@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Cabinet - Multiplayer API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .glass-effect {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .btn-primary {
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-gradient);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
+        }
+        
+        .animated-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .floating-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen animated-bg">
+    <!-- Header -->
+    <header class="glass-effect border-b border-white/20 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.php" class="text-white text-2xl font-bold flex items-center">
+                    <i class="fas fa-gamepad mr-2"></i>
+                    Multiplayer API
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="index.php" class="text-white hover:text-gray-200 px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="php/logout.php" class="text-white hover:text-gray-200 px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Log Out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- User Cabinet -->
+    <section class="min-h-[calc(100vh-4rem)] py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-black text-white mb-4">User Cabinet</h1>
+                <p class="text-xl text-white/70">Manage your account and API keys</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- User Info Card -->
+                <div class="glass-effect rounded-2xl p-6 floating-card lg:col-span-1">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center text-white text-2xl mr-4">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Account Details</h2>
+                            <p class="text-white/70 text-sm">Manage your profile information</p>
+                        </div>
+                    </div>
+                    
+                    <div id="user-info" class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-white/50 w-6"></i>
+                            <div class="ml-3">
+                                <p class="text-sm text-white/70">Email</p>
+                                <p id="email" class="text-white font-medium">loading...</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-key text-white/50 w-6"></i>
+                            <div class="ml-3">
+                                <p class="text-sm text-white/70">Account Status</p>
+                                <p class="text-green-400 font-medium">Active</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- API Keys Section -->
+                <div class="glass-effect rounded-2xl p-6 floating-card lg:col-span-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white">API Keys</h2>
+                            <p class="text-white/70">Manage your project API keys</p>
+                        </div>
+                        <button onclick="openNewKeyModal()" class="btn-primary text-white px-6 py-2.5 rounded-lg font-medium flex items-center justify-center mt-4 sm:mt-0">
+                            <i class="fas fa-plus mr-2"></i> New API Key
+                        </button>
+                    </div>
+                    
+                    <!-- New Key Form (Hidden by default) -->
+                    <form id="new-key-form" action="php/generate_key.php" method="POST" class="hidden mb-8 glass-effect p-6 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-4">Generate New API Key</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="project_name" class="block text-sm font-medium text-white/80 mb-2">Project Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-project-diagram text-white/50"></i>
+                                    </div>
+                                    <input type="text" id="project_name" name="project_name" required 
+                                           class="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                           placeholder="My Awesome Project">
+                                </div>
+                            </div>
+                            <div class="flex justify-end space-x-3 pt-2">
+                                <button type="button" id="cancel-key-btn" class="px-4 py-2 text-white/70 hover:text-white transition">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn-primary text-white px-6 py-2 rounded-lg font-medium flex items-center">
+                                    <i class="fas fa-key mr-2"></i> Generate Key
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- API Keys List -->
+                    <div class="overflow-x-auto rounded-xl">
+                        <table class="min-w-full divide-y divide-white/10">
+                            <thead class="bg-white/5">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Project</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">API Key</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">API Private Key</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Created</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-white/70 uppercase tracking-wider">Reset Private Key</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-white/70 uppercase tracking-wider">Remove API Key</th>
+                                </tr>
+                            </thead>
+                            <tbody id="api-keys" class="divide-y divide-white/5">
+                                <!-- API keys will be loaded here via JavaScript -->
+                                <tr>
+                                    <td colspan="4" class="px-6 py-4 text-center text-white/60">
+                                        Loading your API keys...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 text-sm text-white/50 text-center">
+                        <p>Need help with API integration? <a href="index.php/#sdk" class="text-purple-300 hover:text-white transition">View Documentation</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New API Key Modal -->
+    <div id="newKeyModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="glass-effect rounded-2xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white">Create New API Key</h3>
+                <button onclick="closeNewKeyModal()" class="text-white/50 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="newKeyForm" class="space-y-4">
+                <div>
+                    <label for="project_name" class="block text-sm font-medium text-white/80 mb-1">Project Name</label>
+                    <input type="text" id="project_name" name="project_name" required
+                           class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                           placeholder="My Awesome Project">
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" onclick="closeNewKeyModal()" class="px-4 py-2 rounded-lg text-white/80 hover:text-white transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        Create Key
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event to the button (as a fallback to the onclick attribute)
+            const newKeyBtn = document.querySelector('button[onclick*="openNewKeyModal"]');
+            if (newKeyBtn) {
+                console.log('Found New API Key button, adding click event listener');
+                newKeyBtn.addEventListener('click', openNewKeyModal);
+            } else {
+                console.error('Could not find New API Key button');
+            }
+        });
+
+        // Modal functions
+        function openNewKeyModal() {
+            console.log('openNewKeyModal called');
+            const modal = document.getElementById('newKeyModal');
+            console.log('Modal element:', modal);
+            if (modal) {
+                console.log('Removing hidden class');
+                modal.classList.remove('hidden');
+                console.log('Modal classes after removal:', modal.className);
+            } else {
+                console.error('Could not find newKeyModal element');
+            }
+        }
+
+        function closeNewKeyModal() {
+            document.getElementById('newKeyModal').classList.add('hidden');
+        }
+
+        // Handle new key form submission
+        document.getElementById('newKeyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch('php/generate_key.php', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    closeNewKeyModal();
+                    location.reload(); // Reload to show the new key
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while creating the API key');
+            });
+        });
+
+        // Load user data and API keys
+        fetch('php/get_user_data.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    window.location.href = 'login.html?error=' + encodeURIComponent(data.error);
+                    return;
+                }
+                document.getElementById('email').textContent = data.user.email;
+                const tbody = document.getElementById('api-keys');
+                data.api_keys.forEach(key => {
+                    const row = document.createElement('tr');
+                    row.dataset.keyId = key.id; // Store the key ID in a data attribute
+                    row.innerHTML = `
+                        <td class="px-6 py-4">${key.project_name}</td>
+                        <td class="px-6 py-4 font-mono">${key.api_key}</td>
+                        <td class="px-6 py-4 font-mono api-private-key">${key.api_private_key}</td>
+                        <td class="px-6 py-4 updated-at">${new Date(key.created_at).toLocaleString()}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="resetApiKey('${key.id}')" class="btn-secondary text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center">
+                                <i class="fas fa-key mr-2"></i> Reset
+                            </button>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="removeApiKey('${key.id}')" class="btn-secondary text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center">
+                                <i class="fas fa-trash-alt mr-2"></i> Remove
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading user data:', error);
+                window.location.href = 'login.html?error=' + encodeURIComponent('Failed to load user data: ' + error.message);
+            });
+        
+
+        // Function to reset Private Key
+        function resetApiKey(keyId) {
+            if (!confirm('Are you sure you want to reset this API key? This action cannot be undone.')) {
+                return;
+            }
+
+            console.log('Attempting to reset key ID:', keyId);
+            
+            fetch(`php/reset_key.php?id=${keyId}`, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    console.error('Response not OK, status:', response.status);
+                    return response.json().then(err => {
+                        console.error('Error response:', err);
+                        throw new Error(err.error || 'Failed to reset API key');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                const row = document.querySelector(`tr[data-key-id="${keyId}"]`);
+                console.log('Row to reset:', row);
+
+                if (row) {
+                    const privateCell = row.querySelector('.api-private-key');
+                    const updatedCell = row.querySelector('.updated-at');
+                    
+                    const newKey = String(data.new_private_key).trim();
+                    
+                    if (privateCell) {
+                        privateCell.innerText = "";            // wipe old key
+                        privateCell.textContent = newKey;      // set new key
+                    }
+
+                    if (updatedCell) {
+                        updatedCell.textContent = new Date().toLocaleString();
+                    }
+
+                    console.log('Row updated in UI');
+                }
+
+                alert('API key reset successfully');
+            })
+            .catch(error => {
+                console.error('Error reset API key:', error);
+                alert('Error: ' + (error.message || 'An error occurred while resetting the API key'));
+            });
+        }
+        
+        // Function to delete an API key
+        function removeApiKey(keyId) {
+            if (!confirm('Are you sure you want to delete this API key? This action cannot be undone.')) {
+                return;
+            }
+
+            console.log('Attempting to delete key ID:', keyId);
+            
+            fetch(`php/delete_key.php?id=${keyId}`, {
+                method: 'DELETE',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    console.error('Response not OK, status:', response.status);
+                    return response.json().then(err => {
+                        console.error('Error response:', err);
+                        throw new Error(err.error || 'Failed to delete API key');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Delete successful, response:', data);
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    // Remove the deleted row from the table
+                    const row = document.querySelector(`tr[data-key-id="${keyId}"]`);
+                    console.log('Row to remove:', row);
+                    if (row) {
+                        row.remove();
+                        console.log('Row removed from UI');
+                    }
+                    alert('API key deleted successfully');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting API key:', error);
+                alert('Error: ' + (error.message || 'An error occurred while deleting the API key'));
+            });
+        }
+    </script>
+</body>
+</html>
