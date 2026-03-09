@@ -457,6 +457,12 @@ function updateHeartbeat() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
+    // Check if player is in any room first
+    $roomId = getPlayerRoom($player['id']);
+    if (!$roomId) {
+        sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
+    }
+
     global $pdo;
     $pdo->beginTransaction();
     
@@ -466,16 +472,12 @@ function updateHeartbeat() {
             UPDATE room_players 
             SET last_heartbeat = CURRENT_TIMESTAMP,
                 is_online = TRUE
-            WHERE player_id = ?
+            WHERE player_id = ? AND room_id = ?
         ");
-        $stmt->execute([$player['id']]);
+        $stmt->execute([$player['id'], $roomId]);
         
-        // Get current room ID
-        $roomId = getPlayerRoom($player['id']);
-        if ($roomId) {
-            // Check and reassign host if needed
-            checkAndReassignHost($roomId);
-        }
+        // Check and reassign host if needed
+        checkAndReassignHost($roomId);
         
         $pdo->commit();
         sendResponse(['success' => true, 'status' => 'ok']);
