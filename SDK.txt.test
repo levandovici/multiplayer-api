@@ -10,7 +10,7 @@
 4) $ curl -X GET "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
 {"success":true,"type":"game","game_id":4,"data":{"text":"hello world","game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}}
 
-5) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
+5) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=175192bcedb99170c422abb74f7d4d9f4b81&api_private_token=325fc853eccf0236d9b4ac9cbba16fef5107" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
 {"success":true,"message":"Game data updated successfully","updated_at":"2026-01-13 14:24:23"}
 
 6) $ curl -X GET "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c&game_player_token=46702c9b906e3361c26dbcd605ee9183"
@@ -19,7 +19,7 @@
 7) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c&game_player_token=46702c9b906e3361c26dbcd605ee9183" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
 {"success":true,"message":"Player data updated successfully","updated_at":"2026-01-13 14:27:10"}
 
-8) $ curl -X GET "https://api.michitai.com/v1/php/time.php?api_key=dc8049bdeb600eb3d00945e530faebd2911c"
+8) $ curl -X GET "https://api.michitai.com/v1/php/time.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
 {"success":true,"utc":"2026-01-14T14:16:43+00:00","timestamp":1768400203,"readable":"2026-01-14 14:16:43 UTC"}
 
 9) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4}'
