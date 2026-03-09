@@ -275,7 +275,7 @@ function listRoomPlayers() {
                 rp.player_name,
                 rp.is_host,
                 rp.is_online,
-                TIMESTAMPDIFF(SECOND, rp.last_heartbeat, NOW())
+                rp.last_heartbeat
             FROM room_players rp
             WHERE rp.room_id = ?
             ORDER BY 

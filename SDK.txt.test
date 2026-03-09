@@ -32,7 +32,7 @@
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","message":"Successfully joined the room"}
 
 12) $ curl -X GET "https://api.michitai.com/v1/php/game_room.php/players?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
-{"success":true,"players":[{"player_id":"1","player_name":"TestPlayer","is_host":0,"is_online":true}],"last_updated":"2026-01-15T16:06:42+00:00"}
+{"success":true,"players":[{"player_id":"48","player_name":"TestPlayer","is_host":1,"is_online":1,"last_heartbeat":"2026-03-09 09:39:34"},{"player_id":"49","player_name":"TestPlayer","is_host":0,"is_online":1,"last_heartbeat":"2026-03-09 09:44:39"}],"last_updated":"2026-03-09T09:56:21+00:00"}
 
 13) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"message":"Successfully left the room"}
