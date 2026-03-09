@@ -145,7 +145,7 @@ public class Game
         Console.WriteLine($"[ROOM] Players in room ({roomPlayers.Players.Count}):");
         foreach (var player in roomPlayers.Players)
         {
-            Console.WriteLine($" - {player.Player_name} (ID: {player.Player_id}, Host: {player.Is_host == 1}, Online: {player.Is_online})");
+            Console.WriteLine($" - {player.Player_name} (ID: {player.Player_id}, Host: {player.Is_host == 1}, Online: {player.Is_online}, Last Heartbeat: {player.Last_heartbeat})");
         }
         Console.WriteLine();
 

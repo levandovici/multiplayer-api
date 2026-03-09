@@ -475,6 +475,7 @@ namespace michitai
         public required string Player_name { get; set; }
         public int Is_host { get; set; }
         public int Is_online { get; set; }
+        public required string Last_heartbeat { get; set; }
     }
 
     public class RoomPlayersResponse
