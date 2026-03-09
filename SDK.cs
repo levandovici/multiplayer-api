@@ -508,7 +508,7 @@ namespace michitai
     {
         public required string Action_id { get; set; }
         public required string Action_type { get; set; }
-        public string? Response_data { get; set; }
+        public object? Response_data { get; set; }
         public required string Status { get; set; }
     }
 
@@ -523,7 +523,7 @@ namespace michitai
         public required string Action_id { get; set; }
         public required string Player_id { get; set; }
         public required string Action_type { get; set; }
-        public required string Request_data { get; set; }
+        public object? Request_data { get; set; }
         public required string Created_at { get; set; }
         public required string Player_name { get; set; }
     }

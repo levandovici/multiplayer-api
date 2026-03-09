@@ -171,8 +171,10 @@ public class Game
         {
             foreach (var pendingAction in pendingActions.Actions)
             {
+                string requestDataStr = pendingAction.Request_data != null ? 
+                    JsonSerializer.Serialize(pendingAction.Request_data) : "null";
                 Console.WriteLine($"[ACTION] Pending: {pendingAction.Action_type}, " +
-                               $"Request: {pendingAction.Request_data}");
+                               $"Request: {requestDataStr}");
             }
         }
         else
@@ -200,8 +202,10 @@ public class Game
         {
             foreach (var completedAction in completedActions.Actions)
             {
+                string responseDataStr = completedAction.Response_data != null ? 
+                    JsonSerializer.Serialize(completedAction.Response_data) : "null";
                 Console.WriteLine($"[ACTION] Completed: {completedAction.Action_type}, " +
-                               $"Result: {completedAction.Response_data}");
+                               $"Result: {responseDataStr}");
             }
         }
         else
