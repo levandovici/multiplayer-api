@@ -696,12 +696,12 @@ function sendUpdates() {
         ");
         $stmt->execute([$roomId, ...$targetPlayerIds]);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        if (empty($targets)) {
+            sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
+        }
     } else {
         sendResponse(['success' => false, 'error' => 'targetPlayerIds must be "all" or an array'], 400);
-    }
-
-    if (empty($targets)) {
-        sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
     }
 
     // Create updates for each target player
