@@ -52,10 +52,10 @@
 18) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
 {"success":true,"message":"Action completed"}
 
-19) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"roomId":"05f157893b1237f7699e548d045904ab","targetPlayerIds":"all","type":"play_animation","dataJson":{"animation":"victory","duration":2.0}}'
+19) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"targetPlayerIds":"all","type":"play_animation","dataJson":{"animation":"victory","duration":2.0}}'
 {"success":true,"updates_sent":1,"update_ids":["ddb19c9d8722073762f5db33ff13712a"],"target_players":["47"]}
 
-20) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"roomId":"05f157893b1237f7699e548d045904ab","targetPlayerIds":["47"],"type":"spawn_effect","dataJson":{"effect":"explosion","position":{"x":10,"y":20}}}'
+20) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"targetPlayerIds":["47"],"type":"spawn_effect","dataJson":{"effect":"explosion","position":{"x":10,"y":20}}}'
 {"success":true,"updates_sent":1,"update_ids":["377bfa1d4c56c3f72d9c87b0c081e6e8"],"target_players":["47"]}
 
 21) $ curl "https://api.michitai.com/v1/php/game_room.php/updates/poll?api_token=9384bafb17a0cb699320bdac8ae2cb392a6b&game_player_token=49966083a589a82bdf04aeac8db087825915&lastUpdateId=14135a1fe5998b4accc7d56218710aa6"

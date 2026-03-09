@@ -645,19 +645,24 @@ function sendUpdates() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Only host can send updates
+    // Get player's current room first
+    $roomId = getPlayerRoom($player['id']);
+    if (!$roomId) {
+        sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
+    }
+
+    // Check if player is host of this room
     if (!isHost($player['id'])) {
         sendResponse(['success' => false, 'error' => 'Only host can send updates'], 403);
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    // Validate required fields
-    if (empty($data['roomId']) || empty($data['type']) || !isset($data['dataJson'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required fields: roomId, type, dataJson'], 400);
+    // Validate required fields (roomId no longer needed)
+    if (empty($data['type']) || !isset($data['dataJson'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required fields: type, dataJson'], 400);
     }
 
-    $roomId = $data['roomId'];
     $updateType = trim($data['type']);
     $dataJson = is_string($data['dataJson']) ? $data['dataJson'] : json_encode($data['dataJson'], JSON_UNESCAPED_UNICODE);
 
@@ -667,19 +672,13 @@ function sendUpdates() {
         sendResponse(['success' => false, 'error' => 'Invalid JSON in dataJson field'], 400);
     }
 
-    // Verify host is in this room
-    $hostRoomId = getPlayerRoom($player['id']);
-    if ($hostRoomId !== $roomId) {
-        sendResponse(['success' => false, 'error' => 'You are not the host of this room'], 403);
-    }
-
     // Get target players
     $targetPlayerIds = $data['targetPlayerIds'] ?? 'all';
     $targets = [];
 
     global $pdo;
     if ($targetPlayerIds === 'all') {
-        // Get all players in room except the host
+        // Get all players in room except host
         $stmt = $pdo->prepare("
             SELECT player_id 
             FROM room_players 
@@ -688,7 +687,7 @@ function sendUpdates() {
         $stmt->execute([$roomId, $player['id']]);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
     } elseif (is_array($targetPlayerIds)) {
-        // Validate specific players are in the room and online
+        // Validate specific players are in room and online
         $placeholders = implode(',', array_fill(0, count($targetPlayerIds), '?'));
         $stmt = $pdo->prepare("
             SELECT player_id 
