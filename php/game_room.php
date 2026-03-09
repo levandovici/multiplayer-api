@@ -548,6 +548,16 @@ function pollActions() {
     $stmt->execute([$player['id']]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Decode response_data JSON for each action
+    foreach ($actions as &$action) {
+        if (!empty($action['response_data'])) {
+            $decoded = json_decode($action['response_data'], true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $action['response_data'] = $decoded;
+            }
+        }
+    }
+
     // Mark as read
     if (!empty($actions)) {
         $actionIds = array_column($actions, 'action_id');
@@ -586,6 +596,14 @@ function getPendingActions() {
     ");
     $stmt->execute([$roomId]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Decode request_data JSON for each action
+    foreach ($actions as &$action) {
+        $decoded = json_decode($action['request_data'], true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $action['request_data'] = $decoded;
+        }
+    }
 
     sendResponse(['success' => true, 'actions' => $actions]);
 }
