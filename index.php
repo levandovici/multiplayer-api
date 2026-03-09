@@ -849,7 +849,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/time.php?api_key=YOUR_API_KEY</span>
+            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves the current server time in multiple formats including UTC timestamp and human-readable format.
