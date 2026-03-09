@@ -497,6 +497,30 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions/{ID}/complete</div>
                             <div class="col-span-6">Complete or reject action (requires API key, Host player private key)</div>
                         </div>
+
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2">
+                                <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
+                            </div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/updates</div>
+                            <div class="col-span-6">Send updates to players (requires API key, Host player private key)</div>
+                        </div>
+
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2">
+                                <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
+                            </div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/updates/poll</div>
+                            <div class="col-span-6">Poll for updates (requires API key, Player private key)</div>
+                        </div>
+
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2">
+                                <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
+                            </div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/current</div>
+                            <div class="col-span-6">Get current game room status (requires API key, Player private key)</div>
+                        </div>
                 
                     </div>
                 </div>
@@ -1075,7 +1099,169 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-    <!-- 19. Error Response -->
+<!-- 19. Send Updates to All Players -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Send updates to all players in the room (host only).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+    <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "targetPlayerIds": "all",
+  "type": "play_animation",
+  "dataJson": {
+    "animation": "victory",
+    "duration": 2.0
+  }
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "updates_sent": 1,
+  "update_ids": ["ddb19c9d8722073762f5db33ff13712a"],
+  "target_players": ["47"]
+}</code></pre>
+</div>
+
+<!-- 20. Send Updates to Specific Player -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Send updates to specific players in the room (host only).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+    <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "targetPlayerIds": ["47"],
+  "type": "spawn_effect",
+  "dataJson": {
+    "effect": "explosion",
+    "position": {
+      "x": 10,
+      "y": 20
+    }
+  }
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "updates_sent": 1,
+  "update_ids": ["377bfa1d4c56c3f72d9c87b0c081e6e8"],
+  "target_players": ["47"]
+}</code></pre>
+</div>
+
+<!-- 21. Poll for Updates -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Poll for updates sent to the current player.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "updates": [
+    {
+      "update_id": "a28388775fcf9478c6926cbe44f9d3ed",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:51:40"
+    },
+    {
+      "update_id": "f26cbcdab3939b968f148edf68a9fe54",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:53:58"
+    }
+  ],
+  "last_update_id": "f26cbcdab3939b968f148edf68a9fe54"
+}</code></pre>
+</div>
+
+<!-- 22. Poll for Updates with Last ID -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Poll for updates after a specific update ID (incremental polling).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "updates": [
+    {
+      "update_id": "f26cbcdab3939b968f148edf68a9fe54",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:53:58"
+    }
+  ],
+  "last_update_id": "f26cbcdab3939b968f148edf68a9fe54"
+}</code></pre>
+</div>
+
+<!-- 23. Get Current Game Room Status -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Get current game room status and player information.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "in_room": true,
+  "room": {
+    "room_id": "05f157893b1237f7699e548d045904ab",
+    "room_name": "Game from Matchmaking 636b3f",
+    "is_host": false,
+    "is_online": true,
+    "max_players": 4,
+    "current_players": 2,
+    "has_password": false,
+    "is_active": true,
+    "player_name": "TestPlayer",
+    "joined_at": "2026-03-06 17:50:35",
+    "last_heartbeat": "2026-03-06 18:02:35",
+    "room_created_at": "2026-03-06 17:50:35",
+    "room_last_activity": "2026-03-06 18:04:58"
+  },
+  "pending_actions": [],
+  "pending_updates": []
+}</code></pre>
+</div>
+
+    <!-- 24. Error Response -->
     <div class="bg-red-900/20 border border-red-500/30 p-4 rounded-lg">
         <div class="text-sm text-red-400 mb-2">Error Response (401 Unauthorized):</div>
         <p class="text-xs text-red-400 mb-2">
