@@ -487,7 +487,7 @@ pre::-webkit-scrollbar-thumb:hover {
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions/pending</div>
-                            <div class="col-span-6">View all pending actions (host only, requires API key, Player private key)</div>
+                            <div class="col-span-6">View all pending actions (requires API key, Host player private key)</div>
                         </div>
                 
                         <div class="grid grid-cols-12 items-center">
@@ -495,7 +495,7 @@ pre::-webkit-scrollbar-thumb:hover {
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions/{ID}/complete</div>
-                            <div class="col-span-6">Complete or reject action (host only, requires API key, Player private key)</div>
+                            <div class="col-span-6">Complete or reject action (requires API key, Host player private key)</div>
                         </div>
                 
                     </div>
