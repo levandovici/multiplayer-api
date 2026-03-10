@@ -918,7 +918,8 @@ try {
     } elseif ($method === 'POST' && preg_match('#/([^/]+)/response/?$#', $path, $matches)) {
         $_GET['requestId'] = $matches[1];
         respondToRequest();
-    } elseif ($method === 'GET' && preg_match('#/status/?$#', $path)) {
+    } elseif ($method === 'GET' && preg_match('#/([^/]+)/status/?$#', $path, $matches)) {
+        $_GET['requestId'] = $matches[1];
         checkRequestStatus();
     } elseif ($method === 'GET' && preg_match('#/current/?$#', $path)) {
         getCurrentMatchmakingStatus();
