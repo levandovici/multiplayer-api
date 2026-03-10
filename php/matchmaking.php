@@ -802,11 +802,10 @@ function startMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    $data = json_decode(file_get_contents('php://input'), true) ?: [];
-    $matchmakingId = $data['matchmakingId'] ?? null;
+    $matchmakingId = $_GET['matchmakingId'] ?? null;
 
     if (!$matchmakingId) {
-        sendResponse(['success' => false, 'error' => 'Missing required field: matchmakingId'], 400);
+        sendResponse(['success' => false, 'error' => 'Missing required parameter: matchmakingId'], 400);
     }
 
     // Only host can start matchmaking
@@ -935,7 +934,8 @@ try {
     } elseif ($method === 'POST' && preg_match('#/([^/]+)/remove/?$#', $path, $matches)) {
         $_GET['matchmakingId'] = $matches[1];
         removeMatchmaking();
-    } elseif ($method === 'POST' && preg_match('#/start/?$#', $path)) {
+    } elseif ($method === 'POST' && preg_match('#/([^/]+)/start/?$#', $path, $matches)) {
+        $_GET['matchmakingId'] = $matches[1];
         startMatchmaking();
     } else {
         sendResponse(['success' => false, 'error' => 'Not found'], 404);
