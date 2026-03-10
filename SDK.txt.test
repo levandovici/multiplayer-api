@@ -100,7 +100,7 @@
 34) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/heartbeat?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb"
 {"success":true,"status":"ok"}
 
-35) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/remove?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"matchmakingId":"636b3ffc9b30dc9c918d8a49661df078"}'
+35) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/remove?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&game_player_token=b9643ce7a7e00999a313ec59a708835d3f7c"
 {"success":true,"message":"Matchmaking lobby removed successfully"}
 
 36) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/start?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"matchmakingId":"636b3ffc9b30dc9c918d8a49661df078"}'
