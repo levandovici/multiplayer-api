@@ -226,6 +226,21 @@ function requestJoin() {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
     }
 
+    // Check if player already has a pending request to this matchmaking
+    global $pdo;
+    $stmt = $pdo->prepare("
+        SELECT 1 
+        FROM matchmaking_requests 
+        WHERE matchmaking_id = ? AND player_id = ? AND status = 'pending'
+        LIMIT 1
+    ");
+    $stmt->execute([$matchmakingId, $player['id']]);
+    $existingRequest = $stmt->fetchColumn();
+
+    if ($existingRequest) {
+        sendResponse(['success' => false, 'error' => 'You already have a pending request to this matchmaking lobby'], 400);
+    }
+
     global $pdo;
     $pdo->beginTransaction();
 
