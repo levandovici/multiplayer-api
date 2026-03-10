@@ -132,6 +132,16 @@ function listMatchmaking() {
         ");
 
         $lobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Parse extra_json_string for each lobby
+        foreach ($lobbies as &$lobby) {
+            if (!empty($lobby['extra_json_string'])) {
+                $lobby['extra_json_string'] = json_decode($lobby['extra_json_string'], true);
+            } else {
+                $lobby['extra_json_string'] = null;
+            }
+        }
+        
         sendResponse(['success' => true, 'lobbies' => $lobbies]);
     } catch (Exception $e) {
         error_log("List matchmaking failed: " . $e->getMessage());

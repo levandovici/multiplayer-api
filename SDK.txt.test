@@ -67,8 +67,8 @@
 23) $ curl "https://api.michitai.com/v1/php/game_room.php/current?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=12d1b70eb189b52aed11732313079158597a"
 {"success":true,"in_room":true,"room":{"room_id":"05f157893b1237f7699e548d045904ab","room_name":"Game from Matchmaking 636b3f","is_host":false,"is_online":true,"max_players":4,"current_players":2,"has_password":false,"is_active":true,"player_name":"TestPlayer","joined_at":"2026-03-06 17:50:35","last_heartbeat":"2026-03-06 18:02:35","room_created_at":"2026-03-06 17:50:35","room_last_activity":"2026-03-06 18:04:58"},"pending_actions":[],"pending_updates":[]}
 
-24) $ curl "https://api.michitai.com/v1/php/matchmaking.php/list?api_token=111e15f332a500e6671b737b0d3412834785"
-{"success":true,"lobbies":[{"matchmaking_id":"636b3ffc9b30dc9c918d8a49661df078","host_player_id":46,"max_players":4,"strict_full":1,"extra_json_string":"{\"minLevel\":10,\"rank\":\"gold\"}","created_at":"2026-03-06 16:21:16","last_heartbeat":"2026-03-06 16:21:16","current_players":1,"host_name":"TestPlayer"}]}
+24) $ curl "https://api.michitai.com/v1/php/matchmaking.php/list?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb"
+{"success":true,"lobbies":[{"matchmaking_id":"15b2b6e5f0ba44b5eef77705d120861f","host_player_id":62,"max_players":4,"strict_full":1,"extra_json_string":{"minLevel":10,"rank":"gold"},"created_at":"2026-03-10 15:16:58","last_heartbeat":"2026-03-10 15:16:58","current_players":1,"host_name":"TestPlayer"}]}
 
 25) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/create?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"maxPlayers":4,"strictFull":true,"joinByRequests":true,"extraJsonString":{"minLevel":10,"rank":"gold"}}'
 {"success":true,"matchmaking_id":"636b3ffc9b30dc9c918d8a49661df078","max_players":4,"strict_full":true,"join_by_requests":true,"is_host":true}
