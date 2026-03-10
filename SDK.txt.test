@@ -73,8 +73,8 @@
 25) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/create?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"maxPlayers":4,"strictFull":true,"joinByRequests":true,"extraJsonString":{"minLevel":10,"rank":"gold"}}'
 {"success":true,"matchmaking_id":"636b3ffc9b30dc9c918d8a49661df078","max_players":4,"strict_full":true,"join_by_requests":true,"is_host":true}
 
-26) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/request?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=12d1b70eb189b52aed11732313079158597a" -H "Content-Type: application/json" -d '{"matchmakingId":"636b3ffc9b30dc9c918d8a49661df078"}'
-{"success":true,"request_id":"c7a5e5f813f2d4dfe7353557ffcb8c0f","message":"Join request sent to host"}
+26) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&game_player_token=dc71b48b385eaea3388576ea14288319dc8e"
+{"success":true,"request_id":"82334acd88f0af6a1f4747bbe755263a","message":"Join request sent to host"}
 
 27) $ curl -X POST "https://api.michitai.com/v1/php/matchmaking.php/response?api_token=111e15f332a500e6671b737b0d3412834785&game_player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"requestId":"c7a5e5f813f2d4dfe7353557ffcb8c0f","action":"approve"}'
 {"success":true,"message":"Join request approved successfully","request_id":"c7a5e5f813f2d4dfe7353557ffcb8c0f","action":"approve"}
