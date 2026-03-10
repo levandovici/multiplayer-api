@@ -602,21 +602,24 @@ function getCurrentMatchmakingStatus() {
             ]);
         }
 
-        // Get pending requests for this player if any
-        $stmt = $pdo->prepare("
-            SELECT 
-                request_id,
-                matchmaking_id,
-                status,
-                requested_at,
-                responded_at
-            FROM matchmaking_requests 
-            WHERE player_id = ? AND status = 'pending'
-            ORDER BY requested_at DESC
-            LIMIT 5
-        ");
-        $stmt->execute([$player['id']]);
-        $pendingRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Get pending requests for this matchmaking lobby if player is host
+        $pendingRequests = [];
+        if ((bool)$matchmaking['is_host']) {
+            $stmt = $pdo->prepare("
+                SELECT 
+                    request_id,
+                    matchmaking_id,
+                    status,
+                    requested_at,
+                    responded_at
+                FROM matchmaking_requests 
+                WHERE matchmaking_id = ? AND status = 'pending'
+                ORDER BY requested_at DESC
+                LIMIT 5
+            ");
+            $stmt->execute([$matchmaking['matchmaking_id']]);
+            $pendingRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
         sendResponse([
             'success' => true,
