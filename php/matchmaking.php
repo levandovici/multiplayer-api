@@ -703,13 +703,13 @@ function respondToRequest() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
+    $requestId = $_GET['requestId'] ?? null;
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['requestId']) || empty($data['action'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required fields: requestId, action'], 400);
+    if (!$requestId || empty($data['action'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required fields: requestId (in URL), action'], 400);
     }
 
-    $requestId = $data['requestId'];
     $action = $data['action']; // 'approve' or 'reject'
 
     if (!in_array($action, ['approve', 'reject'])) {
@@ -915,7 +915,8 @@ try {
     }  elseif ($method === 'POST' && preg_match('#/([^/]+)/request/?$#', $path, $matches)) {
         $_GET['matchmakingId'] = $matches[1];
         requestJoin();
-    } elseif ($method === 'POST' && preg_match('#/response/?$#', $path)) {
+    } elseif ($method === 'POST' && preg_match('#/([^/]+)/response/?$#', $path, $matches)) {
+        $_GET['requestId'] = $matches[1];
         respondToRequest();
     } elseif ($method === 'GET' && preg_match('#/status/?$#', $path)) {
         checkRequestStatus();
