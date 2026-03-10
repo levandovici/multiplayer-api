@@ -291,13 +291,11 @@ function joinMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+    $matchmakingId = $_GET['matchmakingId'] ?? null;
 
-    if (empty($data['matchmakingId'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required field: matchmakingId'], 400);
+    if (!$matchmakingId) {
+        sendResponse(['success' => false, 'error' => 'Missing required parameter: matchmakingId'], 400);
     }
-
-    $matchmakingId = $data['matchmakingId'];
 
     // Check if player is already in a matchmaking lobby
     $existingLobby = getPlayerMatchmaking($player['id']);
@@ -926,7 +924,8 @@ try {
         checkRequestStatus();
     } elseif ($method === 'GET' && preg_match('#/current/?$#', $path)) {
         getCurrentMatchmakingStatus();
-    } elseif ($method === 'POST' && preg_match('#/join/?$#', $path)) {
+    } elseif ($method === 'POST' && preg_match('#/([^/]+)/join/?$#', $path, $matches)) {
+        $_GET['matchmakingId'] = $matches[1];
         joinMatchmaking();
     } elseif ($method === 'POST' && preg_match('#/leave/?$#', $path)) {
         leaveMatchmaking();
