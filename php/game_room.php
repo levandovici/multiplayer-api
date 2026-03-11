@@ -364,9 +364,10 @@ function leaveRoom() {
                     WHERE room_id = ?
                 ")->execute([$newHost['player_id'], $roomId]);
             } else {
-                // No one left → deactivate room
+                // No players left → completely remove room and all related data
                 $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
-                $pdo->prepare("UPDATE game_rooms SET is_active = FALSE WHERE room_id = ?")->execute([$roomId]);
+                $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
+                $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
             }
         }
 
