@@ -91,21 +91,22 @@ function getPlayerRoom($playerId) {
     return $result ? $result['room_id'] : null;
 }
 
-function addPlayerToRoom($roomId, $playerId, $playerName, $isHost = false) {
+function addPlayerToRoom($roomId, $playerId, $playerName, $gameId, $isHost = false) {
     global $pdo;
     $stmt = $pdo->prepare("
         INSERT INTO room_players 
-            (player_id, room_id, player_name, is_host, last_heartbeat, joined_at, is_online) 
-        VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE)
+            (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online) 
+        VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE)
         ON DUPLICATE KEY UPDATE 
             room_id = VALUES(room_id),
+            game_id = VALUES(game_id),
             player_name = VALUES(player_name),
             is_host = VALUES(is_host),
             last_heartbeat = CURRENT_TIMESTAMP,
             joined_at = CURRENT_TIMESTAMP,
             is_online = TRUE
     ");
-    $stmt->execute([$playerId, $roomId, $playerName, $isHost ? 1 : 0]);
+    $stmt->execute([$playerId, $roomId, $gameId, $playerName, $isHost ? 1 : 0]);
 }
 
 function isHost($playerId) {
@@ -143,11 +144,11 @@ function createRoom() {
         $pdo->beginTransaction();
 
         $pdo->prepare("
-            INSERT INTO game_rooms (room_id, room_name, password, max_players)
-            VALUES (?, ?, ?, ?)
-        ")->execute([$roomId, $roomName, $password, $maxPlayers]);
+            INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players)
+            VALUES (?, ?, ?, ?, ?)
+        ")->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers]);
 
-        addPlayerToRoom($roomId, $player['id'], $player['player_name'], true);
+        addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true);
 
         $pdo->prepare("
             UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?
@@ -212,7 +213,7 @@ function joinRoom($roomId) {
         }
 
         $stmt = $pdo->prepare("
-            SELECT password, max_players, is_active,
+            SELECT game_id, password, max_players, is_active,
                    (SELECT COUNT(*) FROM room_players WHERE room_id = ?) as current_players
             FROM game_rooms 
             WHERE room_id = ?
@@ -239,7 +240,7 @@ function joinRoom($roomId) {
             }
         }
 
-        addPlayerToRoom($roomId, $player['id'], $player['player_name']);
+        addPlayerToRoom($roomId, $player['id'], $player['player_name'], $room['game_id']);
 
         // Check and reassign host if needed (will also reactivate if inactive)
         checkAndReassignHost($roomId);
@@ -508,12 +509,13 @@ function submitAction() {
     global $pdo;
     $stmt = $pdo->prepare("
         INSERT INTO action_queue 
-        (action_id, room_id, player_id, action_type, request_data, status)
-        VALUES (?, ?, ?, ?, ?, 'pending')
+        (action_id, room_id, game_id, player_id, action_type, request_data, status)
+        VALUES (?, ?, ?, ?, ?, ?, 'pending')
     ");
     $stmt->execute([
         $actionId,
         $roomId,
+        $context['api']['id'],
         $player['id'],
         $data['action_type'],
         json_encode($data['request_data'], JSON_UNESCAPED_UNICODE)
@@ -711,13 +713,13 @@ function sendUpdates() {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO player_updates 
-            (update_id, room_id, from_player_id, target_player_id, type, data_json)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (update_id, room_id, game_id, from_player_id, target_player_id, type, data_json)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
 
         foreach ($targets as $targetPlayerId) {
             $updateId = bin2hex(random_bytes(16));
-            $stmt->execute([$updateId, $roomId, $player['id'], $targetPlayerId, $updateType, $dataJson]);
+            $stmt->execute([$updateId, $roomId, $context['api']['id'], $player['id'], $targetPlayerId, $updateType, $dataJson]);
             $updateIds[] = $updateId;
         }
 

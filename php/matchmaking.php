@@ -208,18 +208,18 @@ function createMatchmaking() {
         // Create matchmaking lobby
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking 
-            (matchmaking_id, host_player_id, max_players, strict_full, join_by_requests, extra_json_string)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (matchmaking_id, game_id, host_player_id, max_players, strict_full, join_by_requests, extra_json_string)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $player['id'], $maxPlayers, $strictFull, $joinByRequests, $extraJsonString]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $extraJsonString]);
 
         // Add host as first player
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
-            (matchmaking_id, player_id)
-            VALUES (?, ?)
+            (matchmaking_id, game_id, player_id)
+            VALUES (?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $player['id']]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id']]);
 
         $pdo->commit();
 
@@ -296,10 +296,10 @@ function requestJoin() {
         $requestId = bin2hex(random_bytes(16));
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_requests 
-            (request_id, matchmaking_id, player_id)
-            VALUES (?, ?, ?)
+            (request_id, matchmaking_id, game_id, player_id)
+            VALUES (?, ?, ?, ?)
         ");
-        $stmt->execute([$requestId, $matchmakingId, $player['id']]);
+        $stmt->execute([$requestId, $matchmakingId, $matchmaking['game_id'], $player['id']]);
 
         $pdo->commit();
 
@@ -362,10 +362,10 @@ function joinMatchmaking() {
         // Add player to matchmaking
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
-            (matchmaking_id, player_id)
-            VALUES (?, ?)
+            (matchmaking_id, game_id, player_id)
+            VALUES (?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $player['id']]);
+        $stmt->execute([$matchmakingId, $matchmaking['game_id'], $player['id']]);
 
         $pdo->commit();
 
@@ -804,14 +804,14 @@ function respondToRequest() {
             // Add player to matchmaking
             $stmt = $pdo->prepare("
                 INSERT INTO matchmaking_players 
-                (matchmaking_id, player_id)
-                VALUES (?, ?)
+                (matchmaking_id, game_id, player_id)
+                VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE
                     status = 'active',
                     joined_at = CURRENT_TIMESTAMP,
                     last_heartbeat = CURRENT_TIMESTAMP
             ");
-            $stmt->execute([$request['matchmaking_id'], $request['player_id']]);
+            $stmt->execute([$request['matchmaking_id'], $request['game_id'], $request['player_id']]);
         }
 
         $pdo->commit();
@@ -876,20 +876,23 @@ function startMatchmaking() {
         $roomName = 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
 
         $stmt = $pdo->prepare("
-            INSERT INTO game_rooms (room_id, room_name, max_players)
-            VALUES (?, ?, ?)
+            INSERT INTO game_rooms (room_id, game_id, room_name, max_players)
+            VALUES (?, ?, ?, ?)
         ");
-        $stmt->execute([$roomId, $roomName, $matchmaking['max_players']]);
+        $stmt->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players']]);
 
         // Move all players to game room
         $stmt = $pdo->prepare("
-            INSERT INTO room_players (player_id, room_id, player_name, is_host, last_heartbeat, joined_at, is_online)
-            SELECT mp.player_id, ?, gp.player_name, (mp.player_id = ?), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE
+            INSERT INTO room_players (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online)
+            SELECT mp.player_id, ?, mp.game_id, gp.player_name, 
+                   (m.host_player_id = mp.player_id) as is_host, 
+                   mp.last_heartbeat, mp.joined_at, TRUE
             FROM matchmaking_players mp
             JOIN game_players gp ON mp.player_id = gp.id
+            JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
             WHERE mp.matchmaking_id = ? AND mp.status = 'active'
         ");
-        $stmt->execute([$roomId, $player['id'], $matchmakingId]);
+        $stmt->execute([$roomId, $matchmakingId]);
 
         // Get the host's room_player_id to set as host_player_id
         $stmt = $pdo->prepare("

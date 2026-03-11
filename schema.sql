@@ -49,6 +49,7 @@ CREATE TABLE verification_tokens (
 
 CREATE TABLE IF NOT EXISTS game_rooms (
     room_id VARCHAR(36) PRIMARY KEY,
+    game_id INT NOT NULL,
     room_name VARCHAR(255) NOT NULL,
     host_player_id VARCHAR(36) NULL,
     password VARCHAR(255) NULL,
@@ -56,12 +57,14 @@ CREATE TABLE IF NOT EXISTS game_rooms (
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS room_players (
     player_id VARCHAR(36) PRIMARY KEY,
     room_id VARCHAR(36) NOT NULL,
+    game_id INT NOT NULL,
     player_name VARCHAR(100) NOT NULL,
     is_host BOOLEAN DEFAULT FALSE,
     is_online BOOLEAN DEFAULT TRUE,
@@ -69,13 +72,16 @@ CREATE TABLE IF NOT EXISTS room_players (
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES game_rooms(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     INDEX idx_room_id (room_id),
+    INDEX idx_game_id (game_id),
     INDEX idx_last_heartbeat (last_heartbeat)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS action_queue (
     action_id VARCHAR(36) PRIMARY KEY,
     room_id VARCHAR(36) NOT NULL,
+    game_id INT NOT NULL,
     player_id VARCHAR(36) NOT NULL,
     action_type VARCHAR(50) NOT NULL,
     request_data JSON,
@@ -84,7 +90,9 @@ CREATE TABLE IF NOT EXISTS action_queue (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     processed_at TIMESTAMP NULL,
     FOREIGN KEY (room_id) REFERENCES game_rooms(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     INDEX idx_room_status (room_id, status),
+    INDEX idx_game_status (game_id, status),
     INDEX idx_player_status (player_id, status),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -102,6 +110,7 @@ ALTER TABLE game_rooms
 CREATE TABLE IF NOT EXISTS player_updates (
     update_id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     room_id VARCHAR(36) NOT NULL,
+    game_id INT NOT NULL,
     from_player_id VARCHAR(36) NOT NULL,
     target_player_id VARCHAR(36) NOT NULL,
     type VARCHAR(50) NOT NULL COMMENT 'play_animation, spawn_effect, sync_state, etc.',
@@ -112,9 +121,11 @@ CREATE TABLE IF NOT EXISTS player_updates (
     
     INDEX idx_target_player_updates (target_player_id, status, created_at),
     INDEX idx_room_updates (room_id, created_at),
+    INDEX idx_game_updates (game_id, created_at),
     INDEX idx_from_player (from_player_id, created_at),
     
     FOREIGN KEY (room_id) REFERENCES game_rooms(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     FOREIGN KEY (from_player_id) REFERENCES room_players(player_id) ON DELETE CASCADE,
     FOREIGN KEY (target_player_id) REFERENCES room_players(player_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -122,6 +133,7 @@ CREATE TABLE IF NOT EXISTS player_updates (
 -- Table for matchmaking lobbies
 CREATE TABLE IF NOT EXISTS matchmaking (
     matchmaking_id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    game_id INT NOT NULL,
     host_player_id INT NOT NULL,
     max_players INT NOT NULL DEFAULT 4 CHECK (max_players BETWEEN 2 AND 16),
     strict_full BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Game can start only when full',
@@ -133,15 +145,18 @@ CREATE TABLE IF NOT EXISTS matchmaking (
     started_at TIMESTAMP NULL,
     
     INDEX idx_host_lobby (host_player_id, is_started),
+    INDEX idx_game_lobby (game_id, is_started),
     INDEX idx_active_lobbies (is_started, created_at),
     INDEX idx_heartbeat (last_heartbeat),
     
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     FOREIGN KEY (host_player_id) REFERENCES game_players(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Table for matchmaking players (junction table)
 CREATE TABLE IF NOT EXISTS matchmaking_players (
     matchmaking_id VARCHAR(36) NOT NULL,
+    game_id INT NOT NULL,
     player_id INT NOT NULL,
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_heartbeat TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -149,9 +164,11 @@ CREATE TABLE IF NOT EXISTS matchmaking_players (
     
     PRIMARY KEY (matchmaking_id, player_id),
     INDEX idx_player_lobbies (player_id, status),
+    INDEX idx_game_players (game_id, status),
     INDEX idx_lobby_players (matchmaking_id, status),
     
     FOREIGN KEY (matchmaking_id) REFERENCES matchmaking(matchmaking_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     FOREIGN KEY (player_id) REFERENCES game_players(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -159,6 +176,7 @@ CREATE TABLE IF NOT EXISTS matchmaking_players (
 CREATE TABLE IF NOT EXISTS matchmaking_requests (
     request_id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     matchmaking_id VARCHAR(36) NOT NULL,
+    game_id INT NOT NULL,
     player_id INT NOT NULL,
     requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
@@ -166,9 +184,11 @@ CREATE TABLE IF NOT EXISTS matchmaking_requests (
     responded_by INT NULL COMMENT 'Host player who approved/rejected',
     
     INDEX idx_lobby_requests (matchmaking_id, status),
+    INDEX idx_game_requests (game_id, status),
     INDEX idx_player_requests (player_id, status),
     
     FOREIGN KEY (matchmaking_id) REFERENCES matchmaking(matchmaking_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     FOREIGN KEY (player_id) REFERENCES game_players(id) ON DELETE CASCADE,
     FOREIGN KEY (responded_by) REFERENCES game_players(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
