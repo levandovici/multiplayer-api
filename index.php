@@ -359,17 +359,17 @@ pre::-webkit-scrollbar-thumb:hover {
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_players.php</div>
-                            <div class="col-span-6">Register new Player with API key, returns Player private key</div>
+                            <div class="col-span-6">Register new player (requires API key, returns Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_players.php</div>
-                            <div class="col-span-6">Authenticate Player with API key and Player private key</div>
+                            <div class="col-span-6">Authenticate player (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_players.php</div>
-                            <div class="col-span-6">List all Players with API key and API private key</div>
+                            <div class="col-span-6">List all players (requires API key, API private key)</div>
                         </div>
                     </div>
                 </div>
@@ -381,22 +381,22 @@ pre::-webkit-scrollbar-thumb:hover {
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
-                            <div class="col-span-6">Get Game data (requires API key)</div>
+                            <div class="col-span-6">Get game data (requires API key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
-                            <div class="col-span-6">Update Game data (requires API key, API private key)</div>
+                            <div class="col-span-6">Update game data (requires API key, API private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
-                            <div class="col-span-6">Get Player data (requires API key, Player private key)</div>
+                            <div class="col-span-6">Get player data (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
-                            <div class="col-span-6">Update Player data (requires API key, Player private key)</div>
+                            <div class="col-span-6">Update player data (requires API key, Player private key)</div>
                         </div>
                     </div>
                 </div>
@@ -409,6 +409,73 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/php/time.php</div>
                             <div class="col-span-6">Get server time (requires API key)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Matchmaking -->
+                <div class="p-4 border-t border-white/10">
+                    <h4 class="text-white/60 text-sm font-semibold mb-3">Matchmaking</h4>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/list</div>
+                            <div class="col-span-6">List all available matchmaking lobbies (requires API key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/create</div>
+                            <div class="col-span-6">Create a new matchmaking lobby (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/request</div>
+                            <div class="col-span-6">Request to join a matchmaking lobby (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/response</div>
+                            <div class="col-span-6">Respond to join request (requires API key, Host player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/status</div>
+                            <div class="col-span-6">Check join request status (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/current</div>
+                            <div class="col-span-6">Get current matchmaking status (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/join</div>
+                            <div class="col-span-6">Join a matchmaking lobby directly (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/leave</div>
+                            <div class="col-span-6">Leave current matchmaking lobby (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/players</div>
+                            <div class="col-span-6">List all players in current matchmaking (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/heartbeat</div>
+                            <div class="col-span-6">Send matchmaking heartbeat (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/remove</div>
+                            <div class="col-span-6">Remove matchmaking lobby (requires API key, Host player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/start</div>
+                            <div class="col-span-6">Start game from matchmaking (requires API key, Host player private key)</div>
                         </div>
                     </div>
                 </div>
