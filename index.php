@@ -912,27 +912,340 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-    <!-- 8. Get Server Time -->
-    <div class="bg-black/50 p-4 rounded-lg">
-        <div class="flex items-center text-sm text-green-400 mb-2">
-            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY</span>
-        </div>
-        <p class="text-xs text-gray-400 mb-2">
-            <strong>Description:</strong> Retrieves the current server time in multiple formats including UTC timestamp and human-readable format.
-        </p>
-        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-        <div class="text-xs text-gray-400 mb-2">Response:</div>
-        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+<!-- 8. Get Server Time -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Retrieves the current server time in multiple formats including UTC timestamp and human-readable format.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+    <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
   "success": true,
   "utc": "2025-01-14T16:24:00+00:00",
   "timestamp": 1736864640,
   "readable": "2025-01-14 16:24:00 UTC"
 }</code></pre>
     </div>
-    
- <!-- 9. Create New Room -->
+
+   <!-- 9. List Matchmaking Lobbies -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/matchmaking.php/list?api_token=YOUR_API_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Lists all available matchmaking lobbies that are not full and not started.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "lobbies": [
+    {
+      "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
+      "host_player_id": 62,
+      "max_players": 4,
+      "strict_full": 1,
+      "extra_json_string": {"minLevel":10,"rank":"gold"},
+      "created_at": "2026-03-10 15:16:58",
+      "last_heartbeat": "2026-03-10 15:16:58",
+      "current_players": 1,
+      "host_name": "TestPlayer"
+    }
+  ]
+}</code></pre>
+</div>
+
+<!-- 10. Create Matchmaking Lobby -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Creates a new matchmaking lobby. The creating player automatically becomes the host.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "maxPlayers": 4,
+  "strictFull": true,
+  "joinByRequests": true,
+  "extraJsonString": {"minLevel":10,"rank":"gold"}
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "matchmaking_id": "636b3ffc9b30dc9c918d8a49661df078",
+  "max_players": 4,
+  "strict_full": true,
+  "join_by_requests": true,
+  "is_host": true
+}</code></pre>
+</div>
+
+<!-- 11. Request to Join Matchmaking -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/request?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Requests to join a matchmaking lobby that requires host approval.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "request_id": "82334acd88f0af6a1f4747bbe755263a",
+  "message": "Join request sent to host"
+}</code></pre>
+</div>
+
+<!-- 12. Respond to Join Request -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Host responds to a join request (approve or reject).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "action": "approve"
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "message": "Join request approved successfully",
+  "request_id": "f4d90025b5de54e6b1a83940cffb4490",
+  "action": "approve"
+}</code></pre>
+</div>
+
+<!-- 13. Reject Join Request -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Host rejects a join request.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "action": "reject"
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "message": "Join request rejected successfully",
+  "request_id": "f4d90025b5de54e6b1a83940cffb4490",
+  "action": "reject"
+}</code></pre>
+</div>
+
+<!-- 14. Check Join Request Status -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/status?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Checks the status of a join request.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "request": {
+    "request_id": "f4d90025b5de54e6b1a83940cffb4490",
+    "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
+    "status": "approved",
+    "requested_at": "2026-03-10 16:10:23",
+    "responded_at": "2026-03-10 16:18:43",
+    "responded_by": 62,
+    "responder_name": "TestPlayer",
+    "join_by_requests": true
+  }
+}</code></pre>
+</div>
+
+<!-- 15. Get Current Matchmaking Status -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Gets the current player's matchmaking status and lobby information.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "in_matchmaking": true,
+  "matchmaking": {
+    "matchmaking_id": "636b3ffc9b30dc9c918d8a49661df078",
+    "is_host": true,
+    "max_players": 4,
+    "current_players": 1,
+    "strict_full": true,
+    "join_by_requests": false,
+    "extra_json_string": {"minLevel":10,"rank":"gold"},
+    "joined_at": "2026-03-06 17:23:53",
+    "player_status": "active",
+    "last_heartbeat": "2026-03-06 17:23:53",
+    "lobby_heartbeat": "2026-03-06 17:24:37",
+    "is_started": false,
+    "started_at": null
+  },
+  "pending_requests": []
+}</code></pre>
+</div>
+
+<!-- 16. Join Matchmaking Directly -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Joins a matchmaking lobby directly (only works if lobby doesn't require approval).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
+  "message": "Successfully joined matchmaking lobby"
+}</code></pre>
+</div>
+
+<!-- 17. Leave Matchmaking -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Leaves the current matchmaking lobby.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "message": "Successfully left matchmaking lobby"
+}</code></pre>
+</div>
+
+<!-- 18. List Matchmaking Players -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-blue-400 mb-2">
+        <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+        <span class="font-mono">/v1/php/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Lists all players in the current matchmaking lobby.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "players": [
+    {
+      "player_id": 47,
+      "joined_at": "2026-03-06 17:23:53",
+      "last_heartbeat": "2026-03-06 17:23:53",
+      "status": "active",
+      "player_name": "TestPlayer",
+      "seconds_since_heartbeat": 726,
+      "is_host": 1
+    },
+    {
+      "player_id": 46,
+      "joined_at": "2026-03-06 17:35:01",
+      "last_heartbeat": "2026-03-06 17:35:01",
+      "status": "active",
+      "player_name": "TestPlayer",
+      "seconds_since_heartbeat": 58,
+      "is_host": 0
+    }
+  ],
+  "last_updated": "2026-03-06T17:35:59+00:00"
+}</code></pre>
+</div>
+
+<!-- 19. Send Matchmaking Heartbeat -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Sends a heartbeat to keep the player active in the matchmaking lobby.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "status": "ok"
+}</code></pre>
+</div>
+
+<!-- 20. Remove Matchmaking Lobby -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Removes the matchmaking lobby (host only).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "message": "Matchmaking lobby removed successfully"
+}</code></pre>
+</div>
+
+<!-- 21. Start Game from Matchmaking -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Starts a game from the matchmaking lobby (host only).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "room_id": "c899e32506d44823d486585b247eafe5",
+  "room_name": "Game from Matchmaking 15b2b6",
+  "players_transferred": 2,
+  "message": "Game started successfully"
+}</code></pre>
+</div>
+
+ <!-- 22. Create New Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -956,7 +1269,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 10. List Available Rooms -->
+<!-- 23. List Available Rooms -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -982,7 +1295,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 11. Join Room -->
+<!-- 24. Join Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1003,7 +1316,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 12. List Players in Current Room -->
+<!-- 25. List Players in Current Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1029,7 +1342,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 13. Leave Current Room -->
+<!-- 26. Leave Current Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-orange-400 mb-2">
         <span class="font-mono bg-orange-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1047,7 +1360,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 14. Player Heartbeat -->
+<!-- 27. Player Heartbeat -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1065,7 +1378,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
     
-<!-- 15. Submit Action -->
+<!-- 28. Submit Action -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1090,7 +1403,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 16. Poll Completed Actions -->
+<!-- 29. Poll Completed Actions -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1115,7 +1428,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 17. Get Pending Actions (Admin/Host View) -->
+<!-- 30. Get Pending Actions (Admin/Host View) -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1142,7 +1455,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 18. Complete Action (Host/Server Only) -->
+<!-- 31. Complete Action (Host/Server Only) -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1166,7 +1479,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 19. Send Updates to All Players -->
+<!-- 32. Send Updates to All Players -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1193,7 +1506,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 20. Send Updates to Specific Player -->
+<!-- 33. Send Updates to Specific Player -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1223,7 +1536,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 21. Poll for Updates -->
+<!-- 34. Poll for Updates -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1263,7 +1576,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 22. Poll for Updates with Last ID -->
+<!-- 35. Poll for Updates with Last ID -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1293,7 +1606,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 23. Get Current Game Room Status -->
+<!-- 36. Get Current Game Room Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1328,7 +1641,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-    <!-- 24. Error Response -->
+    <!-- 37. Error Response -->
     <div class="bg-red-900/20 border border-red-500/30 p-4 rounded-lg">
         <div class="text-sm text-red-400 mb-2">Error Response (401 Unauthorized):</div>
         <p class="text-xs text-red-400 mb-2">
@@ -1336,11 +1649,11 @@ pre::-webkit-scrollbar-thumb:hover {
         </p>
         <div class="text-xs text-gray-400 mb-2">Response:</div>
     <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": false,
-  "error": {
+    "success": false,
+    "error": {
     "code": "unauthorized",
     "message": "Invalid or missing API key"
-  }
+    }
 }</code></pre>
     </div>
 
