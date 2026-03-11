@@ -79,7 +79,7 @@ function requirePlayer($context) {
 function getPlayerMatchmaking($playerId) {
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT mp.matchmaking_id, m.host_player_id
+        SELECT mp.matchmaking_id
         FROM matchmaking_players mp
         JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
         WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
@@ -88,6 +88,34 @@ function getPlayerMatchmaking($playerId) {
     $stmt->execute([$playerId]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ? $result['matchmaking_id'] : null;
+}
+
+function getPlayerMatchmakingDetails($playerId) {
+    global $pdo;
+    $stmt = $pdo->prepare("
+        SELECT 
+            mp.matchmaking_id, 
+            m.host_player_id,
+            (m.host_player_id = ?) as is_host,
+            mp.status as player_status,
+            mp.joined_at,
+            mp.last_heartbeat,
+            m.max_players,
+            m.strict_full,
+            m.join_by_requests,
+            m.extra_json_string,
+            m.is_started,
+            m.started_at,
+            m.created_at,
+            m.last_heartbeat as lobby_heartbeat
+        FROM matchmaking_players mp
+        JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
+        WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
+        LIMIT 1
+    ");
+    $stmt->execute([$playerId, $playerId]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ?: null;
 }
 
 function isMatchmakingHost($playerId, $matchmakingId) {
@@ -514,14 +542,17 @@ function removeMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    $matchmakingId = $_GET['matchmakingId'] ?? null;
-
-    if (!$matchmakingId) {
-        sendResponse(['success' => false, 'error' => 'Missing required parameter: matchmakingId'], 400);
+    // Get player's current matchmaking lobby
+    $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
+    
+    if (!$currentMatchmaking) {
+        sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
     }
 
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+
     // Only host can remove matchmaking
-    if (!isMatchmakingHost($player['id'], $matchmakingId)) {
+    if (!$currentMatchmaking['is_host']) {
         sendResponse(['success' => false, 'error' => 'Only host can remove matchmaking lobby'], 403);
     }
 
@@ -802,14 +833,17 @@ function startMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    $matchmakingId = $_GET['matchmakingId'] ?? null;
-
-    if (!$matchmakingId) {
-        sendResponse(['success' => false, 'error' => 'Missing required parameter: matchmakingId'], 400);
+    // Get player's current matchmaking lobby
+    $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
+    
+    if (!$currentMatchmaking) {
+        sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
     }
 
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+
     // Only host can start matchmaking
-    if (!isMatchmakingHost($player['id'], $matchmakingId)) {
+    if (!$currentMatchmaking['is_host']) {
         sendResponse(['success' => false, 'error' => 'Only host can start matchmaking'], 403);
     }
 
@@ -931,11 +965,9 @@ try {
         getMatchmakingPlayers();
     } elseif ($method === 'POST' && preg_match('#/heartbeat/?$#', $path)) {
         updateMatchmakingHeartbeat();
-    } elseif ($method === 'POST' && preg_match('#/([^/]+)/remove/?$#', $path, $matches)) {
-        $_GET['matchmakingId'] = $matches[1];
+    } elseif ($method === 'POST' && preg_match('#/remove/?$#', $path)) {
         removeMatchmaking();
-    } elseif ($method === 'POST' && preg_match('#/([^/]+)/start/?$#', $path, $matches)) {
-        $_GET['matchmakingId'] = $matches[1];
+    } elseif ($method === 'POST' && preg_match('#/start/?$#', $path)) {
         startMatchmaking();
     } else {
         sendResponse(['success' => false, 'error' => 'Not found'], 404);
