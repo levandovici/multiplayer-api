@@ -130,6 +130,28 @@ function createRoom() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
+    // Check if player is already in a game room
+    $existingRoom = getPlayerRoom($player['id']);
+    if ($existingRoom) {
+        sendResponse(['success' => false, 'error' => 'You are already in a game room. Leave current room first.'], 400);
+    }
+
+    // Check if player is in a matchmaking lobby
+    global $pdo;
+    $stmt = $pdo->prepare("
+        SELECT mp.matchmaking_id
+        FROM matchmaking_players mp
+        JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
+        WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
+        LIMIT 1
+    ");
+    $stmt->execute([$player['id']]);
+    $matchmakingLobby = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($matchmakingLobby) {
+        sendResponse(['success' => false, 'error' => 'You cannot create a game room while in a matchmaking lobby. Leave matchmaking first.'], 400);
+    }
+
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
     $roomId = bin2hex(random_bytes(16));
@@ -139,7 +161,6 @@ function createRoom() {
     $password = !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
     $maxPlayers = max(2, min(16, (int)($data['max_players'] ?? 6)));
 
-    global $pdo;
     try {
         $pdo->beginTransaction();
 
