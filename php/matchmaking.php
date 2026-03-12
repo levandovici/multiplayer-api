@@ -90,6 +90,20 @@ function getPlayerMatchmaking($playerId) {
     return $result ? $result['matchmaking_id'] : null;
 }
 
+function getPlayerRoom($playerId) {
+    global $pdo;
+    $stmt = $pdo->prepare("
+        SELECT rp.room_id
+        FROM room_players rp
+        JOIN game_rooms gr ON rp.room_id = gr.room_id
+        WHERE rp.player_id = ? AND gr.is_active = TRUE
+        LIMIT 1
+    ");
+    $stmt->execute([$playerId]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['room_id'] : null;
+}
+
 function getPlayerMatchmakingDetails($playerId) {
     global $pdo;
     $stmt = $pdo->prepare("
@@ -185,6 +199,12 @@ function createMatchmaking() {
     $existingLobby = getPlayerMatchmaking($player['id']);
     if ($existingLobby) {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
+    }
+
+    // Check if player is already in a game room
+    $existingRoom = getPlayerRoom($player['id']);
+    if ($existingRoom) {
+        sendResponse(['success' => false, 'error' => 'You cannot create matchmaking while in a game room. Leave the room first.'], 400);
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
