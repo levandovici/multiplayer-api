@@ -386,6 +386,19 @@ function leaveRoom() {
                 ")->execute([$newHost['player_id'], $roomId]);
             } else {
                 // No players left → completely remove room and all related data
+                
+                // Check if this room was created from matchmaking and clean up matchmaking data
+                $stmt = $pdo->prepare("SELECT matchmaking_id FROM game_rooms WHERE room_id = ?");
+                $stmt->execute([$roomId]);
+                $matchmakingId = $stmt->fetchColumn();
+                
+                if ($matchmakingId) {
+                    // Remove matchmaking players and the matchmaking lobby itself
+                    $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                    $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                    $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                }
+                
                 $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);

@@ -896,10 +896,10 @@ function startMatchmaking() {
         $roomName = 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
 
         $stmt = $pdo->prepare("
-            INSERT INTO game_rooms (room_id, game_id, room_name, max_players)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO game_rooms (room_id, game_id, room_name, max_players, matchmaking_id)
+            VALUES (?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players']]);
+        $stmt->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmakingId]);
 
         // Move all players to game room
         $stmt = $pdo->prepare("
