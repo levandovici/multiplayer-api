@@ -32,11 +32,14 @@ CREATE TABLE game_players (
     player_data JSON DEFAULT (JSON_OBJECT()),
     is_active BOOLEAN DEFAULT TRUE,
     last_login TIMESTAMP NULL,
+    last_heartbeat TIMESTAMP NULL,
+    last_logout TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     INDEX idx_private_key (private_key),
-    INDEX idx_game_private (game_id, private_key)
+    INDEX idx_game_private (game_id, private_key),
+    INDEX idx_last_heartbeat (last_heartbeat)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE verification_tokens (
