@@ -151,7 +151,7 @@ namespace michitai
         {
             return Send<PlayerRegisterResponse>(
                 HttpMethod.Post,
-                Url("game_players.php"),
+                Url("game_players.php/register"),
                 new { player_name = name, player_data = playerData }
             );
         }
@@ -165,7 +165,7 @@ namespace michitai
         {
             return Send<PlayerAuthResponse>(
                 HttpMethod.Put,
-                Url("game_players.php", $"&game_player_token={playerToken}")
+                Url("game_players.php/login", $"&game_player_token={playerToken}")
             );
         }
 
@@ -175,7 +175,7 @@ namespace michitai
         /// <returns>Task containing list of players and total count.</returns>
         public Task<PlayerListResponse> GetAllPlayers()
         {
-            return Send<PlayerListResponse>(HttpMethod.Get, Url("game_players.php", $"&api_private_token={_apiPrivateToken}"));
+            return Send<PlayerListResponse>(HttpMethod.Get, Url("game_players.php/list", $"&api_private_token={_apiPrivateToken}"));
         }
 
         /// <summary>
