@@ -63,6 +63,18 @@ try {
         ], 401);
     }
 
+    // Get UTC offset from query string (e.g., ?utc+1 or ?utc-2)
+    $utcOffset = 0;
+    if (isset($_GET['utc'])) {
+        $utcParam = trim(preg_replace('/\s+/', '', $_GET['utc']));
+
+        if (preg_match('/^([+-]?)(\d+)$/', $utcParam, $matches)) {
+            $sign = $matches[1] === '-' ? -1 : 1;
+            $hours = (int)$matches[2];
+            $utcOffset = $sign * $hours;
+        }
+    }
+
     // Validate API key
     $keyData = validateApiKey($apiToken);
     if (!$keyData) {
@@ -76,19 +88,43 @@ try {
     // Set timezone to UTC
     date_default_timezone_set('UTC');
     $timestamp = time();
-    $utc = gmdate('c');
-    $readable = gmdate('Y-m-d H:i:s') . ' UTC';
+    
+    // Apply UTC offset if provided
+    if ($utcOffset !== 0) {
+        $timestamp += ($utcOffset * 3600); // Convert hours to seconds
+    }
+    
+    $utc = date('c', $timestamp); // Use offset-adjusted timestamp with proper timezone
+    $readable = gmdate('Y-m-d H:i:s', $timestamp) . ' UTC';
+    
+    // Add offset info to response if used
+    $offsetInfo = [];
+    if ($utcOffset !== 0) {
+        $offsetInfo = [
+            'offset_hours' => $utcOffset,
+            'offset_string' => ($utcOffset >= 0 ? '+' : '') . $utcOffset,
+            'original_utc' => gmdate('c'),
+            'original_timestamp' => time()
+        ];
+    }
 
     // Log successful response
     error_log("Time API Response for user_id: " . $keyData['user_id']);
 
     // Return time data
-    sendResponse([
+    $response = [
         'success' => true,
         'utc' => $utc,
         'timestamp' => $timestamp,
         'readable' => $readable
-    ]);
+    ];
+    
+    // Add offset info if used
+    if (!empty($offsetInfo)) {
+        $response['offset'] = $offsetInfo;
+    }
+    
+    sendResponse($response);
 
 } catch (Exception $e) {
     error_log("Time API Error: " . $e->getMessage());
