@@ -1,7 +1,3 @@
-CREATE DATABASE levandovici_api;
-
-USE levandovici_api;
-
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,

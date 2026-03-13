@@ -767,7 +767,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-            <span class="font-mono">/v1/php/game_players.php?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/php/game_players.php?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Creates a new player in the game. Returns a <code>player_id</code> and <code>private_key</code> needed for future requests.
@@ -795,7 +795,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/v1/php/game_players.php?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/php/game_players.php?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates player info such as active status. This does not change player data like level or inventory (those are in <code>/game_data.php</code>).
@@ -826,7 +826,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Update player heartbeat to track activity and maintain online status.
@@ -845,7 +845,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Logout player and update last_logout timestamp. Sets is_active to 0.
@@ -864,7 +864,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/game_players.php?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+            <span class="font-mono">/php/game_players.php?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves a list of all players in the game. Useful for admin dashboards or multiplayer matchmaking.
@@ -885,7 +885,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/game_data.php/game/get?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/php/game_data.php/game/get?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves the global game data, including text, settings, and last update timestamp. Used to sync clients with the server.
@@ -912,7 +912,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/v1/php/game_data.php/game/update?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+            <span class="font-mono">/php/game_data.php/game/update?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates global game data. For example, changing settings or max players. Requires API key authentication.
@@ -937,7 +937,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/game_data.php/player/get?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/php/game_data.php/player/get?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves a specific player's data using their <code>private_key</code>. Includes level, score, and inventory.
@@ -962,7 +962,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/v1/php/game_data.php/player/update?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/php/game_data.php/player/update?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates a specific player's data like level, score, inventory, and last played timestamp.
@@ -986,7 +986,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/php/time.php?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves current server time in multiple formats including UTC timestamp and human-readable format.
@@ -1006,7 +1006,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY&utc=+1</span>
+            <span class="font-mono">/php/time.php?api_token=YOUR_API_KEY&utc=+1</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves server time with +1 hour offset adjustment.
@@ -1032,7 +1032,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY&utc=-2</span>
+            <span class="font-mono">/php/time.php?api_token=YOUR_API_KEY&utc=-2</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves server time with -2 hours offset adjustment.
@@ -1058,7 +1058,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/matchmaking.php/list?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/list?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Lists all available matchmaking lobbies that are not full and not started.
@@ -1088,7 +1088,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Creates a new matchmaking lobby. The creating player automatically becomes the host.
@@ -1115,7 +1115,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/request?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/request?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Requests to join a matchmaking lobby that requires host approval.
@@ -1134,7 +1134,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Host responds to a join request (approve or reject).
@@ -1156,7 +1156,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Host rejects a join request.
@@ -1178,7 +1178,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/status?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/status?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Checks the status of a join request.
@@ -1205,7 +1205,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Gets the current player's matchmaking status and lobby information.
@@ -1239,7 +1239,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/{matchmaking_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Joins a matchmaking lobby directly (only works if lobby doesn't require approval).
@@ -1258,7 +1258,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Leaves the current matchmaking lobby.
@@ -1276,7 +1276,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Lists all players in the current matchmaking lobby.
@@ -1314,7 +1314,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Sends a heartbeat to keep the player active in the matchmaking lobby.
@@ -1332,7 +1332,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Removes the matchmaking lobby (host only).
@@ -1350,7 +1350,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Starts a game from the matchmaking lobby (host only).
@@ -1371,7 +1371,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Creates a new game room. The creating player automatically becomes the host.
@@ -1395,7 +1395,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/rooms?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/rooms?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Returns list of currently available game rooms (not full, public/visible).
@@ -1421,7 +1421,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/rooms/{room_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/rooms/{room_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Join an existing room by ID. Password is required if the room is protected.
@@ -1442,7 +1442,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Returns list of players currently in the same room as you.
@@ -1468,7 +1468,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-orange-400 mb-2">
         <span class="font-mono bg-orange-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Leave the current room. If you were the host, a new host may be assigned automatically.
@@ -1486,7 +1486,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Updates player's last activity timestamp (used to determine online status).
@@ -1504,7 +1504,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Submits a new player action to the room's action queue (movement, attack, item use, etc.). The action is initially marked as pending and awaits server/host processing.
@@ -1529,7 +1529,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/php/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Retrieves recently completed/processed actions from the room. Clients should poll this endpoint regularly to receive updates on action results.
@@ -1554,7 +1554,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/php/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Returns list of currently pending actions in the room. Typically used by the host or server-side logic to process/approve actions.
@@ -1581,7 +1581,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/actions/{action_id}/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/php/game_room.php/actions/{action_id}/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Marks a pending action as completed and attaches the result/response data. Usually called by the room host or authoritative server.
@@ -1605,7 +1605,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Send updates to all players in the room (host only).
@@ -1632,7 +1632,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Send updates to specific players in the room (host only).
@@ -1662,7 +1662,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Poll for updates sent to the current player.
@@ -1702,7 +1702,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
+        <span class="font-mono">/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Poll for updates after a specific update ID (incremental polling).
@@ -1732,7 +1732,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/php/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get current game room status and player information.
@@ -1767,7 +1767,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get leaderboard sorted by player level (descending).
@@ -1834,7 +1834,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get leaderboard sorted by level first, then score as tie-breaker.
@@ -1908,7 +1908,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get leaderboard sorted by score first, then level as tie-breaker.

@@ -69,7 +69,7 @@ try {
 
     // Get request path for routing
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $path = str_replace('/v1/php/game_data.php', '', $path);
+    $path = str_replace('/php/game_data.php', '', $path);
     $path = ltrim($path, '/');
     $path = rtrim($path, '/');
 

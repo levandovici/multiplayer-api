@@ -1,6 +1,6 @@
 //Register a Player
 
-curl -X POST "https://api.michitai.com/v1/php/game_players.php?api_token=YOUR_API_TOKEN" \
+curl -X POST "https://api.michitai.com/php/game_players.php?api_token=YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "player_name": "TestPlayer",
@@ -11,23 +11,23 @@ curl -X POST "https://api.michitai.com/v1/php/game_players.php?api_token=YOUR_AP
     }
   }'
 
-curl -X POST "https://api.michitai.com/v1/php/game_players.php?api_token=YOUR_API_TOKEN" -H "Content-Type: application/json" -d '{"player_name":"TestPlayer","player_data":{"level":1,"score":0,"inventory":["sword","shield"]}}'
+curl -X POST "https://api.michitai.com/php/game_players.php?api_token=YOUR_API_TOKEN" -H "Content-Type: application/json" -d '{"player_name":"TestPlayer","player_data":{"level":1,"score":0,"inventory":["sword","shield"]}}'
 
 //Authenticate a Player
 
-curl -X PUT "https://api.michitai.com/v1/php/game_players.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+curl -X PUT "https://api.michitai.com/php/game_players.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
 
 //List All Players
 
-curl -X GET "https://api.michitai.com/v1/php/game_players.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN"
+curl -X GET "https://api.michitai.com/php/game_players.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN"
 
 //Get Game Data 
 
-curl -X GET "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TOKEN"
+curl -X GET "https://api.michitai.com/php/game_data.php?api_token=YOUR_API_TOKEN"
 
 //Update Game Data
 
-curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" \
+curl -X PUT "https://api.michitai.com/php/game_data.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "game_settings": {
@@ -37,15 +37,15 @@ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TO
     "last_updated": "2025-01-13T12:00:00Z"
   }'
 
-curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
+curl -X PUT "https://api.michitai.com/php/game_data.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
 
 //Get Player Data
 
-curl -X GET "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl -X GET "https://api.michitai.com/php/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Update Player Data
 
-curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+curl -X PUT "https://api.michitai.com/php/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "level": 2,
@@ -54,15 +54,15 @@ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TO
     "last_played": "2025-01-13T12:30:00Z"
   }'
 
-curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
+curl -X PUT "https://api.michitai.com/php/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
 
 //Get Server Time
 
-curl -X GET "https://api.michitai.com/v1/php/time.php?api_key=YOUR_API_KEY"
+curl -X GET "https://api.michitai.com/php/time.php?api_key=YOUR_API_KEY"
 
 //Create a New Room
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+curl -X POST "https://api.michitai.com/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "room_name": "My Game Room",
@@ -70,58 +70,58 @@ curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms?api_token=YOUR
     "max_players": 4
   }'
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4}'
+curl -X POST "https://api.michitai.com/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4}'
 
 //List All Available Rooms
 
-curl -X GET "https://api.michitai.com/v1/php/game_room.php/rooms?api_token=YOUR_API_TOKEN"
+curl -X GET "https://api.michitai.com/php/game_room.php/rooms?api_token=YOUR_API_TOKEN"
 
 //Join a Room
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+curl -X POST "https://api.michitai.com/php/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"password": "secret123"}'
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"password":"secret123"}'
+curl -X POST "https://api.michitai.com/php/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"password":"secret123"}'
 
 //List All Players in a Room
 
-curl -X GET "https://api.michitai.com/v1/php/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl -X GET "https://api.michitai.com/php/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Leave a Room
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl -X POST "https://api.michitai.com/php/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Send Heartbeat
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/players/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl -X POST "https://api.michitai.com/php/game_room.php/players/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Submit Action
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+curl -X POST "https://api.michitai.com/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "action_type": "move",
     "request_data": {"x": 10, "y": 20}
   }'
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"action_type":"move","request_data":{"x":10,"y":20}}'
+curl -X POST "https://api.michitai.com/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"action_type":"move","request_data":{"x":10,"y":20}}'
 
 //Poll for Action Response
 
-curl "https://api.michitai.com/v1/php/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl "https://api.michitai.com/php/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Get Pending actions
 
-curl "https://api.michitai.com/v1/php/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN"
+curl "https://api.michitai.com/php/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN"
 
 //Complete Action
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN" \
+curl -X POST "https://api.michitai.com/php/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "status": "completed",
     "response_data": {"success": true, "message": "Moved successfully"}
   }'
 
-curl -X POST "https://api.michitai.com/v1/php/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
+curl -X POST "https://api.michitai.com/php/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
