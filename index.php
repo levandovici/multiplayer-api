@@ -390,22 +390,22 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/game/get</div>
                             <div class="col-span-6">Get game data (requires API key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/game/update</div>
                             <div class="col-span-6">Update game data (requires API key, API private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/player/get</div>
                             <div class="col-span-6">Get player data (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/player/update</div>
                             <div class="col-span-6">Update player data (requires API key, Player private key)</div>
                         </div>
                     </div>
@@ -863,7 +863,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/game_data.php?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/v1/php/game_data.php/game/get?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves the global game data, including text, settings, and last update timestamp. Used to sync clients with the server.
@@ -890,7 +890,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/v1/php/game_data.php?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+            <span class="font-mono">/v1/php/game_data.php/game/update?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates global game data. For example, changing settings or max players. Requires API key authentication.
@@ -915,7 +915,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/v1/php/game_data.php?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/v1/php/game_data.php/player/get?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves a specific player's data using their <code>private_key</code>. Includes level, score, and inventory.
@@ -940,7 +940,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/v1/php/game_data.php?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/v1/php/game_data.php/player/update?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates a specific player's data like level, score, inventory, and last played timestamp.
