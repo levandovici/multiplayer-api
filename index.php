@@ -970,27 +970,79 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-<!-- 10. Get Server Time -->
-<div class="bg-black/50 p-4 rounded-lg">
-    <div class="flex items-center text-sm text-green-400 mb-2">
-        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY</span>
-    </div>
-    <p class="text-xs text-gray-400 mb-2">
-        <strong>Description:</strong> Retrieves the current server time in multiple formats including UTC timestamp and human-readable format.
-    </p>
-    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-    <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-    <div class="text-xs text-gray-400 mb-2">Response:</div>
-    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+    <!-- 10. Get Server Time -->
+    <div class="bg-black/50 p-4 rounded-lg">
+        <div class="flex items-center text-sm text-green-400 mb-2">
+            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
+            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-2">
+            <strong>Description:</strong> Retrieves current server time in multiple formats including UTC timestamp and human-readable format.
+        </p>
+        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+        <div class="text-xs text-gray-400 mb-2">Response:</div>
+        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
   "success": true,
-  "utc": "2025-01-14T16:24:00+00:00",
-  "timestamp": 1736864640,
-  "readable": "2025-01-14 16:24:00 UTC"
+  "utc": "2026-03-13T14:01:49+00:00",
+  "timestamp": 1773410509,
+  "readable": "2026-03-13 14:01:49 UTC"
 }</code></pre>
     </div>
 
-   <!-- 11. List Matchmaking Lobbies -->
+    <!-- 11. Get Server Time with +1 Hour Offset -->
+    <div class="bg-black/50 p-4 rounded-lg">
+        <div class="flex items-center text-sm text-green-400 mb-2">
+            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
+            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY&utc=+1</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-2">
+            <strong>Description:</strong> Retrieves server time with +1 hour offset adjustment.
+        </p>
+        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+        <div class="text-xs text-gray-400 mb-2">Response:</div>
+        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "utc": "2026-03-13T15:04:17+00:00",
+  "timestamp": 1773414257,
+  "readable": "2026-03-13 15:04:17 UTC",
+  "offset": {
+    "offset_hours": 1,
+    "offset_string": "+1",
+    "original_utc": "2026-03-13T14:04:17+00:00",
+    "original_timestamp": 1773410657
+  }
+}</code></pre>
+    </div>
+
+    <!-- 12. Get Server Time with -2 Hours Offset -->
+    <div class="bg-black/50 p-4 rounded-lg">
+        <div class="flex items-center text-sm text-green-400 mb-2">
+            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
+            <span class="font-mono">/v1/php/time.php?api_token=YOUR_API_KEY&utc=-2</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-2">
+            <strong>Description:</strong> Retrieves server time with -2 hours offset adjustment.
+        </p>
+        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+        <div class="text-xs text-gray-400 mb-2">Response:</div>
+        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "utc": "2026-03-13T12:05:13+00:00",
+  "timestamp": 1773403513,
+  "readable": "2026-03-13 12:05:13 UTC",
+  "offset": {
+    "offset_hours": -2,
+    "offset_string": "-2",
+    "original_utc": "2026-03-13T14:05:13+00:00",
+    "original_timestamp": 1773410713
+  }
+}</code></pre>
+    </div>
+
+   <!-- 13. List Matchmaking Lobbies -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1020,7 +1072,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 12. Create Matchmaking Lobby -->
+<!-- 14. Create Matchmaking Lobby -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1047,7 +1099,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 13. Request to Join Matchmaking -->
+<!-- 15. Request to Join Matchmaking -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1066,7 +1118,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 14. Respond to Join Request -->
+<!-- 16. Respond to Join Request -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1088,7 +1140,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 15. Reject Join Request -->
+<!-- 17. Reject Join Request -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1110,7 +1162,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 16. Check Join Request Status -->
+<!-- 18. Check Join Request Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1137,7 +1189,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 17. Get Current Matchmaking Status -->
+<!-- 19. Get Current Matchmaking Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1171,7 +1223,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 18. Join Matchmaking Directly -->
+<!-- 20. Join Matchmaking Directly -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1190,7 +1242,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 19. Leave Matchmaking -->
+<!-- 21. Leave Matchmaking -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1208,7 +1260,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 20. List Matchmaking Players -->
+<!-- 22. List Matchmaking Players -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1246,7 +1298,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 21. Send Matchmaking Heartbeat -->
+<!-- 23. Send Matchmaking Heartbeat -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1264,7 +1316,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 22. Remove Matchmaking Lobby -->
+<!-- 24. Remove Matchmaking Lobby -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1282,7 +1334,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 23. Start Game from Matchmaking -->
+<!-- 25. Start Game from Matchmaking -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1303,7 +1355,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
- <!-- 24. Create New Room -->
+ <!-- 26. Create New Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1327,7 +1379,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 25. List Available Rooms -->
+<!-- 27. List Available Rooms -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1353,7 +1405,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 26. Join Room -->
+<!-- 28. Join Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1374,7 +1426,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 27. List Players in Current Room -->
+<!-- 29. List Players in Current Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1400,7 +1452,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 28. Leave Current Room -->
+<!-- 30. Leave Current Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-orange-400 mb-2">
         <span class="font-mono bg-orange-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1418,7 +1470,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 29. Player Heartbeat -->
+<!-- 31. Player Heartbeat -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1436,7 +1488,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
     
-<!-- 30. Submit Action -->
+<!-- 32. Submit Action -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1461,7 +1513,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 31. Poll Completed Actions -->
+<!-- 33. Poll Completed Actions -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1486,7 +1538,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 32. Get Pending Actions (Admin/Host View) -->
+<!-- 34. Get Pending Actions (Admin/Host View) -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1513,7 +1565,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 33. Complete Action (Host/Server Only) -->
+<!-- 35. Complete Action (Host/Server Only) -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1537,7 +1589,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 34. Send Updates to All Players -->
+<!-- 36. Send Updates to All Players -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1564,7 +1616,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 35. Send Updates to Specific Player -->
+<!-- 37. Send Updates to Specific Player -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1594,7 +1646,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 36. Poll for Updates -->
+<!-- 38. Poll for Updates -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1634,7 +1686,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 37. Poll for Updates with Last ID -->
+<!-- 39. Poll for Updates with Last ID -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1664,7 +1716,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 38. Get Current Game Room Status -->
+<!-- 40. Get Current Game Room Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1699,7 +1751,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-    <!-- 39. Error Response -->
+    <!-- 41. Error Response -->
     <div class="bg-red-900/20 border border-red-500/30 p-4 rounded-lg">
         <div class="text-sm text-red-400 mb-2">Error Response (401 Unauthorized):</div>
         <p class="text-xs text-red-400 mb-2">
