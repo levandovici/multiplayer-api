@@ -13,16 +13,16 @@
 5) $ curl -X GET "https://api.michitai.com/v1/php/game_players.php/list?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&api_private_token=25f77965f41ef117e4f8e570685c51c4ebdc"
 {"success":true,"count":3,"players":[{"id":1,"player_name":"TestPlayer","is_active":1,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:37:47"},{"id":3,"player_name":"TestPlayer","is_active":1,"last_login":"2026-03-13 09:40:35","last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:39:06"},{"id":2,"player_name":"TestPlayer","is_active":1,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:38:01"}]}
 
-6) $ curl -X GET "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
+6) $ curl -X GET "https://api.michitai.com/v1/php/game_data.php/game/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
 {"success":true,"type":"game","game_id":4,"data":{"text":"hello world","game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}}
 
-7) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=175192bcedb99170c422abb74f7d4d9f4b81&api_private_token=325fc853eccf0236d9b4ac9cbba16fef5107" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
+7) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php/game/update?api_token=175192bcedb99170c422abb74f7d4d9f4b81&api_private_token=325fc853eccf0236d9b4ac9cbba16fef5107" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
 {"success":true,"message":"Game data updated successfully","updated_at":"2026-01-13 14:24:23"}
 
-8) $ curl -X GET "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c&game_player_token=46702c9b906e3361c26dbcd605ee9183"
+8) $ curl -X GET "https://api.michitai.com/v1/php/game_data.php/player/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c&game_player_token=46702c9b906e3361c26dbcd605ee9183"
 {"success":true,"type":"player","player_id":7,"player_name":"TestPlayer","data":{"level":1,"score":0,"inventory":["sword","shield"]}}
 
-9) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c&game_player_token=46702c9b906e3361c26dbcd605ee9183" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
+9) $ curl -X PUT "https://api.michitai.com/v1/php/game_data.php/player/update?api_token=dc8049bdeb600eb3d00945e530faebd2911c&game_player_token=46702c9b906e3361c26dbcd605ee9183" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
 {"success":true,"message":"Player data updated successfully","updated_at":"2026-01-13 14:27:10"}
 
 10) $ curl -X GET "https://api.michitai.com/v1/php/time.php?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
