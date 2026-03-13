@@ -234,8 +234,8 @@ try {
                 sendResponse(['success' => false, 'error' => 'Player does not belong to this game'], 403);
             }
             
-            // Update last logout time
-            $stmt = $pdo->prepare("UPDATE game_players SET last_logout = NOW() WHERE id = ?");
+            // Update last logout time and set is_active to 0
+            $stmt = $pdo->prepare("UPDATE game_players SET last_logout = NOW(), is_active = 0 WHERE id = ?");
             $stmt->execute([$player['id']]);
             
             sendResponse([
