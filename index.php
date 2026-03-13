@@ -358,17 +358,27 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/register</div>
                             <div class="col-span-6">Register new player (requires API key, returns Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/login</div>
                             <div class="col-span-6">Authenticate player (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/heartbeat</div>
+                            <div class="col-span-6">Update player heartbeat (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/logout</div>
+                            <div class="col-span-6">Logout player (requires API key, Player private key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/list</div>
                             <div class="col-span-6">List all players (requires API key, API private key)</div>
                         </div>
                     </div>
