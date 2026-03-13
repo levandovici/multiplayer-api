@@ -539,7 +539,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/players/heartbeat</div>
+                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/heartbeat</div>
                             <div class="col-span-6">Send player activity heartbeat (requires API key, Player private key)</div>
                         </div>
                 
@@ -1412,7 +1412,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/v1/php/game_room.php/players/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/v1/php/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Updates player's last activity timestamp (used to determine online status).

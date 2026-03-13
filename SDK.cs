@@ -329,7 +329,7 @@ namespace michitai
         {
             return Send<HeartbeatResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/players/heartbeat", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/heartbeat", $"&game_player_token={gamePlayerToken}")
             );
         }
 

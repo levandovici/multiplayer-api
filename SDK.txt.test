@@ -43,7 +43,7 @@
 15) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/rooms/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"message":"Successfully left the room"}
 
-16) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/players/heartbeat?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+16) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/heartbeat?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"status":"ok"}
 
 17) $ curl -X POST "https://api.michitai.com/v1/php/game_room.php/actions?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&game_player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"action_type":"move","request_data":{"x":10,"y":20}}'
