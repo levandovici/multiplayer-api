@@ -411,6 +411,18 @@ pre::-webkit-scrollbar-thumb:hover {
                     </div>
                 </div>
 
+                <!-- Leaderboard -->
+                <div class="p-4 border-t border-white/10">
+                    <h4 class="text-white/60 text-sm font-semibold mb-3">Leaderboard</h4>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/leaderboard.php</div>
+                            <div class="col-span-6">Get ranked leaderboard (requires API key, filters)</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Server Data -->
                 <div class="p-4 border-t border-white/10">
                     <h4 class="text-white/60 text-sm font-semibold mb-3">Server Data</h4>
@@ -1748,6 +1760,221 @@ pre::-webkit-scrollbar-thumb:hover {
   },
   "pending_actions": [],
   "pending_updates": []
+}</code></pre>
+</div>
+
+<!-- 41. Get Leaderboard by Level -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Get leaderboard sorted by player level (descending).
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "sortBy": ["level"],
+  "limit": 10
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "player_id": 33,
+      "player_name": "GameHost",
+      "player_data": {
+        "level": 15,
+        "rank": "platinum",
+        "role": "host",
+        "last_played": "2026-03-13T14:28:06.9900113Z",
+        "matchmaking_status": "ready"
+      }
+    },
+    {
+      "rank": 2,
+      "player_id": 35,
+      "player_name": "Player2",
+      "player_data": {
+        "level": 12,
+        "rank": "gold",
+        "role": "player"
+      }
+    },
+    {
+      "rank": 3,
+      "player_id": 34,
+      "player_name": "Player1",
+      "player_data": {
+        "level": 8,
+        "rank": "silver",
+        "role": "player"
+      }
+    },
+    {
+      "rank": 4,
+      "player_id": 36,
+      "player_name": "Player3",
+      "player_data": {
+        "level": 6,
+        "rank": "bronze",
+        "role": "player"
+      }
+    }
+  ],
+  "total": 4,
+  "sort_by": ["level"],
+  "limit": 10
+}</code></pre>
+</div>
+
+<!-- 42. Get Leaderboard by Level and Score -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Get leaderboard sorted by level first, then score as tie-breaker.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "sortBy": ["level", "score"],
+  "limit": 10
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "player_id": 40,
+      "player_name": "TestPlayer4",
+      "player_data": {
+        "level": 20,
+        "score": 1000,
+        "inventory": []
+      }
+    },
+    {
+      "rank": 2,
+      "player_id": 37,
+      "player_name": "TestPlayer1",
+      "player_data": {
+        "level": 15,
+        "score": 4500,
+        "inventory": ["sword"]
+      }
+    },
+    {
+      "rank": 3,
+      "player_id": 38,
+      "player_name": "TestPlayer2",
+      "player_data": {
+        "level": 15,
+        "score": 2000,
+        "inventory": ["sword", "shield"]
+      }
+    },
+    {
+      "rank": 4,
+      "player_id": 41,
+      "player_name": "TestPlayer5",
+      "player_data": {
+        "level": 12,
+        "inventory": ["staff"]
+      }
+    },
+    {
+      "rank": 5,
+      "player_id": 39,
+      "player_name": "TestPlayer3",
+      "player_data": {
+        "level": 8,
+        "score": 3000,
+        "inventory": ["bow"]
+      }
+    }
+  ],
+  "total": 5,
+  "sort_by": ["level", "score"],
+  "limit": 10
+}</code></pre>
+</div>
+
+<!-- 43. Get Leaderboard by Score and Level -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Get leaderboard sorted by score first, then level as tie-breaker.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{
+  "sortBy": ["score", "level"],
+  "limit": 10
+}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "player_id": 37,
+      "player_name": "TestPlayer1",
+      "player_data": {
+        "level": 15,
+        "score": 4500,
+        "inventory": ["sword"]
+      }
+    },
+    {
+      "rank": 2,
+      "player_id": 39,
+      "player_name": "TestPlayer3",
+      "player_data": {
+        "level": 8,
+        "score": 3000,
+        "inventory": ["bow"]
+      }
+    },
+    {
+      "rank": 3,
+      "player_id": 38,
+      "player_name": "TestPlayer2",
+      "player_data": {
+        "level": 15,
+        "score": 2000,
+        "inventory": ["sword", "shield"]
+      }
+    },
+    {
+      "rank": 4,
+      "player_id": 40,
+      "player_name": "TestPlayer4",
+      "player_data": {
+        "level": 20,
+        "score": 1000,
+        "inventory": []
+      }
+    },
+    {
+      "rank": 5,
+      "player_id": 41,
+      "player_name": "TestPlayer5",
+      "player_data": {
+        "level": 12,
+        "inventory": ["staff"]
+      }
+    }
+  ],
+  "total": 5,
+  "sort_by": ["score", "level"],
+  "limit": 10
 }</code></pre>
 </div>
 
