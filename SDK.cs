@@ -179,6 +179,32 @@ namespace michitai
         }
 
         /// <summary>
+        /// Sends a heartbeat to keep the player's session alive and update last_heartbeat.
+        /// </summary>
+        /// <param name="gamePlayerToken">The player's authentication token.</param>
+        /// <returns>Task containing the heartbeat response.</returns>
+        public Task<PlayerHeartbeatResponse> SendPlayerHeartbeatAsync(string gamePlayerToken)
+        {
+            return Send<PlayerHeartbeatResponse>(
+                HttpMethod.Post,
+                Url("game_players.php/heartbeat", $"&game_player_token={gamePlayerToken}")
+            );
+        }
+
+        /// <summary>
+        /// Logs out a player and updates last_logout timestamp. Sets is_active to 0.
+        /// </summary>
+        /// <param name="gamePlayerToken">The player's authentication token.</param>
+        /// <returns>Task containing the logout response.</returns>
+        public Task<PlayerLogoutResponse> LogoutPlayerAsync(string gamePlayerToken)
+        {
+            return Send<PlayerLogoutResponse>(
+                HttpMethod.Post,
+                Url("game_players.php/logout", $"&game_player_token={gamePlayerToken}")
+            );
+        }
+
+        /// <summary>
         /// Retrieves game data for the current game.
         /// </summary>
         /// <returns>Task containing the game data response.</returns>
@@ -701,6 +727,22 @@ namespace michitai
         public required string Last_login { get; set; }
         public required string Created_at { get; set; }
         public required string Updated_at { get; set; }
+    }
+
+    public class PlayerHeartbeatResponse : IApiResponse
+    {
+        public bool Success { get; set; }
+        public string? Error { get; set; }
+        public required string Message { get; set; }
+        public required string Last_heartbeat { get; set; }
+    }
+
+    public class PlayerLogoutResponse : IApiResponse
+    {
+        public bool Success { get; set; }
+        public string? Error { get; set; }
+        public required string Message { get; set; }
+        public required string Last_logout { get; set; }
     }
 
     public class GameDataResponse
