@@ -549,6 +549,14 @@ function updateMatchmakingHeartbeat() {
         ");
         $stmt->execute([$matchmakingId]);
         
+        // Update game_players heartbeat
+        $stmt = $pdo->prepare("
+            UPDATE game_players 
+            SET last_heartbeat = CURRENT_TIMESTAMP
+            WHERE id = ?
+        ");
+        $stmt->execute([$player['id']]);
+        
         $pdo->commit();
         sendResponse(['success' => true, 'status' => 'ok']);
     } catch (Exception $e) {
