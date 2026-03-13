@@ -67,20 +67,41 @@ try {
     // Get request body
     $input = json_decode(file_get_contents('php://input'), true) ?: [];
 
+    // Get request path for routing
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = str_replace('/v1/php/', '', $path);
+    $path = rtrim($path, '/');
+
     // Route the request
     switch ($method) {
         case 'GET':
-            // Get game data (requires API key)
             if (empty($apiToken)) {
                 sendResponse(['success' => false, 'error' => 'API token is required'], 401);
             }
 
-            // If player token is provided, get player data
-            if (!empty($gamePlayerToken)) {
-                // Validate API key
+            // Route: /game_data.php/game/get
+            if ($path === 'game/get') {
+                // Get game data (requires API key)
                 $game = validateApiKey($apiToken);
                 if (!$game) {
                     sendResponse(['success' => false, 'error' => 'Invalid API token'], 401);
+                }
+
+                $gameData = (($game['game_data'] ?? '{}') === '{}')
+                    ? new stdClass()
+                    : json_decode($game['game_data'], true);
+                sendResponse([
+                    'success' => true,
+                    'type' => 'game',
+                    'game_id' => $game['id'],
+                    'data' => $gameData
+                ]);
+            }
+            // Route: /game_data.php/player/get
+            elseif ($path === 'player/get') {
+                // Get player data (requires API key, Player private key)
+                if (empty($gamePlayerToken)) {
+                    sendResponse(['success' => false, 'error' => 'Game player token is required'], 401);
                 }
 
                 // Validate player token
@@ -103,39 +124,53 @@ try {
                     'player_name' => $player['player_name'],
                     'data' => $playerData
                 ]);
-            } 
-            // Otherwise, get game data
+            }
             else {
-                // Validate API keys
-                $game = validateApiKey($apiToken);
-                if (!$game) {
-                    sendResponse(['success' => false, 'error' => 'Invalid API token or API private token'], 401);
-                }
-
-                $gameData = (($game['game_data'] ?? '{}') === '{}')
-                    ? new stdClass()
-                    : json_decode($game['game_data'], true);
-                sendResponse([
-                    'success' => true,
-                    'type' => 'game',
-                    'game_id' => $game['id'],
-                    'data' => $gameData
-                ]);
+                sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
             }
             break;
 
         case 'PUT':
-            // Update game data or player data
             if (empty($apiToken)) {
                 sendResponse(['success' => false, 'error' => 'API token is required'], 401);
             }
 
-            // If player token is provided, update player data
-            if (!empty($gamePlayerToken)) {
-                // Validate API key
-                $game = validateApiKey($apiToken);
+            // Route: /game_data.php/game/update
+            if ($path === 'game/update') {
+                // Update game data (requires API key, API private key)
+                if (empty($apiPrivateKey)) {
+                    sendResponse(['success' => false, 'error' => 'API private token is required'], 401);
+                }
+
+                // Validate API keys
+                $game = validateApiKeys($apiToken, $apiPrivateKey);
                 if (!$game) {
-                    sendResponse(['success' => false, 'error' => 'Invalid API token'], 401);
+                    sendResponse(['success' => false, 'error' => 'Invalid API token or API private token'], 401);
+                }
+
+                // Update game data
+                $gameData = json_decode($game['game_data'] ?? '{}', true);
+                $updatedData = array_merge($gameData, $input);
+
+                $stmt = $pdo->prepare("UPDATE api_keys SET game_data = ?, updated_at = NOW() WHERE id = ?");
+                $gameDataJson = json_encode($updatedData, JSON_UNESCAPED_UNICODE);
+                $stmt->execute([$gameDataJson, $game['id']]);
+
+                if ($stmt->rowCount() > 0) {
+                    sendResponse([
+                        'success' => true,
+                        'message' => 'Game data updated successfully',
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                } else {
+                    sendResponse(['success' => false, 'error' => 'Failed to update game data'], 500);
+                }
+            }
+            // Route: /game_data.php/player/update
+            elseif ($path === 'player/update') {
+                // Update player data (requires API key, Player private key)
+                if (empty($gamePlayerToken)) {
+                    sendResponse(['success' => false, 'error' => 'Game player token is required'], 401);
                 }
 
                 // Validate player token
@@ -166,32 +201,9 @@ try {
                 } else {
                     sendResponse(['success' => false, 'error' => 'Failed to update player data'], 500);
                 }
-            } 
-            // Otherwise, update game data
+            }
             else {
-                // Validate API keys
-                $game = validateApiKeys($apiToken, $apiPrivateKey);
-                if (!$game) {
-                    sendResponse(['success' => false, 'error' => 'Invalid API token or API private token'], 401);
-                }
-
-                // Update game data
-                $gameData = json_decode($game['game_data'] ?? '{}', true);
-                $updatedData = array_merge($gameData, $input);
-
-                $stmt = $pdo->prepare("UPDATE api_keys SET game_data = ?, updated_at = NOW() WHERE id = ?");
-                $gameDataJson = json_encode($updatedData, JSON_UNESCAPED_UNICODE);
-                $stmt->execute([$gameDataJson, $game['id']]);
-
-                if ($stmt->rowCount() > 0) {
-                    sendResponse([
-                        'success' => true,
-                        'message' => 'Game data updated successfully',
-                        'updated_at' => date('Y-m-d H:i:s')
-                    ]);
-                } else {
-                    sendResponse(['success' => false, 'error' => 'Failed to update game data'], 500);
-                }
+                sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
             }
             break;
 
