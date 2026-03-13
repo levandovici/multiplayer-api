@@ -420,6 +420,16 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-4 font-mono text-white/90">/php/time.php</div>
                             <div class="col-span-6">Get server time (requires API key)</div>
                         </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/time.php?utc=+1</div>
+                            <div class="col-span-6">Get server time +1 hour offset (requires API key)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/php/time.php?utc=-2</div>
+                            <div class="col-span-6">Get server time -2 hours offset (requires API key)</div>
+                        </div>
                     </div>
                 </div>
                 
