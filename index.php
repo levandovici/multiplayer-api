@@ -800,7 +800,45 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-    <!-- 3. List Players -->
+    <!-- 3. Player Heartbeat -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Update player heartbeat to track activity and maintain online status.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "message": "Heartbeat updated",
+  "last_heartbeat": "2026-03-13 09:46:13"
+}</code></pre>
+</div>
+
+<!-- 4. Player Logout -->
+<div class="bg-black/50 p-4 rounded-lg">
+    <div class="flex items-center text-sm text-green-400 mb-2">
+        <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+        <span class="font-mono">/v1/php/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+    </div>
+    <p class="text-xs text-gray-400 mb-2">
+        <strong>Description:</strong> Logout player and update last_logout timestamp. Sets is_active to 0.
+    </p>
+    <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
+        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
+    <div class="text-xs text-gray-400 mb-2">Response:</div>
+    <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
+  "success": true,
+  "message": "Player logged out successfully",
+  "last_logout": "2026-03-13 09:46:37"
+}</code></pre>
+</div>
+
+    <!-- 5. List Players -->
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -821,7 +859,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-    <!-- 4. Get Game Data -->
+    <!-- 6. Get Game Data -->
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -848,7 +886,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-    <!-- 5. Update Game Data -->
+    <!-- 7. Update Game Data -->
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
@@ -873,7 +911,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-    <!-- 6. Get Player Data -->
+    <!-- 8. Get Player Data -->
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -898,7 +936,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-    <!-- 7. Update Player Data -->
+    <!-- 9. Update Player Data -->
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
@@ -922,7 +960,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-<!-- 8. Get Server Time -->
+<!-- 10. Get Server Time -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -942,7 +980,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
     </div>
 
-   <!-- 9. List Matchmaking Lobbies -->
+   <!-- 11. List Matchmaking Lobbies -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -972,7 +1010,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 10. Create Matchmaking Lobby -->
+<!-- 12. Create Matchmaking Lobby -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -999,7 +1037,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 11. Request to Join Matchmaking -->
+<!-- 13. Request to Join Matchmaking -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1018,7 +1056,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 12. Respond to Join Request -->
+<!-- 14. Respond to Join Request -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1040,7 +1078,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 13. Reject Join Request -->
+<!-- 15. Reject Join Request -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1062,7 +1100,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 14. Check Join Request Status -->
+<!-- 16. Check Join Request Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1089,7 +1127,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 15. Get Current Matchmaking Status -->
+<!-- 17. Get Current Matchmaking Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1123,7 +1161,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 16. Join Matchmaking Directly -->
+<!-- 18. Join Matchmaking Directly -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1142,7 +1180,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 17. Leave Matchmaking -->
+<!-- 19. Leave Matchmaking -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1160,7 +1198,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 18. List Matchmaking Players -->
+<!-- 20. List Matchmaking Players -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1198,7 +1236,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 19. Send Matchmaking Heartbeat -->
+<!-- 21. Send Matchmaking Heartbeat -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1216,7 +1254,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 20. Remove Matchmaking Lobby -->
+<!-- 22. Remove Matchmaking Lobby -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1234,7 +1272,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 21. Start Game from Matchmaking -->
+<!-- 23. Start Game from Matchmaking -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1255,7 +1293,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
- <!-- 22. Create New Room -->
+ <!-- 24. Create New Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1279,7 +1317,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 23. List Available Rooms -->
+<!-- 25. List Available Rooms -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1305,7 +1343,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 24. Join Room -->
+<!-- 26. Join Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1326,7 +1364,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 25. List Players in Current Room -->
+<!-- 27. List Players in Current Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1352,7 +1390,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 26. Leave Current Room -->
+<!-- 28. Leave Current Room -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-orange-400 mb-2">
         <span class="font-mono bg-orange-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1370,7 +1408,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 27. Player Heartbeat -->
+<!-- 29. Player Heartbeat -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1388,7 +1426,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
     
-<!-- 28. Submit Action -->
+<!-- 30. Submit Action -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1413,7 +1451,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 29. Poll Completed Actions -->
+<!-- 31. Poll Completed Actions -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1438,7 +1476,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 30. Get Pending Actions (Admin/Host View) -->
+<!-- 32. Get Pending Actions (Admin/Host View) -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1465,7 +1503,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 31. Complete Action (Host/Server Only) -->
+<!-- 33. Complete Action (Host/Server Only) -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1489,7 +1527,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 32. Send Updates to All Players -->
+<!-- 34. Send Updates to All Players -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1516,7 +1554,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 33. Send Updates to Specific Player -->
+<!-- 35. Send Updates to Specific Player -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1546,7 +1584,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 34. Poll for Updates -->
+<!-- 36. Poll for Updates -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1586,7 +1624,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 35. Poll for Updates with Last ID -->
+<!-- 37. Poll for Updates with Last ID -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1616,7 +1654,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-<!-- 36. Get Current Game Room Status -->
+<!-- 38. Get Current Game Room Status -->
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
@@ -1651,7 +1689,7 @@ pre::-webkit-scrollbar-thumb:hover {
 }</code></pre>
 </div>
 
-    <!-- 37. Error Response -->
+    <!-- 39. Error Response -->
     <div class="bg-red-900/20 border border-red-500/30 p-4 rounded-lg">
         <div class="text-sm text-red-400 mb-2">Error Response (401 Unauthorized):</div>
         <p class="text-xs text-red-400 mb-2">
