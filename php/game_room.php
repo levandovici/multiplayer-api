@@ -512,6 +512,14 @@ function updateHeartbeat() {
         ");
         $stmt->execute([$player['id'], $roomId]);
         
+        // Update game_players heartbeat
+        $stmt = $pdo->prepare("
+            UPDATE game_players 
+            SET last_heartbeat = CURRENT_TIMESTAMP
+            WHERE id = ?
+        ");
+        $stmt->execute([$player['id']]);
+        
         // Check and reassign host if needed
         checkAndReassignHost($roomId);
         
