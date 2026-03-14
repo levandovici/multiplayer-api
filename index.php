@@ -1,14 +1,22 @@
 <?php
 session_start();
 require_once 'php/config.php';
+
+// Set page-specific meta tag variables
+$title = "Multiplayer API – Core Cells";
+$description = "A powerful multiplayer API for real-time gaming experiences. Build multiplayer games with ease using our comprehensive SDK and API.";
+$image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
+$url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>Multiplayer API – Core Cells</title>
+    <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="icon" type="image/png" href="logo.png">
+    
+    <?php require_once 'php/meta-tags.php'; ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
