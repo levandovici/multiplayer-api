@@ -12,7 +12,7 @@ if (!is_dir(__DIR__ . '/../logs')) {
 
 header('Content-Type: application/json');
 
-require_once 'config.php';
+require_once '../php/config.php';
 
 function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);

@@ -18,7 +18,7 @@ error_log("Headers: " . print_r(getallheaders(), true));
 
 try {
     header('Content-Type: application/json');
-    require_once 'config.php';
+    require_once '../php/config.php';
 
     // Helper function to send JSON response
     function sendResponse($data, $statusCode = 200) {
@@ -69,7 +69,7 @@ try {
 
     // Get request path for routing
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $path = str_replace('php/game_data.php', '', $path);
+    $path = str_replace('dotnet/game_data.php', '', $path);
     $path = ltrim($path, '/');
     $path = rtrim($path, '/');
 

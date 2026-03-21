@@ -366,27 +366,27 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/register</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_players.php/register</div>
                             <div class="col-span-6">Register new player (requires API key, returns Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/login</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_players.php/login</div>
                             <div class="col-span-6">Authenticate player (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/heartbeat</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_players.php/heartbeat</div>
                             <div class="col-span-6">Update player heartbeat (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/logout</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_players.php/logout</div>
                             <div class="col-span-6">Logout player (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_players.php/list</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_players.php/list</div>
                             <div class="col-span-6">List all players (requires API key, API private key)</div>
                         </div>
                     </div>
@@ -398,22 +398,22 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/game/get</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_data.php/game/get</div>
                             <div class="col-span-6">Get game data (requires API key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/game/update</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_data.php/game/update</div>
                             <div class="col-span-6">Update game data (requires API key, API private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/player/get</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_data.php/player/get</div>
                             <div class="col-span-6">Get player data (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_data.php/player/update</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_data.php/player/update</div>
                             <div class="col-span-6">Update player data (requires API key, Player private key)</div>
                         </div>
                     </div>
@@ -425,7 +425,7 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/leaderboard.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/leaderboard.php</div>
                             <div class="col-span-6">Get ranked leaderboard (requires API key, filters)</div>
                         </div>
                     </div>
@@ -437,17 +437,17 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/time.php</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/time.php</div>
                             <div class="col-span-6">Get server time (requires API key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/time.php?utc=+1</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/time.php?utc=+1</div>
                             <div class="col-span-6">Get server time +1 hour offset (requires API key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/time.php?utc=-2</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/time.php?utc=-2</div>
                             <div class="col-span-6">Get server time -2 hours offset (requires API key)</div>
                         </div>
                     </div>
@@ -459,62 +459,62 @@ pre::-webkit-scrollbar-thumb:hover {
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/list</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/list</div>
                             <div class="col-span-6">List all available matchmaking lobbies (requires API key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/create</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/create</div>
                             <div class="col-span-6">Create a new matchmaking lobby (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/request</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/{ID}/request</div>
                             <div class="col-span-6">Request to join a matchmaking lobby (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/response</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/{ID}/response</div>
                             <div class="col-span-6">Respond to join request (requires API key, Host player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/status</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/{ID}/status</div>
                             <div class="col-span-6">Check join request status (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/current</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/current</div>
                             <div class="col-span-6">Get current matchmaking status (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/{ID}/join</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/{ID}/join</div>
                             <div class="col-span-6">Join a matchmaking lobby directly (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/leave</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/leave</div>
                             <div class="col-span-6">Leave current matchmaking lobby (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/players</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/players</div>
                             <div class="col-span-6">List all players in current matchmaking (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/heartbeat</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/heartbeat</div>
                             <div class="col-span-6">Send matchmaking heartbeat (requires API key, Player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/remove</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/remove</div>
                             <div class="col-span-6">Remove matchmaking lobby (requires API key, Host player private key)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/php/matchmaking.php/start</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/matchmaking.php/start</div>
                             <div class="col-span-6">Start game from matchmaking (requires API key, Host player private key)</div>
                         </div>
                     </div>
@@ -529,7 +529,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/rooms</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/rooms</div>
                             <div class="col-span-6">Create a new game room (requires API key, Player private key)</div>
                         </div>
                 
@@ -537,7 +537,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/rooms</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/rooms</div>
                             <div class="col-span-6">List all available game rooms (requires API key)</div>
                         </div>
                 
@@ -545,7 +545,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/rooms/{ID}/join</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/rooms/{ID}/join</div>
                             <div class="col-span-6">Join an existing room (requires API key, Player private key)</div>
                         </div>
                 
@@ -553,7 +553,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/rooms/players</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/rooms/players</div>
                             <div class="col-span-6">List all players in current room (requires API key, Player private key)</div>
                         </div>
                 
@@ -561,7 +561,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/rooms/leave</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/rooms/leave</div>
                             <div class="col-span-6">Leave the current game room (requires API key, Player private key)</div>
                         </div>
                 
@@ -569,7 +569,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/heartbeat</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/heartbeat</div>
                             <div class="col-span-6">Send player activity heartbeat (requires API key, Player private key)</div>
                         </div>
                 
@@ -577,7 +577,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/actions</div>
                             <div class="col-span-6">Submit a new game action (requires API key, Player private key)</div>
                         </div>
                 
@@ -585,7 +585,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions/poll</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/actions/poll</div>
                             <div class="col-span-6">Get actions result (requires API key, Player private key)</div>
                         </div>
                 
@@ -593,7 +593,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions/pending</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/actions/pending</div>
                             <div class="col-span-6">View all pending actions (requires API key, Host player private key)</div>
                         </div>
                 
@@ -601,7 +601,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/actions/{ID}/complete</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/actions/{ID}/complete</div>
                             <div class="col-span-6">Complete or reject action (requires API key, Host player private key)</div>
                         </div>
 
@@ -609,7 +609,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/updates</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/updates</div>
                             <div class="col-span-6">Send updates to players (requires API key, Host player private key)</div>
                         </div>
 
@@ -617,7 +617,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/updates/poll</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/updates/poll</div>
                             <div class="col-span-6">Poll for updates (requires API key, Player private key)</div>
                         </div>
 
@@ -625,7 +625,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <div class="col-span-2">
                                 <span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span>
                             </div>
-                            <div class="col-span-4 font-mono text-white/90">/php/game_room.php/current</div>
+                            <div class="col-span-4 font-mono text-white/90">/dotnet/game_room.php/current</div>
                             <div class="col-span-6">Get current game room status (requires API key, Player private key)</div>
                         </div>
                 
@@ -669,7 +669,7 @@ pre::-webkit-scrollbar-thumb:hover {
                         </button>
                     </div>
                     <div class="relative">
-                        <pre><code class="language-csharp"><?php echo htmlspecialchars(file_get_contents('SDK.cs')); ?></code></pre>
+                        <pre><code class="language-csharp"><?php echo htmlspecialchars(file_get_contents('dotnet/SDK.cs')); ?></code></pre>
                     </div>
                     <script>
                     function triggerDownload(url, filename) {
@@ -713,11 +713,11 @@ pre::-webkit-scrollbar-thumb:hover {
                     }
                     
                     document.getElementById('downloadSdk').addEventListener('click', (event) => {
-                        triggerDownload('SDK.cs', 'SDK.cs');
+                        triggerDownload('dotnet/SDK.cs', 'SDK.cs');
                     });
                     
                     document.getElementById('downloadExample').addEventListener('click', (event) => {
-                        triggerDownload('Game.cs', 'Game.cs');
+                        triggerDownload('dotnet/Game.cs', 'Game.cs');
                     });
                     </script>
                 </div>
@@ -775,7 +775,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-            <span class="font-mono">/php/game_players.php?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/dotnet/game_players.php?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Creates a new player in the game. Returns a <code>player_id</code> and <code>private_key</code> needed for future requests.
@@ -803,7 +803,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/php/game_players.php?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/dotnet/game_players.php?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates player info such as active status. This does not change player data like level or inventory (those are in <code>/game_data.php</code>).
@@ -834,7 +834,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Update player heartbeat to track activity and maintain online status.
@@ -853,7 +853,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Logout player and update last_logout timestamp. Sets is_active to 0.
@@ -872,7 +872,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/php/game_players.php?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+            <span class="font-mono">/dotnet/game_players.php?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves a list of all players in the game. Useful for admin dashboards or multiplayer matchmaking.
@@ -893,7 +893,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/php/game_data.php/game/get?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/dotnet/game_data.php/game/get?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves the global game data, including text, settings, and last update timestamp. Used to sync clients with the server.
@@ -920,7 +920,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/php/game_data.php/game/update?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+            <span class="font-mono">/dotnet/game_data.php/game/update?api_token=YOUR_API_KEY&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates global game data. For example, changing settings or max players. Requires API key authentication.
@@ -945,7 +945,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-blue-400 mb-2">
             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/php/game_data.php/player/get?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/dotnet/game_data.php/player/get?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves a specific player's data using their <code>private_key</code>. Includes level, score, and inventory.
@@ -970,7 +970,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-purple-400 mb-2">
             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-            <span class="font-mono">/php/game_data.php/player/update?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
+            <span class="font-mono">/dotnet/game_data.php/player/update?api_token=YOUR_API_KEY&game_player_token=PLAYER_PRIVATE_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Updates a specific player's data like level, score, inventory, and last played timestamp.
@@ -994,7 +994,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/php/time.php?api_token=YOUR_API_KEY</span>
+            <span class="font-mono">/dotnet/time.php?api_token=YOUR_API_KEY</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves current server time in multiple formats including UTC timestamp and human-readable format.
@@ -1014,7 +1014,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/php/time.php?api_token=YOUR_API_KEY&utc=+1</span>
+            <span class="font-mono">/dotnet/time.php?api_token=YOUR_API_KEY&utc=+1</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves server time with +1 hour offset adjustment.
@@ -1040,7 +1040,7 @@ pre::-webkit-scrollbar-thumb:hover {
     <div class="bg-black/50 p-4 rounded-lg">
         <div class="flex items-center text-sm text-green-400 mb-2">
             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">GET</span>
-            <span class="font-mono">/php/time.php?api_token=YOUR_API_KEY&utc=-2</span>
+            <span class="font-mono">/dotnet/time.php?api_token=YOUR_API_KEY&utc=-2</span>
         </div>
         <p class="text-xs text-gray-400 mb-2">
             <strong>Description:</strong> Retrieves server time with -2 hours offset adjustment.
@@ -1066,7 +1066,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/matchmaking.php/list?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/list?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Lists all available matchmaking lobbies that are not full and not started.
@@ -1096,7 +1096,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Creates a new matchmaking lobby. The creating player automatically becomes the host.
@@ -1123,7 +1123,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/request?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/{matchmaking_id}/request?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Requests to join a matchmaking lobby that requires host approval.
@@ -1142,7 +1142,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Host responds to a join request (approve or reject).
@@ -1164,7 +1164,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/{matchmaking_id}/response?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Host rejects a join request.
@@ -1186,7 +1186,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/status?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/{matchmaking_id}/status?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Checks the status of a join request.
@@ -1213,7 +1213,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Gets the current player's matchmaking status and lobby information.
@@ -1247,7 +1247,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/{matchmaking_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/{matchmaking_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Joins a matchmaking lobby directly (only works if lobby doesn't require approval).
@@ -1266,7 +1266,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Leaves the current matchmaking lobby.
@@ -1284,7 +1284,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Lists all players in the current matchmaking lobby.
@@ -1322,7 +1322,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Sends a heartbeat to keep the player active in the matchmaking lobby.
@@ -1340,7 +1340,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Removes the matchmaking lobby (host only).
@@ -1358,7 +1358,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Starts a game from the matchmaking lobby (host only).
@@ -1379,7 +1379,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Creates a new game room. The creating player automatically becomes the host.
@@ -1403,7 +1403,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/rooms?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/rooms?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Returns list of currently available game rooms (not full, public/visible).
@@ -1429,7 +1429,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/rooms/{room_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/rooms/{room_id}/join?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Join an existing room by ID. Password is required if the room is protected.
@@ -1450,7 +1450,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Returns list of players currently in the same room as you.
@@ -1476,7 +1476,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-orange-400 mb-2">
         <span class="font-mono bg-orange-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Leave the current room. If you were the host, a new host may be assigned automatically.
@@ -1494,7 +1494,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Updates player's last activity timestamp (used to determine online status).
@@ -1512,7 +1512,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/dotnet/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Submits a new player action to the room's action queue (movement, attack, item use, etc.). The action is initially marked as pending and awaits server/host processing.
@@ -1537,7 +1537,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/dotnet/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Retrieves recently completed/processed actions from the room. Clients should poll this endpoint regularly to receive updates on action results.
@@ -1562,7 +1562,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/dotnet/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Returns list of currently pending actions in the room. Typically used by the host or server-side logic to process/approve actions.
@@ -1589,7 +1589,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-purple-400 mb-2">
         <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/actions/{action_id}/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
+        <span class="font-mono">/dotnet/game_room.php/actions/{action_id}/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_PRIVATE_KEY</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Marks a pending action as completed and attaches the result/response data. Usually called by the room host or authoritative server.
@@ -1613,7 +1613,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Send updates to all players in the room (host only).
@@ -1640,7 +1640,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Send updates to specific players in the room (host only).
@@ -1670,7 +1670,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Poll for updates sent to the current player.
@@ -1710,7 +1710,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
+        <span class="font-mono">/dotnet/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Poll for updates after a specific update ID (incremental polling).
@@ -1740,7 +1740,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-blue-400 mb-2">
         <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-        <span class="font-mono">/php/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
+        <span class="font-mono">/dotnet/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get current game room status and player information.
@@ -1775,7 +1775,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/dotnet/leaderboard.php?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get leaderboard sorted by player level (descending).
@@ -1842,7 +1842,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/dotnet/leaderboard.php?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get leaderboard sorted by level first, then score as tie-breaker.
@@ -1916,7 +1916,7 @@ pre::-webkit-scrollbar-thumb:hover {
 <div class="bg-black/50 p-4 rounded-lg">
     <div class="flex items-center text-sm text-green-400 mb-2">
         <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-        <span class="font-mono">/php/leaderboard.php?api_token=YOUR_API_TOKEN</span>
+        <span class="font-mono">/dotnet/leaderboard.php?api_token=YOUR_API_TOKEN</span>
     </div>
     <p class="text-xs text-gray-400 mb-2">
         <strong>Description:</strong> Get leaderboard sorted by score first, then level as tie-breaker.

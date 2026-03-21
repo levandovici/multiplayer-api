@@ -17,7 +17,7 @@ error_log("=== MATCHMAKING REQUEST ===");
 error_log("URI: " . $_SERVER['REQUEST_URI']);
 error_log("Method: " . $_SERVER['REQUEST_METHOD']);
 
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../php/config.php';
 
 // ────────────────────────────────────────────────
 //      Helper functions

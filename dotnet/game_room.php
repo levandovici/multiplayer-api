@@ -18,7 +18,7 @@ error_log("URI: " . $_SERVER['REQUEST_URI']);
 error_log("Method: " . $_SERVER['REQUEST_METHOD']);
 // error_log("Headers: " . print_r(getallheaders(), true)); // uncomment for debugging
 
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../php/config.php';
 
 
 // ────────────────────────────────────────────────

@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once 'config.php';
+require_once '../php/config.php';
 
 // Enable error reporting
 error_reporting(E_ALL);

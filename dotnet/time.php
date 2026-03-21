@@ -23,7 +23,7 @@ error_log("Headers: " . print_r(getallheaders(), true));
 try {
     header('Content-Type: application/json; charset=utf-8');
     header('Access-Control-Allow-Origin: *');   // allow Unity WebGL
-    require_once 'config.php';
+    require_once '../php/config.php';
 
     // Helper function to send JSON response
     function sendResponse($data, $statusCode = 200) {
