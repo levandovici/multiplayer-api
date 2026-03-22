@@ -737,7 +737,7 @@ pre::-webkit-scrollbar-thumb:hover {
                     </p>
                     
                     <div class="relative mt-8">
-                        <pre><code class="language-csharp"><?php echo htmlspecialchars(file_get_contents('Game.cs')); ?></code></pre>
+                        <pre><code class="language-csharp"><?php echo htmlspecialchars(file_get_contents('dotnet/Game.cs')); ?></code></pre>
                     </div>
                     
                     <div class="mt-6 p-4 bg-blue-900/20 rounded-lg border border-blue-800/50">
