@@ -1,6 +1,6 @@
 //Register a Player
 
-curl -X POST "https://api.michitai.com/dotnet/game_players.php?api_token=YOUR_API_TOKEN" \
+curl -X POST "https://api.michitai.com/dotnet/game_players.php/register?api_token=YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "player_name": "TestPlayer",
@@ -11,23 +11,123 @@ curl -X POST "https://api.michitai.com/dotnet/game_players.php?api_token=YOUR_AP
     }
   }'
 
-curl -X POST "https://api.michitai.com/dotnet/game_players.php?api_token=YOUR_API_TOKEN" -H "Content-Type: application/json" -d '{"player_name":"TestPlayer","player_data":{"level":1,"score":0,"inventory":["sword","shield"]}}'
+//Response:
+{
+  "success": true,
+  "player_id": "3",
+  "private_key": "cf24626c48177c7459b7bbcaa86538a93913",
+  "player_name": "TestPlayer",
+  "game_id": 2
+}
 
 //Authenticate a Player
 
-curl -X PUT "https://api.michitai.com/dotnet/game_players.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+curl -X PUT "https://api.michitai.com/dotnet/game_players.php/login?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+
+//Response:
+{
+  "success": true,
+  "player": {
+    "id": 3,
+    "game_id": 2,
+    "player_name": "TestPlayer",
+    "player_data": {
+      "level": 1,
+      "score": 0,
+      "inventory": ["sword", "shield"]
+    },
+    "is_active": 1,
+    "last_login": null,
+    "last_heartbeat": null,
+    "last_logout": null,
+    "created_at": "2026-03-13 09:39:06",
+    "updated_at": "2026-03-13 09:39:06"
+  }
+}
+
+//Send Player Heartbeat
+
+curl -X POST "https://api.michitai.com/dotnet/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+
+//Response:
+{
+  "success": true,
+  "message": "Heartbeat updated",
+  "last_heartbeat": "2026-03-13 09:46:13"
+}
+
+//Logout Player
+
+curl -X POST "https://api.michitai.com/dotnet/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+
+//Response:
+{
+  "success": true,
+  "message": "Player logged out successfully",
+  "last_logout": "2026-03-13 09:46:37"
+}
 
 //List All Players
 
-curl -X GET "https://api.michitai.com/dotnet/game_players.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN"
+curl -X GET "https://api.michitai.com/dotnet/game_players.php/list?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "count": 3,
+  "players": [
+    {
+      "id": 1,
+      "player_name": "TestPlayer",
+      "is_active": 1,
+      "last_login": null,
+      "last_logout": null,
+      "last_heartbeat": null,
+      "created_at": "2026-03-13 09:37:47"
+    },
+    {
+      "id": 3,
+      "player_name": "TestPlayer",
+      "is_active": 1,
+      "last_login": "2026-03-13 09:40:35",
+      "last_logout": null,
+      "last_heartbeat": null,
+      "created_at": "2026-03-13 09:39:06"
+    },
+    {
+      "id": 2,
+      "player_name": "TestPlayer",
+      "is_active": 1,
+      "last_login": null,
+      "last_logout": null,
+      "last_heartbeat": null,
+      "created_at": "2026-03-13 09:38:01"
+    }
+  ]
+}
 
 //Get Game Data 
 
-curl -X GET "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TOKEN"
+curl -X GET "https://api.michitai.com/dotnet/game_data.php/game/get?api_token=YOUR_API_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "type": "game",
+  "game_id": 4,
+  "data": {
+    "text": "hello world",
+    "game_settings": {
+      "difficulty": "hard",
+      "max_players": 10
+    },
+    "last_updated": "2025-01-13T12:00:00Z"
+  }
+}
 
 //Update Game Data
 
-curl -X PUT "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" \
+curl -X PUT "https://api.michitai.com/dotnet/game_data.php/game/update?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "game_settings": {
@@ -37,15 +137,35 @@ curl -X PUT "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TO
     "last_updated": "2025-01-13T12:00:00Z"
   }'
 
-curl -X PUT "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
+curl -X PUT "https://api.michitai.com/dotnet/game_data.php/game/update?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
+
+//Response:
+{
+  "success": true,
+  "message": "Game data updated successfully",
+  "updated_at": "2026-01-13 14:24:23"
+}
 
 //Get Player Data
 
-curl -X GET "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl -X GET "https://api.michitai.com/dotnet/game_data.php/player/get?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "type": "player",
+  "player_id": 7,
+  "player_name": "TestPlayer",
+  "data": {
+    "level": 1,
+    "score": 0,
+    "inventory": ["sword", "shield"]
+  }
+}
 
 //Update Player Data
 
-curl -X PUT "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+curl -X PUT "https://api.michitai.com/dotnet/game_data.php/player/update?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "level": 2,
@@ -54,11 +174,46 @@ curl -X PUT "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TO
     "last_played": "2025-01-13T12:30:00Z"
   }'
 
-curl -X PUT "https://api.michitai.com/dotnet/game_data.php?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
+curl -X PUT "https://api.michitai.com/dotnet/game_data.php/player/update?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
+
+//Response:
+{
+  "success": true,
+  "message": "Player data updated successfully",
+  "updated_at": "2026-01-13 14:27:10"
+}
 
 //Get Server Time
 
-curl -X GET "https://api.michitai.com/dotnet/time.php?api_key=YOUR_API_KEY"
+curl -X GET "https://api.michitai.com/dotnet/time.php?api_token=YOUR_API_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "utc": "2026-03-13T14:01:49+00:00",
+  "timestamp": 1773410509,
+  "readable": "2026-03-13 14:01:49 UTC"
+}
+
+//Get Server Time with Offset
+
+curl -X GET "https://api.michitai.com/dotnet/time.php?api_token=YOUR_API_TOKEN&utc=+1"
+
+//Response:
+{
+  "success": true,
+  "utc": "2026-03-13T15:04:17+00:00",
+  "timestamp": 1773414257,
+  "readable": "2026-03-13 15:04:17 UTC",
+  "offset": {
+    "offset_hours": 1,
+    "offset_string": "+1",
+    "original_utc": "2026-03-13T14:04:17+00:00",
+    "original_timestamp": 1773410657
+  }
+}
+
+curl -X GET "https://api.michitai.com/dotnet/time.php?api_token=YOUR_API_TOKEN&utc=-2"
 
 //Create a New Room
 
@@ -70,7 +225,13 @@ curl -X POST "https://api.michitai.com/dotnet/game_room.php/rooms?api_token=YOUR
     "max_players": 4
   }'
 
-curl -X POST "https://api.michitai.com/dotnet/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4}'
+//Response:
+{
+  "success": true,
+  "room_id": "dc3723848639139113ca240958ba0bf8",
+  "room_name": "My Game Room",
+  "is_host": true
+}
 
 //List All Available Rooms
 
@@ -80,11 +241,17 @@ curl -X GET "https://api.michitai.com/dotnet/game_room.php/rooms?api_token=YOUR_
 
 curl -X POST "https://api.michitai.com/dotnet/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"password": "secret123"}'
+  -d '{
+    "password": "secret123"
+  }'
 
-curl -X POST "https://api.michitai.com/dotnet/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"password":"secret123"}'
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": "secret123"
+  }'
 
-//List All Players in a Room
+//List All Players in Current Room
 
 curl -X GET "https://api.michitai.com/dotnet/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
@@ -92,9 +259,13 @@ curl -X GET "https://api.michitai.com/dotnet/game_room.php/players?api_token=YOU
 
 curl -X POST "https://api.michitai.com/dotnet/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
-//Send Heartbeat
+//Send Room Heartbeat
 
-curl -X POST "https://api.michitai.com/dotnet/game_room.php/players/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Get Current Room Status
+
+curl "https://api.michitai.com/dotnet/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Submit Action
 
@@ -102,26 +273,228 @@ curl -X POST "https://api.michitai.com/dotnet/game_room.php/actions?api_token=YO
   -H "Content-Type: application/json" \
   -d '{
     "action_type": "move",
-    "request_data": {"x": 10, "y": 20}
+    "request_data": {
+      "x": 10,
+      "y": 20
+    }
   }'
 
-curl -X POST "https://api.michitai.com/dotnet/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"action_type":"move","request_data":{"x":10,"y":20}}'
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action_type": "move",
+    "request_data": {
+      "x": 10,
+      "y": 20
+    }
+  }'
 
 //Poll for Action Response
 
 curl "https://api.michitai.com/dotnet/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
-//Get Pending actions
+//Get Pending Actions
 
-curl "https://api.michitai.com/dotnet/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN"
+curl "https://api.michitai.com/dotnet/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
 
 //Complete Action
 
-curl -X POST "https://api.michitai.com/dotnet/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN" \
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "status": "completed",
-    "response_data": {"success": true, "message": "Moved successfully"}
+    "response_data": {
+      "success": true,
+      "message": "Moved successfully"
+    }
   }'
 
-curl -X POST "https://api.michitai.com/php/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=HOST_PLAYER_TOKEN" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "completed",
+    "response_data": {
+      "success": true,
+      "message": "Moved successfully"
+    }
+  }'
+
+//Send Room Updates
+
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "targetPlayerIds": "all",
+    "type": "play_animation",
+    "dataJson": {
+      "animation": "victory",
+      "duration": 2.0
+    }
+  }'
+
+curl -X POST "https://api.michitai.com/dotnet/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "targetPlayerIds": ["47"],
+    "type": "spawn_effect",
+    "dataJson": {
+      "effect": "explosion",
+      "position": {
+        "x": 10,
+        "y": 20
+      }
+    }
+  }'
+
+//Poll for Room Updates
+
+curl "https://api.michitai.com/dotnet/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+curl "https://api.michitai.com/dotnet/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN&lastUpdateId=LAST_UPDATE_ID"
+
+//Matchmaking
+
+//List All Matchmaking Lobbies
+
+curl "https://api.michitai.com/dotnet/matchmaking.php/list?api_token=YOUR_API_TOKEN"
+
+//Create Matchmaking Lobby
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "maxPlayers": 4,
+    "strictFull": true,
+    "joinByRequests": true,
+    "extraJsonString": {
+      "minLevel": 10,
+      "rank": "gold"
+    }
+  }'
+
+//Request to Join Matchmaking Lobby
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/MATCHMAKING_ID/request?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+
+//Respond to Join Request
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/MATCHMAKING_ID/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "approve"
+  }'
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/MATCHMAKING_ID/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "reject"
+  }'
+
+//Check Join Request Status
+
+curl "https://api.michitai.com/dotnet/matchmaking.php/MATCHMAKING_ID/status?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Get Current Matchmaking Status
+
+curl "https://api.michitai.com/dotnet/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Join Matchmaking Lobby Directly
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/MATCHMAKING_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Leave Matchmaking Lobby
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//List Players in Current Matchmaking
+
+curl "https://api.michitai.com/dotnet/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Send Matchmaking Heartbeat
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Remove Matchmaking Lobby
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Start Game from Matchmaking
+
+curl -X POST "https://api.michitai.com/dotnet/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"
+
+//Leaderboard
+
+//Get Leaderboard
+
+curl -X POST "https://api.michitai.com/dotnet/leaderboard.php?api_token=YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sortBy": ["level"],
+    "limit": 10
+  }'
+
+//Response:
+{
+  "success": true,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "player_id": 33,
+      "player_name": "GameHost",
+      "player_data": {
+        "level": 15,
+        "rank": "platinum",
+        "role": "host",
+        "last_played": "2026-03-13T14:28:06.9900113Z",
+        "matchmaking_status": "ready"
+      }
+    },
+    {
+      "rank": 2,
+      "player_id": 35,
+      "player_name": "Player2",
+      "player_data": {
+        "level": 12,
+        "rank": "gold",
+        "role": "player"
+      }
+    },
+    {
+      "rank": 3,
+      "player_id": 34,
+      "player_name": "Player1",
+      "player_data": {
+        "level": 8,
+        "rank": "silver",
+        "role": "player"
+      }
+    },
+    {
+      "rank": 4,
+      "player_id": 36,
+      "player_name": "Player3",
+      "player_data": {
+        "level": 6,
+        "rank": "bronze",
+        "role": "player"
+      }
+    }
+  ],
+  "total": 4,
+  "sort_by": ["level"],
+  "limit": 10
+}
+
+curl -X POST "https://api.michitai.com/dotnet/leaderboard.php?api_token=YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sortBy": ["level", "score"],
+    "limit": 10
+  }'
+
+curl -X POST "https://api.michitai.com/dotnet/leaderboard.php?api_token=YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sortBy": ["score", "level"],
+    "limit": 10
+  }'
