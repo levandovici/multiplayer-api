@@ -26,6 +26,12 @@ $description = isset($description) ? $description : $defaultDescription;
 $image = isset($image) && !empty($image) ? $image : $defaultImage;
 $url = isset($url) ? $url : $defaultUrl;
 
+// Additional platform-specific variables
+$platform_name = isset($platform_name) ? $platform_name : $defaultTitle;
+$platform_type = isset($platform_type) ? $platform_type : "website";
+$card_type = isset($card_type) ? $card_type : "summary_large_image";
+$site_twitter = isset($site_twitter) ? $site_twitter : "@michitai";
+
 // Ensure image has full URL if it's a relative path
 if (!filter_var($image, FILTER_VALIDATE_URL) && !str_starts_with($image, 'http')) {
     $image = "https://" . $_SERVER['HTTP_HOST'] . "/" . ltrim($image, '/');
@@ -43,14 +49,15 @@ if (!filter_var($url, FILTER_VALIDATE_URL) && !str_starts_with($url, 'http')) {
 <meta property="og:description" content="<?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?>">
 <meta property="og:image" content="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>">
 <meta property="og:url" content="<?= htmlspecialchars($url, ENT_QUOTES, 'UTF-8') ?>">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="Multiplayer API">
+<meta property="og:type" content="<?= htmlspecialchars($platform_type, ENT_QUOTES, 'UTF-8') ?>">
+<meta property="og:site_name" content="<?= htmlspecialchars($platform_name, ENT_QUOTES, 'UTF-8') ?>">
 
 <!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="<?= htmlspecialchars($card_type, ENT_QUOTES, 'UTF-8') ?>">
 <meta name="twitter:title" content="<?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?>">
 <meta name="twitter:description" content="<?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?>">
 <meta name="twitter:image" content="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>">
+<meta name="twitter:site" content="<?= htmlspecialchars($site_twitter, ENT_QUOTES, 'UTF-8') ?>">
 
 <!-- Additional Meta Tags for Better Sharing -->
 <meta name="description" content="<?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?>">
