@@ -171,1229 +171,716 @@ $site_twitter = "@michitai";
             </div>
             
             <div class="max-w-7xl mx-auto space-y-8">
-                <!-- Unity SDK -->
+                <!-- Unity SDK Download -->
                 <div class="glass-effect p-8 rounded-2xl">
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mr-4">
                             <i class="fab fa-unity text-2xl text-white"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-white">Unity SDK</h4>
+                        <h4 class="text-xl font-bold text-white">Unity SDK Download</h4>
                     </div>
-                    <p class="text-white/80 mb-6">
-                        JsonUtility-compatible SDK designed specifically for Unity. 
-                        Handles coroutines, authentication, and proper serialization for mobile builds.
+                    <p class="text-white/80 mb-8">
+                        Complete JsonUtility-compatible SDK designed specifically for Unity developers. 
+                        Includes comprehensive multiplayer functionality with coroutines, authentication, 
+                        and proper serialization for mobile builds.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-end mb-4 gap-3 sm:gap-4">
-                        <button id="downloadUnitySdk" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-3 sm:py-2 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                            <i class="fas fa-download mr-2"></i> Download Unity SDK
+                    
+                    <!-- Feature Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-cube text-purple-400 mr-2"></i>
+                                <h5 class="text-white font-medium">JsonUtility Ready</h5>
+                            </div>
+                            <p class="text-white/60 text-sm">Full compatibility with Unity's JsonUtility serialization system</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-clock text-blue-400 mr-2"></i>
+                                <h5 class="text-white font-medium">Coroutine Based</h5>
+                            </div>
+                            <p class="text-white/60 text-sm">Uses Unity coroutines for async operations and game loops</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-gamepad text-green-400 mr-2"></i>
+                                <h5 class="text-white font-medium">IL2CPP Safe</h5>
+                            </div>
+                            <p class="text-white/60 text-sm">Arrays instead of Lists, no reflection for mobile builds</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-users text-orange-400 mr-2"></i>
+                                <h5 class="text-white font-medium">Multiplayer Ready</h5>
+                            </div>
+                            <p class="text-white/60 text-sm">Complete player management and matchmaking system</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-door-open text-cyan-400 mr-2"></i>
+                                <h5 class="text-white font-medium">Game Rooms</h5>
+                            </div>
+                            <p class="text-white/60 text-sm">Real-time room management with actions and updates</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-trophy text-yellow-400 mr-2"></i>
+                                <h5 class="text-white font-medium">Leaderboards</h5>
+                            </div>
+                            <p class="text-white/60 text-sm">Competitive rankings and player statistics</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Download Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <button id="downloadUnitySdk" class="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-download mr-3"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Download Unity SDK</div>
+                                <div class="text-xs opacity-80">SDK.cs - 50KB</div>
+                            </div>
                         </button>
-                        <button id="downloadUnityExample" class="w-full sm:w-auto bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium py-3 sm:py-2 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                            <i class="fas fa-code mr-2"></i> Download Unity Example
+                        <button id="downloadUnityExample" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-code mr-3"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Download Example</div>
+                                <div class="text-xs opacity-80">Game.cs Demo - 25KB</div>
+                            </div>
                         </button>
-                        <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="w-full sm:w-auto bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-medium py-3 sm:py-2 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                            <i class="fab fa-github mr-2"></i> GitHub
+                        <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fab fa-github mr-3"></i>
+                            <div class="text-left">
+                                <div class="font-bold">View on GitHub</div>
+                                <div class="text-xs opacity-80">Full Repository</div>
+                            </div>
                         </a>
                     </div>
-                    <div class="relative">
-                        <pre><code class="language-csharp"><?php echo htmlspecialchars(file_get_contents('SDK.cs')); ?></code></pre>
-                    </div>
-                    <script>
-                    function triggerDownload(url, filename) {
-                        const originalText = event.target.innerHTML;
-                        event.target.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Preparing...';
-                        event.target.disabled = true;
-                        
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = filename;
-                        
-                        document.body.appendChild(link);
-                        const clickEvent = new MouseEvent('click', {
-                            view: window,
-                            bubbles: true,
-                            cancelable: false
-                        });
-                        link.dispatchEvent(clickEvent);
-                        
-                        setTimeout(() => {
-                            document.body.removeChild(link);
-                            event.target.innerHTML = originalText;
-                            event.target.disabled = false;
-                            
-                            const successMsg = document.createElement('div');
-                            successMsg.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
-                            successMsg.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Downloaded ${filename} successfully!`;
-                            document.body.appendChild(successMsg);
-                            
-                            setTimeout(() => {
-                                successMsg.style.opacity = '0';
-                                setTimeout(() => successMsg.remove(), 300);
-                            }, 3000);
-                        }, 100);
-                    }
                     
-                    document.getElementById('downloadUnitySdk').addEventListener('click', (event) => {
-                        triggerDownload('SDK.cs', 'Unity-SDK.cs');
-                    });
-                    
-                    document.getElementById('downloadUnityExample').addEventListener('click', (event) => {
-                        triggerDownload('Game.cs', 'Unity-Game.cs');
-                    });
-                    </script>
-                </div>
-                
-                <!-- Example Usage -->
-                <div class="glass-effect p-8 rounded-2xl mt-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-600 to-orange-600 flex items-center justify-center mr-4">
-                            <i class="fas fa-code-branch text-2xl text-white"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-white">Unity Example Usage</h4>
-                    </div>
-                    <p class="text-white/80 mb-6">
-                        Here's a complete example of how to use the Unity SDK in your Unity project.
-                        This example demonstrates coroutines, JsonUtility usage, and proper Unity integration.
-                    </p>
-                    
-                    <div class="relative mt-8">
-                        <pre><code class="language-csharp"><?php echo htmlspecialchars(file_get_contents('Game.cs')); ?></code></pre>
-                    </div>
-                    
-                    <div class="mt-6 p-4 bg-blue-900/20 rounded-lg border border-blue-800/50">
-                        <h5 class="text-blue-300 font-medium mb-2 flex items-center">
-                            <i class="fas fa-info-circle mr-2"></i> How to use in Unity
+                    <!-- Installation Guide -->
+                    <div class="bg-blue-900/20 rounded-lg border border-blue-800/50 p-6">
+                        <h5 class="text-blue-300 font-bold mb-6 flex items-center">
+                            <i class="fas fa-rocket mr-2"></i> Quick Installation Guide
                         </h5>
-                        <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
-                            <li>Create a new Unity project or open existing one</li>
-                            <li>Add the downloaded <code class="bg-blue-900/50 px-1 py-0.5 rounded">Unity-SDK.cs</code> file to your project</li>
-                            <li>Create an empty GameObject and add the <code class="bg-blue-900/50 px-1.5 py-0.5 rounded">MultiplayerSDK</code> component</li>
-                            <li>Copy the example code into a new script and attach to a GameObject</li>
-                            <li>Replace <code class="bg-blue-900/50 px-1.5 py-0.5 rounded">YOUR_API_TOKEN</code> with your actual API key</li>
-                            <li>Run the scene to see the SDK in action</li>
-                        </ol>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Step 1 -->
+                            <div class="bg-blue-800/20 p-4 rounded-lg border border-blue-700/50">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">1</div>
+                                    <h6 class="text-blue-200 font-bold">Download & Add SDK</h6>
+                                </div>
+                                <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
+                                    <li>Click "Download Unity SDK" button</li>
+                                    <li>Save <code class="bg-blue-900/50 px-1 py-0.5 rounded">SDK.cs</code></li>
+                                    <li>In Unity: Assets → Import New Asset</li>
+                                    <li>Select the downloaded SDK file</li>
+                                    <li>Verify file appears in Project window</li>
+                                </ol>
+                                <div class="mt-3 p-2 bg-blue-900/30 rounded border border-blue-700/50">
+                                    <p class="text-blue-200 text-xs"><i class="fas fa-lightbulb mr-1"></i> Tip: Create a "Scripts" folder to organize your files</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2 -->
+                            <div class="bg-blue-800/20 p-4 rounded-lg border border-blue-700/50">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">2</div>
+                                    <h6 class="text-blue-200 font-bold">Setup SDK Component</h6>
+                                </div>
+                                <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
+                                    <li>Create empty GameObject (GameObject → Create Empty)</li>
+                                    <li>Name it "MultiplayerManager" or similar</li>
+                                    <li>Select the GameObject in Hierarchy</li>
+                                    <li>Click "Add Component" in Inspector</li>
+                                    <li>Search and add "SDK" component</li>
+                                </ol>
+                                <div class="mt-3 p-2 bg-blue-900/30 rounded border border-blue-700/50">
+                                    <p class="text-blue-200 text-xs"><i class="fas fa-lightbulb mr-1"></i> Tip: Place this GameObject in your main scene for persistence</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3 -->
+                            <div class="bg-blue-800/20 p-4 rounded-lg border border-blue-700/50">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">3</div>
+                                    <h6 class="text-blue-200 font-bold">Configure & Initialize</h6>
+                                </div>
+                                <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
+                                    <li>Get your API token from dashboard</li>
+                                    <li>Set token in SDK Inspector field (Api Token)</li>
+                                    <li>Get your private API token for player operations</li>
+                                    <li>Set private token in SDK Inspector field (Private Api Token)</li>
+                                    <li>Create new C# script for game logic</li>
+                                    <li>Download example code for reference</li>
+                                    <li>Replace <code class="bg-blue-900/50 px-1.5 py-0.5 rounded">YOUR_API_TOKEN</code> and <code class="bg-blue-900/50 px-1.5 py-0.5 rounded">YOUR_PRIVATE_API_TOKEN</code> with actual tokens</li>
+                                </ol>
+                                <div class="mt-3 p-2 bg-blue-900/30 rounded border border-blue-700/50">
+                                    <p class="text-blue-200 text-xs"><i class="fas fa-lightbulb mr-1"></i> Tip: Store API token in ScriptableObject for production</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Setup Steps -->
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-green-900/20 p-4 rounded-lg border border-green-700/50">
+                                <h6 class="text-green-300 font-bold mb-3 flex items-center">
+                                    <i class="fas fa-play-circle mr-2"></i> Testing Your Setup
+                                </h6>
+                                <ol class="text-green-100/80 text-sm space-y-2 list-decimal list-inside">
+                                    <li>Attach your game script to a GameObject</li>
+                                    <li>Add reference to SDK component</li>
+                                    <li>Press Play in Unity Editor</li>
+                                    <li>Check Console for SDK initialization</li>
+                                    <li>Verify API calls work (test with RegisterPlayer)</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="bg-purple-900/20 p-4 rounded-lg border border-purple-700/50">
+                                <h6 class="text-purple-300 font-bold mb-3 flex items-center">
+                                    <i class="fas fa-cogs mr-2"></i> Production Checklist
+                                </h6>
+                                <ul class="text-purple-100/80 text-sm space-y-2 list-disc list-inside">
+                                    <li>Secure API token (don't hardcode in builds)</li>
+                                    <li>Enable IL2CPP for mobile builds</li>
+                                    <li>Test on target platforms</li>
+                                    <li>Handle network errors gracefully</li>
+                                    <li>Implement proper authentication flow</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Common Issues -->
+                        <div class="mt-6 p-4 bg-yellow-900/20 rounded-lg border border-yellow-700/50">
+                            <h6 class="text-yellow-300 font-bold mb-2 flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-2"></i> Common Issues & Solutions
+                            </h6>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p class="text-yellow-200 font-medium mb-1">Compilation Errors:</p>
+                                    <p class="text-yellow-100/80">Ensure .NET Framework compatibility in Player Settings</p>
+                                </div>
+                                <div>
+                                    <p class="text-yellow-200 font-medium mb-1">API Timeouts:</p>
+                                    <p class="text-yellow-100/80">Check internet connection and API token validity</p>
+                                </div>
+                                <div>
+                                    <p class="text-yellow-200 font-medium mb-1">JsonUtility Issues:</p>
+                                    <p class="text-yellow-100/80">Use [Serializable] classes and proper field names</p>
+                                </div>
+                                <div>
+                                    <p class="text-yellow-200 font-medium mb-1">Coroutine Problems:</p>
+                                    <p class="text-yellow-100/80">Start coroutines from MonoBehaviour instances</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-400">50+</div>
+                            <div class="text-white/60 text-sm">API Methods</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-400">25+</div>
+                            <div class="text-white/60 text-sm">Response Classes</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-400">100%</div>
+                            <div class="text-white/60 text-sm">JsonUtility Compatible</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-orange-400">IL2CPP</div>
+                            <div class="text-white/60 text-sm">Mobile Safe</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Documentation Section -->
+    <!-- Unity-Style Documentation Section -->
     <section id="docs" class="py-16 bg-gradient-to-b from-black/20 to-transparent">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h3 class="text-4xl font-black text-white mb-6">API Documentation</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Complete Unity-compatible API documentation</p>
+                <h3 class="text-4xl font-black text-white mb-6">Unity Scripting API</h3>
+                <p class="text-xl text-white/70 max-w-3xl mx-auto">Complete Unity-compatible API documentation for multiplayer games</p>
             </div>
             
-            <div class="glass-effect rounded-2xl overflow-hidden">
-                <div class="grid grid-cols-12 bg-white/5 border-b border-white/10 p-4 text-white/80 font-medium">
-                    <div class="col-span-2">Method</div>
-                    <div class="col-span-4">Endpoint</div>
-                    <div class="col-span-6">Description</div>
-                </div>
-                
-                <!-- Game Players -->
-                <div class="p-4">
-                    <h4 class="text-white/60 text-sm font-semibold mb-3">Game Players</h4>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_players.php/register</div>
-                            <div class="col-span-6">Register player (Unity-compatible JSON responses)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_players.php/login</div>
-                            <div class="col-span-6">Authenticate player (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_players.php/heartbeat</div>
-                            <div class="col-span-6">Update player heartbeat (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_players.php/logout</div>
-                            <div class="col-span-6">Logout player (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_players.php/list</div>
-                            <div class="col-span-6">List all players (Unity-compatible)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Game Data -->
-                <div class="p-4 border-t border-white/10">
-                    <h4 class="text-white/60 text-sm font-semibold mb-3">Game Data</h4>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_data.php/game/get</div>
-                            <div class="col-span-6">Get game data (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_data.php/game/update</div>
-                            <div class="col-span-6">Update game data (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_data.php/player/get</div>
-                            <div class="col-span-6">Get player data (returns player_data_json string)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_data.php/player/update</div>
-                            <div class="col-span-6">Update player data (Unity-compatible)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Leaderboard -->
-                <div class="p-4 border-t border-white/10">
-                    <h4 class="text-white/60 text-sm font-semibold mb-3">Leaderboard</h4>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/leaderboard.php</div>
-                            <div class="col-span-6">Get ranked leaderboard (Unity-compatible responses)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Server Data -->
-                <div class="p-4 border-t border-white/10">
-                    <h4 class="text-white/60 text-sm font-semibold mb-3">Server Data</h4>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/time.php</div>
-                            <div class="col-span-6">Get server time (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/time.php?utc=+1</div>
-                            <div class="col-span-6">Get server time +1 hour offset (Unity-compatible)</div>
-                        </div>
+            <!-- Navigation Sidebar Style -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Sidebar Navigation -->
+                <div class="lg:col-span-1">
+                    <div class="glass-effect rounded-2xl p-6 sticky top-24">
+                        <h4 class="text-white font-bold mb-4">Classes</h4>
+                        <nav class="space-y-2">
+                            <a href="#multiplayersdk" class="block text-white/70 hover:text-white py-1 text-sm transition">MultiplayerSDK</a>
+                            <a href="#player-management" class="block text-white/70 hover:text-white py-1 text-sm transition">Player Management</a>
+                            <a href="#game-data" class="block text-white/70 hover:text-white py-1 text-sm transition">Game Data</a>
+                            <a href="#time-management" class="block text-white/70 hover:text-white py-1 text-sm transition">Time Management</a>
+                            <a href="#room-management" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Management</a>
+                            <a href="#room-actions" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Actions</a>
+                            <a href="#room-updates" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Updates</a>
+                            <a href="#matchmaking" class="block text-white/70 hover:text-white py-1 text-sm transition">Matchmaking</a>
+                            <a href="#leaderboard" class="block text-white/70 hover:text-white py-1 text-sm transition">Leaderboard</a>
+                            <a href="#http-communication" class="block text-white/70 hover:text-white py-1 text-sm transition">HTTP Communication</a>
+                            <a href="#utility-methods" class="block text-white/70 hover:text-white py-1 text-sm transition">Utility Methods</a>
+                        </nav>
                     </div>
                 </div>
                 
-                <!-- Matchmaking -->
-                <div class="p-4 border-t border-white/10">
-                    <h4 class="text-white/60 text-sm font-semibold mb-3">Matchmaking</h4>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/list</div>
-                            <div class="col-span-6">List all available matchmaking lobbies (Unity-compatible)</div>
+                <!-- Main Content -->
+                <div class="lg:col-span-3 space-y-8">
+                    
+                    <!-- MultiplayerSDK Class -->
+                    <div id="multiplayersdk" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">MultiplayerSDK</h2>
+                            <p class="text-white/80">Main SDK class for Unity multiplayer functionality</p>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/create</div>
-                            <div class="col-span-6">Create matchmaking (extra_json_string for JsonUtility)</div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-white mb-3">Description</h3>
+                            <p class="text-white/80 mb-6">
+                                The MultiplayerSDK class provides complete multiplayer functionality for Unity games. 
+                                It handles player management, matchmaking, game rooms, real-time actions, and leaderboards 
+                                with full JsonUtility compatibility for Unity serialization.
+                            </p>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Public Methods</h3>
+                            <div class="space-y-4">
+                                <div class="border-l-4 border-purple-500 pl-4">
+                                    <h4 class="text-white font-medium">void SetApiToken(string token)</h4>
+                                    <p class="text-white/70 text-sm">Sets the API authentication token for all requests</p>
+                                </div>
+                                <div class="border-l-4 border-purple-500 pl-4">
+                                    <h4 class="text-white font-medium">void SetGamePlayerToken(string token)</h4>
+                                    <p class="text-white/70 text-sm">Sets the player authentication token for player-specific operations</p>
+                                </div>
+                                <div class="border-l-4 border-purple-500 pl-4">
+                                    <h4 class="text-white font-medium">string SerializeToJson&lt;T&gt;(T obj)</h4>
+                                    <p class="text-white/70 text-sm">Serializes object to JSON using Unity's JsonUtility</p>
+                                </div>
+                                <div class="border-l-4 border-purple-500 pl-4">
+                                    <h4 class="text-white font-medium">T DeserializeFromJson&lt;T&gt;(string json)</h4>
+                                    <p class="text-white/70 text-sm">Deserializes JSON to object using Unity's JsonUtility</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/{ID}/request</div>
-                            <div class="col-span-6">Request to join matchmaking (Unity-compatible)</div>
+                    </div>
+
+                    <!-- Player Management Section -->
+                    <div id="player-management" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-green-600 to-emerald-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Player Management</h2>
+                            <p class="text-white/80">Methods for player registration, authentication, and lifecycle management</p>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/{ID}/response</div>
-                            <div class="col-span-6">Respond to join request (Unity-compatible)</div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">RegisterPlayer</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void RegisterPlayer(string playerName, string playerDataJson, Action&lt;RegisterPlayerResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Registers a new player account. The playerDataJson should contain initial player data as a JSON string for Unity compatibility.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">LoginPlayer</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void LoginPlayer(Action&lt;LoginResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Authenticates the player using the currently set game player token. Returns complete player information.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendPlayerHeartbeat</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void SendPlayerHeartbeat(Action&lt;HeartbeatResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends a heartbeat to maintain the player's connection. Call every 30-60 seconds to prevent timeout.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">LogoutPlayer</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void LogoutPlayer(Action&lt;LogoutResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Logs out the current player and invalidates their session. Updates last logout timestamp.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">ListPlayers</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void ListPlayers(Action&lt;ListPlayersResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all registered players. Useful for admin dashboards or player discovery systems.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/current</div>
-                            <div class="col-span-6">Get current matchmaking status (Unity-compatible)</div>
+                    </div>
+
+                    <!-- Game Data Section -->
+                    <div id="game-data" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-blue-600 to-cyan-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Game Data Management</h2>
+                            <p class="text-white/80">Methods for managing global and player-specific game data</p>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/{ID}/join</div>
-                            <div class="col-span-6">Join matchmaking directly (Unity-compatible)</div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetGameData</h3>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void GetGameData(Action&lt;GameDataResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves global game data and settings. Data is returned as JSON string for Unity compatibility.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">UpdateGameData</h3>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void UpdateGameData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Updates global game data. The dataJson should contain the fields to update as JSON string.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetPlayerData</h3>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void GetPlayerData(Action&lt;PlayerDataResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves player-specific data. Requires player authentication token to be set.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">UpdatePlayerData</h3>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void UpdatePlayerData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Updates player-specific data. The dataJson should contain fields to update as JSON string.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/leave</div>
-                            <div class="col-span-6">Leave current matchmaking (Unity-compatible)</div>
+                    </div>
+
+                    <!-- Time Management Section -->
+                    <div id="time-management" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Time Management</h2>
+                            <p class="text-white/80">Methods for server time synchronization</p>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/remove</div>
-                            <div class="col-span-6">Remove matchmaking lobby (Unity-compatible)</div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetServerTime</h3>
+                                    <pre class="bg-black/30 text-indigo-400 p-3 rounded text-sm"><code>void GetServerTime(Action&lt;TimeResponse&gt; callback, int utcOffset = 0)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves server time with optional UTC offset. Useful for time synchronization and anti-cheat measures.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/matchmaking.php/start</div>
-                            <div class="col-span-6">Start game from matchmaking (Unity-compatible)</div>
+                    </div>
+
+                    <!-- Room Management Section -->
+                    <div id="room-management" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-orange-600 to-red-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Room Management</h2>
+                            <p class="text-white/80">Methods for creating and managing game rooms</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">CreateRoom</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void CreateRoom(string roomName, string password, int maxPlayers, Action&lt;CreateRoomResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Creates a new game room. The creating player becomes the room host.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">ListRooms</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void ListRooms(Action&lt;ListRoomsResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves all available game rooms. Useful for server browser functionality.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">JoinRoom</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void JoinRoom(string roomId, string password, Action&lt;JoinRoomResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Joins an existing room. Password required for private rooms.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">ListRoomPlayers</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void ListRoomPlayers(Action&lt;ListRoomPlayersResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all players in the current room. Useful for displaying player lists and checking occupancy.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">LeaveRoom</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void LeaveRoom(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Leaves the current room and updates player status.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendRoomHeartbeat</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void SendRoomHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends heartbeat to maintain room connection. Call every 30-60 seconds while in room.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetCurrentRoomStatus</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void GetCurrentRoomStatus(Action&lt;CurrentRoomStatusResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Gets comprehensive room state including player lists and pending actions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Actions Section -->
+                    <div id="room-actions" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-teal-600 to-green-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Room Actions</h2>
+                            <p class="text-white/80">Methods for submitting and processing game actions</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SubmitAction</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void SubmitAction(string actionType, string requestDataJson, Action&lt;SubmitActionResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Submits an action for processing by other players. Actions are processed asynchronously.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">PollActions</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void PollActions(Action&lt;PollActionsResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Polls for completed actions from other players. Call periodically to check for new actions.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetPendingActions</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void GetPendingActions(Action&lt;GetPendingActionsResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Gets actions awaiting processing by the current player. Call to find actions to complete.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">CompleteAction</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void CompleteAction(string actionId, string status, string responseDataJson, Action&lt;CompleteActionResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Marks an action as completed with processing results. Used after processing pending actions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Updates Section -->
+                    <div id="room-updates" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Room Updates</h2>
+                            <p class="text-white/80">Methods for real-time data synchronization between players</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendUpdate</h3>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm"><code>void SendUpdate(string targetPlayerIds, string type, string dataJson, Action&lt;SendUpdateResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends real-time updates to specific players or all players. Target can be "all" or JSON array of IDs.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">PollUpdates</h3>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm"><code>void PollUpdates(string lastUpdateId, Action&lt;PollUpdatesResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Polls for updates sent by other players. Supports incremental polling with lastUpdateId.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Matchmaking Section -->
+                    <div id="matchmaking" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-pink-600 to-purple-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Matchmaking</h2>
+                            <p class="text-white/80">Methods for matchmaking lobby management and game start</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">ListMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void ListMatchmaking(Action&lt;ListMatchmakingResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">CreateMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, Action&lt;CreateMatchmakingResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby. The creating player becomes the lobby host.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">RequestJoinMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void RequestJoinMatchmaking(string matchmakingId, Action&lt;JoinRequestResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Requests to join a lobby that requires host approval. Returns request ID for tracking.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">JoinMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void JoinMatchmaking(string matchmakingId, Action&lt;JoinMatchmakingResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Joins a matchmaking lobby directly. Only works if lobby allows direct join.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">LeaveMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void LeaveMatchmaking(Action&lt;LeaveMatchmakingResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Leaves the current matchmaking lobby and updates player status.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetMatchmakingPlayers</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void GetMatchmakingPlayers(Action&lt;GetMatchmakingPlayersResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all players in the current matchmaking lobby. Useful for displaying player lists.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendMatchmakingHeartbeat</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void SendMatchmakingHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends heartbeat to maintain lobby connection. Call every 30-60 seconds while in lobby.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">RemoveMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void RemoveMatchmaking(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Removes the matchmaking lobby and kicks all players. Only the lobby host can call this.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">StartMatchmaking</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void StartMatchmaking(Action&lt;StartMatchmakingResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Starts a game from matchmaking lobby. Transfers all players to a new game room.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetCurrentMatchmakingStatus</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void GetCurrentMatchmakingStatus(Action&lt;CurrentMatchmakingStatusResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Gets comprehensive lobby state including player status and pending requests.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">CheckRequestStatus</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void CheckRequestStatus(string requestId, Action&lt;CheckRequestStatusResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Checks the status of a join request. Useful for tracking approval/rejection status.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">RespondToRequest</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void RespondToRequest(string requestId, string action, Action&lt;RespondToRequestResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Responds to a join request (approve/reject). Only the lobby host can call this.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard Section -->
+                    <div id="leaderboard" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-yellow-600 to-orange-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Leaderboard</h2>
+                            <p class="text-white/80">Methods for competitive rankings and player statistics</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetLeaderboard</h3>
+                                    <pre class="bg-black/30 text-yellow-400 p-3 rounded text-sm"><code>void GetLeaderboard(string[] sortBy, int limit, Action&lt;LeaderboardResponse&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves ranked players with configurable sorting criteria. Supports multiple sort fields.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HTTP Communication Section -->
+                    <div id="http-communication" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 p-6">
+                            <h2 class="text-2xl font-bold text-white">HTTP Communication</h2>
+                            <p class="text-white/80">Internal HTTP request handling methods</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendRequest&lt;T&gt;</h3>
+                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm"><code>private void SendRequest&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Internal method for sending HTTP requests with authentication and error handling.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendRequestCoroutine&lt;T&gt;</h3>
+                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm"><code>private IEnumerator SendRequestCoroutine&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
+                                    <p class="text-white/70 mt-2">Internal coroutine for async HTTP requests with comprehensive error handling.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Utility Methods Section -->
+                    <div id="utility-methods" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Utility Methods</h2>
+                            <p class="text-white/80">Helper methods for JSON serialization and token management</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SetApiToken</h3>
+                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public void SetApiToken(string token)</code></pre>
+                                    <p class="text-white/70 mt-2">Sets the API authentication token. Required for all API calls.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SetGamePlayerToken</h3>
+                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public void SetGamePlayerToken(string token)</code></pre>
+                                    <p class="text-white/70 mt-2">Sets the player authentication token. Required for player-specific operations.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SerializeToJson&lt;T&gt;</h3>
+                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public string SerializeToJson&lt;T&gt;(T obj)</code></pre>
+                                    <p class="text-white/70 mt-2">Serializes object to JSON using Unity's JsonUtility. Ensures Unity compatibility.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">DeserializeFromJson&lt;T&gt;</h3>
+                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public T DeserializeFromJson&lt;T&gt;(string json)</code></pre>
+                                    <p class="text-white/70 mt-2">Deserializes JSON to object using Unity's JsonUtility. For parsing API responses.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Response Classes -->
+                    <div class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 p-6">
+                            <h2 class="text-2xl font-bold text-white">Response Classes</h2>
+                            <p class="text-white/80">Data classes for API responses with JsonUtility compatibility</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">BaseResponse</h4>
+                                    <p class="text-white/60 text-sm">Base class for all API responses with success/error fields</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">RegisterPlayerResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from player registration with player credentials</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">LoginResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from player login with complete player info</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">CreateRoomResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from room creation with room details</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">CreateMatchmakingResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from matchmaking lobby creation</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">LeaderboardResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from leaderboard with ranked players</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">TimeResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from server time with timezone information</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">GameDataResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from game data retrieval</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">PlayerDataResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from player data retrieval</p>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded">
+                                    <h4 class="text-white font-medium">UpdateDataResponse</h4>
+                                    <p class="text-white/60 text-sm">Response from data update operations</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Game Rooms -->
-                <div class="p-4 border-t border-white/10">
-                    <h4 class="text-white/60 text-sm font-semibold mb-3">Game Rooms</h4>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/rooms</div>
-                            <div class="col-span-6">Create game room (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/rooms</div>
-                            <div class="col-span-6">List all game rooms (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/rooms/{ID}/join</div>
-                            <div class="col-span-6">Join existing room (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/heartbeat</div>
-                            <div class="col-span-6">Send room heartbeat (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/actions</div>
-                            <div class="col-span-6">Submit game action (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/actions/poll</div>
-                            <div class="col-span-6">Get actions result (Unity-compatible)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
-                            <div class="col-span-4 font-mono text-white/90">/unity/game_room.php/current</div>
-                            <div class="col-span-6">Get current room status (Unity-compatible)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- REST API -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="glass-effect p-8 rounded-2xl">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-600 to-blue-600 flex items-center justify-center mr-4">
-                        <i class="fas fa-code text-2xl text-white"></i>
-                    </div>
-                    <h1 class="text-2xl font-bold text-white">Multiplayer API <span class="font-light">– Core Cells</span></h1>
-                </div>
-                <p class="text-white/80 mb-6">
-                    Use our REST API directly from any platform or language. 
-                    All endpoints return JSON responses with consistent error handling.
-                </p>
-
-                <div class="space-y-4">
-                    <!-- Auto-sized container -->
-                    <div class="space-y-4">
-                    <!-- 1. Register Player -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_players.php/register?api_token=YOUR_API_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Creates a new player in game. Returns a <code>player_id</code> and <code>private_key</code> needed for future requests.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "player_name": "TestPlayer",
-  "player_data_json": "{\"level\":1,\"score\":0}"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "player_id": "123",
-  "private_key": "abc123...",
-  "player_name": "TestPlayer",
-  "game_id": 1
-}</code></pre>
-                    </div>
-
-                    <!-- 2. Login Player -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-purple-400 mb-2">
-                            <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-                            <span class="font-mono">/unity/game_players.php/login?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Authenticates player and returns player information with JsonUtility-compatible data.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "player": {
-    "id": 123,
-    "game_id": 1,
-    "player_name": "TestPlayer",
-    "player_data_json": "{\"level\":5,\"score\":100}",
-    "is_active": 1,
-    "last_login": "2023-01-01 12:00:00",
-    "last_heartbeat": "2023-01-01 12:00:00",
-    "last_logout": null,
-    "created_at": "2023-01-01 10:00:00",
-    "updated_at": "2023-01-01 12:00:00"
-  }
-}</code></pre>
-                    </div>
-
-                    <!-- 3. Player Heartbeat -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Update player heartbeat to track activity and maintain online status.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Heartbeat updated",
-  "last_heartbeat": "2026-03-13 09:46:13"
-}</code></pre>
-                    </div>
-
-                    <!-- 4. Player Logout -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=YOUR_PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Logout player and update last_logout timestamp. Sets is_active to 0.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Player logged out successfully",
-  "last_logout": "2026-03-13 09:46:37"
-}</code></pre>
-                    </div>
-
-                    <!-- 5. List Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_players.php/list?api_token=YOUR_API_TOKEN&api_private_token=YOUR_PRIVATE_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Retrieves a list of all players in game. Useful for admin dashboards or multiplayer matchmaking.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "count": 5,
-  "players": [
-    {
-      "id": 123,
-      "player_name": "TestPlayer",
-      "is_active": 1,
-      "last_login": "2023-01-01 12:00:00",
-      "last_logout": null,
-      "last_heartbeat": "2023-01-01 12:00:00",
-      "created_at": "2023-01-01 10:00:00"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 6. Get Game Data -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_data.php/game/get?api_token=YOUR_API_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Retrieves global game data with JsonUtility-compatible JSON string.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "type": "game",
-  "game_id": 1,
-  "data_json": "{\"difficulty\":\"normal\",\"max_players\":10}"
-}</code></pre>
-                    </div>
-
-                    <!-- 7. Update Game Data -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-purple-400 mb-2">
-                            <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-                            <span class="font-mono">/unity/game_data.php/game/update?api_token=YOUR_API_TOKEN&api_private_token=YOUR_PRIVATE_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Updates global game data. Requires API private token for security.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "difficulty": "hard",
-  "max_players": 12,
-  "last_updated": "2023-01-01T12:00:00Z"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Game data updated successfully",
-  "updated_at": "2023-01-01 12:00:00"
-}</code></pre>
-                    </div>
-
-                    <!-- 8. Get Player Data -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_data.php/player/get?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Retrieves player-specific data as JsonUtility-compatible JSON string.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "type": "player",
-  "player_id": 123,
-  "player_name": "TestPlayer",
-  "data_json": "{\"level\":5,\"score\":100,\"inventory\":[\"sword\",\"potion\"]}"
-}</code></pre>
-                    </div>
-
-                    <!-- 9. Update Player Data -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-purple-400 mb-2">
-                            <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-                            <span class="font-mono">/unity/game_data.php/player/update?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Updates player-specific data like level, score, inventory, and last played timestamp.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "level": 6,
-  "score": 150,
-  "last_played": "2023-01-01T12:00:00Z"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Player data updated successfully",
-  "updated_at": "2023-01-01 12:00:00"
-}</code></pre>
-                    </div>
-
-                    <!-- 10. Get Server Time -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/time.php?api_token=YOUR_API_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets current server time in UTC. Useful for time synchronization between client and server.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "utc": "2023-01-01T12:00:00+00:00",
-  "timestamp": 1672574400,
-  "readable": "2023-01-01 12:00:00 UTC"
-}</code></pre>
-                    </div>
-
-                    <!-- 11. Get Server Time with Offset -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/time.php?api_token=YOUR_API_TOKEN&utc=1</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets server time with UTC offset. Useful for displaying local time to users.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "utc": "2023-01-01T13:00:00+01:00",
-  "timestamp": 1672578000,
-  "readable": "2023-01-01 13:00:00 UTC",
-  "offset": {
-    "offset_hours": 1,
-    "offset_string": "+1",
-    "original_utc": "2023-01-01T12:00:00+00:00",
-    "original_timestamp": 1672574400
-  }
-}</code></pre>
-                    </div>
-
-                    <!-- 12. Create Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Creates a new game room for real-time multiplayer sessions.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "room_name": "Test Room",
-  "password": "secret123",
-  "max_players": 4
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "room_id": "abc123...",
-  "room_name": "Test Room",
-  "is_host": true
-}</code></pre>
-                    </div>
-
-                    <!-- 13. List Rooms -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_room.php/rooms?api_token=YOUR_API_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Lists all available game rooms.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "rooms": [
-    {
-      "room_id": "abc123...",
-      "room_name": "Test Room",
-      "max_players": 4,
-      "current_players": 2,
-      "has_password": true
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 14. Join Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Joins an existing game room.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "password": "secret123"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "room_id": "abc123...",
-  "message": "Successfully joined the room"
-}</code></pre>
-                    </div>
-
-                    <!-- 15. List Room Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Lists all players in the current room.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "players": [
-    {
-      "player_id": "123",
-      "player_name": "Player1",
-      "is_host": true,
-      "is_online": true,
-      "last_heartbeat": "2023-01-01 12:00:00"
-    }
-  ],
-  "last_updated": "2023-01-01T12:00:00+00:00"
-}</code></pre>
-                    </div>
-
-                    <!-- 16. Leave Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Leaves the current game room.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Successfully left the room"
-}</code></pre>
-                    </div>
-
-                    <!-- 17. Room Heartbeat -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Sends heartbeat to maintain connection in game room.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "status": "ok"
-}</code></pre>
-                    </div>
-
-                    <!-- 18. Get Current Room Status -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets current room status and player information.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "in_room": true,
-  "room": {
-    "room_id": "abc123...",
-    "room_name": "Test Room",
-    "is_host": false,
-    "is_online": true,
-    "max_players": 4,
-    "current_players": 2,
-    "has_password": true,
-    "is_active": true,
-    "player_name": "Player1",
-    "joined_at": "2023-01-01 12:00:00",
-    "last_heartbeat": "2023-01-01 12:00:00",
-    "room_created_at": "2023-01-01 11:00:00",
-    "room_last_activity": "2023-01-01 12:00:00"
-  },
-  "pending_actions": [],
-  "pending_updates": []
-}</code></pre>
-                    </div>
-
-                    <!-- 19. Submit Action -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Submits a game action for processing by other players.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "action_type": "player_ready",
-  "request_data_json": "{\"player_id\":\"123\",\"ready\":true,\"timestamp\":\"2023-01-01T12:00:00Z\"}"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "action_id": "action123...",
-  "status": "pending"
-}</code></pre>
-                    </div>
-
-                    <!-- 20. Poll Actions -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Polls for completed actions from other players.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "actions": [
-    {
-      "action_id": "action123...",
-      "action_type": "game_start",
-      "response_data_json": "{\"game_mode\":\"competitive\",\"start_time\":\"2023-01-01T12:00:00Z\"}",
-      "status": "completed"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 21. Get Pending Actions -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets pending actions that need to be processed.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "actions": [
-    {
-      "action_id": "action123...",
-      "player_id": "456",
-      "action_type": "player_ready",
-      "request_data_json": "{\"player_id\":\"456\",\"ready\":true,\"timestamp\":\"2023-01-01T12:00:00Z\"}",
-      "created_at": "2023-01-01 12:00:00",
-      "player_name": "Player2"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 22. Complete Action -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Marks an action as completed with response data.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "status": "completed",
-  "response_data_json": "{\"result\":\"success\",\"processed_at\":\"2023-01-01T12:00:00Z\"}"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Action completed"
-}</code></pre>
-                    </div>
-
-                    <!-- 23. Send Update to All Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Sends update to all players in the room.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "targetPlayerIds": "all",
-  "type": "game_start",
-  "dataJson": "{\"game_mode\":\"competitive\",\"start_time\":\"2023-01-01T12:00:00Z\"}"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "updates_sent": 3,
-  "update_ids": ["update1...", "update2...", "update3..."],
-  "target_players": ["123", "456", "789"]
-}</code></pre>
-                    </div>
-
-                    <!-- 24. Poll Updates -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Polls for updates from other players.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "updates": [
-    {
-      "update_id": "update1...",
-      "from_player_id": "123",
-      "type": "game_start",
-      "data_json": "{\"game_mode\":\"competitive\",\"start_time\":\"2023-01-01T12:00:00Z\"}",
-      "created_at": "2023-01-01 12:00:00"
-    }
-  ],
-  "last_update_id": "update1..."
-}</code></pre>
-                    </div>
-
-                    <!-- 25. List Matchmaking Lobbies -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/matchmaking.php/list?api_token=YOUR_API_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Lists all available matchmaking lobbies that are not full and not started.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "lobbies": [
-    {
-      "matchmaking_id": "mm123...",
-      "host_player_id": "123",
-      "max_players": 4,
-      "strict_full": true,
-      "extra_json_string": "{\"minLevel\":5,\"rank\":\"silver\"}",
-      "created_at": "2023-01-01 11:00:00",
-      "last_heartbeat": "2023-01-01 12:00:00",
-      "current_players": 2,
-      "host_name": "HostPlayer"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 26. Create Matchmaking Lobby -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Creates a new matchmaking lobby. The creating player automatically becomes the host.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "maxPlayers": 4,
-  "strictFull": true,
-  "joinByRequests": false,
-  "extraJsonString": "{\"minLevel\":5,\"rank\":\"silver\",\"gameMode\":\"competitive\"}"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "matchmaking_id": "mm123...",
-  "max_players": 4,
-  "strict_full": true,
-  "join_by_requests": false,
-  "is_host": true
-}</code></pre>
-                    </div>
-
-                    <!-- 27. Request to Join Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/MM_ID/request?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Requests to join a matchmaking lobby that requires host approval.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "request_id": "req123...",
-  "message": "Join request sent to host"
-}</code></pre>
-                    </div>
-
-                    <!-- 28. Join Matchmaking Directly -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/MM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Joins a matchmaking lobby directly (only works if lobby doesn't require approval).
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "matchmaking_id": "mm123...",
-  "message": "Successfully joined matchmaking lobby"
-}</code></pre>
-                    </div>
-
-                    <!-- 29. Leave Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Leaves the current matchmaking lobby.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Successfully left matchmaking lobby"
-}</code></pre>
-                    </div>
-
-                    <!-- 30. Get Matchmaking Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets all players in the current matchmaking lobby.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "players": [
-    {
-      "player_id": "123",
-      "joined_at": "2023-01-01 11:30:00",
-      "last_heartbeat": "2023-01-01 12:00:00",
-      "status": "active",
-      "player_name": "Player1",
-      "seconds_since_heartbeat": 0,
-      "is_host": true
-    }
-  ],
-  "last_updated": "2023-01-01T12:00:00+00:00"
-}</code></pre>
-                    </div>
-
-                    <!-- 31. Matchmaking Heartbeat -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Sends heartbeat to maintain connection in matchmaking lobby.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "status": "ok"
-}</code></pre>
-                    </div>
-
-                    <!-- 32. Remove Matchmaking Lobby -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Removes the matchmaking lobby (host only).
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Matchmaking lobby removed successfully"
-}</code></pre>
-                    </div>
-
-                    <!-- 33. Start Game from Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Starts a game from matchmaking lobby (host only).
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "room_id": "room123...",
-  "room_name": "Game from Matchmaking abc123",
-  "players_transferred": 4,
-  "message": "Game started successfully"
-}</code></pre>
-                    </div>
-
-                    <!-- 34. Get Current Matchmaking Status -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets the current player's matchmaking status and lobby information.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "in_matchmaking": true,
-  "matchmaking": {
-    "matchmaking_id": "mm123...",
-    "is_host": true,
-    "max_players": 4,
-    "current_players": 3,
-    "strict_full": true,
-    "join_by_requests": false,
-    "extra_json_string": "{\"minLevel\":5,\"rank\":\"silver\"}",
-    "joined_at": "2023-01-01 11:30:00",
-    "player_status": "active",
-    "last_heartbeat": "2023-01-01 12:00:00",
-    "lobby_heartbeat": "2023-01-01 12:00:00",
-    "is_started": false,
-    "started_at": null
-  },
-  "pending_requests": []
-}</code></pre>
-                    </div>
-
-                    <!-- 35. Check Request Status -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/unity/matchmaking.php/REQ_ID/status?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Checks the status of a join request.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4 overflow-x-auto bg-gray-950/70 p-3 rounded"><code class="language-json">{}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "request": {
-    "request_id": "req123...",
-    "matchmaking_id": "mm123...",
-    "status": "approved",
-    "requested_at": "2023-01-01 11:45:00",
-    "responded_at": "2023-01-01 11:50:00",
-    "responded_by": "123",
-    "responder_name": "HostPlayer",
-    "join_by_requests": false
-  }
-}</code></pre>
-                    </div>
-
-                    <!-- 36. Respond to Join Request -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/matchmaking.php/REQ_ID/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Host responds to a join request (approve/reject).
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "action": "approve"
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "message": "Join request approved successfully",
-  "request_id": "req123...",
-  "action": "approve"
-}</code></pre>
-                    </div>
-
-                    <!-- 37. Get Leaderboard -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/unity/leaderboard.php?api_token=YOUR_API_TOKEN</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-2">
-                            <strong>Description:</strong> Gets ranked leaderboard based on player data. Supports sorting by multiple fields.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Request Body:</div>
-                        <pre class="text-sm mb-4"><code class="language-json">{
-  "sortBy": ["level","score"],
-  "limit": 10
-}</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": true,
-  "leaderboard": [
-    {
-      "rank": 1,
-      "player_id": 123,
-      "player_name": "TopPlayer",
-      "player_data_json": "{\"level\":50,\"score\":10000,\"rank\":\"diamond\"}"
-    }
-  ],
-  "total": 1,
-  "sort_by": ["level", "score"],
-  "limit": 10
-}</code></pre>
-                    </div>
-
-                    <!-- 38. Error Response Example -->
-                    <div class="bg-black/50 p-4 rounded-lg border border-red-900/50">
-                        <div class="flex items-center text-sm text-red-400 mb-2">
-                            <span class="font-mono bg-red-900/50 px-2 py-1 rounded mr-2">ERROR</span>
-                            <span class="font-mono">Any endpoint with invalid/missing API key</span>
-                        </div>
-                            <strong>Description:</strong> All endpoints return consistent error responses when something goes wrong.
-                        </p>
-                        <div class="text-xs text-gray-300 font-medium mb-2">Error Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto"><code class="language-json">{
-  "success": false,
-  "error": "Invalid API token"
-}</code></pre>
-                    </div>
-
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -1420,6 +907,49 @@ $site_twitter = "@michitai";
                     });
                 }
             });
+        });
+
+        // Download functionality for Unity SDK files
+        function triggerDownload(url, filename) {
+            const originalText = event.target.innerHTML;
+            event.target.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Preparing...';
+            event.target.disabled = true;
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            
+            document.body.appendChild(link);
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: false
+            });
+            link.dispatchEvent(clickEvent);
+            
+            setTimeout(() => {
+                document.body.removeChild(link);
+                event.target.innerHTML = originalText;
+                event.target.disabled = false;
+                
+                const successMsg = document.createElement('div');
+                successMsg.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center z-50';
+                successMsg.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Downloaded ${filename} successfully!`;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    successMsg.style.opacity = '0';
+                    setTimeout(() => successMsg.remove(), 300);
+                }, 3000);
+            }, 100);
+        }
+        
+        document.getElementById('downloadUnitySdk').addEventListener('click', (event) => {
+            triggerDownload('SDK.cs', 'Unity-SDK.cs');
+        });
+        
+        document.getElementById('downloadUnityExample').addEventListener('click', (event) => {
+            triggerDownload('Game.cs', 'Unity-Game.cs');
         });
     </script>
 
