@@ -305,7 +305,7 @@ pre::-webkit-scrollbar-thumb:hover {
             <!-- Platform Selection -->
             <div class="mb-12">
                 <h3 class="text-2xl font-bold text-white mb-6 text-center">Choose Your Platform</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                     <!-- Unity Platform -->
                     <a href="unity/index.php" class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-300 group">
                         <div class="w-20 h-20 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform">
@@ -329,6 +329,19 @@ pre::-webkit-scrollbar-thumb:hover {
                         <div class="flex items-center justify-center space-x-4">
                             <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>Modern</span>
                             <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>C#</span>
+                        </div>
+                    </a>
+                    
+                    <!-- REST API Platform -->
+                    <a href="api/index.php" class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-300 group">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-r from-orange-600 to-red-600 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform">
+                            <i class="fas fa-plug text-3xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">REST API</h4>
+                        <p class="text-white/80 text-center mb-4">Direct REST API for any platform or language</p>
+                        <div class="flex items-center justify-center space-x-4">
+                            <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>Universal</span>
+                            <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>JSON</span>
                         </div>
                     </a>
                 </div>

@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Do NOT redirect index.php, SDK.cs, Game.cs
+RewriteCond %{REQUEST_URI} !^/dotnet/index\.php$
+RewriteCond %{REQUEST_URI} !^/dotnet/SDK\.cs$
+RewriteCond %{REQUEST_URI} !^/dotnet/Game\.cs$
+
+# Redirect everything else from /dotnet to /api
+RewriteRule ^(.*)$ /api/$1 [R=301,L]
