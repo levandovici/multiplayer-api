@@ -4,16 +4,78 @@ using System.Collections.Generic;
 using System;
 using MultiplayerAPI;
 
+/// <summary>
+/// Unity Multiplayer API Demo Game Controller
+/// Comprehensive demonstration of all SDK features including player management,
+/// matchmaking, game rooms, real-time actions, and leaderboards.
+/// </summary>
+/// <remarks>
+/// This class provides a complete demonstration of the Multiplayer API SDK functionality.
+/// It showcases player registration, authentication, matchmaking lobby creation,
+/// join requests, game room management, real-time actions, updates, and leaderboards.
+/// 
+/// The demo follows a logical progression:
+/// 1. SDK initialization and player registration
+/// 2. Player authentication and data management
+/// 3. Traditional room management (for comparison)
+/// 4. Matchmaking lobby system with approval workflow
+/// 5. Game start from matchmaking to room transition
+/// 6. Real-time game room functionality
+/// 7. Leaderboard system with sorting options
+/// 
+/// Use this demo as a reference for implementing multiplayer features in your Unity game.
+/// The coroutines demonstrate proper async handling and token management.
+/// </remarks>
+/// <example>
+/// <code>
+/// // Attach this script to a GameObject in your Unity scene
+/// // Configure API tokens in the Inspector
+/// // Set autoStartDemo to true to run the demo automatically
+/// // Or call RunGameDemo() manually from your code
+/// </code>
+/// </example>
 public class Game : MonoBehaviour
 {
+    /// <summary>
+    /// Multiplayer SDK instance for API communication
+    /// Handles all multiplayer operations and HTTP requests
+    /// </summary>
     private MultiplayerSDK sdk;
+    
+    /// <summary>
+    /// Dictionary of registered players with their authentication tokens
+    /// Used for managing multiple player sessions in the demo
+    /// </summary>
     private Dictionary<string, PlayerInfo> players = new Dictionary<string, PlayerInfo>();
 
     [Header("Game Configuration")]
+    /// <summary>
+    /// API authentication token for server communication
+    /// Required for all API calls - obtain from multiplayer service provider
+    /// </summary>
     public string apiToken = "YOUR_API_TOKEN";
+    
+    /// <summary>
+    /// Private API token for enhanced security (if required)
+    /// Used for privileged operations like admin functions
+    /// </summary>
     public string apiPrivateToken = "YOUR_API_PRIVATE_TOKEN";
+    
+    /// <summary>
+    /// Automatically start the demo when the game begins
+    /// Set to false to manually trigger the demo from other scripts
+    /// </summary>
     public bool autoStartDemo = true;
 
+    /// <summary>
+    /// Unity Start method - initializes the demo
+    /// Called when the GameObject is activated
+    /// </summary>
+    /// <remarks>
+    /// This method initializes the demo by setting up the SDK and
+    /// optionally starting the automated demo sequence.
+    /// The SDK is added as a component to ensure proper lifecycle management.
+    /// </remarks>
     void Start()
     {
         if (autoStartDemo)
@@ -22,6 +84,52 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Comprehensive multiplayer API demonstration
+    /// Showcases all SDK features in a logical workflow
+    /// </summary>
+    /// <remarks>
+    /// This coroutine demonstrates the complete multiplayer API functionality:
+    /// 
+    /// <b>Phase 1: Player Management</b>
+    /// - Register multiple players with different roles and data
+    /// - Authenticate all registered players
+    /// - Manage player-specific and global game data
+    /// 
+    /// <b>Phase 2: Traditional Rooms</b>
+    /// - Create and manage traditional game rooms
+    /// - Demonstrate room listing and player management
+    /// 
+    /// <b>Phase 3: Matchmaking System</b>
+    /// - Create matchmaking lobbies with custom settings
+    /// - Handle join requests and approval workflow
+    /// - Demonstrate direct join and lobby management
+    /// - Start games from matchmaking lobbies
+    /// 
+    /// <b>Phase 4: Real-time Gameplay</b>
+    /// - Submit and process player actions
+    /// - Send real-time updates to players
+    /// - Poll for game state changes
+    /// 
+    /// <b>Phase 5: Competitive Features</b>
+    /// - Retrieve and display leaderboards
+    /// - Test multiple sorting options
+    /// 
+    /// Each phase includes comprehensive logging and error handling
+    /// to demonstrate production-ready implementation patterns.
+    /// </remarks>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
+    /// <example>
+    /// <code>
+    /// // Start the demo manually
+    /// StartCoroutine(RunGameDemo());
+    /// 
+    /// // Or disable autoStartDemo and call from UI button
+    /// public void StartDemoFromUI() {
+    ///     StartCoroutine(RunGameDemo());
+    /// }
+    /// </code>
+    /// </example>
     public IEnumerator RunGameDemo()
     {
         Debug.Log("=== MICHITAI Unity Game SDK Demo ===\n");
@@ -586,7 +694,20 @@ public class Game : MonoBehaviour
     }
 
     #region Coroutines for SDK Calls
-
+    
+    /// <summary>
+    /// Coroutine wrapper for player registration
+    /// Handles async SDK calls with proper token management
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the RegisterPlayer SDK call for use in Unity coroutines.
+    /// Clears the player token before registration and waits for completion.
+    /// Used throughout the demo for consistent async handling patterns.
+    /// </remarks>
+    /// <param name="name">Player display name</param>
+    /// <param name="playerDataJson">Initial player data as JSON string</param>
+    /// <param name="callback">Response callback with registration result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator RegisterPlayerCoroutine(string name, string playerDataJson, System.Action<RegisterPlayerResponse> callback)
     {
         sdk.SetGamePlayerToken(""); // Clear token for registration
@@ -598,6 +719,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for player authentication
+    /// Handles login with proper token management
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the LoginPlayer SDK call for use in Unity coroutines.
+    /// Sets the player token before authentication and waits for completion.
+    /// Demonstrates proper authentication workflow in multiplayer games.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="callback">Response callback with login result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator AuthenticatePlayerCoroutine(string playerToken, System.Action<LoginResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -609,6 +742,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for listing all players
+    /// Administrative function for player management
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the ListPlayers SDK call for administrative purposes.
+    /// Useful for server browsers, admin dashboards, or player discovery systems.
+    /// Returns comprehensive player information including status and activity.
+    /// </remarks>
+    /// <param name="callback">Response callback with player list result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator ListPlayersCoroutine(System.Action<ListPlayersResponse> callback)
     {
         bool completed = false;
@@ -619,6 +763,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for retrieving global game data
+    /// Accesses server-wide game settings and configuration
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetGameData SDK call for accessing global game data.
+    /// Useful for loading game settings, configuration, or server-wide variables.
+    /// The data is returned as JSON for flexible parsing and usage.
+    /// </remarks>
+    /// <param name="callback">Response callback with game data result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetGameDataCoroutine(System.Action<GameDataResponse> callback)
     {
         bool completed = false;
@@ -629,6 +784,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for updating global game data
+    /// Modifies server-wide game settings and configuration
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the UpdateGameData SDK call for modifying global game data.
+    /// Useful for updating game settings, server configuration, or global variables.
+    /// The update is applied immediately and affects all connected players.
+    /// </remarks>
+    /// <param name="dataJson">Game data as JSON string to update</param>
+    /// <param name="callback">Response callback with update result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator UpdateGameDataCoroutine(string dataJson, System.Action<UpdateDataResponse> callback)
     {
         bool completed = false;
@@ -639,6 +806,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for retrieving player-specific data
+    /// Accesses individual player's stored information
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetPlayerData SDK call for accessing player data.
+    /// Useful for loading player progress, inventory, stats, or preferences.
+    /// Requires proper player authentication token for data access.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="callback">Response callback with player data result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetPlayerDataCoroutine(string playerToken, System.Action<PlayerDataResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -650,6 +829,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for updating player-specific data
+    /// Modifies individual player's stored information
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the UpdatePlayerData SDK call for modifying player data.
+    /// Useful for saving player progress, updating inventory, or modifying stats.
+    /// Requires proper player authentication token for data modification.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="dataJson">Player data as JSON string to update</param>
+    /// <param name="callback">Response callback with update result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator UpdatePlayerDataCoroutine(string playerToken, string dataJson, System.Action<UpdateDataResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -661,6 +853,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for server time retrieval
+    /// Synchronizes client time with server timestamps
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetServerTime SDK call for time synchronization.
+    /// Useful for event timing, anti-cheat measures, or coordinated game events.
+    /// Supports UTC offset for timezone-specific time calculations.
+    /// </remarks>
+    /// <param name="utcOffset">UTC offset in hours for timezone adjustment</param>
+    /// <param name="callback">Response callback with time information</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetServerTimeCoroutine(int utcOffset, System.Action<TimeResponse> callback)
     {
         bool completed = false;
@@ -671,6 +875,20 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for traditional room creation
+    /// Creates persistent game rooms for multiplayer sessions
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the CreateRoom SDK call for traditional room management.
+    /// Useful for creating custom game rooms, private matches, or persistent sessions.
+    /// The creating player becomes the room host with management privileges.
+    /// </remarks>
+    /// <param name="roomName">Display name for the room</param>
+    /// <param name="password">Room password (empty for public rooms)</param>
+    /// <param name="maxPlayers">Maximum player capacity</param>
+    /// <param name="callback">Response callback with room creation result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator CreateRoomCoroutine(string roomName, string password, int maxPlayers, System.Action<CreateRoomResponse> callback)
     {
         bool completed = false;
@@ -681,6 +899,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for room listing
+    /// Retrieves all available game rooms
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the ListRooms SDK call for room discovery.
+    /// Useful for server browsers, lobby systems, or room discovery interfaces.
+    /// Returns room details including player count and password protection status.
+    /// </remarks>
+    /// <param name="callback">Response callback with room list result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator ListRoomsCoroutine(System.Action<ListRoomsResponse> callback)
     {
         bool completed = false;
@@ -691,6 +920,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for leaving rooms
+    /// Exits current room and updates player status
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the LeaveRoom SDK call for room exit.
+    /// Useful for cleanup, disconnecting, or transitioning between rooms.
+    /// Properly updates player status and notifies other room members.
+    /// </remarks>
+    /// <param name="callback">Response callback with leave result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator LeaveRoomCoroutine(System.Action<BaseResponse> callback)
     {
         bool completed = false;
@@ -701,6 +941,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for player logout
+    /// Terminates player session and invalidates tokens
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the LogoutPlayer SDK call for session termination.
+    /// Useful for cleanup, disconnecting, or security measures.
+    /// Invalidates player tokens and updates last logout timestamp.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="callback">Response callback with logout result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator LogoutPlayerCoroutine(string playerToken, System.Action<LogoutResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -712,6 +964,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for room player listing
+    /// Retrieves all players in current room
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the ListRoomPlayers SDK call for room player management.
+    /// Useful for displaying player lists, checking room occupancy, or managing game state.
+    /// Returns player details including host status and online status.
+    /// </remarks>
+    /// <param name="callback">Response callback with player list result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator ListRoomPlayersCoroutine(System.Action<ListRoomPlayersResponse> callback)
     {
         bool completed = false;
@@ -722,6 +985,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for room heartbeat
+    /// Maintains connection and prevents timeout
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the SendRoomHeartbeat SDK call for connection maintenance.
+    /// Should be called periodically (every 30-60 seconds) while in a room.
+    /// Prevents automatic timeout and maintains player's room connection.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="callback">Response callback with heartbeat result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator SendRoomHeartbeatCoroutine(string playerToken, System.Action<BaseResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -733,6 +1008,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for current room status
+    /// Retrieves comprehensive room state information
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetCurrentRoomStatus SDK call for room state management.
+    /// Useful for checking room state, player status, and pending actions.
+    /// Returns complete room information including player lists and activity.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="callback">Response callback with room status result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetCurrentRoomStatusCoroutine(string playerToken, System.Action<CurrentRoomStatusResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -744,6 +1031,20 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for action submission
+    /// Submits player actions for processing by other players
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the SubmitAction SDK call for action management.
+    /// Useful for game events, player moves, or multiplayer interactions.
+    /// Actions are processed asynchronously and can be tracked by ID.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="actionType">Type of action being submitted</param>
+    /// <param name="requestDataJson">Action data as JSON string</param>
+    /// <param name="callback">Response callback with action submission result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator SubmitActionCoroutine(string playerToken, string actionType, string requestDataJson, System.Action<SubmitActionResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -755,6 +1056,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for pending actions retrieval
+    /// Gets actions awaiting processing by current player
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetPendingActions SDK call for action processing.
+    /// Useful for processing actions submitted by other players.
+    /// Call periodically to check for new actions that need completion.
+    /// </remarks>
+    /// <param name="callback">Response callback with pending actions result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetPendingActionsCoroutine(System.Action<GetPendingActionsResponse> callback)
     {
         bool completed = false;
@@ -765,6 +1077,20 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for update sending
+    /// Sends real-time updates to room players
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the SendUpdate SDK call for real-time synchronization.
+    /// Useful for game state updates, notifications, or events.
+    /// Supports targeting specific players or broadcasting to all players.
+    /// </remarks>
+    /// <param name="targetPlayerIds">Target players ("all" or JSON array)</param>
+    /// <param name="type">Update type identifier</param>
+    /// <param name="dataJson">Update data as JSON string</param>
+    /// <param name="callback">Response callback with update result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator SendUpdateCoroutine(string targetPlayerIds, string type, string dataJson, System.Action<SendUpdateResponse> callback)
     {
         bool completed = false;
@@ -775,6 +1101,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for update polling
+    /// Retrieves updates sent by other players
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the PollUpdates SDK call for update retrieval.
+    /// Useful for receiving real-time updates from other players.
+    /// Supports incremental polling with last update ID tracking.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="lastUpdateId">Last update ID for incremental polling</param>
+    /// <param name="callback">Response callback with updates result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator PollUpdatesCoroutine(string playerToken, string lastUpdateId, System.Action<PollUpdatesResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -786,6 +1125,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking lobby listing
+    /// Retrieves all available matchmaking lobbies
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the ListMatchmaking SDK call for lobby discovery.
+    /// Useful for lobby browsers, server discovery, or matchmaking interfaces.
+    /// Returns lobby details including player count and settings.
+    /// </remarks>
+    /// <param name="callback">Response callback with lobby list result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator ListMatchmakingCoroutine(System.Action<ListMatchmakingResponse> callback)
     {
         bool completed = false;
@@ -796,6 +1146,21 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking lobby creation
+    /// Creates new matchmaking lobby with custom settings
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the CreateMatchmaking SDK call for lobby creation.
+    /// Useful for creating custom lobbies with specific requirements.
+    /// The creating player becomes the lobby host with management privileges.
+    /// </remarks>
+    /// <param name="maxPlayers">Maximum player capacity</param>
+    /// <param name="strictFull">Whether lobby closes when full</param>
+    /// <param name="joinByRequests">Whether join requires approval</param>
+    /// <param name="extraJsonString">Additional lobby settings as JSON</param>
+    /// <param name="callback">Response callback with lobby creation result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator CreateMatchmakingCoroutine(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, System.Action<CreateMatchmakingResponse> callback)
     {
         bool completed = false;
@@ -806,6 +1171,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking join request
+    /// Requests to join lobby with approval workflow
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the RequestJoinMatchmaking SDK call for join requests.
+    /// Useful for lobbies that require host approval for joining.
+    /// The host must approve or reject the request before entry.
+    /// </remarks>
+    /// <param name="playerKey">Player key from players dictionary</param>
+    /// <param name="matchmakingId">Lobby identifier to join</param>
+    /// <param name="callback">Response callback with join request result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator RequestJoinMatchmakingCoroutine(string playerKey, string matchmakingId, System.Action<JoinRequestResponse> callback)
     {
         sdk.SetGamePlayerToken(players[playerKey].Token);
@@ -817,6 +1195,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for join request response
+    /// Host responds to player join requests
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the RespondToRequest SDK call for request management.
+    /// Only the lobby host can respond to join requests.
+    /// Used to approve or reject player entry to the lobby.
+    /// </remarks>
+    /// <param name="matchmakingId">Lobby identifier</param>
+    /// <param name="action">Response action ("approve" or "reject")</param>
+    /// <param name="callback">Response callback with response result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator RespondToRequestCoroutine(string matchmakingId, string action, System.Action<RespondToRequestResponse> callback)
     {
         bool completed = false;
@@ -827,6 +1218,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for join request status check
+    /// Tracks the status of submitted join requests
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the CheckRequestStatus SDK call for request tracking.
+    /// Useful for monitoring whether join requests were approved or rejected.
+    /// Returns detailed request information and processing status.
+    /// </remarks>
+    /// <param name="playerKey">Player key from players dictionary</param>
+    /// <param name="matchmakingId">Lobby identifier</param>
+    /// <param name="callback">Response callback with status result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator CheckRequestStatusCoroutine(string playerKey, string matchmakingId, System.Action<CheckRequestStatusResponse> callback)
     {
         sdk.SetGamePlayerToken(players[playerKey].Token);
@@ -838,6 +1242,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking player listing
+    /// Retrieves all players in current matchmaking lobby
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetMatchmakingPlayers SDK call for lobby player management.
+    /// Useful for displaying player lists, checking lobby occupancy, or managing lobby state.
+    /// Returns player details including host status and activity information.
+    /// </remarks>
+    /// <param name="callback">Response callback with player list result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetMatchmakingPlayersCoroutine(System.Action<GetMatchmakingPlayersResponse> callback)
     {
         bool completed = false;
@@ -848,6 +1263,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking heartbeat
+    /// Maintains connection and prevents timeout in lobbies
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the SendMatchmakingHeartbeat SDK call for connection maintenance.
+    /// Should be called periodically (every 30-60 seconds) while in a matchmaking lobby.
+    /// Prevents automatic timeout and maintains player's lobby connection.
+    /// </remarks>
+    /// <param name="playerToken">Player authentication token</param>
+    /// <param name="callback">Response callback with heartbeat result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator SendMatchmakingHeartbeatCoroutine(string playerToken, System.Action<BaseResponse> callback)
     {
         sdk.SetGamePlayerToken(playerToken);
@@ -859,6 +1286,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for direct matchmaking join
+    /// Joins lobby without approval requirement
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the JoinMatchmaking SDK call for direct lobby entry.
+    /// Only works for lobbies with joinByRequests set to false.
+    /// Useful for public lobbies or instant join functionality.
+    /// </remarks>
+    /// <param name="playerKey">Player key from players dictionary</param>
+    /// <param name="matchmakingId">Lobby identifier to join</param>
+    /// <param name="callback">Response callback with join result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator JoinMatchmakingCoroutine(string playerKey, string matchmakingId, System.Action<JoinMatchmakingResponse> callback)
     {
         sdk.SetGamePlayerToken(players[playerKey].Token);
@@ -870,6 +1310,18 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking lobby exit
+    /// Leaves current matchmaking lobby
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the LeaveMatchmaking SDK call for lobby exit.
+    /// Useful for leaving lobbies, canceling matchmaking, or switching lobbies.
+    /// Properly updates player status and notifies lobby members.
+    /// </remarks>
+    /// <param name="playerKey">Player key from players dictionary</param>
+    /// <param name="callback">Response callback with leave result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator LeaveMatchmakingCoroutine(string playerKey, System.Action<LeaveMatchmakingResponse> callback)
     {
         sdk.SetGamePlayerToken(players[playerKey].Token);
@@ -881,6 +1333,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for matchmaking lobby removal
+    /// Deletes lobby and removes all players (host only)
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the RemoveMatchmaking SDK call for lobby deletion.
+    /// Only the lobby host can remove a matchmaking lobby.
+    /// Useful for cleanup, canceling matchmaking, or managing lobby lifecycle.
+    /// </remarks>
+    /// <param name="callback">Response callback with removal result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator RemoveMatchmakingCoroutine(System.Action<BaseResponse> callback)
     {
         bool completed = false;
@@ -891,6 +1354,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for game start from matchmaking
+    /// Transfers lobby to game room and starts game
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the StartMatchmaking SDK call for game initiation.
+    /// Only the lobby host can start a game from matchmaking.
+    /// Transfers all lobby players to a new game room for gameplay.
+    /// </remarks>
+    /// <param name="callback">Response callback with game start result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator StartMatchmakingCoroutine(System.Action<StartMatchmakingResponse> callback)
     {
         bool completed = false;
@@ -901,6 +1375,17 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for current matchmaking status
+    /// Retrieves comprehensive lobby state information
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetCurrentMatchmakingStatus SDK call for lobby state.
+    /// Useful for checking lobby state, player status, and pending requests.
+    /// Returns complete lobby information including settings and activity.
+    /// </remarks>
+    /// <param name="callback">Response callback with status result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetCurrentMatchmakingStatusCoroutine(System.Action<CurrentMatchmakingStatusResponse> callback)
     {
         bool completed = false;
@@ -911,6 +1396,19 @@ public class Game : MonoBehaviour
         yield return new WaitUntil(() => completed);
     }
 
+    /// <summary>
+    /// Coroutine wrapper for leaderboard retrieval
+    /// Gets ranked players with configurable sorting
+    /// </summary>
+    /// <remarks>
+    /// This coroutine wraps the GetLeaderboard SDK call for competitive rankings.
+    /// Useful for displaying leaderboards, rankings, or competitive stats.
+    /// Supports multiple sorting criteria and result limiting.
+    /// </remarks>
+    /// <param name="sortBy">Array of fields to sort by</param>
+    /// <param name="limit">Maximum number of results to return</param>
+    /// <param name="callback">Response callback with leaderboard result</param>
+    /// <returns>IEnumerator for Unity coroutine execution</returns>
     private IEnumerator GetLeaderboardCoroutine(string[] sortBy, int limit, System.Action<LeaderboardResponse> callback)
     {
         bool completed = false;
@@ -923,20 +1421,50 @@ public class Game : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Player information container for demo management
+    /// Stores authentication tokens and player metadata
+    /// </summary>
+    /// <remarks>
+    /// This class stores player information for the demo.
+    /// Used to manage multiple player sessions and authentication tokens.
+    /// Includes player ID, authentication token, and display name.
+    /// </remarks>
     [System.Serializable]
     public class PlayerInfo
     {
+        /// <summary>Unique player identifier</summary>
         public string Id;
+        
+        /// <summary>Player authentication token</summary>
         public string Token;
+        
+        /// <summary>Player display name</summary>
         public string Name;
     }
 
+    /// <summary>
+    /// Player data container for demo purposes
+    /// Represents player statistics and progress
+    /// </summary>
+    /// <remarks>
+    /// This class represents player data used in the demo.
+    /// Includes level, rank, score, and inventory information.
+    /// Used for demonstrating player data management and leaderboards.
+    /// </remarks>
     [System.Serializable]
     public class PlayerData
     {
+        /// <summary>Player level or experience</summary>
         public int level;
+        
+        /// <summary>Player rank or tier</summary>
         public string rank;
+        
+        /// <summary>Player score or points</summary>
         public int score;
+        
+        /// <summary>Player inventory or items</summary>
         public string inventory;
     }
 }
