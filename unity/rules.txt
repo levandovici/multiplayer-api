@@ -1,0 +1,389 @@
+Here are **ALL requirements** to migrate your SDK to **Unity JsonUtility**.
+This is the **complete checklist** you must follow.
+
+so I want to migrate this files:
+
+php/game_players.php
+php/game_data.php
+php/leaderboard.php
+php/time.php
+php/matchmaking.php
+php/game_room.php
+
+to php/dotnet/*.php
+and php/unity/*.php
+
+so old code to dotnet
+
+and after we will generate code for unity by this rules:
+
+---
+
+# ✅ 1. All classes must be [Serializable] 
+
+Every model must have:
+
+```csharp
+[Serializable]
+public class PlayerInfo
+{
+    public int Id;
+}
+```
+
+No [Serializable] → Unity won't deserialize.
+
+---
+
+# ✅ 2. Use fields (NOT properties)
+
+❌ Not allowed:
+
+```csharp
+public int Id { get; set; }
+```
+
+✅ Required:
+
+```csharp
+public int Id;
+```
+
+This affects **ALL your response classes**.
+
+---
+
+# ✅ 3. Remove all Dictionary<> 
+
+Unity JsonUtility does **not support**:
+
+```csharp
+Dictionary<string, object>
+Dictionary<string, int>
+```
+
+You must replace with:
+
+### Option A (recommended)
+
+```csharp
+public string player_data_json;
+```
+
+### Option B (fixed schema)
+
+```csharp
+public PlayerData player_data;
+```
+
+---
+
+# ✅ 4. Remove all object 
+
+❌ Not allowed:
+
+```csharp
+public object data;
+public object Response_data;
+```
+
+Replace with:
+
+```csharp
+public string data_json;
+```
+
+---
+
+# ✅ 5. No interfaces in serialized models
+
+❌ Not supported:
+
+```csharp
+class Response : IApiResponse
+```
+
+Remove:
+
+* IApiResponse 
+* interface-based polymorphism
+
+Use plain classes only.
+
+---
+
+# ✅ 6. No inheritance in JSON models (recommended)
+
+Unity JsonUtility has **limited inheritance support**.
+
+Avoid:
+
+```csharp
+class BaseResponse
+class PlayerResponse : BaseResponse
+```
+
+Flatten instead.
+
+---
+
+# ✅ 7. No abstract classes
+
+❌ Not supported for deserialization.
+
+---
+
+# ✅ 8. Arrays only (List sometimes works but arrays safer)
+
+Prefer:
+
+```csharp
+public Player[] players;
+```
+
+Instead of:
+
+```csharp
+public List<Player> players;
+```
+
+(Unity supports List but arrays are safer in IL2CPP)
+
+---
+
+# ✅ 9. No root arrays in JSON
+
+Unity cannot parse:
+
+```json
+[
+  { "id": 1 },
+  { "id": 2 }
+]
+```
+
+Must be:
+
+```json
+{
+  "items": [ ... ]
+}
+```
+
+You may need to change your backend.
+
+---
+
+# ✅ 10. Replace serializer calls
+
+Replace:
+
+```csharp
+JsonSerializer.Serialize(obj)
+```
+
+with:
+
+```csharp
+JsonUtility.ToJson(obj)
+```
+
+Replace:
+
+```csharp
+JsonSerializer.Deserialize<T>(json)
+```
+
+with:
+
+```csharp
+JsonUtility.FromJson<T>(json)
+```
+
+---
+
+# ✅ 11. No nullable generics in models
+
+Avoid:
+
+```csharp
+int?
+bool?
+```
+
+Use:
+
+```csharp
+int
+bool
+```
+
+or create default values.
+
+---
+
+# ✅ 12. Public fields only
+
+❌ Not serialized:
+
+```csharp
+private int score;
+```
+
+✅ Required:
+
+```csharp
+public int score;
+```
+
+---
+
+# ✅ 13. No constructors required
+
+Unity ignores constructors during deserialization.
+
+Avoid logic in constructors.
+
+---
+
+# ✅ 14. Enum support is limited
+
+Enums work, but safer to use string:
+
+❌ Risky:
+
+```csharp
+public ActionStatus status;
+```
+
+✅ Safer:
+
+```csharp
+public string status;
+```
+
+---
+
+# ✅ 15. No DateTime
+
+Unity JsonUtility does not handle DateTime.
+
+Use:
+
+```csharp
+public string created_at;
+```
+
+(which you already do 👍)
+
+---
+
+# ✅ 16. No polymorphic JSON
+
+❌ Not allowed:
+
+```json
+{ "data": { different structure } }
+```
+
+Must be fixed schema.
+
+---
+
+# ✅ 17. No nested generic types
+
+Avoid:
+
+```csharp
+List<Dictionary<string, object>>
+```
+
+Replace with string JSON.
+
+---
+
+# ✅ 18. Rename snake_case carefully
+
+Unity matches **exact names**.
+
+If backend sends:
+
+```json
+"player_id"
+```
+
+Your field must be:
+
+```csharp
+public string player_id;
+```
+
+NOT:
+
+```csharp
+public string PlayerId;
+```
+
+---
+
+# ✅ 19. No custom converters
+
+Unity JsonUtility has **zero converter support**.
+
+---
+
+# ✅ 20. No JsonSerializerOptions 
+
+Everything becomes default behavior.
+
+---
+
+# 📋 Migration checklist summary
+
+You must:
+
+* Add [Serializable] to all models
+* Convert properties → fields
+* Remove Dictionary
+* Remove object
+* Remove interfaces
+* Remove inheritance
+* Replace List with arrays (recommended)
+* Replace serializer calls
+* Replace dynamic JSON with string
+* Ensure snake_case naming
+* Avoid enums (optional but safer)
+
+---
+
+# ⚠️ Biggest breaking changes in YOUR SDK
+
+You must change these:
+
+* Dictionary<string, object> Player_data 
+* object Response_data 
+* object Request_data 
+* object DataJson 
+* object Extra_json_string 
+* all { get; set; } 
+* all interface responses
+
+These are the **major refactor points**.
+
+---
+
+# Estimated migration effort
+
+For your SDK size:
+
+* 120+ models
+* matchmaking
+* rooms
+* actions
+* leaderboard
+
+⏱ Estimated time:
+
+* Manual: 3–5 hours
+* Auto-conversion: 30 minutes
+* Full rewrite: 1 day
