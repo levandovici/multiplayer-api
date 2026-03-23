@@ -477,31 +477,31 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">RegisterPlayer</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void RegisterPlayer(string playerName, string playerDataJson, Action&lt;RegisterPlayerResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RegisterPlayer(string playerName, string playerDataJson, Action&lt;RegisterPlayerResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Registers a new player account. The playerDataJson should contain initial player data as a JSON string for Unity compatibility.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">LoginPlayer</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void LoginPlayer(Action&lt;LoginResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LoginPlayer(Action&lt;LoginResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Authenticates the player using the currently set game player token. Returns complete player information.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendPlayerHeartbeat</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void SendPlayerHeartbeat(Action&lt;HeartbeatResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendPlayerHeartbeat(Action&lt;HeartbeatResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Sends a heartbeat to maintain the player's connection. Call every 30-60 seconds to prevent timeout.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">LogoutPlayer</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void LogoutPlayer(Action&lt;LogoutResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LogoutPlayer(Action&lt;LogoutResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Logs out the current player and invalidates their session. Updates last logout timestamp.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">ListPlayers</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm"><code>void ListPlayers(Action&lt;ListPlayersResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListPlayers(Action&lt;ListPlayersResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Lists all registered players. Useful for admin dashboards or player discovery systems.</p>
                                 </div>
                             </div>
@@ -518,25 +518,25 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetGameData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void GetGameData(Action&lt;GameDataResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetGameData(Action&lt;GameDataResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Retrieves global game data and settings. Data is returned as JSON string for Unity compatibility.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">UpdateGameData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void UpdateGameData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void UpdateGameData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Updates global game data. The dataJson should contain the fields to update as JSON string.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetPlayerData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void GetPlayerData(Action&lt;PlayerDataResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetPlayerData(Action&lt;PlayerDataResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Retrieves player-specific data. Requires player authentication token to be set.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">UpdatePlayerData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm"><code>void UpdatePlayerData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void UpdatePlayerData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Updates player-specific data. The dataJson should contain fields to update as JSON string.</p>
                                 </div>
                             </div>
@@ -553,7 +553,7 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetServerTime</h3>
-                                    <pre class="bg-black/30 text-indigo-400 p-3 rounded text-sm"><code>void GetServerTime(Action&lt;TimeResponse&gt; callback, int utcOffset = 0)</code></pre>
+                                    <pre class="bg-black/30 text-indigo-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetServerTime(Action&lt;TimeResponse&gt; callback, int utcOffset = 0)</code></pre>
                                     <p class="text-white/70 mt-2">Retrieves server time with optional UTC offset. Useful for time synchronization and anti-cheat measures.</p>
                                 </div>
                             </div>
@@ -570,43 +570,43 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateRoom</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void CreateRoom(string roomName, string password, int maxPlayers, Action&lt;CreateRoomResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CreateRoom(string roomName, string password, int maxPlayers, Action&lt;CreateRoomResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Creates a new game room. The creating player becomes the room host.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">ListRooms</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void ListRooms(Action&lt;ListRoomsResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListRooms(Action&lt;ListRoomsResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Retrieves all available game rooms. Useful for server browser functionality.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">JoinRoom</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void JoinRoom(string roomId, string password, Action&lt;JoinRoomResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void JoinRoom(string roomId, string password, Action&lt;JoinRoomResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Joins an existing room. Password required for private rooms.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">ListRoomPlayers</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void ListRoomPlayers(Action&lt;ListRoomPlayersResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListRoomPlayers(Action&lt;ListRoomPlayersResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Lists all players in the current room. Useful for displaying player lists and checking occupancy.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">LeaveRoom</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void LeaveRoom(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LeaveRoom(Action&lt;BaseResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Leaves the current room and updates player status.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendRoomHeartbeat</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void SendRoomHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendRoomHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Sends heartbeat to maintain room connection. Call every 30-60 seconds while in room.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetCurrentRoomStatus</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm"><code>void GetCurrentRoomStatus(Action&lt;CurrentRoomStatusResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetCurrentRoomStatus(Action&lt;CurrentRoomStatusResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Gets comprehensive room state including player lists and pending actions.</p>
                                 </div>
                             </div>
@@ -623,25 +623,25 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SubmitAction</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void SubmitAction(string actionType, string requestDataJson, Action&lt;SubmitActionResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SubmitAction(string actionType, string requestDataJson, Action&lt;SubmitActionResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Submits an action for processing by other players. Actions are processed asynchronously.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">PollActions</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void PollActions(Action&lt;PollActionsResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void PollActions(Action&lt;PollActionsResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Polls for completed actions from other players. Call periodically to check for new actions.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetPendingActions</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void GetPendingActions(Action&lt;GetPendingActionsResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetPendingActions(Action&lt;GetPendingActionsResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Gets actions awaiting processing by the current player. Call to find actions to complete.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CompleteAction</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm"><code>void CompleteAction(string actionId, string status, string responseDataJson, Action&lt;CompleteActionResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CompleteAction(string actionId, string status, string responseDataJson, Action&lt;CompleteActionResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Marks an action as completed with processing results. Used after processing pending actions.</p>
                                 </div>
                             </div>
@@ -658,13 +658,13 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendUpdate</h3>
-                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm"><code>void SendUpdate(string targetPlayerIds, string type, string dataJson, Action&lt;SendUpdateResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendUpdate(string targetPlayerIds, string type, string dataJson, Action&lt;SendUpdateResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Sends real-time updates to specific players or all players. Target can be "all" or JSON array of IDs.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">PollUpdates</h3>
-                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm"><code>void PollUpdates(string lastUpdateId, Action&lt;PollUpdatesResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void PollUpdates(string lastUpdateId, Action&lt;PollUpdatesResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Polls for updates sent by other players. Supports incremental polling with lastUpdateId.</p>
                                 </div>
                             </div>
@@ -681,73 +681,73 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">ListMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void ListMatchmaking(Action&lt;ListMatchmakingResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListMatchmaking(Action&lt;ListMatchmakingResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, Action&lt;CreateMatchmakingResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, Action&lt;CreateMatchmakingResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Creates a new matchmaking lobby. The creating player becomes the lobby host.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">RequestJoinMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void RequestJoinMatchmaking(string matchmakingId, Action&lt;JoinRequestResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RequestJoinMatchmaking(string matchmakingId, Action&lt;JoinRequestResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Requests to join a lobby that requires host approval. Returns request ID for tracking.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">JoinMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void JoinMatchmaking(string matchmakingId, Action&lt;JoinMatchmakingResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void JoinMatchmaking(string matchmakingId, Action&lt;JoinMatchmakingResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Joins a matchmaking lobby directly. Only works if lobby allows direct join.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">LeaveMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void LeaveMatchmaking(Action&lt;LeaveMatchmakingResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LeaveMatchmaking(Action&lt;LeaveMatchmakingResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Leaves the current matchmaking lobby and updates player status.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetMatchmakingPlayers</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void GetMatchmakingPlayers(Action&lt;GetMatchmakingPlayersResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetMatchmakingPlayers(Action&lt;GetMatchmakingPlayersResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Lists all players in the current matchmaking lobby. Useful for displaying player lists.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendMatchmakingHeartbeat</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void SendMatchmakingHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendMatchmakingHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Sends heartbeat to maintain lobby connection. Call every 30-60 seconds while in lobby.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">RemoveMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void RemoveMatchmaking(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RemoveMatchmaking(Action&lt;BaseResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Removes the matchmaking lobby and kicks all players. Only the lobby host can call this.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">StartMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void StartMatchmaking(Action&lt;StartMatchmakingResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void StartMatchmaking(Action&lt;StartMatchmakingResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Starts a game from matchmaking lobby. Transfers all players to a new game room.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetCurrentMatchmakingStatus</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void GetCurrentMatchmakingStatus(Action&lt;CurrentMatchmakingStatusResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetCurrentMatchmakingStatus(Action&lt;CurrentMatchmakingStatusResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Gets comprehensive lobby state including player status and pending requests.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CheckRequestStatus</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void CheckRequestStatus(string requestId, Action&lt;CheckRequestStatusResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CheckRequestStatus(string requestId, Action&lt;CheckRequestStatusResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Checks the status of a join request. Useful for tracking approval/rejection status.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">RespondToRequest</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm"><code>void RespondToRequest(string requestId, string action, Action&lt;RespondToRequestResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RespondToRequest(string requestId, string action, Action&lt;RespondToRequestResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Responds to a join request (approve/reject). Only the lobby host can call this.</p>
                                 </div>
                             </div>
@@ -764,7 +764,7 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetLeaderboard</h3>
-                                    <pre class="bg-black/30 text-yellow-400 p-3 rounded text-sm"><code>void GetLeaderboard(string[] sortBy, int limit, Action&lt;LeaderboardResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-yellow-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetLeaderboard(string[] sortBy, int limit, Action&lt;LeaderboardResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Retrieves ranked players with configurable sorting criteria. Supports multiple sort fields.</p>
                                 </div>
                             </div>
@@ -781,13 +781,13 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendRequest&lt;T&gt;</h3>
-                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm"><code>private void SendRequest&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>private void SendRequest&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Internal method for sending HTTP requests with authentication and error handling.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendRequestCoroutine&lt;T&gt;</h3>
-                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm"><code>private IEnumerator SendRequestCoroutine&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>private IEnumerator SendRequestCoroutine&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Internal coroutine for async HTTP requests with comprehensive error handling.</p>
                                 </div>
                             </div>
