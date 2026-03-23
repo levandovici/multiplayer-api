@@ -271,7 +271,6 @@ pre::-webkit-scrollbar-thumb:hover {
                     <img src="logo.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
                     <div>
                         <h1 class="text-lg font-bold text-white">Multiplayer API</h1>
-                        <p class="text-xs text-white/70">Core Cells</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">

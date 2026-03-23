@@ -84,8 +84,7 @@ $site_twitter = "@michitai";
                 <div class="flex items-center space-x-3">
                     <img src="../logo.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
                     <div>
-                        <h1 class="text-lg font-bold text-white">.NET Multiplayer API</h1>
-                        <p class="text-xs text-white/70">System.Text.Json</p>
+                        <h1 class="text-lg font-bold text-white">Multiplayer API</h1>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
