@@ -1474,8 +1474,9 @@ namespace MultiplayerAPI
         [Header("API Configuration")]
         public string baseUrl = "https://api.michitai.com";
         public string apiToken = "";
+        public string apiPrivateToken = "";
         public string gamePlayerToken = "";
-        public float requestTimeout = 10f;
+        public float requestTimeout = 30f;
 
         [Header("Debug")]
         public bool enableDebugLogs = true;
@@ -1484,31 +1485,6 @@ namespace MultiplayerAPI
 
         #region PLAYER MANAGEMENT
         // Methods for player registration, authentication, and lifecycle management
-
-        /// <summary>
-        /// Authenticates a player with existing credentials
-        /// Returns complete player information and session data
-        /// </summary>
-        /// <remarks>
-        /// Call this method after player registration to authenticate the player.
-        /// The response contains complete player information including current status,
-        /// last activity timestamps, and player data. Store the player_id
-        /// and private_key for subsequent authenticated API calls.
-        /// </remarks>
-        /// <param name="callback">Response callback with LoginResponse result</param>
-        /// <example>
-        /// <code>
-        /// sdk.LoginPlayer((response) => {
-        ///     if (response.success) {
-        ///         Debug.Log($"Logged in as: {Response.player.player_name}");
-        ///         sdk.SetGamePlayerToken("player_token_from_login");
-        ///     } else {
-        ///         Debug.LogError($"Login failed: {Response.error}");
-        ///     }
-        /// });
-        /// </code>
-        /// </example>
-        public void LoginPlayer(Action<LoginResponse> callback)
 
         /// <summary>
         /// Registers a new player in the multiplayer system
@@ -1653,7 +1629,7 @@ namespace MultiplayerAPI
         /// </example>
         public void ListPlayers(Action<ListPlayersResponse> callback)
         {
-            SendRequest($"{UnityEndpoint}/game_players.php/list", "GET", "", callback);
+            SendRequest($"{UnityEndpoint}/game_players.php/list", "GET", "", callback, usePrivateToken: true);
         }
 
         #endregion
@@ -1741,7 +1717,7 @@ namespace MultiplayerAPI
         /// </example>
         public void UpdateGameData(string dataJson, Action<UpdateDataResponse> callback)
         {
-            SendRequest($"{UnityEndpoint}/game_data.php/game/update", "PUT", dataJson, callback);
+            SendRequest($"{UnityEndpoint}/game_data.php/game/update", "PUT", dataJson, callback, usePrivateToken: true);
         }
 
         /// <summary>
@@ -2703,9 +2679,43 @@ namespace MultiplayerAPI
         /// });
         /// </code>
         /// </example>
-        private void SendRequest<T>(string url, string method, string bodyJson, Action<T> callback) where T : BaseResponse
+        private void SendRequest<T>(string url, string method, string bodyJson, Action<T> callback, bool usePrivateToken = false) where T : BaseResponse
         {
-            StartCoroutine(SendRequestCoroutine(url, method, bodyJson, callback));
+            StartCoroutine(SendRequestCoroutine(BuildUrlWithAuth(url, usePrivateToken), method, bodyJson, callback));
+        }
+
+        /// <summary>
+        /// Builds URL with authentication query parameters
+        /// Matches .NET SDK authentication pattern
+        /// </summary>
+        /// <param name="url">Base URL</param>
+        /// <param name="usePrivateToken">Whether to use private token for admin operations</param>
+        /// <returns>URL with authentication parameters</returns>
+        private string BuildUrlWithAuth(string url, bool usePrivateToken = false)
+        {
+            string separator = url.Contains("?") ? "&" : "?";
+            
+            // Add api_token parameter
+            if (!string.IsNullOrEmpty(apiToken))
+            {
+                url += $"{separator}api_token={UnityWebRequest.EscapeURL(apiToken)}";
+                separator = "&";
+            }
+            
+            // Add game_player_token parameter
+            if (!string.IsNullOrEmpty(gamePlayerToken))
+            {
+                url += $"{separator}game_player_token={UnityWebRequest.EscapeURL(gamePlayerToken)}";
+                separator = "&";
+            }
+            
+            // Add api_private_token parameter for admin operations
+            if (usePrivateToken && !string.IsNullOrEmpty(apiPrivateToken))
+            {
+                url += $"{separator}api_private_token={UnityWebRequest.EscapeURL(apiPrivateToken)}";
+            }
+            
+            return url;
         }
 
         /// <summary>
@@ -2744,17 +2754,6 @@ namespace MultiplayerAPI
                 // Set headers
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
-
-                // Add authentication
-                if (!string.IsNullOrEmpty(apiToken))
-                {
-                    request.SetRequestHeader("X-API-Token", apiToken);
-                }
-
-                if (!string.IsNullOrEmpty(gamePlayerToken))
-                {
-                    request.SetRequestHeader("X-Player-Token", gamePlayerToken);
-                }
 
                 // Add body for POST/PUT requests
                 if (!string.IsNullOrEmpty(bodyJson) && (method == "POST" || method == "PUT"))
@@ -2874,6 +2873,35 @@ namespace MultiplayerAPI
         }
 
         /// <summary>
+        /// Sets the private API token for admin operations
+        /// Required for admin-only operations like listing all players
+        /// </summary>
+        /// <remarks>
+        /// This method sets the private API token used for privileged operations.
+        /// The private token should be kept secure and only used server-side
+        /// or in trusted admin interfaces. This token is required for
+        /// operations like listing all players or updating global game data.
+        /// </remarks>
+        /// <param name="token">Private API token for admin operations</param>
+        /// <example>
+        /// <code>
+        /// // Set private API token for admin operations
+        /// sdk.SetApiPrivateToken("your_private_api_token_here");
+        /// 
+        /// // Now admin operations will work
+        /// sdk.ListPlayers((response) => {
+        ///     if (response.success) {
+        ///         Debug.Log($"Found {response.count} players");
+        ///     }
+        /// });
+        /// </code>
+        /// </example>
+        public void SetApiPrivateToken(string token)
+        {
+            apiPrivateToken = token;
+        }
+
+        /// <summary>
         /// Serializes object to JSON using Unity's JsonUtility
         /// Helper method for consistent JSON serialization
         /// </summary>
@@ -2929,6 +2957,22 @@ namespace MultiplayerAPI
         public T DeserializeFromJson<T>(string json)
         {
             return JsonUtility.FromJson<T>(json);
+        }
+
+        /// <summary>
+        /// Switch to player token with safe waiting period
+        /// </summary>
+        /// <param name="playerKey">Player identifier key</param>
+        /// <param name="operation">Description of operation for logging</param>
+        /// <param name="waitSeconds">Time to wait after token switch</param>
+        /// <returns>IEnumerator for coroutine execution</returns>
+        public IEnumerator SwitchToPlayerAndWait(string playerKey, string operation, float waitSeconds = 0.4f)
+        {
+            // Note: This method assumes players dict is available in the calling context
+            // In practice, this should be called from Game.cs with players dictionary
+            SetGamePlayerToken(playerKey); // For now, set token directly
+            Debug.Log($"[TOKEN → {playerKey}] {operation}");
+            yield return new WaitForSeconds(waitSeconds);
         }
 
         #endregion

@@ -126,6 +126,12 @@ try {
 
                 // Return player data as JSON string for Unity compatibility
                 $playerData = json_decode($player['player_data'] ?? '{}', true);
+                
+                // Ensure data_json is always a valid JSON object, not array
+                if (empty($playerData) || (is_array($playerData) && empty($playerData))) {
+                    $playerData = new stdClass(); // Empty object instead of array
+                }
+                
                 sendResponse([
                     'success' => true,
                     'type' => 'player',

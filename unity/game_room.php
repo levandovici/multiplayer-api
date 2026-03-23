@@ -537,8 +537,24 @@ function submitAction() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['action_type']) || !isset($data['request_data'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required fields: action_type and request_data'], 400);
+    // Accept both formats for Unity compatibility and future-proofing
+    if (empty($data['action_type'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: action_type'], 400);
+    }
+
+    // Handle Unity's request_data_json format (string) OR standard request_data (object)
+    $requestData = null;
+    if (isset($data['request_data_json'])) {
+        // Unity format: JSON string that needs to be parsed
+        $requestData = json_decode($data['request_data_json'], true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            sendResponse(['success' => false, 'error' => 'Invalid JSON in request_data_json field'], 400);
+        }
+    } elseif (isset($data['request_data'])) {
+        // Standard format: already an object
+        $requestData = $data['request_data'];
+    } else {
+        sendResponse(['success' => false, 'error' => 'Missing required field: request_data or request_data_json'], 400);
     }
 
     $roomId = getPlayerRoom($player['id']);
@@ -560,7 +576,7 @@ function submitAction() {
         $context['api']['id'],
         $player['id'],
         $data['action_type'],
-        json_encode($data['request_data'], JSON_UNESCAPED_UNICODE)
+        json_encode($requestData, JSON_UNESCAPED_UNICODE)
     ]);
 
     sendResponse([
