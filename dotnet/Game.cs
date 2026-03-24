@@ -14,7 +14,7 @@ public class Game
         Console.WriteLine("=== MICHITAI Game SDK Usage Example ===\n");
 
         // 1️⃣ Initialize SDK
-        sdk = new GameSDK("YOUR_API_TOKEN", "YOUR_API_PRIVATE_TOKEN");
+        sdk = new GameSDK("YOUR_API_TOKEN", "YOUR_PRIVATE_TOKEN");
         Console.WriteLine("[INIT] SDK initialized\n");
 
         // 2️⃣ Register Multiple Players for Matchmaking Demo

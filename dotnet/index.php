@@ -903,8 +903,8 @@ foreach (var entry in response.Leaderboard) {
                                 <p class="text-gray-400 text-sm mt-2">Constructs URLs with authentication tokens and query parameters.</p>
                                 <div class="mt-3 p-3 bg-gray-900/20 rounded border border-gray-700/50">
                                     <p class="text-gray-200 text-xs font-medium mb-2">Example:</p>
-                                    <pre class="text-xs text-gray-100 overflow-x-auto"><code class="language-csharp">// Generates: https://api.michitai.com/api/game_players.php/list?api_token=TOKEN&api_private_token=PRIVATE_TOKEN
-var url = Url("game_players.php/list", "&api_private_token={_apiPrivateToken}");</code></pre>
+                                    <pre class="text-xs text-gray-100 overflow-x-auto"><code class="language-csharp">// Generates: https://api.michitai.com/api/game_players.php/list?api_token=TOKEN&private_token=PRIVATE_TOKEN
+var url = Url("game_players.php/list", "&private_token={_apiPrivateToken}");</code></pre>
                                 </div>
                             </div>
                             

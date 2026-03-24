@@ -165,7 +165,7 @@ namespace michitai
         {
             return Send<PlayerAuthResponse>(
                 HttpMethod.Put,
-                Url("game_players.php/login", $"&game_player_token={playerToken}")
+                Url("game_players.php/login", $"&player_token={playerToken}")
             );
         }
 
@@ -175,7 +175,7 @@ namespace michitai
         /// <returns>Task containing list of players and total count.</returns>
         public Task<PlayerListResponse> GetAllPlayers()
         {
-            return Send<PlayerListResponse>(HttpMethod.Get, Url("game_players.php/list", $"&api_private_token={_apiPrivateToken}"));
+            return Send<PlayerListResponse>(HttpMethod.Get, Url("game_players.php/list", $"&private_token={_apiPrivateToken}"));
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace michitai
         {
             return Send<PlayerHeartbeatResponse>(
                 HttpMethod.Post,
-                Url("game_players.php/heartbeat", $"&game_player_token={gamePlayerToken}")
+                Url("game_players.php/heartbeat", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -200,7 +200,7 @@ namespace michitai
         {
             return Send<PlayerLogoutResponse>(
                 HttpMethod.Post,
-                Url("game_players.php/logout", $"&game_player_token={gamePlayerToken}")
+                Url("game_players.php/logout", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -220,7 +220,7 @@ namespace michitai
         /// <returns>Task indicating success or failure of the update.</returns>
         public Task<SuccessResponse> UpdateGameData(object data)
         {
-            return Send<SuccessResponse>(HttpMethod.Put, Url("game_data.php/game/update", $"&api_private_token={_apiPrivateToken}"), data);
+            return Send<SuccessResponse>(HttpMethod.Put, Url("game_data.php/game/update", $"&private_token={_apiPrivateToken}"), data);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace michitai
         {
             return Send<PlayerDataResponse>(
                 HttpMethod.Get,
-                Url("game_data.php/player/get", $"&game_player_token={playerToken}")
+                Url("game_data.php/player/get", $"&player_token={playerToken}")
             );
         }
 
@@ -246,7 +246,7 @@ namespace michitai
         {
             return Send<SuccessResponse>(
                 HttpMethod.Put,
-                Url("game_data.php/player/update", $"&game_player_token={playerToken}"),
+                Url("game_data.php/player/update", $"&player_token={playerToken}"),
                 data
             );
         }
@@ -292,7 +292,7 @@ namespace michitai
         {
             return Send<RoomCreateResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/rooms", $"&game_player_token={gamePlayerToken}"),
+                Url("game_room.php/rooms", $"&player_token={gamePlayerToken}"),
                 new
                 {
                     room_name = roomName,
@@ -328,7 +328,7 @@ namespace michitai
         {
             return Send<RoomJoinResponse>(
                 HttpMethod.Post,
-                Url($"game_room.php/rooms/{roomId}/join", $"&game_player_token={gamePlayerToken}"),
+                Url($"game_room.php/rooms/{roomId}/join", $"&player_token={gamePlayerToken}"),
                 password != null ? new { password = password } : new { password = "" }
             );
         }
@@ -342,7 +342,7 @@ namespace michitai
         {
             return Send<RoomLeaveResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/rooms/leave", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/rooms/leave", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -355,7 +355,7 @@ namespace michitai
         {
             return Send<RoomPlayersResponse>(
                 HttpMethod.Get,
-                Url("game_room.php/players", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/players", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -368,7 +368,7 @@ namespace michitai
         {
             return Send<HeartbeatResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/heartbeat", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/heartbeat", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -386,7 +386,7 @@ namespace michitai
         {
             return Send<ActionSubmitResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/actions", $"&game_player_token={gamePlayerToken}"),
+                Url("game_room.php/actions", $"&player_token={gamePlayerToken}"),
                 new
                 {
                     action_type = actionType,
@@ -404,7 +404,7 @@ namespace michitai
         {
             return Send<ActionPollResponse>(
                 HttpMethod.Get,
-                Url("game_room.php/actions/poll", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/actions/poll", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -417,7 +417,7 @@ namespace michitai
         {
             return Send<ActionPendingResponse>(
                 HttpMethod.Get,
-                Url("game_room.php/actions/pending", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/actions/pending", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -435,7 +435,7 @@ namespace michitai
         {
             return Send<ActionCompleteResponse>(
                 HttpMethod.Post,
-                Url($"game_room.php/actions/{actionId}/complete", $"&game_player_token={gamePlayerToken}"),
+                Url($"game_room.php/actions/{actionId}/complete", $"&player_token={gamePlayerToken}"),
                 new
                 {
                     status = request.Status,
@@ -456,7 +456,7 @@ namespace michitai
         {
             return Send<UpdatePlayersResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/updates", $"&game_player_token={gamePlayerToken}"),
+                Url("game_room.php/updates", $"&player_token={gamePlayerToken}"),
                 new
                 {
                     targetPlayerIds = request.TargetPlayerIds,
@@ -476,7 +476,7 @@ namespace michitai
             string gamePlayerToken,
             string? lastUpdateId = null)
         {
-            string extra = $"&game_player_token={gamePlayerToken}";
+            string extra = $"&player_token={gamePlayerToken}";
             if (!string.IsNullOrEmpty(lastUpdateId))
             {
                 extra += $"&lastUpdateId={lastUpdateId}";
@@ -497,7 +497,7 @@ namespace michitai
         {
             return Send<CurrentRoomResponse>(
                 HttpMethod.Get,
-                Url("game_room.php/current", $"&game_player_token={gamePlayerToken}")
+                Url("game_room.php/current", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -531,7 +531,7 @@ namespace michitai
         {
             return Send<MatchmakingCreateResponse>(
                 HttpMethod.Post,
-                Url("matchmaking.php/create", $"&game_player_token={gamePlayerToken}"),
+                Url("matchmaking.php/create", $"&player_token={gamePlayerToken}"),
                 new
                 {
                     maxPlayers = maxPlayers,
@@ -554,7 +554,7 @@ namespace michitai
         {
             return Send<MatchmakingJoinRequestResponse>(
                 HttpMethod.Post,
-                Url($"matchmaking.php/{matchmakingId}/request", $"&game_player_token={gamePlayerToken}")
+                Url($"matchmaking.php/{matchmakingId}/request", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -572,7 +572,7 @@ namespace michitai
         {
             return Send<MatchmakingRequestResponse>(
                 HttpMethod.Post,
-                Url($"matchmaking.php/{matchmakingId}/response", $"&game_player_token={gamePlayerToken}"),
+                Url($"matchmaking.php/{matchmakingId}/response", $"&player_token={gamePlayerToken}"),
                 new { action = action.ToString().ToLower() }
             );
         }
@@ -589,7 +589,7 @@ namespace michitai
         {
             return Send<MatchmakingRequestStatusResponse>(
                 HttpMethod.Get,
-                Url($"matchmaking.php/{requestId}/status", $"&game_player_token={gamePlayerToken}")
+                Url($"matchmaking.php/{requestId}/status", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -602,7 +602,7 @@ namespace michitai
         {
             return Send<MatchmakingCurrentResponse>(
                 HttpMethod.Get,
-                Url("matchmaking.php/current", $"&game_player_token={gamePlayerToken}")
+                Url("matchmaking.php/current", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -618,7 +618,7 @@ namespace michitai
         {
             return Send<MatchmakingDirectJoinResponse>(
                 HttpMethod.Post,
-                Url($"matchmaking.php/{matchmakingId}/join", $"&game_player_token={gamePlayerToken}")
+                Url($"matchmaking.php/{matchmakingId}/join", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -631,7 +631,7 @@ namespace michitai
         {
             return Send<MatchmakingLeaveResponse>(
                 HttpMethod.Post,
-                Url("matchmaking.php/leave", $"&game_player_token={gamePlayerToken}")
+                Url("matchmaking.php/leave", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -644,7 +644,7 @@ namespace michitai
         {
             return Send<MatchmakingPlayersResponse>(
                 HttpMethod.Get,
-                Url("matchmaking.php/players", $"&game_player_token={gamePlayerToken}")
+                Url("matchmaking.php/players", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -657,7 +657,7 @@ namespace michitai
         {
             return Send<MatchmakingHeartbeatResponse>(
                 HttpMethod.Post,
-                Url("matchmaking.php/heartbeat", $"&game_player_token={gamePlayerToken}")
+                Url("matchmaking.php/heartbeat", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -670,7 +670,7 @@ namespace michitai
         {
             return Send<MatchmakingRemoveResponse>(
                 HttpMethod.Post,
-                Url("matchmaking.php/remove", $"&game_player_token={gamePlayerToken}")
+                Url("matchmaking.php/remove", $"&player_token={gamePlayerToken}")
             );
         }
 
@@ -683,7 +683,7 @@ namespace michitai
         {
             return Send<MatchmakingStartResponse>(
                 HttpMethod.Post,
-                Url("matchmaking.php/start", $"&game_player_token={gamePlayerToken}")
+                Url("matchmaking.php/start", $"&player_token={gamePlayerToken}")
             );
         }
 
