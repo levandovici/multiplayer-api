@@ -792,746 +792,7 @@ $site_twitter = "@michitai";
 }</code></pre>
                     </div>
 
-                    <!-- 10. Get Server Time -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/time.php?api_token=API_KEY</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/time.php?api_token=API_KEY"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "utc": "2026-03-13T14:01:49+00:00",
-  "timestamp": 1773410509,
-  "readable": "2026-03-13 14:01:49 UTC"
-}</code></pre>
-                    </div>
-
-                    <!-- 11. Get Server Time +1 Hour -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/time.php?api_token=API_KEY&utc=+1</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/time.php?api_token=API_KEY&utc=+1"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "utc": "2026-03-13T15:04:17+00:00",
-  "timestamp": 1773414257,
-  "readable": "2026-03-13 15:04:17 UTC",
-  "offset": {
-    "offset_hours": 1,
-    "offset_string": "+1",
-    "original_utc": "2026-03-13T14:04:17+00:00",
-    "original_timestamp": 1773410657
-  }
-}</code></pre>
-                    </div>
-
-                    <!-- 12. Get Server Time -2 Hours -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/time.php?api_token=API_KEY&utc=-2</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/time.php?api_token=API_KEY&utc=-2"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "utc": "2026-03-13T12:05:13+00:00",
-  "timestamp": 1773403513,
-  "readable": "2026-03-13 12:05:13 UTC",
-  "offset": {
-    "offset_hours": -2,
-    "offset_string": "-2",
-    "original_utc": "2026-03-13T14:05:13+00:00",
-    "original_timestamp": 1773410713
-  }
-}</code></pre>
-                    </div>
-
-                    <!-- 13. Create Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "room_name": "My Game Room",
-    "password": "secret123",
-    "max_players": 4
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "room_id": "dc3723848639139113ca240958ba0bf8",
-  "room_name": "My Game Room",
-  "is_host": true
-}</code></pre>
-                    </div>
-
-                    <!-- 14. List Rooms -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/list?api_token=API_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_room.php/list?api_token=API_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "rooms": [
-    {
-      "room_id": "dc3723848639139113ca240958ba0bf8",
-      "room_name": "My Game Room",
-      "max_players": 4,
-      "current_players": 1,
-      "has_password": 1
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 15. Join Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/ROOM_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/dc3723848639139113ca240958ba0bf8/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "password": "secret123"
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "room_id": "dc3723848639139113ca240958ba0bf8",
-  "message": "Successfully joined the room"
-}</code></pre>
-                    </div>
-
-                    <!-- 16. List Room Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_room.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "players": [
-    {
-      "player_id": "48",
-      "player_name": "TestPlayer",
-      "is_host": 1,
-      "is_online": 1,
-      "last_heartbeat": "2026-03-09 09:39:34"
-    },
-    {
-      "player_id": "49",
-      "player_name": "TestPlayer",
-      "is_host": 0,
-      "is_online": 1,
-      "last_heartbeat": "2026-03-09 09:44:39"
-    }
-  ],
-  "last_updated": "2026-03-09T09:56:21+00:00"
-}</code></pre>
-                    </div>
-
-                    <!-- 17. Leave Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "message": "Successfully left the room"
-}</code></pre>
-                    </div>
-
-                    <!-- 18. Room Heartbeat -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "status": "ok"
-}</code></pre>
-                    </div>
-
-                    <!-- 19. Submit Action -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "action_type": "move",
-    "request_data": {
-      "x": 10,
-      "y": 20
-    }
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "action_id": "1c2bbd859e36dc7d7e5e9b4f263c88ce",
-  "status": "pending"
-}</code></pre>
-                    </div>
-
-                    <!-- 20. Poll Actions -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/actions/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "actions": [
-    {
-      "action_id": "efc5ea74e3a37e41a4f57d948cfb2538",
-      "action_type": "move",
-      "response_data": {
-        "success": true,
-        "message": "Moved successfully"
-      },
-      "status": "completed"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 21. Get Pending Actions -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/actions/pending?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/pending?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "actions": [
-    {
-      "action_id": "efc5ea74e3a37e41a4f57d948cfb2538",
-      "player_id": "49",
-      "action_type": "move",
-      "request_data": {
-        "x": 10,
-        "y": 20
-      },
-      "created_at": "2026-03-09 10:10:10",
-      "player_name": "TestPlayer"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 22. Complete Action -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/actions/ACTION_ID/complete?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "completed",
-    "response_data": {
-      "success": true,
-      "message": "Moved successfully"
-    }
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "message": "Action completed"
-}</code></pre>
-                    </div>
-
-                    <!-- 23. Send Update to All Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "targetPlayerIds": "all",
-    "type": "play_animation",
-    "dataJson": {
-      "animation": "victory",
-      "duration": 2.0
-    }
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "updates_sent": 1,
-  "update_ids": ["ddb19c9d8722073762f5db33ff13712a"],
-  "target_players": ["47"]
-}</code></pre>
-                    </div>
-
-                    <!-- 24. Send Update to Specific Player -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "targetPlayerIds": ["47"],
-    "type": "spawn_effect",
-    "dataJson": {
-      "effect": "explosion",
-      "position": {
-        "x": 10,
-        "y": 20
-      }
-    }
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "updates_sent": 1,
-  "update_ids": ["377bfa1d4c56c3f72d9c87b0c081e6e8"],
-  "target_players": ["47"]
-}</code></pre>
-                    </div>
-
-                    <!-- 25. Poll Updates -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "updates": [
-    {
-      "update_id": "a28388775fcf9478c6926cbe44f9d3ed",
-      "from_player_id": "48",
-      "type": "play_animation",
-      "data_json": {
-        "animation": "victory",
-        "duration": 2
-      },
-      "created_at": "2026-03-09 10:51:40"
-    },
-    {
-      "update_id": "f26cbcdab3939b968f148edf68a9fe54",
-      "from_player_id": "48",
-      "type": "play_animation",
-      "data_json": {
-        "animation": "victory",
-        "duration": 2
-      },
-      "created_at": "2026-03-09 10:53:58"
-    },
-    {
-      "update_id": "374ad8d18f1a1fddf09a856d61787c5c",
-      "from_player_id": "48",
-      "type": "play_animation",
-      "data_json": {
-        "animation": "victory",
-        "duration": 2
-      },
-      "created_at": "2026-03-09 10:54:16"
-    }
-  ],
-  "last_update_id": "374ad8d18f1a1fddf09a856d61787c5c"
-}</code></pre>
-                    </div>
-
-            <!-- 26. Poll Updates with Last Update ID -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "updates": [
-    {
-      "update_id": "f26cbcdab3939b968f148edf68a9fe54",
-      "from_player_id": "48",
-      "type": "play_animation",
-      "data_json": {
-        "animation": "victory",
-        "duration": 2
-      },
-      "created_at": "2026-03-09 10:53:58"
-    }
-  ],
-  "last_update_id": "f26cbcdab3939b968f148edf68a9fe54"
-}</code></pre>
-                    </div>
-
-                    <!-- 27. Get Current Room -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "in_room": true,
-  "room": {
-    "room_id": "05f157893b1237f7699e548d045904ab",
-    "room_name": "Game from Matchmaking 636b3f",
-    "is_host": false,
-    "is_online": true,
-    "max_players": 4,
-    "current_players": 2,
-    "has_password": false,
-    "is_active": true,
-    "player_name": "TestPlayer",
-    "joined_at": "2026-03-06 17:50:35",
-    "last_heartbeat": "2026-03-06 18:02:35",
-    "room_created_at": "2026-03-06 17:50:35",
-    "room_last_activity": "2026-03-06 18:04:58"
-  },
-  "pending_actions": [],
-  "pending_updates": []
-}</code></pre>
-                    </div>
-
-                    <!-- 28. List Matchmaking Lobbies -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/list?api_token=API_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/list?api_token=API_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "lobbies": [
-    {
-      "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
-      "host_player_id": 62,
-      "max_players": 4,
-      "strict_full": 1,
-      "extra_json_string": {
-        "minLevel": 10,
-        "rank": "gold"
-      },
-      "created_at": "2026-03-10 15:16:58",
-      "last_heartbeat": "2026-03-10 15:16:58",
-      "current_players": 1,
-      "host_name": "TestPlayer"
-    }
-  ]
-}</code></pre>
-                    </div>
-
-                    <!-- 29. Create Matchmaking Lobby -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "maxPlayers": 4,
-    "strictFull": true,
-    "joinByRequests": true,
-    "extraJsonString": {
-      "minLevel": 10,
-      "rank": "gold"
-    }
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "matchmaking_id": "636b3ffc9b30dc9c918d8a49661df078",
-  "max_players": 4,
-  "strict_full": true,
-  "join_by_requests": true,
-  "is_host": true
-}</code></pre>
-                    </div>
-
-                    <!-- 30. Request to Join Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/request?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "request_id": "82334acd88f0af6a1f4747bbe755263a",
-  "message": "Join request sent to host"
-}</code></pre>
-                    </div>
-
-            <!-- 31. Respond to Join Request (Approve) -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "action": "approve"
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "message": "Join request approved successfully",
-  "request_id": "f4d90025b5de54e6b1a83940cffb4490",
-  "action": "approve"
-}</code></pre>
-                    </div>
-
-                    <!-- 32. Respond to Join Request (Reject) -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "action": "reject"
-  }'</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "message": "Join request rejected successfully",
-  "request_id": "f4d90025b5de54e6b1a83940cffb4490",
-  "action": "reject"
-}</code></pre>
-                    </div>
-
-                    <!-- 33. Check Join Request Status -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/status?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/status?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "request": {
-    "request_id": "f4d90025b5de54e6b1a83940cffb4490",
-    "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
-    "status": "approved",
-    "requested_at": "2026-03-10 16:10:23",
-    "responded_at": "2026-03-10 16:18:43",
-    "responded_by": 62,
-    "responder_name": "TestPlayer",
-    "join_by_requests": true
-  }
-}</code></pre>
-                    </div>
-
-                    <!-- 34. Get Current Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "in_matchmaking": true,
-  "matchmaking": {
-    "matchmaking_id": "636b3ffc9b30dc9c918d8a49661df078",
-    "is_host": true,
-    "max_players": 4,
-    "current_players": 1,
-    "strict_full": true,
-    "join_by_requests": false,
-    "extra_json_string": {
-      "minLevel": 10,
-      "rank": "gold"
-    },
-    "joined_at": "2026-03-06 17:23:53",
-    "player_status": "active",
-    "last_heartbeat": "2026-03-06 17:23:53",
-    "lobby_heartbeat": "2026-03-06 17:24:37",
-    "is_started": false,
-    "started_at": null
-  },
-  "pending_requests": []
-}</code></pre>
-                    </div>
-
-                    <!-- 35. Join Matchmaking Lobby -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
-  "message": "Successfully joined matchmaking lobby"
-}</code></pre>
-                    </div>
-    
-    <!-- 36. Leave Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "message": "Successfully left matchmaking lobby"
-}</code></pre>
-                    </div>
-
-                    <!-- 37. List Matchmaking Players -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "players": [
-    {
-      "player_id": 47,
-      "joined_at": "2026-03-06 17:23:53",
-      "last_heartbeat": "2026-03-06 17:23:53",
-      "status": "active",
-      "player_name": "TestPlayer",
-      "seconds_since_heartbeat": 726,
-      "is_host": 1
-    },
-    {
-      "player_id": 46,
-      "joined_at": "2026-03-06 17:35:01",
-      "last_heartbeat": "2026-03-06 17:35:01",
-      "status": "active",
-      "player_name": "TestPlayer",
-      "seconds_since_heartbeat": 58,
-      "is_host": 0
-    }
-  ],
-  "last_updated": "2026-03-06T17:35:59+00:00"
-}</code></pre>
-                    </div>
-
-                    <!-- 38. Matchmaking Heartbeat -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "status": "ok"
-}</code></pre>
-                    </div>
-
-                    <!-- 39. Remove Matchmaking Lobby -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/remove?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/remove?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "message": "Matchmaking lobby removed successfully"
-}</code></pre>
-                    </div>
-
-                    <!-- 40. Start Game from Matchmaking -->
-                    <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-green-400 mb-2">
-                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/start?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/start?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
-                        <div class="text-xs text-gray-400 mb-2">Response:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
-  "success": true,
-  "room_id": "c899e32506d44823d486585b247eafe5",
-  "room_name": "Game from Matchmaking 15b2b6",
-  "players_transferred": 2,
-  "message": "Game started successfully"
-}</code></pre>
-                    </div>
-
-                    <!-- 41. Get Leaderboard (by level) -->
+                    <!-- 10. Get Leaderboard (by level) -->
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1597,7 +858,7 @@ $site_twitter = "@michitai";
 }</code></pre>
                     </div>
 
-                        <!-- 42. Get Leaderboard (by level and score) -->
+                        <!-- 11. Get Leaderboard (by level and score) -->
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1670,7 +931,7 @@ $site_twitter = "@michitai";
 }</code></pre>
                     </div>
 
-                    <!-- 43. Get Leaderboard (by score and level) -->
+                    <!-- 12. Get Leaderboard (by score and level) -->
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1740,6 +1001,745 @@ $site_twitter = "@michitai";
   "total": 5,
   "sort_by": ["score", "level"],
   "limit": 10
+}</code></pre>
+                    </div>
+
+                    <!-- 13. Get Server Time -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/time.php?api_token=API_KEY</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/time.php?api_token=API_KEY"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "utc": "2026-03-13T14:01:49+00:00",
+  "timestamp": 1773410509,
+  "readable": "2026-03-13 14:01:49 UTC"
+}</code></pre>
+                    </div>
+
+                    <!-- 14. Get Server Time +1 Hour -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/time.php?api_token=API_KEY&utc=+1</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/time.php?api_token=API_KEY&utc=+1"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "utc": "2026-03-13T15:04:17+00:00",
+  "timestamp": 1773414257,
+  "readable": "2026-03-13 15:04:17 UTC",
+  "offset": {
+    "offset_hours": 1,
+    "offset_string": "+1",
+    "original_utc": "2026-03-13T14:04:17+00:00",
+    "original_timestamp": 1773410657
+  }
+}</code></pre>
+                    </div>
+
+                    <!-- 15. Get Server Time -2 Hours -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/time.php?api_token=API_KEY&utc=-2</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/time.php?api_token=API_KEY&utc=-2"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "utc": "2026-03-13T12:05:13+00:00",
+  "timestamp": 1773403513,
+  "readable": "2026-03-13 12:05:13 UTC",
+  "offset": {
+    "offset_hours": -2,
+    "offset_string": "-2",
+    "original_utc": "2026-03-13T14:05:13+00:00",
+    "original_timestamp": 1773410713
+  }
+}</code></pre>
+                    </div>
+
+                    <!-- 16. List Matchmaking Lobbies -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/matchmaking.php/list?api_token=API_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/list?api_token=API_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "lobbies": [
+    {
+      "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
+      "host_player_id": 62,
+      "max_players": 4,
+      "strict_full": 1,
+      "extra_json_string": {
+        "minLevel": 10,
+        "rank": "gold"
+      },
+      "created_at": "2026-03-10 15:16:58",
+      "last_heartbeat": "2026-03-10 15:16:58",
+      "current_players": 1,
+      "host_name": "TestPlayer"
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <!-- 17. Create Matchmaking Lobby -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "maxPlayers": 4,
+    "strictFull": true,
+    "joinByRequests": true,
+    "extraJsonString": {
+      "minLevel": 10,
+      "rank": "gold"
+    }
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "matchmaking_id": "636b3ffc9b30dc9c918d8a49661df078",
+  "max_players": 4,
+  "strict_full": true,
+  "join_by_requests": true,
+  "is_host": true
+}</code></pre>
+                    </div>
+
+                    <!-- 18. Request to Join Matchmaking -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/request?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "request_id": "82334acd88f0af6a1f4747bbe755263a",
+  "message": "Join request sent to host"
+}</code></pre>
+                    </div>
+
+            <!-- 19. Respond to Join Request (Approve) -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "approve"
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "message": "Join request approved successfully",
+  "request_id": "f4d90025b5de54e6b1a83940cffb4490",
+  "action": "approve"
+}</code></pre>
+                    </div>
+
+                    <!-- 20. Respond to Join Request (Reject) -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "reject"
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "message": "Join request rejected successfully",
+  "request_id": "f4d90025b5de54e6b1a83940cffb4490",
+  "action": "reject"
+}</code></pre>
+                    </div>
+
+                    <!-- 21. Check Join Request Status -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/status?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/status?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "request": {
+    "request_id": "f4d90025b5de54e6b1a83940cffb4490",
+    "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
+    "status": "approved",
+    "requested_at": "2026-03-10 16:10:23",
+    "responded_at": "2026-03-10 16:18:43",
+    "responded_by": 62,
+    "responder_name": "TestPlayer",
+    "join_by_requests": true
+  }
+}</code></pre>
+                    </div>
+
+                    <!-- 22. Get Current Matchmaking -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/matchmaking.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "in_matchmaking": true,
+  "matchmaking": {
+    "matchmaking_id": "636b3ffc9b30dc9c918d8a49661df078",
+    "is_host": true,
+    "max_players": 4,
+    "current_players": 1,
+    "strict_full": true,
+    "join_by_requests": false,
+    "extra_json_string": {
+      "minLevel": 10,
+      "rank": "gold"
+    },
+    "joined_at": "2026-03-06 17:23:53",
+    "player_status": "active",
+    "last_heartbeat": "2026-03-06 17:23:53",
+    "lobby_heartbeat": "2026-03-06 17:24:37",
+    "is_started": false,
+    "started_at": null
+  },
+  "pending_requests": []
+}</code></pre>
+                    </div>
+
+                    <!-- 23. Join Matchmaking Lobby -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "matchmaking_id": "15b2b6e5f0ba44b5eef77705d120861f",
+  "message": "Successfully joined matchmaking lobby"
+}</code></pre>
+                    </div>
+    
+    <!-- 24. Leave Matchmaking -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "message": "Successfully left matchmaking lobby"
+}</code></pre>
+                    </div>
+
+                    <!-- 25. List Matchmaking Players -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/matchmaking.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "players": [
+    {
+      "player_id": 47,
+      "joined_at": "2026-03-06 17:23:53",
+      "last_heartbeat": "2026-03-06 17:23:53",
+      "status": "active",
+      "player_name": "TestPlayer",
+      "seconds_since_heartbeat": 726,
+      "is_host": 1
+    },
+    {
+      "player_id": 46,
+      "joined_at": "2026-03-06 17:35:01",
+      "last_heartbeat": "2026-03-06 17:35:01",
+      "status": "active",
+      "player_name": "TestPlayer",
+      "seconds_since_heartbeat": 58,
+      "is_host": 0
+    }
+  ],
+  "last_updated": "2026-03-06T17:35:59+00:00"
+}</code></pre>
+                    </div>
+
+                    <!-- 26. Matchmaking Heartbeat -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "status": "ok"
+}</code></pre>
+                    </div>
+
+                    <!-- 27. Remove Matchmaking Lobby -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/remove?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/remove?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "message": "Matchmaking lobby removed successfully"
+}</code></pre>
+                    </div>
+
+                    <!-- 28. Start Game from Matchmaking -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/matchmaking.php/start?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/start?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "room_id": "c899e32506d44823d486585b247eafe5",
+  "room_name": "Game from Matchmaking 15b2b6",
+  "players_transferred": 2,
+  "message": "Game started successfully"
+}</code></pre>
+                    </div>
+
+                    <!-- 29. Create Room -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_name": "My Game Room",
+    "password": "secret123",
+    "max_players": 4
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "room_id": "dc3723848639139113ca240958ba0bf8",
+  "room_name": "My Game Room",
+  "is_host": true
+}</code></pre>
+                    </div>
+
+                    <!-- 30. List Rooms -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/list?api_token=API_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_room.php/list?api_token=API_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "rooms": [
+    {
+      "room_id": "dc3723848639139113ca240958ba0bf8",
+      "room_name": "My Game Room",
+      "max_players": 4,
+      "current_players": 1,
+      "has_password": 1
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <!-- 31. Join Room -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/ROOM_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/dc3723848639139113ca240958ba0bf8/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": "secret123"
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "room_id": "dc3723848639139113ca240958ba0bf8",
+  "message": "Successfully joined the room"
+}</code></pre>
+                    </div>
+
+                    <!-- 32. List Room Players -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_room.php/players?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "players": [
+    {
+      "player_id": "48",
+      "player_name": "TestPlayer",
+      "is_host": 1,
+      "is_online": 1,
+      "last_heartbeat": "2026-03-09 09:39:34"
+    },
+    {
+      "player_id": "49",
+      "player_name": "TestPlayer",
+      "is_host": 0,
+      "is_online": 1,
+      "last_heartbeat": "2026-03-09 09:44:39"
+    }
+  ],
+  "last_updated": "2026-03-09T09:56:21+00:00"
+}</code></pre>
+                    </div>
+
+                    <!-- 33. Leave Room -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/leave?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "message": "Successfully left the room"
+}</code></pre>
+                    </div>
+
+                    <!-- 34. Room Heartbeat -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/heartbeat?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "status": "ok"
+}</code></pre>
+                    </div>
+
+                    <!-- 35. Submit Action -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action_type": "move",
+    "request_data": {
+      "x": 10,
+      "y": 20
+    }
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "action_id": "1c2bbd859e36dc7d7e5e9b4f263c88ce",
+  "status": "pending"
+}</code></pre>
+                    </div>
+
+                    <!-- 36. Poll Actions -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/actions/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "actions": [
+    {
+      "action_id": "efc5ea74e3a37e41a4f57d948cfb2538",
+      "action_type": "move",
+      "response_data": {
+        "success": true,
+        "message": "Moved successfully"
+      },
+      "status": "completed"
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <!-- 37. Get Pending Actions -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/actions/pending?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/pending?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "actions": [
+    {
+      "action_id": "efc5ea74e3a37e41a4f57d948cfb2538",
+      "player_id": "49",
+      "action_type": "move",
+      "request_data": {
+        "x": 10,
+        "y": 20
+      },
+      "created_at": "2026-03-09 10:10:10",
+      "player_name": "TestPlayer"
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <!-- 38. Complete Action -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/actions/ACTION_ID/complete?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "completed",
+    "response_data": {
+      "success": true,
+      "message": "Moved successfully"
+    }
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "message": "Action completed"
+}</code></pre>
+                    </div>
+
+                    <!-- 39. Send Update to All Players -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "targetPlayerIds": "all",
+    "type": "play_animation",
+    "dataJson": {
+      "animation": "victory",
+      "duration": 2.0
+    }
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "updates_sent": 1,
+  "update_ids": ["ddb19c9d8722073762f5db33ff13712a"],
+  "target_players": ["47"]
+}</code></pre>
+                    </div>
+
+                    <!-- 40. Send Update to Specific Player -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "targetPlayerIds": ["47"],
+    "type": "spawn_effect",
+    "dataJson": {
+      "effect": "explosion",
+      "position": {
+        "x": 10,
+        "y": 20
+      }
+    }
+  }'</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "updates_sent": 1,
+  "update_ids": ["377bfa1d4c56c3f72d9c87b0c081e6e8"],
+  "target_players": ["47"]
+}</code></pre>
+                    </div>
+
+                    <!-- 41. Poll Updates -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "updates": [
+    {
+      "update_id": "a28388775fcf9478c6926cbe44f9d3ed",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:51:40"
+    },
+    {
+      "update_id": "f26cbcdab3939b968f148edf68a9fe54",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:53:58"
+    },
+    {
+      "update_id": "374ad8d18f1a1fddf09a856d61787c5c",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:54:16"
+    }
+  ],
+  "last_update_id": "374ad8d18f1a1fddf09a856d61787c5c"
+}</code></pre>
+                    </div>
+
+            <!-- 42. Poll Updates with Last Update ID -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "updates": [
+    {
+      "update_id": "f26cbcdab3939b968f148edf68a9fe54",
+      "from_player_id": "48",
+      "type": "play_animation",
+      "data_json": {
+        "animation": "victory",
+        "duration": 2
+      },
+      "created_at": "2026-03-09 10:53:58"
+    }
+  ],
+  "last_update_id": "f26cbcdab3939b968f148edf68a9fe54"
+}</code></pre>
+                    </div>
+
+                    <!-- 43. Get Current Room -->
+                    <div class="bg-black/50 p-4 rounded-lg">
+                        <div class="flex items-center text-sm text-blue-400 mb-2">
+                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                            <span class="font-mono">/api/game_room.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <div class="text-xs text-gray-400 mb-2">Response:</div>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
+  "success": true,
+  "in_room": true,
+  "room": {
+    "room_id": "05f157893b1237f7699e548d045904ab",
+    "room_name": "Game from Matchmaking 636b3f",
+    "is_host": false,
+    "is_online": true,
+    "max_players": 4,
+    "current_players": 2,
+    "has_password": false,
+    "is_active": true,
+    "player_name": "TestPlayer",
+    "joined_at": "2026-03-06 17:50:35",
+    "last_heartbeat": "2026-03-06 18:02:35",
+    "room_created_at": "2026-03-06 17:50:35",
+    "room_last_activity": "2026-03-06 18:04:58"
+  },
+  "pending_actions": [],
+  "pending_updates": []
 }</code></pre>
                     </div>
 
