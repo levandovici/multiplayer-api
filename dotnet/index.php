@@ -184,52 +184,6 @@ $site_twitter = "@michitai";
                         and full serialization capabilities for modern applications.
                     </p>
                     
-                    <!-- Feature Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-bolt text-green-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Async/Await Ready</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Modern async/await patterns with Task-based operations</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-code text-blue-400 mr-2"></i>
-                                <h5 class="text-white font-medium">System.Text.Json</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Full serialization support with modern .NET JSON library</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-shield-alt text-purple-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Type Safe</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Strong typing with generics and nullable reference types</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-users text-orange-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Multiplayer Ready</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Complete player management and matchmaking system</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-door-open text-cyan-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Game Rooms</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Real-time room management with actions and updates</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-trophy text-yellow-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Leaderboards</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Competitive rankings and player statistics</p>
-                        </div>
-                    </div>
-                    
                     <!-- Download Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-6">
                         <button id="downloadDotnetSdk" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
