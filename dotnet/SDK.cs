@@ -292,7 +292,7 @@ namespace michitai
         {
             return Send<RoomCreateResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/rooms", $"&player_token={gamePlayerToken}"),
+                Url("game_room.php/create", $"&player_token={gamePlayerToken}"),
                 new
                 {
                     room_name = roomName,
@@ -310,7 +310,7 @@ namespace michitai
         {
             return Send<RoomListResponse>(
                 HttpMethod.Get,
-                Url("game_room.php/rooms")
+                Url("game_room.php/list")
             );
         }
 
@@ -328,7 +328,7 @@ namespace michitai
         {
             return Send<RoomJoinResponse>(
                 HttpMethod.Post,
-                Url($"game_room.php/rooms/{roomId}/join", $"&player_token={gamePlayerToken}"),
+                Url($"game_room.php/{roomId}/join", $"&player_token={gamePlayerToken}"),
                 password != null ? new { password = password } : new { password = "" }
             );
         }
@@ -342,7 +342,7 @@ namespace michitai
         {
             return Send<RoomLeaveResponse>(
                 HttpMethod.Post,
-                Url("game_room.php/rooms/leave", $"&player_token={gamePlayerToken}")
+                Url("game_room.php/leave", $"&player_token={gamePlayerToken}")
             );
         }
 
