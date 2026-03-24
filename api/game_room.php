@@ -950,11 +950,11 @@ try {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $method = $_SERVER['REQUEST_METHOD'];
 
-    if ($method === 'POST' && preg_match('#/rooms/?$#', $path)) {
+    if ($method === 'POST' && preg_match('#/create/?$#', $path)) {
         createRoom();
-    } elseif ($method === 'GET' && preg_match('#/rooms/?$#', $path)) {
+    } elseif ($method === 'GET' && preg_match('#/list/?$#', $path)) {
         listRooms();
-    } elseif ($method === 'POST' && preg_match('#/rooms/([a-f0-9-]{32,36})/join/?$#', $path, $m)) {
+    } elseif ($method === 'POST' && preg_match('#/([a-f0-9-]{32,36})/join/?$#', $path, $m)) {
         joinRoom($m[1]);
     } elseif ($method === 'GET' && preg_match('#/players/?$#', $path)) {
         listRoomPlayers();

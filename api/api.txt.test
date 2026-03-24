@@ -34,19 +34,19 @@
 12) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751&utc=-2"
 {"success":true,"utc":"2026-03-13T12:05:13+00:00","timestamp":1773403513,"readable":"2026-03-13 12:05:13 UTC","offset":{"offset_hours":-2,"offset_string":"-2","original_utc":"2026-03-13T14:05:13+00:00","original_timestamp":1773410713}}
 
-13) $ curl -X POST "https://api.michitai.com/api/game_room.php/rooms?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4}'
+13) $ curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4}'
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","room_name":"My Game Room","is_host":true}
 
-14) $ curl -X GET "https://api.michitai.com/api/game_room.php/rooms?api_token=7e2bf5846eae184afd1f100ca9e901f34e59"
+14) $ curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=7e2bf5846eae184afd1f100ca9e901f34e59"
 {"success":true,"rooms":[{"room_id":"dc3723848639139113ca240958ba0bf8","room_name":"My Game Room","max_players":4,"current_players":1,"has_password":1}]}
 
-15) $ curl -X POST "https://api.michitai.com/api/game_room.php/rooms/dc3723848639139113ca240958ba0bf8/join?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"password":"secret123"}'
+15) $ curl -X POST "https://api.michitai.com/api/game_room.php/dc3723848639139113ca240958ba0bf8/join?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"password":"secret123"}'
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","message":"Successfully joined the room"}
 
 16) $ curl -X GET "https://api.michitai.com/api/game_room.php/players?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"players":[{"player_id":"48","player_name":"TestPlayer","is_host":1,"is_online":1,"last_heartbeat":"2026-03-09 09:39:34"},{"player_id":"49","player_name":"TestPlayer","is_host":0,"is_online":1,"last_heartbeat":"2026-03-09 09:44:39"}],"last_updated":"2026-03-09T09:56:21+00:00"}
 
-17) $ curl -X POST "https://api.michitai.com/api/game_room.php/rooms/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+17) $ curl -X POST "https://api.michitai.com/api/game_room.php/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"message":"Successfully left the room"}
 
 18) $ curl -X POST "https://api.michitai.com/api/game_room.php/heartbeat?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
