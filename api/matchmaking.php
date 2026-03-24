@@ -54,7 +54,7 @@ function getAuthContext() {
     }
 
     $player = null;
-    $playerToken = $headers['X-Player-Token'] ?? $_GET['game_player_token'] ?? '';
+    $playerToken = $headers['X-Player-Token'] ?? $_GET['player_token'] ?? '';
 
     if ($playerToken !== '') {
         $stmt = $pdo->prepare("SELECT * FROM game_players WHERE private_key = ?");

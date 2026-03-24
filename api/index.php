@@ -273,27 +273,27 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_players.php/register</div>
-                            <div class="col-span-6">Register player (JSON responses)</div>
+                            <div class="col-span-6">Register player (requires API TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_players.php/login</div>
-                            <div class="col-span-6">Authenticate player (JSON)</div>
+                            <div class="col-span-6">Authenticate player (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_players.php/heartbeat</div>
-                            <div class="col-span-6">Update player heartbeat (JSON)</div>
+                            <div class="col-span-6">Update player heartbeat (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_players.php/logout</div>
-                            <div class="col-span-6">Logout player (JSON)</div>
+                            <div class="col-span-6">Logout player (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_players.php/list</div>
-                            <div class="col-span-6">List all players (JSON)</div>
+                            <div class="col-span-6">List all players (requires API TOKEN, PRIVATE TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -305,22 +305,22 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_data.php/game/get</div>
-                            <div class="col-span-6">Get game data (JSON)</div>
+                            <div class="col-span-6">Get game data (requires API TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_data.php/game/update</div>
-                            <div class="col-span-6">Update game data (JSON)</div>
+                            <div class="col-span-6">Update game data (requires API TOKEN, PRIVATE TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_data.php/player/get</div>
-                            <div class="col-span-6">Get player data (returns dynamic player_data object)</div>
+                            <div class="col-span-6">Get player data (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">PUT</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_data.php/player/update</div>
-                            <div class="col-span-6">Update player data (JSON)</div>
+                            <div class="col-span-6">Update player data (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -332,7 +332,7 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/leaderboard.php</div>
-                            <div class="col-span-6">Get ranked leaderboard (JSON responses)</div>
+                            <div class="col-span-6">Get ranked leaderboard (requires API TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -344,17 +344,17 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/time.php</div>
-                            <div class="col-span-6">Get server time (JSON)</div>
+                            <div class="col-span-6">Get server time (requires API TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/time.php?utc=+1</div>
-                            <div class="col-span-6">Get server time +1 hour offset (JSON)</div>
+                            <div class="col-span-6">Get server time +1 hour offset (requires API TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/time.php?utc=-2</div>
-                            <div class="col-span-6">Get server time -2 hours offset (JSON)</div>
+                            <div class="col-span-6">Get server time -2 hours offset (requires API TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -366,62 +366,62 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/list</div>
-                            <div class="col-span-6">List all available matchmaking lobbies (JSON)</div>
+                            <div class="col-span-6">List all available matchmaking lobbies (requires API TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/create</div>
-                            <div class="col-span-6">Create matchmaking (extra_json_string for dynamic data)</div>
+                            <div class="col-span-6">Create matchmaking (requires API TOKEN, PRIVATE TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/{ID}/request</div>
-                            <div class="col-span-6">Request to join matchmaking (JSON)</div>
+                            <div class="col-span-6">Request to join matchmaking (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/{ID}/response</div>
-                            <div class="col-span-6">Respond to join request (JSON)</div>
+                            <div class="col-span-6">Respond to join request (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/{ID}/status</div>
-                            <div class="col-span-6">Check join request status (JSON)</div>
+                            <div class="col-span-6">Check join request status (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/current</div>
-                            <div class="col-span-6">Get current matchmaking status (JSON)</div>
+                            <div class="col-span-6">Get current matchmaking status (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/{ID}/join</div>
-                            <div class="col-span-6">Join matchmaking directly (JSON)</div>
+                            <div class="col-span-6">Join matchmaking directly (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/leave</div>
-                            <div class="col-span-6">Leave current matchmaking (JSON)</div>
+                            <div class="col-span-6">Leave current matchmaking (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/players</div>
-                            <div class="col-span-6">List all players in current matchmaking (JSON)</div>
+                            <div class="col-span-6">List all players in current matchmaking (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/heartbeat</div>
-                            <div class="col-span-6">Send matchmaking heartbeat (JSON)</div>
+                            <div class="col-span-6">Send matchmaking heartbeat (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/remove</div>
-                            <div class="col-span-6">Remove matchmaking lobby (JSON)</div>
+                            <div class="col-span-6">Remove matchmaking lobby (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/start</div>
-                            <div class="col-span-6">Start game from matchmaking (JSON)</div>
+                            <div class="col-span-6">Start game from matchmaking (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -433,67 +433,67 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/rooms</div>
-                            <div class="col-span-6">Create game room (JSON)</div>
+                            <div class="col-span-6">Create game room (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/rooms</div>
-                            <div class="col-span-6">List all game rooms (JSON)</div>
+                            <div class="col-span-6">List all game rooms (requires API TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/rooms/{ID}/join</div>
-                            <div class="col-span-6">Join existing room (JSON)</div>
+                            <div class="col-span-6">Join existing room (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/rooms/players</div>
-                            <div class="col-span-6">List all players in current room (JSON)</div>
+                            <div class="col-span-6">List all players in current room (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/rooms/leave</div>
-                            <div class="col-span-6">Leave current game room (JSON)</div>
+                            <div class="col-span-6">Leave current game room (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/heartbeat</div>
-                            <div class="col-span-6">Send room heartbeat (JSON)</div>
+                            <div class="col-span-6">Send room heartbeat (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/actions</div>
-                            <div class="col-span-6">Submit game action (JSON)</div>
+                            <div class="col-span-6">Submit game action (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/actions/poll</div>
-                            <div class="col-span-6">Get actions result (JSON)</div>
+                            <div class="col-span-6">Get actions result (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/actions/pending</div>
-                            <div class="col-span-6">View all pending actions (JSON)</div>
+                            <div class="col-span-6">View all pending actions (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/actions/{ID}/complete</div>
-                            <div class="col-span-6">Complete or reject action (JSON)</div>
+                            <div class="col-span-6">Complete or reject action (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/updates</div>
-                            <div class="col-span-6">Send updates to players (JSON)</div>
+                            <div class="col-span-6">Send updates to players (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/updates/poll</div>
-                            <div class="col-span-6">Poll for updates (JSON)</div>
+                            <div class="col-span-6">Poll for updates (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/current</div>
-                            <div class="col-span-6">Get current room status (JSON)</div>
+                            <div class="col-span-6">Get current room status (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -533,13 +533,13 @@ $site_twitter = "@michitai";
                         <div class="bg-black/50 p-4 rounded-lg">
                             <h5 class="text-blue-300 font-medium mb-2">Player Authentication</h5>
                             <p class="text-white/70 text-sm mb-2">Include player token for player-specific operations:</p>
-                            <pre class="text-sm text-gray-300 overflow-x-auto"><code>?game_player_token=PLAYER_PRIVATE_KEY</code></pre>
+                            <pre class="text-sm text-gray-300 overflow-x-auto"><code>?player_token=YOUR_PLAYER_TOKEN</code></pre>
                         </div>
                         
                         <div class="bg-black/50 p-4 rounded-lg">
                             <h5 class="text-purple-300 font-medium mb-2">Admin Operations</h5>
                             <p class="text-white/70 text-sm mb-2">Some operations require your private API token:</p>
-                            <pre class="text-sm text-gray-300 overflow-x-auto"><code>?api_private_token=YOUR_API_PRIVATE_TOKEN</code></pre>
+                            <pre class="text-sm text-gray-300 overflow-x-auto"><code>?private_token=YOUR_PRIVATE_TOKEN</code></pre>
                         </div>
                     </div>
                 </div>
@@ -594,10 +594,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-purple-400 mb-2">
                             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-                            <span class="font-mono">/api/game_players.php/login?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_players.php/login?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X PUT "/api/game_players.php/login?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X PUT "/api/game_players.php/login?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
@@ -625,10 +625,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_players.php/heartbeat?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
@@ -642,10 +642,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_players.php/logout?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_players.php/logout?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_players.php/logout?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
@@ -659,10 +659,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_players.php/list?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+                            <span class="font-mono">/api/game_players.php/list?api_token=YOUR_API_TOKEN&private_token=YOUR_PRIVATE_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_players.php/list?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_players.php/list?api_token=YOUR_API_TOKEN&private_token=YOUR_PRIVATE_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -727,10 +727,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-purple-400 mb-2">
                             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-                            <span class="font-mono">/api/game_data.php/game/update?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN</span>
+                            <span class="font-mono">/api/game_data.php/game/update?api_token=YOUR_API_TOKEN&private_token=YOUR_PRIVATE_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X PUT "/api/game_data.php/game/update?api_token=YOUR_API_TOKEN&api_private_token=YOUR_API_PRIVATE_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X PUT "/api/game_data.php/game/update?api_token=YOUR_API_TOKEN&private_token=YOUR_PRIVATE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "game_settings": {
@@ -751,10 +751,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_data.php/player/get?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_data.php/player/get?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_data.php/player/get?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_data.php/player/get?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -773,10 +773,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-purple-400 mb-2">
                             <span class="font-mono bg-purple-900/50 px-2 py-1 rounded mr-2">PUT</span>
-                            <span class="font-mono">/api/game_data.php/player/update?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_data.php/player/update?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X PUT "/api/game_data.php/player/update?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X PUT "/api/game_data.php/player/update?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "level": 2,
@@ -859,10 +859,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/rooms?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/rooms?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/rooms?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "room_name": "My Game Room",
@@ -905,10 +905,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/rooms/ROOM_ID/join?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/rooms/dc3723848639139113ca240958ba0bf8/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/rooms/dc3723848639139113ca240958ba0bf8/join?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "password": "secret123"
@@ -925,10 +925,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/players?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_room.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X GET "/api/game_room.php/players?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -956,10 +956,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/rooms/leave?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -971,10 +971,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/heartbeat?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -986,10 +986,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/actions?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "action_type": "move",
@@ -1010,10 +1010,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/poll?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1035,10 +1035,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/actions/pending?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1062,10 +1062,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/actions/ACTION_ID/complete?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "status": "completed",
@@ -1085,10 +1085,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/updates?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "targetPlayerIds": "all",
@@ -1111,10 +1111,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/updates?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "targetPlayerIds": ["47"],
@@ -1140,10 +1140,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1187,10 +1187,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
+                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN&lastUpdateId=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1214,10 +1214,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/game_room.php/current?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/current?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1276,10 +1276,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/create?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/create?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/create?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "maxPlayers": 4,
@@ -1305,10 +1305,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/request?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/request?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1321,10 +1321,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "action": "approve"
@@ -1342,10 +1342,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/response?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN" \
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "action": "reject"
@@ -1363,10 +1363,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/status?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/REQUEST_ID/status?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/status?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/status?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1387,10 +1387,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/current?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/current?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/current?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1421,10 +1421,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/MATCHMAKING_ID/join?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/join?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/join?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1437,10 +1437,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/leave?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/leave?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/leave?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1452,10 +1452,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/players?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/players?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/matchmaking.php/players?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1487,10 +1487,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/heartbeat?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1502,10 +1502,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/remove?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/remove?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/remove?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1517,10 +1517,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
-                            <span class="font-mono">/api/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN</span>
+                            <span class="font-mono">/api/matchmaking.php/start?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/start?api_token=YOUR_API_TOKEN&game_player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/start?api_token=YOUR_API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,

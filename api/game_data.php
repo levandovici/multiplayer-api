@@ -59,10 +59,10 @@ try {
     $apiToken = $_GET['api_token'] ?? '';
 
     // Get API private key from query string
-    $apiPrivateKey = $_GET['api_private_token'] ?? '';
+    $apiPrivateKey = $_GET['private_token'] ?? '';
 
     // Get game player token from query string
-    $gamePlayerToken = $_GET['game_player_token'] ?? '';
+    $gamePlayerToken = $_GET['player_token'] ?? '';
 
     // Get request body
     $input = json_decode(file_get_contents('php://input'), true) ?: [];

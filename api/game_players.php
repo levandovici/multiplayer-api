@@ -86,10 +86,10 @@ try {
     $apiToken = $_GET['api_token'] ?? $_SERVER['HTTP_X_API_TOKEN'] ?? '';
 
     // Get API private token from query string or headers
-    $apiPrivateToken = $_GET['api_private_token'] ?? $_SERVER['HTTP_X_API_PRIVATE_TOKEN'] ?? '';
+    $apiPrivateToken = $_GET['private_token'] ?? $_SERVER['HTTP_X_API_PRIVATE_TOKEN'] ?? '';
     
     // Get game player token from query string or headers
-    $gamePlayerToken = $_GET['game_player_token'] ?? $_SERVER['HTTP_X_GAME_PLAYER_TOKEN'] ?? '';
+    $gamePlayerToken = $_GET['player_token'] ?? $_SERVER['HTTP_X_GAME_PLAYER_TOKEN'] ?? '';
     
     // Get request body
     $input = json_decode(file_get_contents('php://input'), true) ?: [];
