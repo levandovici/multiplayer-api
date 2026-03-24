@@ -1,4 +1,9 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Content-Type: application/json');
+
 // time.php  – place it in the root of your site (or any folder you like)
 
 // Enable error reporting
@@ -21,14 +26,11 @@ error_log("Headers: " . print_r(getallheaders(), true));
 // ... [previous code remains the same until line 20]
 
 try {
-    header('Content-Type: application/json; charset=utf-8');
-    header('Access-Control-Allow-Origin: *');   // allow Unity WebGL
     require_once '../php/config.php';
 
     // Helper function to send JSON response
     function sendResponse($data, $statusCode = 200) {
         http_response_code($statusCode);
-        header('Content-Type: application/json; charset=utf-8');
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit;
     }

@@ -1,4 +1,9 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Content-Type: application/json');
+
 // Enable error reporting (keep in dev, consider disabling in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -9,8 +14,6 @@ ini_set('error_log', __DIR__ . '/../logs/php_errors.log');
 if (!is_dir(__DIR__ . '/../logs')) {
     @mkdir(__DIR__ . '/../logs', 0777, true);
 }
-
-header('Content-Type: application/json');
 
 require_once '../php/config.php';
 

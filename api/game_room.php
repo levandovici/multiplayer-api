@@ -1,4 +1,7 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
 header('Content-Type: application/json');
 
 // Enable error reporting & logging
@@ -26,7 +29,6 @@ require_once __DIR__ . '/../php/config.php';
 // ────────────────────────────────────────────────
 function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);
-    header('Content-Type: application/json');
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }

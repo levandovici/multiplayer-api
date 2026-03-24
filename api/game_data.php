@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Content-Type: application/json');
 // Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -17,13 +21,11 @@ error_log("Method: " . $_SERVER['REQUEST_METHOD']);
 error_log("Headers: " . print_r(getallheaders(), true));
 
 try {
-    header('Content-Type: application/json');
     require_once '../php/config.php';
 
     // Helper function to send JSON response
     function sendResponse($data, $statusCode = 200) {
         http_response_code($statusCode);
-        header('Content-Type: application/json');
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit;
     }
