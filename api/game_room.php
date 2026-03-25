@@ -30,6 +30,10 @@ $isUnity = ($format === 'unity');
 
 // Helper function to send JSON response
 function sendResponse($data, $statusCode = 200) {
+    global $isUnity;
+    if ($isUnity) {
+        $data = formatForUnity($data);
+    }
     http_response_code($statusCode);
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
@@ -38,13 +42,7 @@ function sendResponse($data, $statusCode = 200) {
 // ====================== HELPER FUNCTIONS ======================
 function getAuthContext() {
     $headers = getallheaders();
-    $apiToken = '';
-
-    if (isset($headers['Authorization']) && preg_match('/Bearer\s+(\S+)/', $headers['Authorization'], $m)) {
-        $apiToken = $m[1];
-    } elseif (isset($_GET['api_token'])) {
-        $apiToken = $_GET['api_token'];
-    }
+    $apiToken = $_GET['api_token'];
 
     if (empty($apiToken)) {
         sendResponse(['success' => false, 'error' => 'API token is required'], 401);
@@ -115,33 +113,33 @@ function isHost($playerId) {
     return (bool)$stmt->fetchColumn();
 }
 
-// ====================== UNITY HELPER ======================
+// ====================== UNITY HELPER (Recursive + Robust) ======================
 function formatForUnity($data) {
-    global $isUnity;
-    if (!$isUnity) return $data;
+    if (!is_array($data)) {
+        return $data;
+    }
 
-    // Convert complex fields to _json strings for Unity JsonUtility compatibility
-    if (isset($data['response_data']) && is_string($data['response_data'])) {
-        $decoded = json_decode($data['response_data'], true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $data['response_data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            unset($data['response_data']);
+    $result = [];
+    foreach ($data as $key => $value) {
+        if (in_array($key, ['request_data', 'response_data', 'player_data'])) {
+            $jsonKey = $key . '_json';
+            if (is_string($value)) {
+                $decoded = json_decode($value, true);
+                $result[$jsonKey] = (json_last_error() === JSON_ERROR_NONE)
+                    ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                    : $value;
+            } else {
+                $result[$jsonKey] = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            }
+        } elseif ($key === 'data_json') {
+            // Keep as data_json but ensure it's always a string
+            $result[$key] = is_string($value) ? $value : json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        } else {
+            // Recurse into nested structures
+            $result[$key] = (is_array($value) || is_object($value)) ? formatForUnity($value) : $value;
         }
     }
-    if (isset($data['request_data']) && is_string($data['request_data'])) {
-        $decoded = json_decode($data['request_data'], true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $data['request_data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            unset($data['request_data']);
-        }
-    }
-    if (isset($data['data_json']) && is_string($data['data_json'])) {
-        $decoded = json_decode($data['data_json'], true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $data['data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        }
-    }
-    return $data;
+    return $result;
 }
 
 // ====================== ENDPOINTS ======================
@@ -155,9 +153,14 @@ function createRoom() {
         sendResponse(['success' => false, 'error' => 'You are already in a game room. Leave current room first.'], 400);
     }
 
-    // Check matchmaking
     global $pdo;
-    $stmt = $pdo->prepare("SELECT mp.matchmaking_id FROM matchmaking_players mp JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE LIMIT 1");
+    $stmt = $pdo->prepare("
+        SELECT mp.matchmaking_id
+        FROM matchmaking_players mp
+        JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
+        WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
+        LIMIT 1
+    ");
     $stmt->execute([$player['id']]);
     if ($stmt->fetchColumn()) {
         sendResponse(['success' => false, 'error' => 'You cannot create a game room while in a matchmaking lobby.'], 400);
@@ -199,7 +202,7 @@ function createRoom() {
 }
 
 function listRooms() {
-    getAuthContext(); // validate API key
+    getAuthContext();
 
     global $pdo;
     try {
@@ -327,7 +330,6 @@ function leaveRoom() {
                 $pdo->prepare("UPDATE room_players SET is_host = TRUE WHERE player_id = ? AND room_id = ?")->execute([$newHost['player_id'], $roomId]);
                 $pdo->prepare("UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?")->execute([$newHost['player_id'], $roomId]);
             } else {
-                // Cleanup empty room
                 $stmt = $pdo->prepare("SELECT matchmaking_id FROM game_rooms WHERE room_id = ?");
                 $stmt->execute([$roomId]);
                 $matchmakingId = $stmt->fetchColumn();
@@ -427,7 +429,6 @@ function submitAction() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    // Support both standard and Unity-friendly input
     $actionType = $data['action_type'] ?? null;
     $requestData = $data['request_data'] ?? null;
 
@@ -455,7 +456,7 @@ function submitAction() {
         INSERT INTO action_queue (action_id, room_id, game_id, player_id, action_type, request_data, status)
         VALUES (?, ?, ?, ?, ?, ?, 'pending')
     ");
-    $stmt->execute([$actionId, $roomId, $context['api']['id'], $player['id'], $actionType, json_encode($requestData, JSON_UNESCAPED_UNICODE), 'pending']);
+    $stmt->execute([$actionId, $roomId, $context['api']['id'], $player['id'], $actionType, json_encode($requestData, JSON_UNESCAPED_UNICODE)]);
 
     sendResponse([
         'success' => true,
@@ -482,18 +483,6 @@ function pollActions() {
     $stmt->execute([$player['id']]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($actions as &$action) {
-        $action = formatForUnity($action);
-    }
-
-    // Mark as read
-    if (!empty($actions)) {
-        $actionIds = array_column($actions, 'action_id');
-        $placeholders = implode(',', array_fill(0, count($actionIds), '?'));
-        $pdo->prepare("UPDATE action_queue SET status = 'read' WHERE action_id IN ($placeholders)")
-            ->execute($actionIds);
-    }
-
     sendResponse(['success' => true, 'actions' => $actions]);
 }
 
@@ -518,10 +507,6 @@ function getPendingActions() {
     ");
     $stmt->execute([$roomId]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    foreach ($actions as &$action) {
-        $action = formatForUnity($action);
-    }
 
     sendResponse(['success' => true, 'actions' => $actions]);
 }
@@ -553,12 +538,15 @@ function completeAction($actionId) {
     sendResponse(['success' => true, 'message' => 'Action completed']);
 }
 
+// ====================== FIXED: sendUpdates() ======================
 function sendUpdates() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
     $roomId = getPlayerRoom($player['id']);
-    if (!$roomId) sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
+    if (!$roomId) {
+        sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
+    }
 
     if (!isHost($player['id'])) {
         sendResponse(['success' => false, 'error' => 'Only host can send updates'], 403);
@@ -573,8 +561,7 @@ function sendUpdates() {
     $updateType = trim($data['type']);
     $dataJson = is_string($data['dataJson']) ? $data['dataJson'] : json_encode($data['dataJson'], JSON_UNESCAPED_UNICODE);
 
-    json_decode($dataJson);
-    if (json_last_error() !== JSON_ERROR_NONE) {
+    if (json_decode($dataJson) === null && json_last_error() !== JSON_ERROR_NONE) {
         sendResponse(['success' => false, 'error' => 'Invalid JSON in dataJson field'], 400);
     }
 
@@ -582,14 +569,24 @@ function sendUpdates() {
     $targets = [];
 
     global $pdo;
+
     if ($targetPlayerIds === 'all') {
-        $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND player_id != ? AND is_online = TRUE");
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND player_id != ? AND is_online = TRUE
+        ");
         $stmt->execute([$roomId, $player['id']]);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    } elseif (is_array($targetPlayerIds)) {
+    } elseif (is_array($targetPlayerIds) && count($targetPlayerIds) > 0) {
         $placeholders = implode(',', array_fill(0, count($targetPlayerIds), '?'));
-        $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE");
-        $stmt->execute(array_merge([$roomId], $targetPlayerIds));
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE
+        ");
+        $params = array_merge([$roomId], $targetPlayerIds);
+        $stmt->execute($params);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
@@ -627,121 +624,6 @@ function sendUpdates() {
     }
 }
 
-function getCurrentGameRoomStatus() {
-    $context = getAuthContext();
-    $player = requirePlayer($context);
-
-    global $pdo;
-
-    // Get room information
-    $stmt = $pdo->prepare("
-        SELECT 
-            rp.room_id,
-            rp.player_id,
-            rp.player_name,
-            rp.is_host,
-            rp.is_online,
-            rp.last_heartbeat,
-            rp.joined_at,
-            gr.room_name,
-            gr.max_players,
-            gr.password IS NOT NULL as has_password,
-            gr.is_active,
-            gr.created_at as room_created_at,
-            gr.updated_at,
-            gr.last_activity as room_last_activity,
-            COUNT(rp2.player_id) as current_players
-        FROM room_players rp
-        JOIN game_rooms gr ON rp.room_id = gr.room_id
-        LEFT JOIN room_players rp2 ON gr.room_id = rp2.room_id
-        WHERE rp.player_id = ? AND gr.is_active = TRUE
-        GROUP BY gr.room_id 
-        LIMIT 1
-    ");
-    $stmt->execute([$player['id']]);
-    $room = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$room) {
-        sendResponse([
-            'success' => true,
-            'in_room' => false,
-            'message' => 'Player is not in any game room'
-        ]);
-    }
-
-    // Get pending actions for this player
-    $stmt = $pdo->prepare("
-        SELECT action_id, action_type, status, created_at, processed_at
-        FROM action_queue 
-        WHERE player_id = ? AND status IN ('pending', 'processing')
-        ORDER BY created_at DESC
-        LIMIT 5
-    ");
-    $stmt->execute([$player['id']]);
-    $pendingActions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Get pending updates for this player
-    $stmt = $pdo->prepare("
-        SELECT update_id, from_player_id, type, data_json, created_at, status
-        FROM player_updates 
-        WHERE target_player_id = ? AND status = 'pending'
-        ORDER BY created_at DESC
-        LIMIT 5
-    ");
-    $stmt->execute([$player['id']]);
-    $pendingUpdates = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Format pending updates for Unity (convert data_json to data_json string)
-    if ($isUnity) {
-        foreach ($pendingUpdates as &$update) {
-            if (!empty($update['data_json'])) {
-                $decoded = json_decode($update['data_json'], true);
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $update['data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-                }
-            }
-        }
-    }
-
-    // Build response
-    $response = [
-        'success' => true,
-        'in_room' => true,
-        'room' => [
-            'room_id'            => $room['room_id'],
-            'room_name'          => $room['room_name'],
-            'is_host'            => (bool)$room['is_host'],
-            'is_online'          => (bool)$room['is_online'],
-            'max_players'        => (int)$room['max_players'],
-            'current_players'    => (int)$room['current_players'],
-            'has_password'       => (bool)$room['has_password'],
-            'is_active'          => (bool)$room['is_active'],
-            'player_name'        => $room['player_name'],
-            'joined_at'          => $room['joined_at'],
-            'last_heartbeat'     => $room['last_heartbeat'],
-            'room_created_at'    => $room['room_created_at'],
-            'room_last_activity' => $room['room_last_activity']
-        ],
-        'pending_actions' => $pendingActions,
-        'pending_updates' => $pendingUpdates
-    ];
-
-    // If Unity format → convert any complex fields (extra safety)
-    if ($isUnity) {
-        foreach ($response['pending_actions'] as &$action) {
-            if (isset($action['request_data']) && is_string($action['request_data'])) {
-                $decoded = json_decode($action['request_data'], true);
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $action['request_data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-                    unset($action['request_data']);
-                }
-            }
-        }
-    }
-
-    sendResponse($response);
-}
-
 function pollUpdates() {
     $context = getAuthContext();
     $player = requirePlayer($context);
@@ -768,24 +650,86 @@ function pollUpdates() {
     $stmt->execute($params);
     $updates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($updates as &$update) {
-        $update = formatForUnity($update);
-    }
-
-    // Mark as delivered
-    if (!empty($updates)) {
-        $updateIds = array_column($updates, 'update_id');
-        $placeholders = implode(',', array_fill(0, count($updateIds), '?'));
-        $pdo->prepare("UPDATE player_updates SET status = 'delivered', delivered_at = CURRENT_TIMESTAMP 
-                       WHERE update_id IN ($placeholders) AND status = 'pending'")
-            ->execute($updateIds);
-    }
-
     sendResponse([
         'success' => true,
         'updates' => $updates,
         'last_update_id' => !empty($updates) ? end($updates)['update_id'] : $lastUpdateId
     ]);
+}
+
+function getCurrentGameRoomStatus() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT 
+            rp.room_id, rp.player_id, rp.player_name, rp.is_host, rp.is_online, 
+            rp.last_heartbeat, rp.joined_at,
+            gr.room_name, gr.max_players, gr.password IS NOT NULL as has_password, 
+            gr.is_active, gr.created_at as room_created_at, gr.updated_at, 
+            gr.last_activity as room_last_activity,
+            COUNT(rp2.player_id) as current_players
+        FROM room_players rp
+        JOIN game_rooms gr ON rp.room_id = gr.room_id
+        LEFT JOIN room_players rp2 ON gr.room_id = rp2.room_id
+        WHERE rp.player_id = ? AND gr.is_active = TRUE
+        GROUP BY gr.room_id 
+        LIMIT 1
+    ");
+    $stmt->execute([$player['id']]);
+    $room = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$room) {
+        sendResponse([
+            'success' => true,
+            'in_room' => false,
+            'message' => 'Player is not in any game room'
+        ]);
+    }
+
+    $stmt = $pdo->prepare("
+        SELECT action_id, action_type, status, created_at, processed_at
+        FROM action_queue 
+        WHERE player_id = ? AND status IN ('pending', 'processing')
+        ORDER BY created_at DESC LIMIT 5
+    ");
+    $stmt->execute([$player['id']]);
+    $pendingActions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmt = $pdo->prepare("
+        SELECT update_id, from_player_id, type, data_json, created_at, status
+        FROM player_updates 
+        WHERE target_player_id = ? AND status = 'pending'
+        ORDER BY created_at DESC LIMIT 5
+    ");
+    $stmt->execute([$player['id']]);
+    $pendingUpdates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $response = [
+        'success' => true,
+        'in_room' => true,
+        'room' => [
+            'room_id'            => $room['room_id'],
+            'room_name'          => $room['room_name'],
+            'is_host'            => (bool)$room['is_host'],
+            'is_online'          => (bool)$room['is_online'],
+            'max_players'        => (int)$room['max_players'],
+            'current_players'    => (int)$room['current_players'],
+            'has_password'       => (bool)$room['has_password'],
+            'is_active'          => (bool)$room['is_active'],
+            'player_name'        => $room['player_name'],
+            'joined_at'          => $room['joined_at'],
+            'last_heartbeat'     => $room['last_heartbeat'],
+            'room_created_at'    => $room['room_created_at'],
+            'room_last_activity' => $room['room_last_activity']
+        ],
+        'pending_actions' => $pendingActions,
+        'pending_updates' => $pendingUpdates
+    ];
+
+    sendResponse($response);
 }
 
 // ====================== ROUTING ======================
