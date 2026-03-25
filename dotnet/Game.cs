@@ -69,7 +69,7 @@ public class Game
         {
             var create = await sdk!.CreateMatchmakingLobbyAsync(
                 players["host"].Token, maxPlayers: 4, strictFull: true, joinByRequests: false,
-                extraJsonString: new { minLevel = 5, rank = "silver", gameMode = "competitive" });
+                rules: new { minLevel = 5, rank = "silver", gameMode = "competitive" });
 
             matchmakingId = create.Matchmaking_id;
             Console.WriteLine($"[MATCHMAKING] Lobby created: {matchmakingId}");

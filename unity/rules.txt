@@ -364,7 +364,7 @@ You must change these:
 * object Response_data 
 * object Request_data 
 * object DataJson 
-* object Extra_json_string 
+* object Rules 
 * all { get; set; } 
 * all interface responses
 

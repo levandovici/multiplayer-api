@@ -245,9 +245,9 @@ namespace michitai
             => Send<MatchmakingListResponse>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
         public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync(string playerToken, int maxPlayers = 4, bool strictFull = false,
-            bool joinByRequests = false, object? extraJsonString = null, CancellationToken ct = default)
+            bool joinByRequests = false, object? rules = null, CancellationToken ct = default)
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new { maxPlayers, strictFull, joinByRequests, extraJsonString }, ct);
+                new { maxPlayers, strictFull, joinByRequests, rules }, ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -554,7 +554,7 @@ namespace michitai
         public int Host_player_id { get; set; }
         public int Max_players { get; set; }
         public int Strict_full { get; set; }
-        public object? Extra_json_string { get; set; }
+        public object? Rules { get; set; }
         public string Created_at { get; set; } = string.Empty;
         public string Last_heartbeat { get; set; } = string.Empty;
         public int Current_players { get; set; }
@@ -615,7 +615,7 @@ namespace michitai
         public int Current_players { get; set; }
         public bool Strict_full { get; set; }
         public bool Join_by_requests { get; set; }
-        public object? Extra_json_string { get; set; }
+        public object? Rules { get; set; }
         public string Joined_at { get; set; } = string.Empty;
         public string Player_status { get; set; } = string.Empty;
         public string Last_heartbeat { get; set; } = string.Empty;

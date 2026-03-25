@@ -388,9 +388,9 @@ public class Game : MonoBehaviour
 
         // 2️⃣5️⃣ Create Matchmaking Lobby
         Debug.Log("[MATCHMAKING] Host creating new matchmaking lobby...");
-        string matchmakingExtraJson = "{\"minLevel\":5,\"rank\":\"silver\",\"gameMode\":\"competitive\"}";
+        string matchmakingRulesJson = "{\"minLevel\":5,\"rank\":\"silver\",\"gameMode\":\"competitive\"}";
         string matchmakingId = ""; // Declare outside callback to fix scope
-        yield return StartCoroutine(CreateMatchmakingCoroutine(4, true, false, matchmakingExtraJson, (response) => {
+        yield return StartCoroutine(CreateMatchmakingCoroutine(4, true, false, matchmakingRulesJson, (response) => {
             if (response.success) {
                 matchmakingId = response.matchmaking_id; // Assign to outer variable
                 Debug.Log($"[MATCHMAKING] Lobby created: ID={matchmakingId}, Max Players={response.max_players}, Host={response.is_host}");
@@ -1286,13 +1286,13 @@ public class Game : MonoBehaviour
     /// <param name="maxPlayers">Maximum player capacity</param>
     /// <param name="strictFull">Whether lobby closes when full</param>
     /// <param name="joinByRequests">Whether join requires approval</param>
-    /// <param name="extraJsonString">Additional lobby settings as JSON</param>
+    /// <param name="rules">Additional lobby settings as JSON</param>
     /// <param name="callback">Response callback with lobby creation result</param>
     /// <returns>IEnumerator for Unity coroutine execution</returns>
-    private IEnumerator CreateMatchmakingCoroutine(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, System.Action<CreateMatchmakingResponse> callback)
+    private IEnumerator CreateMatchmakingCoroutine(int maxPlayers, bool strictFull, bool joinByRequests, string rules, System.Action<CreateMatchmakingResponse> callback)
     {
         bool completed = false;
-        sdk.CreateMatchmaking(maxPlayers, strictFull, joinByRequests, extraJsonString, (response) => {
+        sdk.CreateMatchmaking(maxPlayers, strictFull, joinByRequests, rules, (response) => {
             callback?.Invoke(response);
             completed = true;
         });

@@ -366,7 +366,7 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=API_
     "maxPlayers": 4,
     "strictFull": true,
     "joinByRequests": true,
-    "extraJsonString": {
+    "rules": {
       "minLevel": 10,
       "rank": "gold"
     }

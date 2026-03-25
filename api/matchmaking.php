@@ -125,7 +125,7 @@ function getPlayerMatchmakingDetails($playerId) {
             m.max_players,
             m.strict_full,
             m.join_by_requests,
-            m.extra_json_string,
+            m.rules,
             m.is_started,
             m.started_at,
             m.created_at,
@@ -153,29 +153,29 @@ function isMatchmakingHost($playerId, $matchmakingId) {
 }
 
 // ====================== UNITY FORMATTER ======================
-// Ensures extra_json_string is a JSON string for Unity, and object/null for normal JSON clients
+// Ensures rules is a JSON string for Unity, and object/null for normal JSON clients
 function formatForUnity($data) {
     global $isUnity;
     if (!$isUnity) return $data;
 
-    // Handle top-level extra_json_string
-    if (isset($data['extra_json_string'])) {
-        if (is_string($data['extra_json_string']) && !empty($data['extra_json_string'])) {
-            $decoded = json_decode($data['extra_json_string'], true);
-            $data['extra_json_string'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    // Handle top-level rules
+    if (isset($data['rules'])) {
+        if (is_string($data['rules']) && !empty($data['rules'])) {
+            $decoded = json_decode($data['rules'], true);
+            $data['rules'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         } else {
-            $data['extra_json_string'] = '{}';
+            $data['rules'] = '{}';
         }
     }
 
     // Handle nested in 'matchmaking' key (used in getCurrentMatchmakingStatus)
     if (isset($data['matchmaking']) && is_array($data['matchmaking'])) {
-        if (isset($data['matchmaking']['extra_json_string'])) {
-            if (is_string($data['matchmaking']['extra_json_string']) && !empty($data['matchmaking']['extra_json_string'])) {
-                $decoded = json_decode($data['matchmaking']['extra_json_string'], true);
-                $data['matchmaking']['extra_json_string'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if (isset($data['matchmaking']['rules'])) {
+            if (is_string($data['matchmaking']['rules']) && !empty($data['matchmaking']['rules'])) {
+                $decoded = json_decode($data['matchmaking']['rules'], true);
+                $data['matchmaking']['rules'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             } else {
-                $data['matchmaking']['extra_json_string'] = '{}';
+                $data['matchmaking']['rules'] = '{}';
             }
         }
     }
@@ -198,7 +198,7 @@ function listMatchmaking() {
                 m.host_player_id,
                 m.max_players,
                 m.strict_full,
-                m.extra_json_string,
+                m.rules,
                 m.created_at,
                 m.last_heartbeat,
                 COUNT(mp.player_id) as current_players,
@@ -246,7 +246,7 @@ function createMatchmaking() {
     $maxPlayers = max(2, min(16, (int)$data['maxPlayers']));
     $strictFull = !empty($data['strictFull']);
     $joinByRequests = !empty($data['joinByRequests']);
-    $extraJsonString = isset($data['extraJsonString']) ? json_encode($data['extraJsonString'], JSON_UNESCAPED_UNICODE) : null;
+    $rules = isset($data['rules']) ? json_encode($data['rules'], JSON_UNESCAPED_UNICODE) : null;
 
     $matchmakingId = bin2hex(random_bytes(16));
 
@@ -256,10 +256,10 @@ function createMatchmaking() {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking 
-            (matchmaking_id, game_id, host_player_id, max_players, strict_full, join_by_requests, extra_json_string)
+            (matchmaking_id, game_id, host_player_id, max_players, strict_full, join_by_requests, rules)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $extraJsonString]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $rules]);
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
@@ -573,7 +573,7 @@ function getCurrentMatchmakingStatus() {
                 m.max_players,
                 m.strict_full,
                 m.join_by_requests,
-                m.extra_json_string,
+                m.rules,
                 m.created_at,
                 m.last_heartbeat as lobby_heartbeat,
                 m.is_started,
@@ -622,7 +622,7 @@ function getCurrentMatchmakingStatus() {
                 'current_players' => (int)$matchmaking['current_players'],
                 'strict_full' => (bool)$matchmaking['strict_full'],
                 'join_by_requests' => (bool)$matchmaking['join_by_requests'],
-                'extra_json_string' => $matchmaking['extra_json_string'],   // raw from DB
+                'rules' => $matchmaking['rules'],   // raw from DB
                 'joined_at' => $matchmaking['joined_at'],
                 'player_status' => $matchmaking['player_status'],
                 'last_heartbeat' => $matchmaking['last_heartbeat'],

@@ -686,7 +686,7 @@ $site_twitter = "@michitai";
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, Action&lt;CreateMatchmakingResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string rules, Action&lt;CreateMatchmakingResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Creates a new matchmaking lobby. The creating player becomes the lobby host.</p>
                                 </div>
                                 

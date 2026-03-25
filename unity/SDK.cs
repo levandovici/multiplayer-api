@@ -982,7 +982,7 @@ namespace MultiplayerAPI
         public bool strict_full;
         
         /// <summary>Additional lobby settings as JSON string (Unity compatibility requirement)</summary>
-        public string extra_json_string; // Unity compatibility: JSON string
+        public string rules; // Unity compatibility: JSON string
         
         /// <summary>Timestamp when lobby was created</summary>
         public string created_at;
@@ -1020,7 +1020,7 @@ namespace MultiplayerAPI
     /// <remarks>
     /// This class contains the data needed to create a new matchmaking lobby.
     /// Includes player capacity, fullness behavior, join requirements, and extra settings.
-    /// The extraJsonString field allows for custom lobby configuration.
+    /// The rules field allows for custom lobby configuration.
     /// </remarks>
     [Serializable]
     public class CreateMatchmakingRequest
@@ -1035,7 +1035,7 @@ namespace MultiplayerAPI
         public bool joinByRequests;
         
         /// <summary>Additional lobby settings as JSON string (e.g., {"minLevel":5,"rank":"silver"})</summary>
-        public string extraJsonString; // JSON string
+        public string rules; // JSON string
     }
 
     /// <summary>
@@ -1226,7 +1226,7 @@ namespace MultiplayerAPI
         public bool join_by_requests;
         
         /// <summary>Additional lobby settings as JSON string (Unity compatibility requirement)</summary>
-        public string extra_json_string; // Unity compatibility: JSON string
+        public string rules; // Unity compatibility: JSON string
         
         /// <summary>Timestamp when player joined the lobby</summary>
         public string joined_at;
@@ -2287,7 +2287,7 @@ namespace MultiplayerAPI
         /// <param name="maxPlayers">Maximum player capacity (2-16 recommended)</param>
         /// <param name="strictFull">Whether lobby closes automatically when full</param>
         /// <param name="joinByRequests">Whether players must request to join (true) or can join directly (false)</param>
-        /// <param name="extraJsonString">Additional lobby settings as JSON string (e.g., {"minLevel":5,"rank":"silver"})</param>
+        /// <param name="rules">Additional lobby settings as JSON string (e.g., {"minLevel":5,"rank":"silver"})</param>
         /// <param name="callback">Response callback with CreateMatchmakingResponse result</param>
         /// <example>
         /// <code>
@@ -2301,14 +2301,14 @@ namespace MultiplayerAPI
         /// });
         /// </code>
         /// </example>
-        public void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string extraJsonString, Action<CreateMatchmakingResponse> callback)
+        public void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string rules, Action<CreateMatchmakingResponse> callback)
         {
             var request = new CreateMatchmakingRequest
             {
                 maxPlayers = maxPlayers,
                 strictFull = strictFull,
                 joinByRequests = joinByRequests,
-                extraJsonString = extraJsonString
+                rules = rules
             };
 
             var json = JsonUtility.ToJson(request);

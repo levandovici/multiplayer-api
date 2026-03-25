@@ -695,7 +695,7 @@ $site_twitter = "@michitai";
     int maxPlayers,
     bool strictFull,
     bool joinByRequests,
-    object? extraJsonString = null
+    object? rules = null
 )</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with configurable settings.</p>
                             </div>

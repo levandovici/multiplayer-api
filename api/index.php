@@ -1084,7 +1084,7 @@ $site_twitter = "@michitai";
       "host_player_id": 62,
       "max_players": 4,
       "strict_full": 1,
-      "extra_json_string": {
+      "rules": {
         "minLevel": 10,
         "rank": "gold"
       },
@@ -1110,7 +1110,7 @@ $site_twitter = "@michitai";
     "maxPlayers": 4,
     "strictFull": true,
     "joinByRequests": true,
-    "extraJsonString": {
+    "rules": {
       "minLevel": 10,
       "rank": "gold"
     }
@@ -1227,7 +1227,7 @@ $site_twitter = "@michitai";
     "current_players": 1,
     "strict_full": true,
     "join_by_requests": false,
-    "extra_json_string": {
+    "rules": {
       "minLevel": 10,
       "rank": "gold"
     },
