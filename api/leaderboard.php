@@ -5,9 +5,9 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
 header('Content-Type: application/json');
 
-// Enable error reporting
+// Enable error reporting - disabled display in production for security
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/php_errors.log');
 
@@ -113,12 +113,18 @@ try {
 
     $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Build leaderboard with Unity support
+    // Build leaderboard
     $leaderboard = [];
     $rank = 1;
 
     foreach ($players as $row) {
-        $playerData = json_decode($row['player_data'] ?? '{}', true) ?: new stdClass();
+        // Decode player_data safely - always work with array in PHP
+        $playerData = json_decode($row['player_data'] ?? '{}', true);
+        
+        // If decoding failed or returned non-array, use empty array
+        if (!is_array($playerData)) {
+            $playerData = [];
+        }
 
         $entry = [
             'rank'        => $rank++,
@@ -127,8 +133,13 @@ try {
         ];
 
         if ($isUnity) {
-            $entry['player_data_json'] = json_encode($playerData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            // For Unity: send as JSON string and force object {} instead of array []
+            $entry['player_data_json'] = json_encode(
+                (object)$playerData, 
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+            );
         } else {
+            // Normal API: send as object/array (standard for JSON)
             $entry['player_data'] = $playerData;
         }
 
