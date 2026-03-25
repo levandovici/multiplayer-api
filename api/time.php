@@ -1,10 +1,11 @@
 <?php
+// ====================== CORS & HEADERS ======================
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
 header('Content-Type: application/json');
 
-// time.php  – place it in the root of your site (or any folder you like)
+// time.php – Unified version with ?format=unity support
 
 // Enable error reporting
 error_reporting(E_ALL);
@@ -21,12 +22,15 @@ if (!is_dir(__DIR__ . '/../logs')) {
 error_log("=== Time API Request ===");
 error_log("Request URI: " . $_SERVER['REQUEST_URI']);
 error_log("Method: " . $_SERVER['REQUEST_METHOD']);
-error_log("Headers: " . print_r(getallheaders(), true));
-
-// ... [previous code remains the same until line 20]
+// error_log("Headers: " . print_r(getallheaders(), true)); // uncomment for debugging
 
 try {
     require_once '../php/config.php';
+
+    // ====================== FORMAT HANDLING ======================
+    $format = strtolower($_GET['format'] ?? 'json');
+    $isUnity = ($format === 'unity');
+    // ============================================================
 
     // Helper function to send JSON response
     function sendResponse($data, $statusCode = 200) {
@@ -93,19 +97,19 @@ try {
     
     // Apply UTC offset if provided
     if ($utcOffset !== 0) {
-        $timestamp += ($utcOffset * 3600); // Convert hours to seconds
+        $timestamp += ($utcOffset * 3600);
     }
     
-    $utc = date('c', $timestamp); // Use offset-adjusted timestamp with proper timezone
+    $utc = date('c', $timestamp);
     $readable = gmdate('Y-m-d H:i:s', $timestamp) . ' UTC';
     
-    // Add offset info to response if used
+    // Add offset info if used
     $offsetInfo = [];
     if ($utcOffset !== 0) {
         $offsetInfo = [
-            'offset_hours' => $utcOffset,
-            'offset_string' => ($utcOffset >= 0 ? '+' : '') . $utcOffset,
-            'original_utc' => gmdate('c'),
+            'offset_hours'   => $utcOffset,
+            'offset_string'  => ($utcOffset >= 0 ? '+' : '') . $utcOffset,
+            'original_utc'   => gmdate('c'),
             'original_timestamp' => time()
         ];
     }
@@ -113,19 +117,22 @@ try {
     // Log successful response
     error_log("Time API Response for user_id: " . $keyData['user_id']);
 
-    // Return time data
+    // Build response
     $response = [
-        'success' => true,
-        'utc' => $utc,
-        'timestamp' => $timestamp,
-        'readable' => $readable
+        'success'    => true,
+        'utc'        => $utc,
+        'timestamp'  => $timestamp,
+        'readable'   => $readable
     ];
-    
-    // Add offset info if used
+
     if (!empty($offsetInfo)) {
         $response['offset'] = $offsetInfo;
     }
-    
+
+    // ====================== UNITY COMPATIBILITY ======================
+    // For Unity we return everything as simple types (already is), no complex objects
+    // So no extra conversion needed for time.php, but we keep the flag for consistency
+
     sendResponse($response);
 
 } catch (Exception $e) {
@@ -134,7 +141,8 @@ try {
     
     sendResponse([
         'success' => false,
-        'error' => 'Internal server error',
+        'error'   => 'Internal server error',
         'message' => $e->getMessage()
     ], 500);
 }
+?>

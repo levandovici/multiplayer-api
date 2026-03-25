@@ -1,7 +1,8 @@
 <?php
+// ====================== CORS & HEADERS ======================
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
 header('Content-Type: application/json');
 
 // Enable error reporting & logging
@@ -19,25 +20,26 @@ if (!is_dir(__DIR__ . '/../logs')) {
 error_log("=== GAME ROOM REQUEST ===");
 error_log("URI: " . $_SERVER['REQUEST_URI']);
 error_log("Method: " . $_SERVER['REQUEST_METHOD']);
-// error_log("Headers: " . print_r(getallheaders(), true)); // uncomment for debugging
 
 require_once __DIR__ . '/../php/config.php';
 
+// ====================== FORMAT HANDLING ======================
+$format = strtolower($_GET['format'] ?? 'json');
+$isUnity = ($format === 'unity');
+// ============================================================
 
-// ────────────────────────────────────────────────
-//      Helper functions
-// ────────────────────────────────────────────────
+// Helper function to send JSON response
 function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
+// ====================== HELPER FUNCTIONS ======================
 function getAuthContext() {
     $headers = getallheaders();
     $apiToken = '';
 
-    // Prefer Bearer token
     if (isset($headers['Authorization']) && preg_match('/Bearer\s+(\S+)/', $headers['Authorization'], $m)) {
         $apiToken = $m[1];
     } elseif (isset($_GET['api_token'])) {
@@ -82,12 +84,7 @@ function requirePlayer($context) {
 
 function getPlayerRoom($playerId) {
     global $pdo;
-    $stmt = $pdo->prepare("
-        SELECT room_id 
-        FROM room_players 
-        WHERE player_id = ? AND is_online = TRUE
-        LIMIT 1
-    ");
+    $stmt = $pdo->prepare("SELECT room_id FROM room_players WHERE player_id = ? AND is_online = TRUE LIMIT 1");
     $stmt->execute([$playerId]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ? $result['room_id'] : null;
@@ -113,45 +110,57 @@ function addPlayerToRoom($roomId, $playerId, $playerName, $gameId, $isHost = fal
 
 function isHost($playerId) {
     global $pdo;
-    $stmt = $pdo->prepare("
-        SELECT 1 
-        FROM room_players 
-        WHERE player_id = ? AND is_host = TRUE
-        LIMIT 1
-    ");
+    $stmt = $pdo->prepare("SELECT 1 FROM room_players WHERE player_id = ? AND is_host = TRUE LIMIT 1");
     $stmt->execute([$playerId]);
-    return (bool) $stmt->fetchColumn();
+    return (bool)$stmt->fetchColumn();
 }
 
+// ====================== UNITY HELPER ======================
+function formatForUnity($data) {
+    global $isUnity;
+    if (!$isUnity) return $data;
 
-// ────────────────────────────────────────────────
-//      Endpoints
-// ────────────────────────────────────────────────
+    // Convert complex fields to _json strings for Unity JsonUtility compatibility
+    if (isset($data['response_data']) && is_string($data['response_data'])) {
+        $decoded = json_decode($data['response_data'], true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $data['response_data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            unset($data['response_data']);
+        }
+    }
+    if (isset($data['request_data']) && is_string($data['request_data'])) {
+        $decoded = json_decode($data['request_data'], true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $data['request_data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            unset($data['request_data']);
+        }
+    }
+    if (isset($data['data_json']) && is_string($data['data_json'])) {
+        $decoded = json_decode($data['data_json'], true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $data['data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        }
+    }
+    return $data;
+}
+
+// ====================== ENDPOINTS ======================
 
 function createRoom() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Check if player is already in a game room
     $existingRoom = getPlayerRoom($player['id']);
     if ($existingRoom) {
         sendResponse(['success' => false, 'error' => 'You are already in a game room. Leave current room first.'], 400);
     }
 
-    // Check if player is in a matchmaking lobby
+    // Check matchmaking
     global $pdo;
-    $stmt = $pdo->prepare("
-        SELECT mp.matchmaking_id
-        FROM matchmaking_players mp
-        JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-        WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
-        LIMIT 1
-    ");
+    $stmt = $pdo->prepare("SELECT mp.matchmaking_id FROM matchmaking_players mp JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE LIMIT 1");
     $stmt->execute([$player['id']]);
-    $matchmakingLobby = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($matchmakingLobby) {
-        sendResponse(['success' => false, 'error' => 'You cannot create a game room while in a matchmaking lobby. Leave matchmaking first.'], 400);
+    if ($stmt->fetchColumn()) {
+        sendResponse(['success' => false, 'error' => 'You cannot create a game room while in a matchmaking lobby.'], 400);
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
@@ -166,16 +175,13 @@ function createRoom() {
     try {
         $pdo->beginTransaction();
 
-        $pdo->prepare("
-            INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players)
-            VALUES (?, ?, ?, ?, ?)
-        ")->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers]);
+        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players) VALUES (?, ?, ?, ?, ?)")
+            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers]);
 
         addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true);
 
-        $pdo->prepare("
-            UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?
-        ")->execute([$player['id'], $roomId]);
+        $pdo->prepare("UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?")
+            ->execute([$player['id'], $roomId]);
 
         $pdo->commit();
 
@@ -193,17 +199,14 @@ function createRoom() {
 }
 
 function listRooms() {
-    getAuthContext(); // just validate API key
+    getAuthContext(); // validate API key
 
     global $pdo;
     try {
         $stmt = $pdo->query("
-            SELECT 
-                r.room_id, 
-                r.room_name, 
-                r.max_players, 
-                COUNT(rp.player_id) as current_players,
-                r.password IS NOT NULL as has_password
+            SELECT r.room_id, r.room_name, r.max_players, 
+                   COUNT(rp.player_id) as current_players,
+                   r.password IS NOT NULL as has_password
             FROM game_rooms r
             LEFT JOIN room_players rp ON r.room_id = rp.room_id
             WHERE r.is_active = TRUE
@@ -238,24 +241,14 @@ function joinRoom($roomId) {
         $stmt = $pdo->prepare("
             SELECT game_id, password, max_players, is_active,
                    (SELECT COUNT(*) FROM room_players WHERE room_id = ?) as current_players
-            FROM game_rooms 
-            WHERE room_id = ?
+            FROM game_rooms WHERE room_id = ?
         ");
         $stmt->execute([$roomId, $roomId]);
         $room = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$room) {
-            throw new Exception('Room not found');
-        }
-
-        // If inactive, only allow if empty (no stale players)
-        if (!$room['is_active'] && $room['current_players'] > 0) {
-            throw new Exception('Room inactive');
-        }
-
-        if ($room['current_players'] >= $room['max_players']) {
-            throw new Exception('Room is full');
-        }
+        if (!$room) throw new Exception('Room not found');
+        if (!$room['is_active'] && $room['current_players'] > 0) throw new Exception('Room inactive');
+        if ($room['current_players'] >= $room['max_players']) throw new Exception('Room is full');
 
         if ($room['password'] !== null) {
             if (!isset($data['password']) || !password_verify($data['password'], $room['password'])) {
@@ -264,8 +257,6 @@ function joinRoom($roomId) {
         }
 
         addPlayerToRoom($roomId, $player['id'], $player['player_name'], $room['game_id']);
-
-        // Check and reassign host if needed (will also reactivate if inactive)
         checkAndReassignHost($roomId);
 
         $pdo->commit();
@@ -292,33 +283,16 @@ function listRoomPlayers() {
     }
 
     global $pdo;
-    try {
-        $stmt = $pdo->prepare("
-            SELECT 
-                rp.player_id,
-                rp.player_name,
-                rp.is_host,
-                rp.is_online,
-                rp.last_heartbeat
-            FROM room_players rp
-            WHERE rp.room_id = ?
-            ORDER BY 
-                rp.is_host DESC,
-                rp.joined_at ASC,
-                rp.player_name ASC
-        ");
-        $stmt->execute([$roomId]);
-        $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("
+        SELECT rp.player_id, rp.player_name, rp.is_host, rp.is_online, rp.last_heartbeat
+        FROM room_players rp
+        WHERE rp.room_id = ?
+        ORDER BY rp.is_host DESC, rp.joined_at ASC, rp.player_name ASC
+    ");
+    $stmt->execute([$roomId]);
+    $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        sendResponse([
-            'success' => true,
-            'players' => $players,
-            'last_updated' => date('c')
-        ]);
-    } catch (Exception $e) {
-        error_log("List players failed: " . $e->getMessage());
-        sendResponse(['success' => false, 'error' => 'Failed to list players'], 500);
-    }
+    sendResponse(['success' => true, 'players' => $players, 'last_updated' => date('c')]);
 }
 
 function leaveRoom() {
@@ -330,77 +304,40 @@ function leaveRoom() {
         $pdo->beginTransaction();
 
         $roomId = getPlayerRoom($player['id']);
-        if (!$roomId) {
-            throw new Exception('You are not in any room');
-        }
+        if (!$roomId) throw new Exception('You are not in any room');
 
-        $stmt = $pdo->prepare("
-            SELECT is_host 
-            FROM room_players 
-            WHERE player_id = ? AND room_id = ?
-        ");
+        $stmt = $pdo->prepare("SELECT is_host FROM room_players WHERE player_id = ? AND room_id = ?");
         $stmt->execute([$player['id'], $roomId]);
         $playerData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$playerData) {
-            throw new Exception('You are not in this room');
-        }
+        if (!$playerData) throw new Exception('You are not in this room');
 
         $isHost = (bool)$playerData['is_host'];
 
-        // Remove leaving player first
-        $pdo->prepare("
-            DELETE FROM room_players 
-            WHERE player_id = ? AND room_id = ?
-        ")->execute([$player['id'], $roomId]);
+        $pdo->prepare("DELETE FROM room_players WHERE player_id = ? AND room_id = ?")
+            ->execute([$player['id'], $roomId]);
 
         if ($isHost) {
-            // Find next oldest online player to become host
-            $stmt = $pdo->prepare("
-                SELECT player_id 
-                FROM room_players 
-                WHERE room_id = ? 
-                  AND is_online = TRUE
-                ORDER BY joined_at ASC
-                LIMIT 1
-            ");
+            $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND is_online = TRUE ORDER BY joined_at ASC LIMIT 1");
             $stmt->execute([$roomId]);
             $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($newHost) {
-                // Assign new host (set all others to false for safety)
-                $pdo->prepare("
-                    UPDATE room_players 
-                    SET is_host = FALSE
-                    WHERE room_id = ?
-                ")->execute([$roomId]);
-
-                $pdo->prepare("
-                    UPDATE room_players 
-                    SET is_host = TRUE
-                    WHERE player_id = ? AND room_id = ?
-                ")->execute([$newHost['player_id'], $roomId]);
-
-                $pdo->prepare("
-                    UPDATE game_rooms 
-                    SET host_player_id = ?
-                    WHERE room_id = ?
-                ")->execute([$newHost['player_id'], $roomId]);
+                $pdo->prepare("UPDATE room_players SET is_host = FALSE WHERE room_id = ?")->execute([$roomId]);
+                $pdo->prepare("UPDATE room_players SET is_host = TRUE WHERE player_id = ? AND room_id = ?")->execute([$newHost['player_id'], $roomId]);
+                $pdo->prepare("UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?")->execute([$newHost['player_id'], $roomId]);
             } else {
-                // No players left → completely remove room and all related data
-                
-                // Check if this room was created from matchmaking and clean up matchmaking data
+                // Cleanup empty room
                 $stmt = $pdo->prepare("SELECT matchmaking_id FROM game_rooms WHERE room_id = ?");
                 $stmt->execute([$roomId]);
                 $matchmakingId = $stmt->fetchColumn();
-                
+
                 if ($matchmakingId) {
-                    // Remove matchmaking players and the matchmaking lobby itself
                     $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
                     $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
                     $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
                 }
-                
+
                 $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
@@ -408,11 +345,7 @@ function leaveRoom() {
         }
 
         $pdo->commit();
-
-        sendResponse([
-            'success' => true,
-            'message' => 'Successfully left the room'
-        ]);
+        sendResponse(['success' => true, 'message' => 'Successfully left the room']);
     } catch (Exception $e) {
         $pdo->rollBack();
         error_log("Leave room failed: " . $e->getMessage());
@@ -422,80 +355,47 @@ function leaveRoom() {
 
 function checkAndReassignHost($roomId) {
     global $pdo;
-    
-    // Check if current host is still online
+
     $stmt = $pdo->prepare("
-        SELECT player_id, is_online, last_heartbeat,
-               TIMESTAMPDIFF(SECOND, last_heartbeat, NOW()) as seconds_since_heartbeat
-        FROM room_players
-        WHERE room_id = ? AND is_host = TRUE
-        LIMIT 1
+        SELECT player_id, is_online 
+        FROM room_players 
+        WHERE room_id = ? AND is_host = TRUE LIMIT 1
     ");
     $stmt->execute([$roomId]);
     $currentHost = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Host is offline if missing, marked offline, or timed out
-    $hostOffline = !$currentHost || 
-                   !$currentHost['is_online'];
+    $hostOffline = !$currentHost || !$currentHost['is_online'];
 
     if ($hostOffline) {
-        try {
-            if ($currentHost) {
-                // Remove host status from current host
-                $pdo->prepare("
-                    UPDATE room_players 
-                    SET is_host = FALSE 
-                    WHERE player_id = ? AND room_id = ?
-                ")->execute([$currentHost['player_id'], $roomId]);
-            }
+        if ($currentHost) {
+            $pdo->prepare("UPDATE room_players SET is_host = FALSE WHERE player_id = ? AND room_id = ?")
+                ->execute([$currentHost['player_id'], $roomId]);
+        }
 
-            // Find next available player to be host (oldest first)
-            $stmt = $pdo->prepare("
-                SELECT player_id 
-                FROM room_players 
-                WHERE room_id = ? 
-                  AND is_online = TRUE
-                ORDER BY joined_at ASC
-                LIMIT 1
-            ");
-            $stmt->execute([$roomId]);
-            $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare("
+            SELECT player_id FROM room_players 
+            WHERE room_id = ? AND is_online = TRUE 
+            ORDER BY joined_at ASC LIMIT 1
+        ");
+        $stmt->execute([$roomId]);
+        $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($newHost) {
-                // Assign new host
-                $pdo->prepare("
-                    UPDATE room_players 
-                    SET is_host = TRUE
-                    WHERE player_id = ? AND room_id = ?
-                ")->execute([$newHost['player_id'], $roomId]);
-
-                $pdo->prepare("
-                    UPDATE game_rooms 
-                    SET host_player_id = ?,
-                        is_active = TRUE  -- Reactivate if was inactive
-                    WHERE room_id = ?
-                ")->execute([$newHost['player_id'], $roomId]);
-
-                return true;
-            } else {
-                // No players left in room → deactivate
-                $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
-                $pdo->prepare("UPDATE game_rooms SET is_active = FALSE WHERE room_id = ?")->execute([$roomId]);
-                return false;
-            }
-        } catch (Exception $e) {
-            error_log("Failed to reassign host: " . $e->getMessage());
-            throw $e;  // Let outer transaction handle rollback
+        if ($newHost) {
+            $pdo->prepare("UPDATE room_players SET is_host = TRUE WHERE player_id = ? AND room_id = ?")
+                ->execute([$newHost['player_id'], $roomId]);
+            $pdo->prepare("UPDATE game_rooms SET host_player_id = ?, is_active = TRUE WHERE room_id = ?")
+                ->execute([$newHost['player_id'], $roomId]);
+        } else {
+            $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
+            $pdo->prepare("UPDATE game_rooms SET is_active = FALSE WHERE room_id = ?")->execute([$roomId]);
         }
     }
-    return false;
 }
 
 function updateHeartbeat() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Check if player is in any room first
     $roomId = getPlayerRoom($player['id']);
     if (!$roomId) {
         sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
@@ -503,28 +403,15 @@ function updateHeartbeat() {
 
     global $pdo;
     $pdo->beginTransaction();
-    
     try {
-        // Update player's own heartbeat
-        $stmt = $pdo->prepare("
-            UPDATE room_players 
-            SET last_heartbeat = CURRENT_TIMESTAMP,
-                is_online = TRUE
-            WHERE player_id = ? AND room_id = ?
-        ");
-        $stmt->execute([$player['id'], $roomId]);
-        
-        // Update game_players heartbeat
-        $stmt = $pdo->prepare("
-            UPDATE game_players 
-            SET last_heartbeat = CURRENT_TIMESTAMP
-            WHERE id = ?
-        ");
-        $stmt->execute([$player['id']]);
-        
-        // Check and reassign host if needed
+        $pdo->prepare("UPDATE room_players SET last_heartbeat = CURRENT_TIMESTAMP, is_online = TRUE WHERE player_id = ? AND room_id = ?")
+            ->execute([$player['id'], $roomId]);
+
+        $pdo->prepare("UPDATE game_players SET last_heartbeat = CURRENT_TIMESTAMP WHERE id = ?")
+            ->execute([$player['id']]);
+
         checkAndReassignHost($roomId);
-        
+
         $pdo->commit();
         sendResponse(['success' => true, 'status' => 'ok']);
     } catch (Exception $e) {
@@ -540,8 +427,20 @@ function submitAction() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['action_type']) || !isset($data['request_data'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required fields: action_type and request_data'], 400);
+    // Support both standard and Unity-friendly input
+    $actionType = $data['action_type'] ?? null;
+    $requestData = $data['request_data'] ?? null;
+
+    if (empty($actionType)) {
+        sendResponse(['success' => false, 'error' => 'Missing action_type'], 400);
+    }
+
+    if (isset($data['request_data_json']) && is_string($data['request_data_json'])) {
+        $requestData = json_decode($data['request_data_json'], true);
+    }
+
+    if ($requestData === null) {
+        sendResponse(['success' => false, 'error' => 'Missing request_data or request_data_json'], 400);
     }
 
     $roomId = getPlayerRoom($player['id']);
@@ -553,18 +452,10 @@ function submitAction() {
 
     global $pdo;
     $stmt = $pdo->prepare("
-        INSERT INTO action_queue 
-        (action_id, room_id, game_id, player_id, action_type, request_data, status)
+        INSERT INTO action_queue (action_id, room_id, game_id, player_id, action_type, request_data, status)
         VALUES (?, ?, ?, ?, ?, ?, 'pending')
     ");
-    $stmt->execute([
-        $actionId,
-        $roomId,
-        $context['api']['id'],
-        $player['id'],
-        $data['action_type'],
-        json_encode($data['request_data'], JSON_UNESCAPED_UNICODE)
-    ]);
+    $stmt->execute([$actionId, $roomId, $context['api']['id'], $player['id'], $actionType, json_encode($requestData, JSON_UNESCAPED_UNICODE), 'pending']);
 
     sendResponse([
         'success' => true,
@@ -578,42 +469,29 @@ function pollActions() {
     $player = requirePlayer($context);
 
     $roomId = getPlayerRoom($player['id']);
-    if (!$roomId) {
-        sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
-    }
+    if (!$roomId) sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
 
     global $pdo;
     $stmt = $pdo->prepare("
         SELECT action_id, action_type, response_data, status
         FROM action_queue
-        WHERE player_id = ? 
-          AND status IN ('completed', 'failed')
-          AND processed_at > NOW() - INTERVAL 1 HOUR
-        ORDER BY processed_at DESC
-        LIMIT 50
+        WHERE player_id = ? AND status IN ('completed', 'failed')
+        AND processed_at > NOW() - INTERVAL 1 HOUR
+        ORDER BY processed_at DESC LIMIT 50
     ");
     $stmt->execute([$player['id']]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Decode response_data JSON for each action
     foreach ($actions as &$action) {
-        if (!empty($action['response_data'])) {
-            $decoded = json_decode($action['response_data'], true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                $action['response_data'] = $decoded;
-            }
-        }
+        $action = formatForUnity($action);
     }
 
     // Mark as read
     if (!empty($actions)) {
         $actionIds = array_column($actions, 'action_id');
         $placeholders = implode(',', array_fill(0, count($actionIds), '?'));
-        $pdo->prepare("
-            UPDATE action_queue 
-            SET status = 'read' 
-            WHERE action_id IN ($placeholders)
-        ")->execute($actionIds);
+        $pdo->prepare("UPDATE action_queue SET status = 'read' WHERE action_id IN ($placeholders)")
+            ->execute($actionIds);
     }
 
     sendResponse(['success' => true, 'actions' => $actions]);
@@ -628,14 +506,11 @@ function getPendingActions() {
     }
 
     $roomId = getPlayerRoom($player['id']);
-    if (!$roomId) {
-        sendResponse(['success' => false, 'error' => 'You are not in any room'], 400);
-    }
+    if (!$roomId) sendResponse(['success' => false, 'error' => 'You are not in any room'], 400);
 
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT a.action_id, a.player_id, a.action_type, a.request_data, a.created_at,
-               rp.player_name
+        SELECT a.action_id, a.player_id, a.action_type, a.request_data, a.created_at, rp.player_name
         FROM action_queue a
         JOIN room_players rp ON a.player_id = rp.player_id
         WHERE a.room_id = ? AND a.status = 'pending'
@@ -644,12 +519,8 @@ function getPendingActions() {
     $stmt->execute([$roomId]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Decode request_data JSON for each action
     foreach ($actions as &$action) {
-        $decoded = json_decode($action['request_data'], true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $action['request_data'] = $decoded;
-        }
+        $action = formatForUnity($action);
     }
 
     sendResponse(['success' => true, 'actions' => $actions]);
@@ -664,20 +535,14 @@ function completeAction($actionId) {
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
-    $status = in_array($data['status'] ?? 'completed', ['completed', 'failed']) 
-        ? $data['status'] 
-        : 'completed';
-
+    $status = in_array($data['status'] ?? 'completed', ['completed', 'failed']) ? $data['status'] : 'completed';
     $responseData = isset($data['response_data']) ? json_encode($data['response_data'], JSON_UNESCAPED_UNICODE) : null;
 
     global $pdo;
     $stmt = $pdo->prepare("
         UPDATE action_queue 
-        SET status = ?,
-            response_data = ?,
-            processed_at = CURRENT_TIMESTAMP
-        WHERE action_id = ?
-          AND status = 'pending'
+        SET status = ?, response_data = ?, processed_at = CURRENT_TIMESTAMP
+        WHERE action_id = ? AND status = 'pending'
     ");
     $stmt->execute([$status, $responseData, $actionId]);
 
@@ -692,20 +557,15 @@ function sendUpdates() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Get player's current room first
     $roomId = getPlayerRoom($player['id']);
-    if (!$roomId) {
-        sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
-    }
+    if (!$roomId) sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
 
-    // Check if player is host of this room
     if (!isHost($player['id'])) {
         sendResponse(['success' => false, 'error' => 'Only host can send updates'], 403);
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    // Validate required fields (roomId no longer needed)
     if (empty($data['type']) || !isset($data['dataJson'])) {
         sendResponse(['success' => false, 'error' => 'Missing required fields: type, dataJson'], 400);
     }
@@ -713,48 +573,32 @@ function sendUpdates() {
     $updateType = trim($data['type']);
     $dataJson = is_string($data['dataJson']) ? $data['dataJson'] : json_encode($data['dataJson'], JSON_UNESCAPED_UNICODE);
 
-    // Validate JSON
     json_decode($dataJson);
     if (json_last_error() !== JSON_ERROR_NONE) {
         sendResponse(['success' => false, 'error' => 'Invalid JSON in dataJson field'], 400);
     }
 
-    // Get target players
     $targetPlayerIds = $data['targetPlayerIds'] ?? 'all';
     $targets = [];
 
     global $pdo;
     if ($targetPlayerIds === 'all') {
-        // Get all players in room except host
-        $stmt = $pdo->prepare("
-            SELECT player_id 
-            FROM room_players 
-            WHERE room_id = ? AND player_id != ? AND is_online = TRUE
-        ");
+        $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND player_id != ? AND is_online = TRUE");
         $stmt->execute([$roomId, $player['id']]);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
     } elseif (is_array($targetPlayerIds)) {
-        // Validate specific players are in room and online
         $placeholders = implode(',', array_fill(0, count($targetPlayerIds), '?'));
-        $stmt = $pdo->prepare("
-            SELECT player_id 
-            FROM room_players 
-            WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE
-        ");
-        $stmt->execute([$roomId, ...$targetPlayerIds]);
+        $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE");
+        $stmt->execute(array_merge([$roomId], $targetPlayerIds));
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-        if (empty($targets)) {
-            sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
-        }
-    } else {
-        sendResponse(['success' => false, 'error' => 'targetPlayerIds must be "all" or an array'], 400);
     }
 
-    // Create updates for each target player
+    if (empty($targets)) {
+        sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
+    }
+
     $updateIds = [];
     $pdo->beginTransaction();
-    
     try {
         $stmt = $pdo->prepare("
             INSERT INTO player_updates 
@@ -788,100 +632,114 @@ function getCurrentGameRoomStatus() {
     $player = requirePlayer($context);
 
     global $pdo;
-    try {
-        // Check if player is in any game room
-        $stmt = $pdo->prepare("
-            SELECT 
-                rp.room_id,
-                rp.player_id,
-                rp.player_name,
-                rp.is_host,
-                rp.is_online,
-                rp.last_heartbeat,
-                rp.joined_at,
-                gr.room_name,
-                gr.max_players,
-                gr.password IS NOT NULL as has_password,
-                gr.is_active,
-                gr.created_at as room_created_at,
-                gr.updated_at,
-                gr.last_activity as room_last_activity,
-                COUNT(rp2.player_id) as current_players
-            FROM room_players rp
-            JOIN game_rooms gr ON rp.room_id = gr.room_id
-            LEFT JOIN room_players rp2 ON gr.room_id = rp2.room_id
-            WHERE rp.player_id = ? AND gr.is_active = TRUE
-            GROUP BY gr.room_id
-            LIMIT 1
-        ");
-        $stmt->execute([$player['id']]);
-        $room = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$room) {
-            sendResponse([
-                'success' => true,
-                'in_room' => false,
-                'message' => 'Player is not in any game room'
-            ]);
-        }
+    // Get room information
+    $stmt = $pdo->prepare("
+        SELECT 
+            rp.room_id,
+            rp.player_id,
+            rp.player_name,
+            rp.is_host,
+            rp.is_online,
+            rp.last_heartbeat,
+            rp.joined_at,
+            gr.room_name,
+            gr.max_players,
+            gr.password IS NOT NULL as has_password,
+            gr.is_active,
+            gr.created_at as room_created_at,
+            gr.updated_at,
+            gr.last_activity as room_last_activity,
+            COUNT(rp2.player_id) as current_players
+        FROM room_players rp
+        JOIN game_rooms gr ON rp.room_id = gr.room_id
+        LEFT JOIN room_players rp2 ON gr.room_id = rp2.room_id
+        WHERE rp.player_id = ? AND gr.is_active = TRUE
+        GROUP BY gr.room_id 
+        LIMIT 1
+    ");
+    $stmt->execute([$player['id']]);
+    $room = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Get pending actions for this player if any
-        $stmt = $pdo->prepare("
-            SELECT 
-                action_id,
-                action_type,
-                status,
-                created_at,
-                processed_at
-            FROM action_queue 
-            WHERE player_id = ? AND status IN ('pending', 'processing')
-            ORDER BY created_at DESC
-            LIMIT 5
-        ");
-        $stmt->execute([$player['id']]);
-        $pendingActions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Get pending updates for this player if any
-        $stmt = $pdo->prepare("
-            SELECT 
-                update_id,
-                from_player_id,
-                type,
-                created_at,
-                status
-            FROM player_updates 
-            WHERE target_player_id = ? AND status = 'pending'
-            ORDER BY created_at DESC
-            LIMIT 5
-        ");
-        $stmt->execute([$player['id']]);
-        $pendingUpdates = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    if (!$room) {
         sendResponse([
             'success' => true,
-            'in_room' => true,
-            'room' => [
-                'room_id' => $room['room_id'],
-                'room_name' => $room['room_name'],
-                'is_host' => (bool)$room['is_host'],
-                'is_online' => (bool)$room['is_online'],
-                'max_players' => (int)$room['max_players'],
-                'current_players' => (int)$room['current_players'],
-                'has_password' => (bool)$room['has_password'],
-                'is_active' => (bool)$room['is_active'],
-                'player_name' => $room['player_name'],
-                'joined_at' => $room['joined_at'],
-                'last_heartbeat' => $room['last_heartbeat'],
-                'room_created_at' => $room['room_created_at'],
-                'room_last_activity' => $room['room_last_activity']
-            ],
-            'pending_actions' => $pendingActions,
-            'pending_updates' => $pendingUpdates
+            'in_room' => false,
+            'message' => 'Player is not in any game room'
         ]);
-    } catch (Exception $e) {
-        error_log("Get current game room status failed: " . $e->getMessage());
-        sendResponse(['success' => false, 'error' => 'Failed to get game room status'], 500);
     }
+
+    // Get pending actions for this player
+    $stmt = $pdo->prepare("
+        SELECT action_id, action_type, status, created_at, processed_at
+        FROM action_queue 
+        WHERE player_id = ? AND status IN ('pending', 'processing')
+        ORDER BY created_at DESC
+        LIMIT 5
+    ");
+    $stmt->execute([$player['id']]);
+    $pendingActions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Get pending updates for this player
+    $stmt = $pdo->prepare("
+        SELECT update_id, from_player_id, type, data_json, created_at, status
+        FROM player_updates 
+        WHERE target_player_id = ? AND status = 'pending'
+        ORDER BY created_at DESC
+        LIMIT 5
+    ");
+    $stmt->execute([$player['id']]);
+    $pendingUpdates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Format pending updates for Unity (convert data_json to data_json string)
+    if ($isUnity) {
+        foreach ($pendingUpdates as &$update) {
+            if (!empty($update['data_json'])) {
+                $decoded = json_decode($update['data_json'], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $update['data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                }
+            }
+        }
+    }
+
+    // Build response
+    $response = [
+        'success' => true,
+        'in_room' => true,
+        'room' => [
+            'room_id'            => $room['room_id'],
+            'room_name'          => $room['room_name'],
+            'is_host'            => (bool)$room['is_host'],
+            'is_online'          => (bool)$room['is_online'],
+            'max_players'        => (int)$room['max_players'],
+            'current_players'    => (int)$room['current_players'],
+            'has_password'       => (bool)$room['has_password'],
+            'is_active'          => (bool)$room['is_active'],
+            'player_name'        => $room['player_name'],
+            'joined_at'          => $room['joined_at'],
+            'last_heartbeat'     => $room['last_heartbeat'],
+            'room_created_at'    => $room['room_created_at'],
+            'room_last_activity' => $room['room_last_activity']
+        ],
+        'pending_actions' => $pendingActions,
+        'pending_updates' => $pendingUpdates
+    ];
+
+    // If Unity format → convert any complex fields (extra safety)
+    if ($isUnity) {
+        foreach ($response['pending_actions'] as &$action) {
+            if (isset($action['request_data']) && is_string($action['request_data'])) {
+                $decoded = json_decode($action['request_data'], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $action['request_data_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                    unset($action['request_data']);
+                }
+            }
+        }
+    }
+
+    sendResponse($response);
 }
 
 function pollUpdates() {
@@ -889,18 +747,14 @@ function pollUpdates() {
     $player = requirePlayer($context);
 
     $roomId = getPlayerRoom($player['id']);
-    if (!$roomId) {
-        sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
-    }
+    if (!$roomId) sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
 
     $lastUpdateId = $_GET['lastUpdateId'] ?? null;
 
     global $pdo;
-    
-    // Build query based on lastUpdateId
     $whereClause = "WHERE target_player_id = ? AND room_id = ?";
     $params = [$player['id'], $roomId];
-    
+
     if ($lastUpdateId) {
         $whereClause .= " AND update_id > ?";
         $params[] = $lastUpdateId;
@@ -908,33 +762,23 @@ function pollUpdates() {
 
     $stmt = $pdo->prepare("
         SELECT update_id, from_player_id, type, data_json, created_at
-        FROM player_updates 
-        {$whereClause}
-        ORDER BY created_at ASC
-        LIMIT 50
+        FROM player_updates $whereClause
+        ORDER BY created_at ASC LIMIT 50
     ");
     $stmt->execute($params);
     $updates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Decode data_json back to object for each update
     foreach ($updates as &$update) {
-        $decoded = json_decode($update['data_json'], true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $update['data_json'] = $decoded;
-        }
+        $update = formatForUnity($update);
     }
 
-    // Mark updates as delivered
+    // Mark as delivered
     if (!empty($updates)) {
         $updateIds = array_column($updates, 'update_id');
         $placeholders = implode(',', array_fill(0, count($updateIds), '?'));
-        
-        $updateStmt = $pdo->prepare("
-            UPDATE player_updates 
-            SET status = 'delivered', delivered_at = CURRENT_TIMESTAMP
-            WHERE update_id IN ($placeholders) AND status = 'pending'
-        ");
-        $updateStmt->execute($updateIds);
+        $pdo->prepare("UPDATE player_updates SET status = 'delivered', delivered_at = CURRENT_TIMESTAMP 
+                       WHERE update_id IN ($placeholders) AND status = 'pending'")
+            ->execute($updateIds);
     }
 
     sendResponse([
@@ -944,10 +788,7 @@ function pollUpdates() {
     ]);
 }
 
-
-// ────────────────────────────────────────────────
-//      Routing
-// ────────────────────────────────────────────────
+// ====================== ROUTING ======================
 try {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $method = $_SERVER['REQUEST_METHOD'];
@@ -985,3 +826,4 @@ try {
     error_log("Critical error in game_room.php: " . $e->getMessage());
     sendResponse(['success' => false, 'error' => 'Internal server error'], 500);
 }
+?>

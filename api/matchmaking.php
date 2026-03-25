@@ -1,7 +1,8 @@
 <?php
+// ====================== CORS & HEADERS ======================
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
 header('Content-Type: application/json');
 
 // Enable error reporting & logging
@@ -22,6 +23,11 @@ error_log("Method: " . $_SERVER['REQUEST_METHOD']);
 
 require_once __DIR__ . '/../php/config.php';
 
+// ====================== FORMAT HANDLING ======================
+$format = strtolower($_GET['format'] ?? 'json');
+$isUnity = ($format === 'unity');
+// ============================================================
+
 // ────────────────────────────────────────────────
 //      Helper functions
 // ────────────────────────────────────────────────
@@ -35,7 +41,6 @@ function getAuthContext() {
     $headers = getallheaders();
     $apiToken = '';
 
-    // Prefer Bearer token
     if (isset($headers['Authorization']) && preg_match('/Bearer\s+(\S+)/', $headers['Authorization'], $m)) {
         $apiToken = $m[1];
     } elseif (isset($_GET['api_token'])) {
@@ -146,12 +151,28 @@ function isMatchmakingHost($playerId, $matchmakingId) {
     return (bool) $stmt->fetchColumn();
 }
 
+// Unity formatter helper
+function formatForUnity($data) {
+    global $isUnity;
+    if (!$isUnity) return $data;
+
+    if (isset($data['extra_json_string'])) {
+        if (is_string($data['extra_json_string']) && !empty($data['extra_json_string'])) {
+            $decoded = json_decode($data['extra_json_string'], true);
+            $data['extra_json_string'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        } else {
+            $data['extra_json_string'] = '{}';
+        }
+    }
+    return $data;
+}
+
 // ────────────────────────────────────────────────
 //      Endpoints
 // ────────────────────────────────────────────────
 
 function listMatchmaking() {
-    getAuthContext(); // just validate API key
+    getAuthContext(); // validate API key
 
     global $pdo;
     try {
@@ -177,13 +198,8 @@ function listMatchmaking() {
 
         $lobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        // Parse extra_json_string for each lobby
         foreach ($lobbies as &$lobby) {
-            if (!empty($lobby['extra_json_string'])) {
-                $lobby['extra_json_string'] = json_decode($lobby['extra_json_string'], true);
-            } else {
-                $lobby['extra_json_string'] = null;
-            }
+            $lobby = formatForUnity($lobby);
         }
         
         sendResponse(['success' => true, 'lobbies' => $lobbies]);
@@ -197,13 +213,11 @@ function createMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Check if player is already in a matchmaking lobby
     $existingLobby = getPlayerMatchmaking($player['id']);
     if ($existingLobby) {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
     }
 
-    // Check if player is already in a game room
     $existingRoom = getPlayerRoom($player['id']);
     if ($existingRoom) {
         sendResponse(['success' => false, 'error' => 'You cannot create matchmaking while in a game room. Leave the room first.'], 400);
@@ -211,7 +225,6 @@ function createMatchmaking() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    // Validate required fields
     if (empty($data['maxPlayers'])) {
         sendResponse(['success' => false, 'error' => 'Missing required field: maxPlayers'], 400);
     }
@@ -227,7 +240,6 @@ function createMatchmaking() {
     $pdo->beginTransaction();
     
     try {
-        // Create matchmaking lobby
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking 
             (matchmaking_id, game_id, host_player_id, max_players, strict_full, join_by_requests, extra_json_string)
@@ -235,10 +247,8 @@ function createMatchmaking() {
         ");
         $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $extraJsonString]);
 
-        // Add host as first player
         $stmt = $pdo->prepare("
-            INSERT INTO matchmaking_players 
-            (matchmaking_id, game_id, player_id)
+            INSERT INTO matchmaking_players (matchmaking_id, game_id, player_id)
             VALUES (?, ?, ?)
         ");
         $stmt->execute([$matchmakingId, $context['api']['id'], $player['id']]);
@@ -265,37 +275,27 @@ function requestJoin() {
     $player = requirePlayer($context);
 
     $matchmakingId = $_GET['matchmakingId'] ?? null;
-
     if (!$matchmakingId) {
         sendResponse(['success' => false, 'error' => 'Missing required parameter: matchmakingId'], 400);
     }
 
-    // Check if player is already in a matchmaking lobby
     $existingLobby = getPlayerMatchmaking($player['id']);
     if ($existingLobby) {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
     }
 
-    // Check if player already has a pending request to this matchmaking
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT 1 
-        FROM matchmaking_requests 
-        WHERE matchmaking_id = ? AND player_id = ? AND status = 'pending'
-        LIMIT 1
+        SELECT 1 FROM matchmaking_requests 
+        WHERE matchmaking_id = ? AND player_id = ? AND status = 'pending' LIMIT 1
     ");
     $stmt->execute([$matchmakingId, $player['id']]);
-    $existingRequest = $stmt->fetchColumn();
-
-    if ($existingRequest) {
-        sendResponse(['success' => false, 'error' => 'You already have a pending request to this matchmaking lobby'], 400);
+    if ($stmt->fetchColumn()) {
+        sendResponse(['success' => false, 'error' => 'You already have a pending request'], 400);
     }
 
-    global $pdo;
     $pdo->beginTransaction();
-
     try {
-        // Check if matchmaking exists and is not started
         $stmt = $pdo->prepare("
             SELECT m.*, COUNT(mp.player_id) as current_players
             FROM matchmaking m
@@ -306,19 +306,12 @@ function requestJoin() {
         $stmt->execute([$matchmakingId]);
         $matchmaking = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$matchmaking) {
-            throw new Exception('Matchmaking lobby not found or already started');
-        }
+        if (!$matchmaking) throw new Exception('Matchmaking lobby not found or already started');
+        if ($matchmaking['current_players'] >= $matchmaking['max_players']) throw new Exception('Matchmaking lobby is full');
 
-        if ($matchmaking['current_players'] >= $matchmaking['max_players']) {
-            throw new Exception('Matchmaking lobby is full');
-        }
-
-        // Create join request
         $requestId = bin2hex(random_bytes(16));
         $stmt = $pdo->prepare("
-            INSERT INTO matchmaking_requests 
-            (request_id, matchmaking_id, game_id, player_id)
+            INSERT INTO matchmaking_requests (request_id, matchmaking_id, game_id, player_id)
             VALUES (?, ?, ?, ?)
         ");
         $stmt->execute([$requestId, $matchmakingId, $matchmaking['game_id'], $player['id']]);
@@ -342,12 +335,10 @@ function joinMatchmaking() {
     $player = requirePlayer($context);
 
     $matchmakingId = $_GET['matchmakingId'] ?? null;
-
     if (!$matchmakingId) {
         sendResponse(['success' => false, 'error' => 'Missing required parameter: matchmakingId'], 400);
     }
 
-    // Check if player is already in a matchmaking lobby
     $existingLobby = getPlayerMatchmaking($player['id']);
     if ($existingLobby) {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
@@ -355,9 +346,7 @@ function joinMatchmaking() {
 
     global $pdo;
     $pdo->beginTransaction();
-
     try {
-        // Check if matchmaking exists and is not started
         $stmt = $pdo->prepare("
             SELECT m.*, COUNT(mp.player_id) as current_players
             FROM matchmaking m
@@ -368,23 +357,12 @@ function joinMatchmaking() {
         $stmt->execute([$matchmakingId]);
         $matchmaking = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$matchmaking) {
-            throw new Exception('Matchmaking lobby not found or already started');
-        }
+        if (!$matchmaking) throw new Exception('Matchmaking lobby not found or already started');
+        if ($matchmaking['join_by_requests']) throw new Exception('This lobby requires host approval. Use /request instead.');
+        if ($matchmaking['current_players'] >= $matchmaking['max_players']) throw new Exception('Matchmaking lobby is full');
 
-        // Check if matchmaking requires approval via requests
-        if ($matchmaking['join_by_requests']) {
-            throw new Exception('This matchmaking lobby requires host approval. Use /request endpoint instead.');
-        }
-
-        if ($matchmaking['current_players'] >= $matchmaking['max_players']) {
-            throw new Exception('Matchmaking lobby is full');
-        }
-
-        // Add player to matchmaking
         $stmt = $pdo->prepare("
-            INSERT INTO matchmaking_players 
-            (matchmaking_id, game_id, player_id)
+            INSERT INTO matchmaking_players (matchmaking_id, game_id, player_id)
             VALUES (?, ?, ?)
         ");
         $stmt->execute([$matchmakingId, $matchmaking['game_id'], $player['id']]);
@@ -409,9 +387,7 @@ function leaveMatchmaking() {
 
     global $pdo;
     $pdo->beginTransaction();
-
     try {
-        // Get player's current matchmaking
         $stmt = $pdo->prepare("
             SELECT mp.matchmaking_id, m.host_player_id
             FROM matchmaking_players mp
@@ -422,56 +398,33 @@ function leaveMatchmaking() {
         $stmt->execute([$player['id']]);
         $playerLobby = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$playerLobby) {
-            throw new Exception('You are not in any matchmaking lobby');
-        }
+        if (!$playerLobby) throw new Exception('You are not in any matchmaking lobby');
 
         $matchmakingId = $playerLobby['matchmaking_id'];
         $isHost = ($playerLobby['host_player_id'] === $player['id']);
 
-        // Remove player from matchmaking
-        $stmt = $pdo->prepare("
-            DELETE FROM matchmaking_players 
-            WHERE matchmaking_id = ? AND player_id = ?
-        ");
-        $stmt->execute([$matchmakingId, $player['id']]);
+        $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ? AND player_id = ?")
+            ->execute([$matchmakingId, $player['id']]);
 
         if ($isHost) {
-            // Find next player to become host
             $stmt = $pdo->prepare("
-                SELECT player_id 
-                FROM matchmaking_players 
+                SELECT player_id FROM matchmaking_players 
                 WHERE matchmaking_id = ? AND status = 'active'
-                ORDER BY joined_at ASC
-                LIMIT 1
+                ORDER BY joined_at ASC LIMIT 1
             ");
             $stmt->execute([$matchmakingId]);
             $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($newHost) {
-                // Transfer host to next player
-                $stmt = $pdo->prepare("
-                    UPDATE matchmaking 
-                    SET host_player_id = ?
-                    WHERE matchmaking_id = ?
-                ");
-                $stmt->execute([$newHost['player_id'], $matchmakingId]);
+                $pdo->prepare("UPDATE matchmaking SET host_player_id = ? WHERE matchmaking_id = ?")
+                    ->execute([$newHost['player_id'], $matchmakingId]);
             } else {
-                // No players left - delete matchmaking
-                $stmt = $pdo->prepare("
-                    DELETE FROM matchmaking 
-                    WHERE matchmaking_id = ?
-                ");
-                $stmt->execute([$matchmakingId]);
+                $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
             }
         }
 
         $pdo->commit();
-
-        sendResponse([
-            'success' => true,
-            'message' => 'Successfully left matchmaking lobby'
-        ]);
+        sendResponse(['success' => true, 'message' => 'Successfully left matchmaking lobby']);
     } catch (Exception $e) {
         $pdo->rollBack();
         error_log("Leave matchmaking failed: " . $e->getMessage());
@@ -489,36 +442,26 @@ function getMatchmakingPlayers() {
     }
 
     global $pdo;
-    try {
-        $stmt = $pdo->prepare("
-            SELECT 
-                mp.player_id,
-                mp.joined_at,
-                mp.last_heartbeat,
-                mp.status,
-                gp.player_name,
-                TIMESTAMPDIFF(SECOND, mp.last_heartbeat, NOW()) as seconds_since_heartbeat,
-                m.host_player_id = mp.player_id as is_host
-            FROM matchmaking_players mp
-            JOIN game_players gp ON mp.player_id = gp.id
-            JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-            WHERE mp.matchmaking_id = ?
-            ORDER BY 
-                is_host DESC,
-                mp.joined_at ASC
-        ");
-        $stmt->execute([$matchmakingId]);
-        $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("
+        SELECT 
+            mp.player_id, mp.joined_at, mp.last_heartbeat, mp.status,
+            gp.player_name,
+            TIMESTAMPDIFF(SECOND, mp.last_heartbeat, NOW()) as seconds_since_heartbeat,
+            (m.host_player_id = mp.player_id) as is_host
+        FROM matchmaking_players mp
+        JOIN game_players gp ON mp.player_id = gp.id
+        JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
+        WHERE mp.matchmaking_id = ?
+        ORDER BY is_host DESC, mp.joined_at ASC
+    ");
+    $stmt->execute([$matchmakingId]);
+    $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        sendResponse([
-            'success' => true,
-            'players' => $players,
-            'last_updated' => date('c')
-        ]);
-    } catch (Exception $e) {
-        error_log("Get matchmaking players failed: " . $e->getMessage());
-        sendResponse(['success' => false, 'error' => 'Failed to get players'], 500);
-    }
+    sendResponse([
+        'success' => true,
+        'players' => $players,
+        'last_updated' => date('c')
+    ]);
 }
 
 function updateMatchmakingHeartbeat() {
@@ -532,38 +475,21 @@ function updateMatchmakingHeartbeat() {
 
     global $pdo;
     $pdo->beginTransaction();
-    
     try {
-        // Update player's heartbeat
-        $stmt = $pdo->prepare("
-            UPDATE matchmaking_players 
-            SET last_heartbeat = CURRENT_TIMESTAMP,
-                status = 'active'
-            WHERE matchmaking_id = ? AND player_id = ?
-        ");
-        $stmt->execute([$matchmakingId, $player['id']]);
-        
-        // Update matchmaking heartbeat
-        $stmt = $pdo->prepare("
-            UPDATE matchmaking 
-            SET last_heartbeat = CURRENT_TIMESTAMP
-            WHERE matchmaking_id = ?
-        ");
-        $stmt->execute([$matchmakingId]);
-        
-        // Update game_players heartbeat
-        $stmt = $pdo->prepare("
-            UPDATE game_players 
-            SET last_heartbeat = CURRENT_TIMESTAMP
-            WHERE id = ?
-        ");
-        $stmt->execute([$player['id']]);
-        
+        $pdo->prepare("UPDATE matchmaking_players SET last_heartbeat = CURRENT_TIMESTAMP, status = 'active' WHERE matchmaking_id = ? AND player_id = ?")
+            ->execute([$matchmakingId, $player['id']]);
+
+        $pdo->prepare("UPDATE matchmaking SET last_heartbeat = CURRENT_TIMESTAMP WHERE matchmaking_id = ?")
+            ->execute([$matchmakingId]);
+
+        $pdo->prepare("UPDATE game_players SET last_heartbeat = CURRENT_TIMESTAMP WHERE id = ?")
+            ->execute([$player['id']]);
+
         $pdo->commit();
         sendResponse(['success' => true, 'status' => 'ok']);
     } catch (Exception $e) {
         $pdo->rollBack();
-        error_log("Matchmaking heartbeat update failed: " . $e->getMessage());
+        error_log("Matchmaking heartbeat failed: " . $e->getMessage());
         sendResponse(['success' => false, 'error' => 'Failed to update heartbeat'], 500);
     }
 }
@@ -572,44 +498,25 @@ function removeMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Get player's current matchmaking lobby
     $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
-    
     if (!$currentMatchmaking) {
         sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
     }
 
-    $matchmakingId = $currentMatchmaking['matchmaking_id'];
-
-    // Only host can remove matchmaking
     if (!$currentMatchmaking['is_host']) {
         sendResponse(['success' => false, 'error' => 'Only host can remove matchmaking lobby'], 403);
     }
 
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+
     global $pdo;
     $pdo->beginTransaction();
-
     try {
-        // Remove all players
-        $stmt = $pdo->prepare("
-            DELETE FROM matchmaking_players 
-            WHERE matchmaking_id = ?
-        ");
-        $stmt->execute([$matchmakingId]);
-
-        // Remove matchmaking
-        $stmt = $pdo->prepare("
-            DELETE FROM matchmaking 
-            WHERE matchmaking_id = ?
-        ");
-        $stmt->execute([$matchmakingId]);
+        $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+        $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
 
         $pdo->commit();
-
-        sendResponse([
-            'success' => true,
-            'message' => 'Matchmaking lobby removed successfully'
-        ]);
+        sendResponse(['success' => true, 'message' => 'Matchmaking lobby removed successfully']);
     } catch (Exception $e) {
         $pdo->rollBack();
         error_log("Remove matchmaking failed: " . $e->getMessage());
@@ -623,31 +530,18 @@ function getCurrentMatchmakingStatus() {
 
     global $pdo;
     try {
-        // Check if player is in any matchmaking lobby
         $stmt = $pdo->prepare("
             SELECT 
-                mp.matchmaking_id,
-                mp.player_id,
-                mp.joined_at,
-                mp.last_heartbeat,
-                mp.status as player_status,
-                m.host_player_id,
-                m.max_players,
-                m.strict_full,
-                m.join_by_requests,
-                m.extra_json_string,
-                m.created_at,
-                m.last_heartbeat as lobby_heartbeat,
-                m.is_started,
-                m.started_at,
+                mp.matchmaking_id, mp.player_id, mp.joined_at, mp.last_heartbeat, mp.status as player_status,
+                m.host_player_id, m.max_players, m.strict_full, m.join_by_requests, m.extra_json_string,
+                m.created_at, m.last_heartbeat as lobby_heartbeat, m.is_started, m.started_at,
                 (mp.player_id = m.host_player_id) as is_host,
                 COUNT(CASE WHEN mp2.status = 'active' THEN 1 END) as current_players
             FROM matchmaking_players mp
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
             LEFT JOIN matchmaking_players mp2 ON m.matchmaking_id = mp2.matchmaking_id
             WHERE mp.player_id = ? AND m.is_started = FALSE
-            GROUP BY m.matchmaking_id
-            LIMIT 1
+            GROUP BY m.matchmaking_id LIMIT 1
         ");
         $stmt->execute([$player['id']]);
         $matchmaking = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -660,26 +554,19 @@ function getCurrentMatchmakingStatus() {
             ]);
         }
 
-        // Get pending requests for this matchmaking lobby if player is host
         $pendingRequests = [];
         if ((bool)$matchmaking['is_host']) {
             $stmt = $pdo->prepare("
-                SELECT 
-                    request_id,
-                    matchmaking_id,
-                    status,
-                    requested_at,
-                    responded_at
+                SELECT request_id, matchmaking_id, status, requested_at, responded_at
                 FROM matchmaking_requests 
                 WHERE matchmaking_id = ? AND status = 'pending'
-                ORDER BY requested_at DESC
-                LIMIT 5
+                ORDER BY requested_at DESC LIMIT 5
             ");
             $stmt->execute([$matchmaking['matchmaking_id']]);
             $pendingRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        sendResponse([
+        $response = [
             'success' => true,
             'in_matchmaking' => true,
             'matchmaking' => [
@@ -689,7 +576,6 @@ function getCurrentMatchmakingStatus() {
                 'current_players' => (int)$matchmaking['current_players'],
                 'strict_full' => (bool)$matchmaking['strict_full'],
                 'join_by_requests' => (bool)$matchmaking['join_by_requests'],
-                'extra_json_string' => json_decode($matchmaking['extra_json_string'] ?: '{}'),
                 'joined_at' => $matchmaking['joined_at'],
                 'player_status' => $matchmaking['player_status'],
                 'last_heartbeat' => $matchmaking['last_heartbeat'],
@@ -698,7 +584,12 @@ function getCurrentMatchmakingStatus() {
                 'started_at' => $matchmaking['started_at']
             ],
             'pending_requests' => $pendingRequests
-        ]);
+        ];
+
+        // Apply Unity formatting for extra_json_string
+        $response['matchmaking'] = formatForUnity($response['matchmaking']);
+
+        sendResponse($response);
     } catch (Exception $e) {
         error_log("Get current matchmaking status failed: " . $e->getMessage());
         sendResponse(['success' => false, 'error' => 'Failed to get matchmaking status'], 500);
@@ -710,54 +601,39 @@ function checkRequestStatus() {
     $player = requirePlayer($context);
 
     $requestId = $_GET['requestId'] ?? null;
-
     if (!$requestId) {
         sendResponse(['success' => false, 'error' => 'Missing required parameter: requestId'], 400);
     }
 
     global $pdo;
-    try {
-        $stmt = $pdo->prepare("
-            SELECT 
-                mr.request_id,
-                mr.matchmaking_id,
-                mr.player_id,
-                mr.status,
-                mr.requested_at,
-                mr.responded_at,
-                mr.responded_by,
-                gp.player_name as responder_name,
-                m.host_player_id,
-                m.join_by_requests
-            FROM matchmaking_requests mr
-            LEFT JOIN game_players gp ON mr.responded_by = gp.id
-            LEFT JOIN matchmaking m ON mr.matchmaking_id = m.matchmaking_id
-            WHERE mr.request_id = ? AND mr.player_id = ?
-        ");
-        $stmt->execute([$requestId, $player['id']]);
-        $request = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("
+        SELECT mr.request_id, mr.matchmaking_id, mr.player_id, mr.status, mr.requested_at, mr.responded_at,
+               mr.responded_by, gp.player_name as responder_name, m.host_player_id, m.join_by_requests
+        FROM matchmaking_requests mr
+        LEFT JOIN game_players gp ON mr.responded_by = gp.id
+        LEFT JOIN matchmaking m ON mr.matchmaking_id = m.matchmaking_id
+        WHERE mr.request_id = ? AND mr.player_id = ?
+    ");
+    $stmt->execute([$requestId, $player['id']]);
+    $request = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$request) {
-            sendResponse(['success' => false, 'error' => 'Request not found or you are not the requester'], 404);
-        }
-
-        sendResponse([
-            'success' => true,
-            'request' => [
-                'request_id' => $request['request_id'],
-                'matchmaking_id' => $request['matchmaking_id'],
-                'status' => $request['status'],
-                'requested_at' => $request['requested_at'],
-                'responded_at' => $request['responded_at'],
-                'responded_by' => $request['responded_by'],
-                'responder_name' => $request['responder_name'],
-                'join_by_requests' => (bool)$request['join_by_requests']
-            ]
-        ]);
-    } catch (Exception $e) {
-        error_log("Check request status failed: " . $e->getMessage());
-        sendResponse(['success' => false, 'error' => 'Failed to check request status'], 500);
+    if (!$request) {
+        sendResponse(['success' => false, 'error' => 'Request not found or you are not the requester'], 404);
     }
+
+    sendResponse([
+        'success' => true,
+        'request' => [
+            'request_id' => $request['request_id'],
+            'matchmaking_id' => $request['matchmaking_id'],
+            'status' => $request['status'],
+            'requested_at' => $request['requested_at'],
+            'responded_at' => $request['responded_at'],
+            'responded_by' => $request['responded_by'],
+            'responder_name' => $request['responder_name'],
+            'join_by_requests' => (bool)$request['join_by_requests']
+        ]
+    ]);
 }
 
 function respondToRequest() {
@@ -768,20 +644,17 @@ function respondToRequest() {
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
     if (!$requestId || empty($data['action'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required fields: requestId (in URL), action'], 400);
+        sendResponse(['success' => false, 'error' => 'Missing required fields: requestId and action'], 400);
     }
 
-    $action = $data['action']; // 'approve' or 'reject'
-
+    $action = $data['action'];
     if (!in_array($action, ['approve', 'reject'])) {
         sendResponse(['success' => false, 'error' => 'Action must be "approve" or "reject"'], 400);
     }
 
     global $pdo;
     $pdo->beginTransaction();
-
     try {
-        // Get the request details
         $stmt = $pdo->prepare("
             SELECT mr.*, m.host_player_id, m.matchmaking_id
             FROM matchmaking_requests mr
@@ -791,16 +664,9 @@ function respondToRequest() {
         $stmt->execute([$requestId]);
         $request = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$request) {
-            throw new Exception('Request not found or already processed');
-        }
+        if (!$request) throw new Exception('Request not found or already processed');
+        if ($request['host_player_id'] !== $player['id']) throw new Exception('Only the host can respond to join requests');
 
-        // Verify the player is the host of this matchmaking
-        if ($request['host_player_id'] !== $player['id']) {
-            throw new Exception('Only the host can respond to join requests');
-        }
-
-        // Check if matchmaking is still active
         $stmt = $pdo->prepare("
             SELECT COUNT(*) as current_players, max_players
             FROM matchmaking m
@@ -811,37 +677,25 @@ function respondToRequest() {
         $stmt->execute([$request['matchmaking_id']]);
         $lobbyStatus = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$lobbyStatus) {
-            throw new Exception('Matchmaking lobby not found or already started');
-        }
+        if (!$lobbyStatus) throw new Exception('Matchmaking lobby not found or already started');
 
-        // Update the request status
         $status = ($action === 'approve') ? 'approved' : 'rejected';
-        $stmt = $pdo->prepare("
+        $pdo->prepare("
             UPDATE matchmaking_requests 
             SET status = ?, responded_at = CURRENT_TIMESTAMP, responded_by = ?
             WHERE request_id = ?
-        ");
-        $stmt->execute([$status, $player['id'], $requestId]);
+        ")->execute([$status, $player['id'], $requestId]);
 
-        // If approved, add the player to the matchmaking
         if ($action === 'approve') {
-            // Check if lobby is full
             if ($lobbyStatus['current_players'] >= $lobbyStatus['max_players']) {
                 throw new Exception('Matchmaking lobby is full');
             }
 
-            // Add player to matchmaking
-            $stmt = $pdo->prepare("
-                INSERT INTO matchmaking_players 
-                (matchmaking_id, game_id, player_id)
+            $pdo->prepare("
+                INSERT INTO matchmaking_players (matchmaking_id, game_id, player_id)
                 VALUES (?, ?, ?)
-                ON DUPLICATE KEY UPDATE
-                    status = 'active',
-                    joined_at = CURRENT_TIMESTAMP,
-                    last_heartbeat = CURRENT_TIMESTAMP
-            ");
-            $stmt->execute([$request['matchmaking_id'], $request['game_id'], $request['player_id']]);
+                ON DUPLICATE KEY UPDATE status = 'active', joined_at = CURRENT_TIMESTAMP, last_heartbeat = CURRENT_TIMESTAMP
+            ")->execute([$request['matchmaking_id'], $request['game_id'], $request['player_id']]);
         }
 
         $pdo->commit();
@@ -863,25 +717,20 @@ function startMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    // Get player's current matchmaking lobby
     $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
-    
     if (!$currentMatchmaking) {
         sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
     }
 
-    $matchmakingId = $currentMatchmaking['matchmaking_id'];
-
-    // Only host can start matchmaking
     if (!$currentMatchmaking['is_host']) {
         sendResponse(['success' => false, 'error' => 'Only host can start matchmaking'], 403);
     }
 
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+
     global $pdo;
     $pdo->beginTransaction();
-
     try {
-        // Get matchmaking details
         $stmt = $pdo->prepare("
             SELECT m.*, COUNT(mp.player_id) as current_players
             FROM matchmaking m
@@ -892,27 +741,20 @@ function startMatchmaking() {
         $stmt->execute([$matchmakingId]);
         $matchmaking = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$matchmaking) {
-            throw new Exception('Matchmaking lobby not found or already started');
-        }
-
-        // Check if strict_full requirement is met
+        if (!$matchmaking) throw new Exception('Matchmaking lobby not found or already started');
         if ($matchmaking['strict_full'] && $matchmaking['current_players'] < $matchmaking['max_players']) {
             throw new Exception('Lobby must be full to start (strict_full enabled)');
         }
 
-        // Create game room without host first (will set after players are added)
         $roomId = bin2hex(random_bytes(16));
         $roomName = 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
 
-        $stmt = $pdo->prepare("
+        $pdo->prepare("
             INSERT INTO game_rooms (room_id, game_id, room_name, max_players, matchmaking_id)
             VALUES (?, ?, ?, ?, ?)
-        ");
-        $stmt->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmakingId]);
+        ")->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmakingId]);
 
-        // Move all players to game room
-        $stmt = $pdo->prepare("
+        $pdo->prepare("
             INSERT INTO room_players (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online)
             SELECT mp.player_id, ?, mp.game_id, gp.player_name, 
                    (m.host_player_id = mp.player_id) as is_host, 
@@ -921,35 +763,20 @@ function startMatchmaking() {
             JOIN game_players gp ON mp.player_id = gp.id
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
             WHERE mp.matchmaking_id = ? AND mp.status = 'active'
-        ");
-        $stmt->execute([$roomId, $matchmakingId]);
+        ")->execute([$roomId, $matchmakingId]);
 
-        // Get the host's room_player_id to set as host_player_id
-        $stmt = $pdo->prepare("
-            SELECT player_id 
-            FROM room_players 
-            WHERE room_id = ? AND player_id = ?
-        ");
+        // Set host
+        $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND player_id = ?");
         $stmt->execute([$roomId, $player['id']]);
         $hostRoomPlayerId = $stmt->fetchColumn();
 
-        // Update game room with host reference
         if ($hostRoomPlayerId) {
-            $stmt = $pdo->prepare("
-                UPDATE game_rooms 
-                SET host_player_id = ?
-                WHERE room_id = ?
-            ");
-            $stmt->execute([$hostRoomPlayerId, $roomId]);
+            $pdo->prepare("UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?")
+                ->execute([$hostRoomPlayerId, $roomId]);
         }
 
-        // Mark matchmaking as started
-        $stmt = $pdo->prepare("
-            UPDATE matchmaking 
-            SET is_started = TRUE, started_at = CURRENT_TIMESTAMP
-            WHERE matchmaking_id = ?
-        ");
-        $stmt->execute([$matchmakingId]);
+        $pdo->prepare("UPDATE matchmaking SET is_started = TRUE, started_at = CURRENT_TIMESTAMP WHERE matchmaking_id = ?")
+            ->execute([$matchmakingId]);
 
         $pdo->commit();
 
@@ -978,7 +805,7 @@ try {
         listMatchmaking();
     } elseif ($method === 'POST' && preg_match('#/create/?$#', $path)) {
         createMatchmaking();
-    }  elseif ($method === 'POST' && preg_match('#/([^/]+)/request/?$#', $path, $matches)) {
+    } elseif ($method === 'POST' && preg_match('#/([^/]+)/request/?$#', $path, $matches)) {
         $_GET['matchmakingId'] = $matches[1];
         requestJoin();
     } elseif ($method === 'POST' && preg_match('#/([^/]+)/response/?$#', $path, $matches)) {

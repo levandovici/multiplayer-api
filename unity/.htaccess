@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Do NOT redirect index.php, SDK.cs, Game.cs
+RewriteCond %{REQUEST_URI} !^/unity/index\.php$
+RewriteCond %{REQUEST_URI} !^/unity/SDK\.cs$
+RewriteCond %{REQUEST_URI} !^/unity/Game\.cs$
+
+# Redirect everything else from /unity to /api
+RewriteRule ^(.*)$ /api/$1 [R=301,L]

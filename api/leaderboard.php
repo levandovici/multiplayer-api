@@ -1,10 +1,11 @@
 <?php
+// ====================== CORS & HEADERS ======================
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
 header('Content-Type: application/json');
 
-// Enable error reporting (keep in dev, consider disabling in production)
+// Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
@@ -17,13 +18,19 @@ if (!is_dir(__DIR__ . '/../logs')) {
 
 require_once '../php/config.php';
 
+// ====================== FORMAT HANDLING ======================
+$format = strtolower($_GET['format'] ?? 'json');
+$isUnity = ($format === 'unity');
+// ============================================================
+
+// Helper function to send JSON response
 function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-// Validate API key and get associated game
+// Validate API key
 function validateApiKey($apiKey) {
     global $pdo;
     $stmt = $pdo->prepare("SELECT id, user_id FROM api_keys WHERE api_key = ?");
@@ -70,11 +77,9 @@ try {
     // Build ORDER BY clause safely
     $orderByParts = [];
     foreach ($sortBy as $field) {
-        // Very strict sanitization – only allow alphanumeric + underscore
         $cleanField = preg_replace('/[^a-zA-Z0-9_]/', '', trim($field));
         if ($cleanField === '') continue;
 
-        // We sort DESC by default (typical for leaderboards)
         $orderByParts[] = "CAST(COALESCE(JSON_EXTRACT(gp.player_data, '$.{$cleanField}'), 0) AS UNSIGNED) DESC";
     }
 
@@ -84,7 +89,7 @@ try {
 
     $orderByClause = "ORDER BY " . implode(', ', $orderByParts);
 
-    // Final query – game_id is ALWAYS from the token, exclude players without level
+    // Final query
     $sql = "
         SELECT 
             gp.id AS player_id,
@@ -108,49 +113,50 @@ try {
 
     $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Build response with ranks
+    // Build leaderboard with Unity support
     $leaderboard = [];
     $rank = 1;
 
     foreach ($players as $row) {
-        $playerData = json_decode($row['player_data'] ?? '{}', true) ?: [];
+        $playerData = json_decode($row['player_data'] ?? '{}', true) ?: new stdClass();
 
-        $leaderboard[] = [
-            'rank'       => $rank++,
-            'player_id'  => (int)$row['player_id'],
-            'player_name'=> $row['player_name'],
-            'player_data'=> $playerData,
+        $entry = [
+            'rank'        => $rank++,
+            'player_id'   => (int)$row['player_id'],
+            'player_name' => $row['player_name']
         ];
+
+        if ($isUnity) {
+            $entry['player_data_json'] = json_encode($playerData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        } else {
+            $entry['player_data'] = $playerData;
+        }
+
+        $leaderboard[] = $entry;
     }
 
-    sendResponse([
+    $response = [
         'success'     => true,
         'leaderboard' => $leaderboard,
         'total'       => count($leaderboard),
         'sort_by'     => $sortBy,
         'limit'       => $limit,
-    ]);
+    ];
+
+    sendResponse($response);
 
 } catch (PDOException $e) {
-    error_log("DB Error: " . $e->getMessage());
-    error_log("SQL State: " . $e->getCode());
-
+    error_log("DB Error in leaderboard.php: " . $e->getMessage());
     sendResponse([
         'success' => false,
-        'error'   => 'Database error',
-        // Remove 'debug' in production!
-        'debug'   => [
-            'message' => $e->getMessage(),
-            'code'    => $e->getCode(),
-        ]
+        'error'   => 'Database error'
     ], 500);
 
 } catch (Exception $e) {
-    error_log("Unexpected: " . $e->getMessage());
+    error_log("Unexpected error in leaderboard.php: " . $e->getMessage());
     sendResponse([
         'success' => false,
-        'error'   => 'Server error',
-        // Remove 'debug' in production!
-        'debug'   => $e->getMessage()
+        'error'   => 'Server error'
     ], 500);
 }
+?>
