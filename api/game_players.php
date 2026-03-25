@@ -145,25 +145,43 @@ try {
             $pdo->prepare("UPDATE game_players SET last_login = NOW() WHERE id = ?")
                 ->execute([$player['id']]);
             
+            // Prepare base player data (keep all fields from DB except private_key)
             unset($player['private_key']);
             
             $playerData = json_decode($player['player_data'] ?? '{}', true) ?: new stdClass();
             
-            $response = [
-                'success'     => true,
-                'player'      => [
-                    'player_id'   => (int)$player['id'],
-                    'player_name' => $player['player_name'],
-                    'is_active'   => (bool)$player['is_active'],
-                    'last_login'  => $player['last_login'],
-                    'created_at'  => $player['created_at']
-                ]
-            ];
-            
+            // Build response according to format
             if ($isUnity) {
-                $response['player']['player_data_json'] = json_encode($playerData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                $response = [
+                    'success' => true,
+                    'player'  => [
+                        'id'              => (int)$player['id'],
+                        'game_id'         => (int)$player['game_id'],
+                        'player_name'     => $player['player_name'],
+                        'player_data_json'=> json_encode($playerData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                        'is_active'       => (bool)$player['is_active'],
+                        'last_login'      => $player['last_login'],
+                        'last_logout'     => $player['last_logout'],
+                        'last_heartbeat'  => $player['last_heartbeat'],
+                        'created_at'      => $player['created_at']
+                    ]
+                ];
             } else {
-                $response['player']['player_data'] = $playerData;
+                // Exact structure as .bak (and .NET logs)
+                $response = [
+                    'success' => true,
+                    'player'  => [
+                        'id'             => (int)$player['id'],
+                        'game_id'        => (int)$player['game_id'],
+                        'player_name'    => $player['player_name'],
+                        'player_data'    => $playerData,
+                        'is_active'      => (bool)$player['is_active'],
+                        'last_login'     => $player['last_login'],
+                        'last_logout'    => $player['last_logout'],
+                        'last_heartbeat' => $player['last_heartbeat'],
+                        'created_at'     => $player['created_at']
+                    ]
+                ];
             }
             
             sendResponse($response);
