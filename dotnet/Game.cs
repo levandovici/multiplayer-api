@@ -160,7 +160,7 @@ public class Game
         players["p2"] = new PlayerInfo { Id = p2.Player_id, Token = p2.Private_key, Name = "PlayerTwo" };
 
         foreach (var p in players.Values)
-            await sdk!.AuthenticatePlayer(p.Token);
+            await AuthenticatePlayer(p.Token);
 
         await GetAllPlayersList();
     }
@@ -183,6 +183,13 @@ public class Game
         var reg = await sdk!.RegisterPlayer(name, data);
         Console.WriteLine($"[REGISTER] {name} registered");
         return reg;
+    }
+
+    private static async Task<PlayerAuthResponse> AuthenticatePlayer(string token)
+    {
+        var auth = await sdk!.AuthenticatePlayer(token);
+        Console.WriteLine($"[AUTH] {auth!.Player!.Player_name} authenticated");
+        return auth;
     }
 
     private static async Task GetAllPlayersList()

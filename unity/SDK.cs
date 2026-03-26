@@ -293,10 +293,10 @@ namespace michitai
 
     [System.Serializable] public class PlayerAuthResponse : ApiResponse
     {
-        public PlayerInfoUnity player;
+        public PlayerInfo player;
     }
 
-    [System.Serializable] public class PlayerInfoUnity
+    [System.Serializable] public class PlayerInfo
     {
         public int id;
         public int game_id;
@@ -600,11 +600,11 @@ namespace michitai
     [System.Serializable] public class MatchmakingCurrentResponse : ApiResponse
     {
         public bool in_matchmaking;
-        public MatchmakingInfoUnity matchmaking;
+        public MatchmakingInfo matchmaking;
         public List<string> pending_requests_json;
     }
 
-    [System.Serializable] public class MatchmakingInfoUnity
+    [System.Serializable] public class MatchmakingInfo
     {
         public string matchmaking_id;
         public bool is_host;

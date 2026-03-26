@@ -170,7 +170,7 @@ public class Game : MonoBehaviour
 
         // Authenticate all players
         foreach (var p in players.Values)
-            await sdk.AuthenticatePlayer(p.Token);
+            await AuthenticatePlayer(p.Token);
 
         await GetAllPlayersList();
     }
@@ -191,6 +191,13 @@ public class Game : MonoBehaviour
         var reg = await sdk.RegisterPlayer(name, playerData);
         Debug.Log($"[REGISTER] {name} registered");
         return reg;
+    }
+
+    private async Task<PlayerAuthResponse> AuthenticatePlayer(string token)
+    {
+        var auth = await sdk.AuthenticatePlayer(token);
+        Debug.Log($"[AUTH] {auth.player.player_name} authenticated");
+        return auth;
     }
 
     private async Task GetAllPlayersList()
