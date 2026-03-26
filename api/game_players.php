@@ -53,12 +53,19 @@ function updatePlayerHeartbeat($playerId) {
     return $stmt->execute([$playerId]);
 }
 
-// Register a new player
+// Register a new player - supports both array and JSON string
 function registerPlayer($gameId, $playerName, $playerData = []) {
     global $pdo;
     
     $privateKey = bin2hex(random_bytes(18));
-    $playerDataJson = json_encode($playerData, JSON_UNESCAPED_UNICODE);
+    
+    // Normalize playerData to JSON string
+    if (is_string($playerData)) {
+        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    } else {
+        $playerDataArray = is_array($playerData) ? $playerData : [];
+        $playerDataJson = json_encode($playerDataArray, JSON_UNESCAPED_UNICODE);
+    }
     
     $stmt = $pdo->prepare("INSERT INTO game_players (game_id, player_name, private_key, player_data) VALUES (?, ?, ?, ?)");
     $stmt->execute([$gameId, $playerName, $privateKey, $playerDataJson]);
@@ -72,6 +79,7 @@ function registerPlayer($gameId, $playerName, $playerData = []) {
             'game_id'     => $gameId
         ];
     }
+    
     return false;
 }
 
@@ -112,7 +120,16 @@ try {
                 sendResponse(['success' => false, 'error' => 'Player name is required'], 400);
             }
             
-            $result = registerPlayer($game['id'], $playerName, $input['player_data'] ?? []);
+            if($isUnity)
+            {
+                // For Unity (JSON string)
+                $result = registerPlayer($game['id'], $playerName, $input['player_data_json'] ?? '');
+            }
+            else
+            {
+                // For normal web requests (array)
+                $result = registerPlayer($game['id'], $playerName, $input['player_data'] ?? []);
+            }
             
             if ($result && $result['success']) {
                 sendResponse($result);

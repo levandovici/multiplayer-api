@@ -159,7 +159,7 @@ namespace michitai
 
         // ==================== PLAYER ====================
         public Task<PlayerRegisterResponse> RegisterPlayer(string name, object? playerData = null, CancellationToken ct = default)
-            => Send<PlayerRegisterResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersRegister), new { player_name = name, player_data = playerData }, ct);
+            => Send<PlayerRegisterResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersRegister), new PlayerRegisterRequest { Player_name = name, Player_data = playerData }, ct);
 
         public Task<PlayerAuthResponse> AuthenticatePlayer(string playerToken, CancellationToken ct = default)
             => Send<PlayerAuthResponse>(HttpMethod.Put, Url(Endpoints.GamePlayersLogin, $"&player_token={playerToken}"), null, ct);
@@ -286,6 +286,15 @@ namespace michitai
     }
 
     public enum MatchmakingRequestAction { Approve, Reject }
+
+    // ====================== ALL REQUEST CLASSES =======================
+
+    
+    public class PlayerRegisterRequest
+    {
+        public string Player_name { get; set; }
+        public object? Player_data { get; set; }
+    }
 
     // ====================== ALL RESPONSE CLASSES ======================
 

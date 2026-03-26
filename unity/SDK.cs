@@ -144,8 +144,8 @@ namespace michitai
         }
 
         // ==================== PLAYER ====================
-        public Task<PlayerRegisterResponse> RegisterPlayer(string name, object playerData = null, CancellationToken ct = default)
-            => Send<PlayerRegisterResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersRegister), new { player_name = name, player_data = playerData }, ct);
+        public Task<PlayerRegisterResponse> RegisterPlayer(string name, string playerDataJson = "", CancellationToken ct = default)
+            => Send<PlayerRegisterResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersRegister), new PlayerRegisterRequest { player_name = name, player_data_json = playerDataJson }, ct);
 
         public Task<PlayerAuthResponse> AuthenticatePlayer(string playerToken, CancellationToken ct = default)
             => Send<PlayerAuthResponse>(HttpMethod.Put, Url(Endpoints.GamePlayersLogin, $"&player_token={playerToken}"), null, ct);
@@ -272,6 +272,14 @@ namespace michitai
     }
 
     public enum MatchmakingRequestAction { Approve, Reject }
+
+    // ====================== REQUEST CLASSES (Unity + JsonUtility ready) ======================
+
+    [System.Serializable] public class PlayerRegisterRequest
+    {
+        public string player_name;
+        public string player_data_json;
+    }
 
     // ====================== RESPONSE CLASSES (Unity + JsonUtility ready) ======================
 

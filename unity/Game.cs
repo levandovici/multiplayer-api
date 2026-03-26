@@ -160,9 +160,9 @@ public class Game : MonoBehaviour
     {
         Debug.Log("[SETUP] Registering players...");
 
-        var h = await RegisterPlayer("GameHost", new { level = 15, rank = "gold", wins = 42 });
-        var p1 = await RegisterPlayer("PlayerOne", new { level = 12, rank = "silver", wins = 28 });
-        var p2 = await RegisterPlayer("PlayerTwo", new { level = 10, rank = "bronze", wins = 15 });
+        var h = await RegisterPlayer("GameHost", JsonUtility.ToJson(new PlayerData { level = 15, wins = 42, rank = "gold" }));
+        var p1 = await RegisterPlayer("PlayerOne", JsonUtility.ToJson(new PlayerData { level = 12, wins = 28, rank = "silver" }));
+        var p2 = await RegisterPlayer("PlayerTwo", JsonUtility.ToJson(new PlayerData { level = 10, wins = 15, rank = "bronze" }));
 
         players["host"] = new PlayerInfo { Id = h.player_id, Token = h.private_key, Name = "GameHost" };
         players["p1"]   = new PlayerInfo { Id = p1.player_id, Token = p1.private_key, Name = "PlayerOne" };
@@ -186,7 +186,7 @@ public class Game : MonoBehaviour
     }
 
     // ====================== HELPER METHODS ======================
-    private async Task<PlayerRegisterResponse> RegisterPlayer(string name, object playerData = null)
+    private async Task<PlayerRegisterResponse> RegisterPlayer(string name, string playerData = "")
     {
         var reg = await sdk.RegisterPlayer(name, playerData);
         Debug.Log($"[REGISTER] {name} registered");
@@ -331,5 +331,14 @@ public class Game : MonoBehaviour
         public string Id { get; set; }
         public string Token { get; set; }
         public string Name { get; set; }
+    }
+
+    // ====================== PLAYER DATA ======================
+
+    private class PlayerData
+    {
+        public int level;
+        public int wins;
+        public string rank;
     }
 }
