@@ -48,9 +48,11 @@ public class Game
         // Game Data
         await SafeExecute(async () =>
         {
-            var gd = await sdk!.GetGameData();
+            var gd = await sdk!.GetGameData<GameData>();
             Console.WriteLine($"[GAME DATA] Retrieved global data");
-            await sdk!.UpdateGameData(new { currentEvent = "SpringFestival", version = "1.2.3" });
+            GameData gameData = gd.GetData;
+            Console.WriteLine($"[GAME DATA] Event: {gameData.CurrentEvent}, Version: {gameData.Version}");
+            await sdk!.UpdateGameData(new GameData { CurrentEvent = "SpringFestival", Version = "1.2.3" });
             Console.WriteLine("[GAME DATA] Global data updated");
         }, "Game Data");
 
@@ -166,6 +168,19 @@ public class Game
             await SendPlayerHeartbeat(p.Token);
 
         await GetAllPlayersList();
+
+        foreach (var p in players.Values)
+        {
+            var data = await GetPlayerData(p.Token);
+
+            var player = data.GetData;
+
+            player.Level++;
+
+            await UpdatePlayerData(p.Token, player);
+
+            data = await GetPlayerData(p.Token);
+        }
     }
 
     private static async Task CleanupEverything()
@@ -207,10 +222,24 @@ public class Game
         var list = await sdk!.GetAllPlayers();
         Console.WriteLine($"[PLAYERS LIST] Total: {list.Count}");
 
-        foreach(PlayerShort player in list.Players)
+        foreach (PlayerShort player in list.Players)
         {
             Console.WriteLine($"[PLAYERS LIST] Id: {player.Id}, Name: {player.Player_name}, Online: {player.Is_active}, Login: {player.Last_login}, Created: {player.Created_at}");
         }
+    }
+
+    private static async Task<PlayerDataResponse<PlayerData>> GetPlayerData(string token)
+    {
+        var data = await sdk!.GetPlayerData<PlayerData>(token);
+        Console.WriteLine($"[PLAYER DATA] Player data retrieved");
+        return data;
+    }
+
+    private static async Task<SuccessResponse> UpdatePlayerData(string token, PlayerData data)
+    {
+        var res = await sdk!.UpdatePlayerData(token, data);
+        Console.WriteLine($"[PLAYER DATA] Player data updated");
+        return res;
     }
 
     private static async Task<string> CreateMatchmakingLobby(bool joinByRequests)
@@ -314,7 +343,7 @@ public class Game
         try
         {
             Console.WriteLine($"[LOG] {operation}");
-            
+
             await action();
         }
         catch (ApiException ex)
@@ -332,5 +361,19 @@ public class Game
         public required string Id { get; set; }
         public required string Token { get; set; }
         public required string Name { get; set; }
+    }
+
+    private class GameData
+    {
+        public string CurrentEvent { get; set; } = string.Empty;
+
+        public string Version { get; set; } = string.Empty;
+    }
+
+    private class PlayerData
+    {
+        public int Level { get; set; }
+
+        public string Rank { get; set; } = string.Empty;
     }
 }

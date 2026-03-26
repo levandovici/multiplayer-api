@@ -51,7 +51,7 @@ namespace michitai
         private readonly HttpClient _http;
         private readonly ILogger? _logger;
 
-        private readonly JsonSerializerOptions _jsonOptions = new()
+        public static readonly JsonSerializerOptions JsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -120,7 +120,7 @@ namespace michitai
             var req = new HttpRequestMessage(method, url);
             if (body != null)
             {
-                string json = JsonSerializer.Serialize(body, _jsonOptions);
+                string json = JsonSerializer.Serialize(body, JsonOptions);
                 req.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
 
@@ -131,7 +131,7 @@ namespace michitai
 
             try
             {
-                var response = JsonSerializer.Deserialize<T>(responseText, _jsonOptions) ?? new T();
+                var response = JsonSerializer.Deserialize<T>(responseText, JsonOptions) ?? new T();
 
                 if (!response.Success)
                 {
@@ -147,7 +147,7 @@ namespace michitai
 
                 try
                 {
-                    var error = JsonSerializer.Deserialize<ErrorResponse>(responseText, _jsonOptions);
+                    var error = JsonSerializer.Deserialize<ErrorResponse>(responseText, JsonOptions);
                     if (error != null && !error.Success)
                         throw new ApiException(error.Error ?? "API error", responseText);
                 }
@@ -174,14 +174,14 @@ namespace michitai
             => Send<PlayerListResponse>(HttpMethod.Get, Url(Endpoints.GamePlayersList, $"&private_token={_apiPrivateToken}"), null, ct);
 
         // ==================== GAME DATA ====================
-        public Task<GameDataResponse> GetGameData(CancellationToken ct = default)
-            => Send<GameDataResponse>(HttpMethod.Get, Url(Endpoints.GameDataGameGet), null, ct);
+        public Task<GameDataResponse<T>> GetGameData<T>(CancellationToken ct = default) where T : class, new()
+            => Send<GameDataResponse<T>>(HttpMethod.Get, Url(Endpoints.GameDataGameGet), null, ct);
 
         public Task<SuccessResponse> UpdateGameData(object data, CancellationToken ct = default)
             => Send<SuccessResponse>(HttpMethod.Put, Url(Endpoints.GameDataGameUpdate, $"&private_token={_apiPrivateToken}"), data, ct);
 
-        public Task<PlayerDataResponse> GetPlayerData(string playerToken, CancellationToken ct = default)
-            => Send<PlayerDataResponse>(HttpMethod.Get, Url(Endpoints.GameDataPlayerGet, $"&player_token={playerToken}"), null, ct);
+        public Task<PlayerDataResponse<T>> GetPlayerData<T>(string playerToken, CancellationToken ct = default) where T : class, new()
+            => Send<PlayerDataResponse<T>>(HttpMethod.Get, Url(Endpoints.GameDataPlayerGet, $"&player_token={playerToken}"), null, ct);
 
         public Task<SuccessResponse> UpdatePlayerData(string playerToken, object data, CancellationToken ct = default)
             => Send<SuccessResponse>(HttpMethod.Put, Url(Endpoints.GameDataPlayerUpdate, $"&player_token={playerToken}"), data, ct);
@@ -289,10 +289,10 @@ namespace michitai
 
     // ====================== ALL REQUEST CLASSES =======================
 
-    
+
     public class PlayerRegisterRequest
     {
-        public string Player_name { get; set; }
+        public required string Player_name { get; set; }
         public object? Player_data { get; set; }
     }
 
@@ -350,19 +350,41 @@ namespace michitai
         public string Last_logout { get; set; } = string.Empty;
     }
 
-    public class GameDataResponse : ApiResponse
+    public class GameDataResponse<T> : ApiResponse where T : class, new()
     {
         public string Type { get; set; } = string.Empty;
         public int Game_id { get; set; }
-        public Dictionary<string, object> Data { get; set; } = new();
+        public JsonElement Data { get; set; }
+
+
+
+        [JsonIgnore]
+        public T GetData
+        {
+            get
+            {
+                return Data.Deserialize<T>(GameSDK.JsonOptions)!;
+            }
+        }
     }
 
-    public class PlayerDataResponse : ApiResponse
+    public class PlayerDataResponse<T> : ApiResponse where T : class, new()
     {
         public string Type { get; set; } = string.Empty;
         public int Player_id { get; set; }
         public string Player_name { get; set; } = string.Empty;
-        public Dictionary<string, object> Data { get; set; } = new();
+        public JsonElement Data { get; set; }
+
+
+
+        [JsonIgnore]
+        public T GetData
+        {
+            get
+            {
+                return Data.Deserialize<T>(GameSDK.JsonOptions)!;
+            }
+        }
     }
 
     public class SuccessResponse : ApiResponse
