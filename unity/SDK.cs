@@ -27,8 +27,8 @@ namespace michitai
     public class ConsoleLogger : ILogger
     {
         public void Error(string message) => Debug.LogError($"[SDK Error] {message}");
-        public void Log(string message)   => Debug.Log($"[SDK] {message}");
-        public void Warn(string message)  => Debug.LogWarning($"[SDK Warning] {message}");
+        public void Log(string message) => Debug.Log($"[SDK] {message}");
+        public void Warn(string message) => Debug.LogWarning($"[SDK Warning] {message}");
     }
 
     // ====================== MAIN SDK (Unity + JsonUtility) ======================
@@ -44,46 +44,46 @@ namespace michitai
         private static class Endpoints
         {
             public const string GamePlayersRegister = "game_players.php/register";
-            public const string GamePlayersLogin    = "game_players.php/login";
+            public const string GamePlayersLogin = "game_players.php/login";
             public const string GamePlayersHeartbeat = "game_players.php/heartbeat";
-            public const string GamePlayersLogout   = "game_players.php/logout";
-            public const string GamePlayersList     = "game_players.php/list";
+            public const string GamePlayersLogout = "game_players.php/logout";
+            public const string GamePlayersList = "game_players.php/list";
 
-            public const string GameDataGameGet     = "game_data.php/game/get";
-            public const string GameDataGameUpdate  = "game_data.php/game/update";
-            public const string GameDataPlayerGet   = "game_data.php/player/get";
+            public const string GameDataGameGet = "game_data.php/game/get";
+            public const string GameDataGameUpdate = "game_data.php/game/update";
+            public const string GameDataPlayerGet = "game_data.php/player/get";
             public const string GameDataPlayerUpdate = "game_data.php/player/update";
 
-            public const string Time                = "time.php";
+            public const string Time = "time.php";
 
-            public const string GameRoomCreate      = "game_room.php/create";
-            public const string GameRoomList        = "game_room.php/list";
-            public const string GameRoomJoin        = "game_room.php/{0}/join";
-            public const string GameRoomLeave       = "game_room.php/leave";
-            public const string GameRoomPlayers     = "game_room.php/players";
-            public const string GameRoomHeartbeat   = "game_room.php/heartbeat";
-            public const string GameRoomActions     = "game_room.php/actions";
+            public const string GameRoomCreate = "game_room.php/create";
+            public const string GameRoomList = "game_room.php/list";
+            public const string GameRoomJoin = "game_room.php/{0}/join";
+            public const string GameRoomLeave = "game_room.php/leave";
+            public const string GameRoomPlayers = "game_room.php/players";
+            public const string GameRoomHeartbeat = "game_room.php/heartbeat";
+            public const string GameRoomActions = "game_room.php/actions";
             public const string GameRoomActionsPoll = "game_room.php/actions/poll";
             public const string GameRoomActionsPending = "game_room.php/actions/pending";
             public const string GameRoomActionComplete = "game_room.php/actions/{0}/complete";
-            public const string GameRoomUpdates     = "game_room.php/updates";
+            public const string GameRoomUpdates = "game_room.php/updates";
             public const string GameRoomUpdatesPoll = "game_room.php/updates/poll";
-            public const string GameRoomCurrent     = "game_room.php/current";
+            public const string GameRoomCurrent = "game_room.php/current";
 
-            public const string MatchmakingList     = "matchmaking.php/list";
-            public const string MatchmakingCreate   = "matchmaking.php/create";
-            public const string MatchmakingRequest  = "matchmaking.php/{0}/request";
+            public const string MatchmakingList = "matchmaking.php/list";
+            public const string MatchmakingCreate = "matchmaking.php/create";
+            public const string MatchmakingRequest = "matchmaking.php/{0}/request";
             public const string MatchmakingResponse = "matchmaking.php/{0}/response";
             public const string MatchmakingRequestStatus = "matchmaking.php/{0}/status";
-            public const string MatchmakingCurrent  = "matchmaking.php/current";
-            public const string MatchmakingJoin     = "matchmaking.php/{0}/join";
-            public const string MatchmakingLeave    = "matchmaking.php/leave";
-            public const string MatchmakingPlayers  = "matchmaking.php/players";
+            public const string MatchmakingCurrent = "matchmaking.php/current";
+            public const string MatchmakingJoin = "matchmaking.php/{0}/join";
+            public const string MatchmakingLeave = "matchmaking.php/leave";
+            public const string MatchmakingPlayers = "matchmaking.php/players";
             public const string MatchmakingHeartbeat = "matchmaking.php/heartbeat";
-            public const string MatchmakingRemove   = "matchmaking.php/remove";
-            public const string MatchmakingStart    = "matchmaking.php/start";
+            public const string MatchmakingRemove = "matchmaking.php/remove";
+            public const string MatchmakingStart = "matchmaking.php/start";
 
-            public const string Leaderboard         = "leaderboard.php";
+            public const string Leaderboard = "leaderboard.php";
         }
 
         public GameSDK(string apiToken, string apiPrivateToken, string baseUrl = "https://api.michitai.com/api",
@@ -155,19 +155,19 @@ namespace michitai
 
         public Task<PlayerLogoutResponse> LogoutPlayerAsync(string playerToken, CancellationToken ct = default)
             => Send<PlayerLogoutResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersLogout, $"&player_token={playerToken}"), null, ct);
-        
+
         public Task<PlayerListResponse> GetAllPlayers(CancellationToken ct = default)
             => Send<PlayerListResponse>(HttpMethod.Get, Url(Endpoints.GamePlayersList, $"&private_token={_apiPrivateToken}"), null, ct);
 
         // ==================== GAME DATA ====================
-        public Task<GameDataResponse> GetGameData(CancellationToken ct = default)
-            => Send<GameDataResponse>(HttpMethod.Get, Url(Endpoints.GameDataGameGet), null, ct);
+        public Task<GameDataResponse<T>> GetGameData<T>(CancellationToken ct = default) where T : class, new()
+            => Send<GameDataResponse<T>>(HttpMethod.Get, Url(Endpoints.GameDataGameGet), null, ct);
 
         public Task<SuccessResponse> UpdateGameData(object data, CancellationToken ct = default)
             => Send<SuccessResponse>(HttpMethod.Put, Url(Endpoints.GameDataGameUpdate, $"&private_token={_apiPrivateToken}"), data, ct);
 
-        public Task<PlayerDataResponse> GetPlayerData(string playerToken, CancellationToken ct = default)
-            => Send<PlayerDataResponse>(HttpMethod.Get, Url(Endpoints.GameDataPlayerGet, $"&player_token={playerToken}"), null, ct);
+        public Task<PlayerDataResponse<T>> GetPlayerData<T>(string playerToken, CancellationToken ct = default) where T : class, new()
+            => Send<PlayerDataResponse<T>>(HttpMethod.Get, Url(Endpoints.GameDataPlayerGet, $"&player_token={playerToken}"), null, ct);
 
         public Task<SuccessResponse> UpdatePlayerData(string playerToken, object data, CancellationToken ct = default)
             => Send<SuccessResponse>(HttpMethod.Put, Url(Endpoints.GameDataPlayerUpdate, $"&player_token={playerToken}"), data, ct);
@@ -275,7 +275,8 @@ namespace michitai
 
     // ====================== REQUEST CLASSES (Unity + JsonUtility ready) ======================
 
-    [System.Serializable] public class PlayerRegisterRequest
+    [System.Serializable]
+    public class PlayerRegisterRequest
     {
         public string player_name;
         public string player_data_json;
@@ -283,7 +284,8 @@ namespace michitai
 
     // ====================== RESPONSE CLASSES (Unity + JsonUtility ready) ======================
 
-    [System.Serializable] public class PlayerRegisterResponse : ApiResponse
+    [System.Serializable]
+    public class PlayerRegisterResponse : ApiResponse
     {
         public string player_id;
         public string private_key;
@@ -291,12 +293,14 @@ namespace michitai
         public int game_id;
     }
 
-    [System.Serializable] public class PlayerAuthResponse : ApiResponse
+    [System.Serializable]
+    public class PlayerAuthResponse : ApiResponse
     {
         public PlayerInfo player;
     }
 
-    [System.Serializable] public class PlayerInfo
+    [System.Serializable]
+    public class PlayerInfo
     {
         public int id;
         public int game_id;
@@ -309,13 +313,15 @@ namespace michitai
         public string created_at;
     }
 
-    [System.Serializable] public class PlayerListResponse : ApiResponse
+    [System.Serializable]
+    public class PlayerListResponse : ApiResponse
     {
         public int count;
         public List<PlayerShort> players = new();
     }
 
-    [System.Serializable] public class PlayerShort
+    [System.Serializable]
+    public class PlayerShort
     {
         public int id;
         public string player_name;
@@ -324,47 +330,74 @@ namespace michitai
         public string created_at;
     }
 
-    [System.Serializable] public class PlayerHeartbeatResponse : ApiResponse
+    [System.Serializable]
+    public class PlayerHeartbeatResponse : ApiResponse
     {
         public string message;
         public string last_heartbeat;
     }
 
-    [System.Serializable] public class PlayerLogoutResponse : ApiResponse
+    [System.Serializable]
+    public class PlayerLogoutResponse : ApiResponse
     {
         public string message;
         public string last_logout;
     }
 
-    [System.Serializable] public class GameDataResponse : ApiResponse
+    [System.Serializable]
+    public class GameDataResponse<T> : ApiResponse where T : class, new()
     {
         public string type;
         public int game_id;
         public string data_json;                  // Unity mode
+
+
+
+        public T GetData
+        {
+            get
+            {
+                return JsonUtility.FromJson<T>(data_json);
+            }
+        }
     }
 
-    [System.Serializable] public class PlayerDataResponse : ApiResponse
+    [System.Serializable]
+    public class PlayerDataResponse<T> : ApiResponse where T : class, new()
     {
         public string type;
         public int player_id;
         public string player_name;
         public string data_json;                  // Unity mode
+
+
+
+        public T GetData
+        {
+            get
+            {
+                return JsonUtility.FromJson<T>(data_json);
+            }
+        }
     }
 
-    [System.Serializable] public class SuccessResponse : ApiResponse
+    [System.Serializable]
+    public class SuccessResponse : ApiResponse
     {
         public string message;
         public string updated_at;
     }
 
-    [System.Serializable] public class ServerTimeResponse : ApiResponse
+    [System.Serializable]
+    public class ServerTimeResponse : ApiResponse
     {
         public string utc;
         public long timestamp;
         public string readable;
     }
 
-    [System.Serializable] public class ServerTimeWithOffsetResponse : ApiResponse
+    [System.Serializable]
+    public class ServerTimeWithOffsetResponse : ApiResponse
     {
         public string utc;
         public long timestamp;
@@ -372,7 +405,8 @@ namespace michitai
         public TimeOffset offset;
     }
 
-    [System.Serializable] public class TimeOffset
+    [System.Serializable]
+    public class TimeOffset
     {
         public int offset_hours;
         public string offset_string;
@@ -381,19 +415,22 @@ namespace michitai
     }
 
     // ====================== GAME ROOMS ======================
-    [System.Serializable] public class RoomCreateResponse : ApiResponse
+    [System.Serializable]
+    public class RoomCreateResponse : ApiResponse
     {
         public string room_id;
         public string room_name;
         public bool is_host;
     }
 
-    [System.Serializable] public class RoomListResponse : ApiResponse
+    [System.Serializable]
+    public class RoomListResponse : ApiResponse
     {
         public List<RoomShort> rooms = new();
     }
 
-    [System.Serializable] public class RoomShort
+    [System.Serializable]
+    public class RoomShort
     {
         public string room_id;
         public string room_name;
@@ -402,19 +439,22 @@ namespace michitai
         public int has_password;
     }
 
-    [System.Serializable] public class RoomJoinResponse : ApiResponse
+    [System.Serializable]
+    public class RoomJoinResponse : ApiResponse
     {
         public string room_id;
         public string message;
     }
 
-    [System.Serializable] public class RoomPlayersResponse : ApiResponse
+    [System.Serializable]
+    public class RoomPlayersResponse : ApiResponse
     {
         public List<RoomPlayer> players = new();
         public string last_updated;
     }
 
-    [System.Serializable] public class RoomPlayer
+    [System.Serializable]
+    public class RoomPlayer
     {
         public string player_id;
         public string player_name;
@@ -423,28 +463,33 @@ namespace michitai
         public string last_heartbeat;
     }
 
-    [System.Serializable] public class RoomLeaveResponse : ApiResponse
+    [System.Serializable]
+    public class RoomLeaveResponse : ApiResponse
     {
         public string message;
     }
 
-    [System.Serializable] public class HeartbeatResponse : ApiResponse
+    [System.Serializable]
+    public class HeartbeatResponse : ApiResponse
     {
         public string status;
     }
 
-    [System.Serializable] public class ActionSubmitResponse : ApiResponse
+    [System.Serializable]
+    public class ActionSubmitResponse : ApiResponse
     {
         public string action_id;
         public string status;
     }
 
-    [System.Serializable] public class ActionPollResponse : ApiResponse
+    [System.Serializable]
+    public class ActionPollResponse : ApiResponse
     {
         public List<ActionInfo> actions = new();
     }
 
-    [System.Serializable] public class ActionInfo
+    [System.Serializable]
+    public class ActionInfo
     {
         public string action_id;
         public string action_type;
@@ -452,12 +497,14 @@ namespace michitai
         public string status;
     }
 
-    [System.Serializable] public class ActionPendingResponse : ApiResponse
+    [System.Serializable]
+    public class ActionPendingResponse : ApiResponse
     {
         public List<PendingAction> actions = new();
     }
 
-    [System.Serializable] public class PendingAction
+    [System.Serializable]
+    public class PendingAction
     {
         public string action_id;
         public string player_id;
@@ -467,18 +514,21 @@ namespace michitai
         public string player_name;
     }
 
-    [System.Serializable] public class ActionCompleteRequest
+    [System.Serializable]
+    public class ActionCompleteRequest
     {
         public string status = "completed";
         public object response_data;
     }
 
-    [System.Serializable] public class ActionCompleteResponse : ApiResponse
+    [System.Serializable]
+    public class ActionCompleteResponse : ApiResponse
     {
         public string message;
     }
 
-    [System.Serializable] public class UpdatePlayersRequest
+    [System.Serializable]
+    public class UpdatePlayersRequest
     {
         public object targetPlayerIds;   // "all" or string[]
         public string type;
@@ -492,20 +542,23 @@ namespace michitai
         }
     }
 
-    [System.Serializable] public class UpdatePlayersResponse : ApiResponse
+    [System.Serializable]
+    public class UpdatePlayersResponse : ApiResponse
     {
         public int updates_sent;
         public List<string> update_ids = new();
         public List<string> target_players = new();
     }
 
-    [System.Serializable] public class PollUpdatesResponse : ApiResponse
+    [System.Serializable]
+    public class PollUpdatesResponse : ApiResponse
     {
         public List<PlayerUpdate> updates = new();
         public string last_update_id;
     }
 
-    [System.Serializable] public class PlayerUpdate
+    [System.Serializable]
+    public class PlayerUpdate
     {
         public string update_id;
         public string from_player_id;
@@ -514,7 +567,8 @@ namespace michitai
         public string created_at;
     }
 
-    [System.Serializable] public class CurrentRoomResponse : ApiResponse
+    [System.Serializable]
+    public class CurrentRoomResponse : ApiResponse
     {
         public bool in_room;
         public CurrentRoomInfo room;
@@ -522,7 +576,8 @@ namespace michitai
         public List<string> pending_updates_json;
     }
 
-    [System.Serializable] public class CurrentRoomInfo
+    [System.Serializable]
+    public class CurrentRoomInfo
     {
         public string room_id;
         public string room_name;
@@ -540,12 +595,14 @@ namespace michitai
     }
 
     // ====================== MATCHMAKING ======================
-    [System.Serializable] public class MatchmakingListResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingListResponse : ApiResponse
     {
         public List<MatchmakingLobby> lobbies = new();
     }
 
-    [System.Serializable] public class MatchmakingLobby
+    [System.Serializable]
+    public class MatchmakingLobby
     {
         public string matchmaking_id;
         public int host_player_id;
@@ -558,7 +615,8 @@ namespace michitai
         public string host_name;
     }
 
-    [System.Serializable] public class MatchmakingCreateResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingCreateResponse : ApiResponse
     {
         public string matchmaking_id;
         public int max_players;
@@ -567,25 +625,29 @@ namespace michitai
         public bool is_host;
     }
 
-    [System.Serializable] public class MatchmakingJoinRequestResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingJoinRequestResponse : ApiResponse
     {
         public string request_id;
         public string message;
     }
 
-    [System.Serializable] public class MatchmakingRequestResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingRequestResponse : ApiResponse
     {
         public string message;
         public string request_id;
         public string action;
     }
 
-    [System.Serializable] public class MatchmakingRequestStatusResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingRequestStatusResponse : ApiResponse
     {
         public MatchmakingRequestInfo request;
     }
 
-    [System.Serializable] public class MatchmakingRequestInfo
+    [System.Serializable]
+    public class MatchmakingRequestInfo
     {
         public string request_id;
         public string matchmaking_id;
@@ -597,14 +659,16 @@ namespace michitai
         public bool join_by_requests;
     }
 
-    [System.Serializable] public class MatchmakingCurrentResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingCurrentResponse : ApiResponse
     {
         public bool in_matchmaking;
         public MatchmakingInfo matchmaking;
         public List<string> pending_requests_json;
     }
 
-    [System.Serializable] public class MatchmakingInfo
+    [System.Serializable]
+    public class MatchmakingInfo
     {
         public string matchmaking_id;
         public bool is_host;
@@ -621,24 +685,28 @@ namespace michitai
         public string started_at;
     }
 
-    [System.Serializable] public class MatchmakingDirectJoinResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingDirectJoinResponse : ApiResponse
     {
         public string message;
         public string matchmaking_id;
     }
 
-    [System.Serializable] public class MatchmakingLeaveResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingLeaveResponse : ApiResponse
     {
         public string message;
     }
 
-    [System.Serializable] public class MatchmakingPlayersResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingPlayersResponse : ApiResponse
     {
         public List<MatchmakingPlayer> players = new();
         public string last_updated;
     }
 
-    [System.Serializable] public class MatchmakingPlayer
+    [System.Serializable]
+    public class MatchmakingPlayer
     {
         public int player_id;
         public string joined_at;
@@ -649,17 +717,20 @@ namespace michitai
         public int is_host;
     }
 
-    [System.Serializable] public class MatchmakingHeartbeatResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingHeartbeatResponse : ApiResponse
     {
         public string status;
     }
 
-    [System.Serializable] public class MatchmakingRemoveResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingRemoveResponse : ApiResponse
     {
         public string message;
     }
 
-    [System.Serializable] public class MatchmakingStartResponse : ApiResponse
+    [System.Serializable]
+    public class MatchmakingStartResponse : ApiResponse
     {
         public string room_id;
         public string room_name;
@@ -668,7 +739,8 @@ namespace michitai
     }
 
     // ====================== LEADERBOARD ======================
-    [System.Serializable] public class LeaderboardResponse : ApiResponse
+    [System.Serializable]
+    public class LeaderboardResponse : ApiResponse
     {
         public List<LeaderboardPlayer> leaderboard = new();
         public int total;
@@ -676,7 +748,8 @@ namespace michitai
         public int limit;
     }
 
-    [System.Serializable] public class LeaderboardPlayer
+    [System.Serializable]
+    public class LeaderboardPlayer
     {
         public int rank;
         public int player_id;

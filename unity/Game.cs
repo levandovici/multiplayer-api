@@ -57,10 +57,11 @@ public class Game : MonoBehaviour
         // Game Data
         await SafeExecute(async () =>
         {
-            var gd = await sdk.GetGameData();
+            var gd = await sdk.GetGameData<GameData>();
             Debug.Log($"[GAME DATA] Retrieved. Game ID: {gd.game_id}");
-
-            await sdk.UpdateGameData(new { currentEvent = "SpringFestival", version = "1.2.3" });
+            GameData gameData = gd.GetData;
+            Debug.Log($"[GAME DATA] Event: {gameData.currentEvent}, Version: {gameData.version}");
+            await sdk.UpdateGameData(new GameData { currentEvent = "SpringFestival", version = "1.2.3" });
             Debug.Log("[GAME DATA] Global data updated");
         }, "Game Data");
 
@@ -165,18 +166,31 @@ public class Game : MonoBehaviour
         var p2 = await RegisterPlayer("PlayerTwo", JsonUtility.ToJson(new PlayerData { level = 10, wins = 15, rank = "bronze" }));
 
         players["host"] = new PlayerInfo { Id = h.player_id, Token = h.private_key, Name = "GameHost" };
-        players["p1"]   = new PlayerInfo { Id = p1.player_id, Token = p1.private_key, Name = "PlayerOne" };
-        players["p2"]   = new PlayerInfo { Id = p2.player_id, Token = p2.private_key, Name = "PlayerTwo" };
+        players["p1"] = new PlayerInfo { Id = p1.player_id, Token = p1.private_key, Name = "PlayerOne" };
+        players["p2"] = new PlayerInfo { Id = p2.player_id, Token = p2.private_key, Name = "PlayerTwo" };
 
         // Authenticate all players
         foreach (var p in players.Values)
             await AuthenticatePlayer(p.Token);
 
         // Send players heartbeat
-        foreach(var p in players.Values)
+        foreach (var p in players.Values)
             await SendPlayerHeartbeat(p.Token);
 
         await GetAllPlayersList();
+
+        foreach (var p in players.Values)
+        {
+            var data = await GetPlayerData(p.Token);
+
+            var player = data.GetData;
+
+            player.level++;
+
+            await UpdatePlayerData(p.Token, player);
+
+            data = await GetPlayerData(p.Token);
+        }
     }
 
     private async Task CleanupEverything()
@@ -222,12 +236,26 @@ public class Game : MonoBehaviour
         }
     }
 
+    private async Task<PlayerDataResponse<PlayerData>> GetPlayerData(string token)
+    {
+        var data = await sdk.GetPlayerData<PlayerData>(token);
+        Debug.Log($"[PLAYER DATA] Player data retrieved");
+        return data;
+    }
+
+    private async Task<SuccessResponse> UpdatePlayerData(string token, PlayerData data)
+    {
+        var res = await sdk.UpdatePlayerData(token, data);
+        Debug.Log($"[PLAYER DATA] Player data updated");
+        return res;
+    }
+
     private async Task<string> CreateMatchmakingLobby(bool joinByRequests)
     {
         var res = await sdk.CreateMatchmakingLobbyAsync(
-            players["host"].Token, 
-            maxPlayers: 4, 
-            strictFull: false, 
+            players["host"].Token,
+            maxPlayers: 4,
+            strictFull: false,
             joinByRequests: joinByRequests,
             rules: new { mode = "tdm", map = "arena" }
         );
@@ -356,8 +384,18 @@ public class Game : MonoBehaviour
         public string Name { get; set; }
     }
 
+    // ====================== GAME DATA ========================
+
+    [System.Serializable]
+    private class GameData
+    {
+        public string currentEvent;
+        public string version;
+    }
+
     // ====================== PLAYER DATA ======================
 
+    [System.Serializable]
     private class PlayerData
     {
         public int level;
