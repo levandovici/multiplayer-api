@@ -196,6 +196,11 @@ public class Game
     {
         var list = await sdk!.GetAllPlayers();
         Console.WriteLine($"[PLAYERS LIST] Total: {list.Count}");
+
+        foreach(PlayerShort player in list.Players)
+        {
+            Console.WriteLine($"[PLAYERS LIST] Id: {player.Id}, Name: {player.Player_name}, Online: {player.Is_active}, Login: {player.Last_login}, Created: {player.Created_at}");
+        }
     }
 
     private static async Task<string> CreateMatchmakingLobby(bool joinByRequests)

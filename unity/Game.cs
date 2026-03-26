@@ -204,6 +204,11 @@ public class Game : MonoBehaviour
     {
         var list = await sdk.GetAllPlayers();
         Debug.Log($"[PLAYERS LIST] Total: {list.count}");
+
+        foreach (PlayerShort player in list.players)
+        {
+            Debug.Log($"[PLAYERS LIST] Id: {player.id}, Name: {player.player_name}, Online: {player.is_active}, Login: {player.last_login}, Created: {player.created_at}");
+        }
     }
 
     private async Task<string> CreateMatchmakingLobby(bool joinByRequests)
