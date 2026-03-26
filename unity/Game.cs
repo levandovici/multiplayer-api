@@ -172,6 +172,10 @@ public class Game : MonoBehaviour
         foreach (var p in players.Values)
             await AuthenticatePlayer(p.Token);
 
+        // Send players heartbeat
+        foreach(var p in players.Values)
+            await SendPlayerHeartbeat(p.Token);
+
         await GetAllPlayersList();
     }
 
@@ -198,6 +202,13 @@ public class Game : MonoBehaviour
         var auth = await sdk.AuthenticatePlayer(token);
         Debug.Log($"[AUTH] {auth.player.player_name} authenticated");
         return auth;
+    }
+
+    private async Task<PlayerHeartbeatResponse> SendPlayerHeartbeat(string token)
+    {
+        var heartbeat = await sdk.SendPlayerHeartbeatAsync(token);
+        Debug.Log($"[HEARTBEAT] Player heartbeat sent");
+        return heartbeat;
     }
 
     private async Task GetAllPlayersList()

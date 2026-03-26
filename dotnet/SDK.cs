@@ -164,14 +164,14 @@ namespace michitai
         public Task<PlayerAuthResponse> AuthenticatePlayer(string playerToken, CancellationToken ct = default)
             => Send<PlayerAuthResponse>(HttpMethod.Put, Url(Endpoints.GamePlayersLogin, $"&player_token={playerToken}"), null, ct);
 
-        public Task<PlayerListResponse> GetAllPlayers(CancellationToken ct = default)
-            => Send<PlayerListResponse>(HttpMethod.Get, Url(Endpoints.GamePlayersList, $"&private_token={_apiPrivateToken}"), null, ct);
-
         public Task<PlayerHeartbeatResponse> SendPlayerHeartbeatAsync(string playerToken, CancellationToken ct = default)
             => Send<PlayerHeartbeatResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersHeartbeat, $"&player_token={playerToken}"), null, ct);
 
         public Task<PlayerLogoutResponse> LogoutPlayerAsync(string playerToken, CancellationToken ct = default)
             => Send<PlayerLogoutResponse>(HttpMethod.Post, Url(Endpoints.GamePlayersLogout, $"&player_token={playerToken}"), null, ct);
+
+        public Task<PlayerListResponse> GetAllPlayers(CancellationToken ct = default)
+            => Send<PlayerListResponse>(HttpMethod.Get, Url(Endpoints.GamePlayersList, $"&private_token={_apiPrivateToken}"), null, ct);
 
         // ==================== GAME DATA ====================
         public Task<GameDataResponse> GetGameData(CancellationToken ct = default)

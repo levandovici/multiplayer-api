@@ -162,6 +162,9 @@ public class Game
         foreach (var p in players.Values)
             await AuthenticatePlayer(p.Token);
 
+        foreach (var p in players.Values)
+            await SendPlayerHeartbeat(p.Token);
+
         await GetAllPlayersList();
     }
 
@@ -190,6 +193,13 @@ public class Game
         var auth = await sdk!.AuthenticatePlayer(token);
         Console.WriteLine($"[AUTH] {auth!.Player!.Player_name} authenticated");
         return auth;
+    }
+
+    private static async Task<PlayerHeartbeatResponse> SendPlayerHeartbeat(string token)
+    {
+        var heartbeat = await sdk!.SendPlayerHeartbeatAsync(token);
+        Console.WriteLine($"[HEARTBEAT] Player heartbeat sent");
+        return heartbeat;
     }
 
     private static async Task GetAllPlayersList()
