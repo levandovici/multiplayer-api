@@ -258,7 +258,7 @@ namespace michitai
 
         public Task<MatchmakingRequestResponse> RespondToJoinRequestAsync(string playerToken, string requestId, MatchmakingRequestAction action, CancellationToken ct = default)
             => Send<MatchmakingRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingResponse, requestId), $"&player_token={playerToken}"),
-                new { action = action.ToString().ToLower() }, ct);
+                new MatchmakingRequest { Action = action.ToString().ToLower() }, ct);
 
         public Task<MatchmakingRequestStatusResponse> CheckJoinRequestStatusAsync(string playerToken, string requestId, CancellationToken ct = default)
             => Send<MatchmakingRequestStatusResponse>(HttpMethod.Get, Url(string.Format(Endpoints.MatchmakingRequestStatus, requestId), $"&player_token={playerToken}"), null, ct);
@@ -613,6 +613,11 @@ namespace michitai
     {
         public string Request_id { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
+    }
+
+    public class MatchmakingRequest
+    {
+        public string Action { get; set; }
     }
 
     public class MatchmakingRequestResponse : ApiResponse
