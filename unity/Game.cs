@@ -252,12 +252,14 @@ public class Game : MonoBehaviour
 
     private async Task<string> CreateMatchmakingLobby(bool joinByRequests)
     {
+        RulesData rules = new RulesData { mode = "tdm", map = "arena" };
+
         var res = await sdk.CreateMatchmakingLobbyAsync(
             players["host"].Token,
             maxPlayers: 4,
             strictFull: false,
             joinByRequests: joinByRequests,
-            rules: new { mode = "tdm", map = "arena" }
+            rules: JsonUtility.ToJson(rules)
         );
 
         Debug.Log($"[MATCHMAKING] Lobby created (requests mode: {joinByRequests})");
@@ -401,5 +403,14 @@ public class Game : MonoBehaviour
         public int level;
         public int wins;
         public string rank;
+    }
+
+    // ====================== MATCHMAKING DATA =================
+
+    [System.Serializable]
+    private class RulesData
+    {
+        public string mode;
+        public string map;
     }
 }

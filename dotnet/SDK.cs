@@ -251,7 +251,7 @@ namespace michitai
         public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync(string playerToken, int maxPlayers = 4, bool strictFull = false,
             bool joinByRequests = false, object? rules = null, CancellationToken ct = default)
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new { maxPlayers, strictFull, joinByRequests, rules }, ct);
+                new  MatchmakingCreateRequest{ Max_players = maxPlayers, Strict_full = strictFull, Join_by_requests = joinByRequests, Rules = rules }, ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -590,6 +590,14 @@ namespace michitai
         public string Last_heartbeat { get; set; } = string.Empty;
         public int Current_players { get; set; }
         public string Host_name { get; set; } = string.Empty;
+    }
+
+    public class MatchmakingCreateRequest
+    {
+        public int Max_players { get; set; }
+        public bool Strict_full { get; set; }
+        public bool Join_by_requests { get; set; }
+        public object? Rules { get; set; }
     }
 
     public class MatchmakingCreateResponse : ApiResponse

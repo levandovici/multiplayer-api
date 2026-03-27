@@ -244,8 +244,9 @@ public class Game
 
     private static async Task<string> CreateMatchmakingLobby(bool joinByRequests)
     {
-        var res = await sdk!.CreateMatchmakingLobbyAsync(players["host"].Token, 4, false, joinByRequests,
-            new { mode = "tdm", map = "arena" });
+        RulesData rules = new RulesData { Mode = "tdm", Map = "arena" };
+
+        var res = await sdk!.CreateMatchmakingLobbyAsync(players["host"].Token, 4, false, joinByRequests, rules);
         Console.WriteLine($"[MATCHMAKING] Lobby created (requests={joinByRequests})");
         return res.Matchmaking_id;
     }
@@ -375,5 +376,12 @@ public class Game
         public int Level { get; set; }
 
         public string Rank { get; set; } = string.Empty;
+    }
+
+    private class RulesData
+    {
+        public string Mode { get; set; } = string.Empty;
+
+        public string Map { get; set; } = string.Empty;
     }
 }

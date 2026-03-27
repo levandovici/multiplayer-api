@@ -235,9 +235,9 @@ namespace michitai
             => Send<MatchmakingListResponse>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
         public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync(string playerToken, int maxPlayers = 4, bool strictFull = false,
-            bool joinByRequests = false, object rules = null, CancellationToken ct = default)
+            bool joinByRequests = false, string rules = "", CancellationToken ct = default)
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new { maxPlayers, strictFull, joinByRequests, rules }, ct);
+                new MatchmakingCreateRequest { max_players = maxPlayers, strict_full = strictFull, join_by_requests = joinByRequests, rules_json = rules }, ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -613,6 +613,15 @@ namespace michitai
         public string last_heartbeat;
         public int current_players;
         public string host_name;
+    }
+
+    [System.Serializable]
+    public class MatchmakingCreateRequest
+    {
+        public int max_players;
+        public bool strict_full;
+        public bool join_by_requests;
+        public string rules_json;           //Unity mode
     }
 
     [System.Serializable]

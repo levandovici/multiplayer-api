@@ -239,13 +239,13 @@ function createMatchmaking() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['maxPlayers'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required field: maxPlayers'], 400);
+    if (empty($data['max_players'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: max_players'], 400);
     }
 
-    $maxPlayers = max(2, min(16, (int)$data['maxPlayers']));
-    $strictFull = !empty($data['strictFull']);
-    $joinByRequests = !empty($data['joinByRequests']);
+    $maxPlayers = max(2, min(16, (int)$data['max_players']));
+    $strictFull = !empty($data['strict_full']);
+    $joinByRequests = !empty($data['join_by_requests']);
     $rules = isset($data['rules']) ? json_encode($data['rules'], JSON_UNESCAPED_UNICODE) : null;
 
     $matchmakingId = bin2hex(random_bytes(16));
