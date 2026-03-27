@@ -72,10 +72,10 @@ public class Game
         // Leaderboard
         await SafeExecute(async () =>
         {
-            var lb = await sdk!.GetLeaderboardAsync(new[] { "level", "wins" }, limit: 10);
+            var lb = await sdk!.GetLeaderboardAsync<PlayerData>(new[] { "level", "wins" }, limit: 10);
             Console.WriteLine($"[LEADERBOARD] Top {lb.Leaderboard.Count} players loaded");
             if (lb.Leaderboard.Count > 0)
-                Console.WriteLine($"[LEADERBOARD] #1: {lb.Leaderboard[0].Player_name}");
+                Console.WriteLine($"[LEADERBOARD] #1: {lb.Leaderboard[0].Player_name}, Level: {lb.Leaderboard[0].GetData.Level}");
         }, "GetLeaderboard");
 
         Console.WriteLine();

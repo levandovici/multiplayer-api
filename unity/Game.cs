@@ -81,12 +81,12 @@ public class Game : MonoBehaviour
         // Leaderboard
         await SafeExecute(async () =>
         {
-            var lb = await sdk.GetLeaderboardAsync(new[] { "level", "wins" }, 10);
+            var lb = await sdk.GetLeaderboardAsync<PlayerData>(new[] { "level", "wins" }, 10);
             Debug.Log($"[LEADERBOARD] Top {lb.leaderboard.Count} players");
             if (lb.leaderboard.Count > 0)
             {
                 var top = lb.leaderboard[0];
-                Debug.Log($"[LEADERBOARD] #1: {top.player_name} (Rank {top.rank})");
+                Debug.Log($"[LEADERBOARD] #1: {top.player_name}, Level: {top.GetData.level} (Rank {top.rank})");
             }
         }, "GetLeaderboard");
     }

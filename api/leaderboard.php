@@ -62,10 +62,10 @@ try {
         sendResponse(['success' => false, 'error' => 'Invalid JSON body'], 400);
     }
 
-    // Required: sortBy array
-    $sortBy = $input['sortBy'] ?? null;
+    // Required: sort_by array
+    $sortBy = $input['sort_by'] ?? null;
     if (!is_array($sortBy) || empty($sortBy)) {
-        sendResponse(['success' => false, 'error' => 'sortBy must be a non-empty array of field names'], 400);
+        sendResponse(['success' => false, 'error' => 'sort_by must be a non-empty array of field names'], 400);
     }
 
     // Optional: limit (default 10, max 1000)

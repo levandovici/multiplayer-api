@@ -172,6 +172,10 @@ namespace michitai
         public Task<SuccessResponse> UpdatePlayerData(string playerToken, object data, CancellationToken ct = default)
             => Send<SuccessResponse>(HttpMethod.Put, Url(Endpoints.GameDataPlayerUpdate, $"&player_token={playerToken}"), data, ct);
 
+        // ==================== LEADERBOARD ====================
+        public Task<LeaderboardResponse<T>> GetLeaderboardAsync<T>(string[] sortBy, int limit = 10, CancellationToken ct = default) where T : class, new()
+            => Send<LeaderboardResponse<T>>(HttpMethod.Post, Url(Endpoints.Leaderboard), new LeaderboardRequest { sort_by = sortBy, limit = limit }, ct);
+
         // ==================== TIME ====================
         public Task<ServerTimeResponse> GetServerTime(CancellationToken ct = default)
             => Send<ServerTimeResponse>(HttpMethod.Get, Url(Endpoints.Time), null, ct);
@@ -265,10 +269,6 @@ namespace michitai
 
         public Task<MatchmakingStartResponse> StartGameFromMatchmakingAsync(string playerToken, CancellationToken ct = default)
             => Send<MatchmakingStartResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingStart, $"&player_token={playerToken}"), null, ct);
-
-        // ==================== LEADERBOARD ====================
-        public Task<LeaderboardResponse> GetLeaderboardAsync(string[] sortBy, int limit = 10, CancellationToken ct = default)
-            => Send<LeaderboardResponse>(HttpMethod.Post, Url(Endpoints.Leaderboard), new { sortBy, limit }, ct);
     }
 
     public enum MatchmakingRequestAction { Approve, Reject }
@@ -740,21 +740,38 @@ namespace michitai
 
     // ====================== LEADERBOARD ======================
     [System.Serializable]
-    public class LeaderboardResponse : ApiResponse
+    public class LeaderboardRequest
     {
-        public List<LeaderboardPlayer> leaderboard = new();
+        public string[] sort_by;
+        public int limit;
+    }
+
+    [System.Serializable]
+    public class LeaderboardResponse<T> : ApiResponse where T : class, new()
+    {
+        public List<LeaderboardPlayer<T>> leaderboard = new();
         public int total;
         public string[] sort_by;
         public int limit;
     }
 
     [System.Serializable]
-    public class LeaderboardPlayer
+    public class LeaderboardPlayer<T> where T : class, new()
     {
         public int rank;
         public int player_id;
         public string player_name;
         public string player_data_json;     // Unity mode
+
+
+
+        public T GetData
+        {
+            get
+            {
+                return JsonUtility.FromJson<T>(player_data_json);
+            }
+        }
     }
 
     // ====================== EXCEPTION ======================
