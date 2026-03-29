@@ -326,8 +326,10 @@ public class Game : MonoBehaviour
         // Players submit actions
         foreach (var p in players.Values)
         {
+            string requestDataJson = JsonUtility.ToJson(new ActionData { ready = true });
+
             await SafeExecute(async () =>
-                await sdk.SubmitActionAsync(p.Token, "player_ready", new ActionData { ready = true }),
+                await sdk.SubmitActionAsync(p.Token, "player_ready", requestDataJson),
                 $"SubmitAction {p.Name}");
         }
 

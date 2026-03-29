@@ -204,9 +204,9 @@ namespace michitai
         public Task<HeartbeatResponse> SendRoomHeartbeatAsync(string playerToken, CancellationToken ct = default)
             => Send<HeartbeatResponse>(HttpMethod.Post, Url(Endpoints.GameRoomHeartbeat, $"&player_token={playerToken}"), null, ct);
 
-        public Task<ActionSubmitResponse> SubmitActionAsync(string playerToken, string actionType, object requestData = null, CancellationToken ct = default)
+        public Task<ActionSubmitResponse> SubmitActionAsync(string playerToken, string actionType, string requestDataJson = null, CancellationToken ct = default)
             => Send<ActionSubmitResponse>(HttpMethod.Post, Url(Endpoints.GameRoomActions, $"&player_token={playerToken}"),
-                new ActionSubmitRequest { action_type = actionType, request_data = requestData }, ct);
+                new ActionSubmitRequest { action_type = actionType, request_data_json = requestDataJson }, ct);
 
         public Task<ActionPollResponse> PollActionsAsync(string playerToken, CancellationToken ct = default)
             => Send<ActionPollResponse>(HttpMethod.Get, Url(Endpoints.GameRoomActionsPoll, $"&player_token={playerToken}"), null, ct);
@@ -498,7 +498,7 @@ namespace michitai
     public class ActionSubmitRequest
     {
         public string action_type;
-        public object request_data;
+        public string request_data_json;    // Unity mode
     }
 
     [System.Serializable]
@@ -526,9 +526,9 @@ namespace michitai
 
         public RoomActionStatus GetStatus
         {
-            get 
+            get
             {
-                switch(status)
+                switch (status)
                 {
                     case "pending":
                         return RoomActionStatus.Pending;
@@ -572,7 +572,7 @@ namespace michitai
 
 
 
-        public RoomCompleteActionStatus Status 
+        public RoomCompleteActionStatus Status
         {
             get
             {
@@ -738,7 +738,7 @@ namespace michitai
     public class MatchmakingRequest
     {
         public string action = MatchmakingRequestAction.Approve.ToString().ToLower();
-    } 
+    }
 
     [System.Serializable]
     public class MatchmakingRequestResponse : ApiResponse
