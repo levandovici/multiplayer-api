@@ -228,8 +228,9 @@ namespace michitai
         public Task<ActionPendingResponse> GetPendingActionsAsync(string playerToken, CancellationToken ct = default)
             => Send<ActionPendingResponse>(HttpMethod.Get, Url(Endpoints.GameRoomActionsPending, $"&player_token={playerToken}"), null, ct);
 
-        public Task<ActionCompleteResponse> CompleteActionAsync(string actionId, string playerToken, ActionCompleteRequest request, CancellationToken ct = default)
-            => Send<ActionCompleteResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomActionComplete, actionId), $"&player_token={playerToken}"), request, ct);
+        public Task<ActionCompleteResponse> CompleteActionAsync(string actionId, string playerToken, ActionComplete request, CancellationToken ct = default)
+            => Send<ActionCompleteResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomActionComplete, actionId), $"&player_token={playerToken}"),
+                new ActionCompleteRequest { Status = request.Status.ToString().ToLower(), Response_data = request.Response_data}, ct);
 
         public Task<UpdatePlayersResponse> UpdatePlayersAsync(string playerToken, UpdatePlayersRequest request, CancellationToken ct = default)
             => Send<UpdatePlayersResponse>(HttpMethod.Post, Url(Endpoints.GameRoomUpdates, $"&player_token={playerToken}"), request, ct);
@@ -251,7 +252,7 @@ namespace michitai
         public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync(string playerToken, int maxPlayers = 4, bool strictFull = false,
             bool joinByRequests = false, object? rules = null, CancellationToken ct = default)
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new  MatchmakingCreateRequest{ Max_players = maxPlayers, Strict_full = strictFull, Join_by_requests = joinByRequests, Rules = rules }, ct);
+                new MatchmakingCreateRequest { Max_players = maxPlayers, Strict_full = strictFull, Join_by_requests = joinByRequests, Rules = rules }, ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -284,6 +285,10 @@ namespace michitai
         public Task<MatchmakingStartResponse> StartGameFromMatchmakingAsync(string playerToken, CancellationToken ct = default)
             => Send<MatchmakingStartResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingStart, $"&player_token={playerToken}"), null, ct);
     }
+
+    public enum RoomActionStatus { Pending, Processing, Completed, Failed, Read }
+
+    public enum RoomCompleteActionStatus { Processing, Completed, Failed }
 
     public enum MatchmakingRequestAction { Approve, Reject }
 
@@ -514,9 +519,24 @@ namespace michitai
         public List<PendingAction> Actions { get; set; } = new();
     }
 
+    public class ActionComplete
+    {
+        public RoomCompleteActionStatus Status { get; private set; }
+
+        public object? Response_data { get; private set; }
+
+
+
+        public ActionComplete(RoomCompleteActionStatus status, object? responseData)
+        {
+            Status = status;
+            Response_data = responseData;
+        }
+    }
+
     public class ActionCompleteRequest
     {
-        public string Status { get; set; } = "completed";
+        public string Status { get; set; } = RoomCompleteActionStatus.Completed.ToString().ToLower();
         public object? Response_data { get; set; }
     }
 

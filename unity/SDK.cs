@@ -214,8 +214,8 @@ namespace michitai
         public Task<ActionPendingResponse> GetPendingActionsAsync(string playerToken, CancellationToken ct = default)
             => Send<ActionPendingResponse>(HttpMethod.Get, Url(Endpoints.GameRoomActionsPending, $"&player_token={playerToken}"), null, ct);
 
-        public Task<ActionCompleteResponse> CompleteActionAsync(string actionId, string playerToken, ActionCompleteRequest request, CancellationToken ct = default)
-            => Send<ActionCompleteResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomActionComplete, actionId), $"&player_token={playerToken}"), request, ct);
+        public Task<ActionCompleteResponse> CompleteActionAsync(string actionId, string playerToken, ActionComplete request, CancellationToken ct = default)
+            => Send<ActionCompleteResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomActionComplete, actionId), $"&player_token={playerToken}"), new ActionCompleteRequest { status = request.Status.ToString().ToLower(), response_data = request.ResponseData }, ct);
 
         public Task<UpdatePlayersResponse> UpdatePlayersAsync(string playerToken, UpdatePlayersRequest request, CancellationToken ct = default)
             => Send<UpdatePlayersResponse>(HttpMethod.Post, Url(Endpoints.GameRoomUpdates, $"&player_token={playerToken}"), request, ct);
@@ -270,6 +270,10 @@ namespace michitai
         public Task<MatchmakingStartResponse> StartGameFromMatchmakingAsync(string playerToken, CancellationToken ct = default)
             => Send<MatchmakingStartResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingStart, $"&player_token={playerToken}"), null, ct);
     }
+
+    public enum RoomActionStatus { Pending, Processing, Completed, Failed, Read }
+
+    public enum RoomCompleteActionStatus { Processing, Completed, Failed }
 
     public enum MatchmakingRequestAction { Approve, Reject }
 
@@ -530,9 +534,52 @@ namespace michitai
     }
 
     [System.Serializable]
+    public class ActionComplete
+    {
+        private RoomCompleteActionStatus _status;
+        private object _response_data;
+
+
+
+        public RoomCompleteActionStatus Status 
+        {
+            get
+            {
+                return _status;
+            }
+
+            private set
+            {
+                _status = value;
+            }
+        }
+
+        public object ResponseData
+        {
+            get
+            {
+                return _response_data;
+            }
+
+            private set
+            {
+                _response_data = value;
+            }
+        }
+
+
+
+        public ActionComplete(RoomCompleteActionStatus status, object response_data)
+        {
+            Status = status;
+            ResponseData = response_data;
+        }
+    }
+
+    [System.Serializable]
     public class ActionCompleteRequest
     {
-        public string status = "completed";
+        public string status = RoomCompleteActionStatus.Completed.ToString().ToLower();
         public object response_data;
     }
 
