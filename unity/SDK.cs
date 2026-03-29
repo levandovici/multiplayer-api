@@ -184,9 +184,9 @@ namespace michitai
             => Send<ServerTimeWithOffsetResponse>(HttpMethod.Get, Url(Endpoints.Time, $"&utc={utcOffset:+#;-#}"), null, ct);
 
         // ==================== GAME ROOMS ====================
-        public Task<RoomCreateResponse> CreateRoomAsync(string playerToken, string roomName, string password = null, int maxPlayers = 4, CancellationToken ct = default)
+        public Task<RoomCreateResponse> CreateRoomAsync(string playerToken, string roomName, string password = null, int maxPlayers = 4, string rulesJson = null, CancellationToken ct = default)
             => Send<RoomCreateResponse>(HttpMethod.Post, Url(Endpoints.GameRoomCreate, $"&player_token={playerToken}"),
-                new RoomCreateRequest { room_name = roomName, password = password, max_players = maxPlayers }, ct);
+                new RoomCreateRequest { room_name = roomName, password = password, max_players = maxPlayers, rules_json = rulesJson }, ct);
 
         public Task<RoomListResponse> GetRoomsAsync(CancellationToken ct = default)
             => Send<RoomListResponse>(HttpMethod.Get, Url(Endpoints.GameRoomList), null, ct);
@@ -426,6 +426,7 @@ namespace michitai
         public string room_name;
         public string password;
         public int max_players;
+        public string rules_json;   // Unity mode
     }
 
     [System.Serializable]
@@ -450,6 +451,7 @@ namespace michitai
         public int max_players;
         public int current_players;
         public int has_password;
+        public string rules_json;   // Unity mode
     }
 
     [System.Serializable]
@@ -680,6 +682,7 @@ namespace michitai
         public int current_players;
         public bool has_password;
         public bool is_active;
+        public string rules_json;   // Unity mode
         public string player_name;
         public string joined_at;
         public string last_heartbeat;

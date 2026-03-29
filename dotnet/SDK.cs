@@ -198,9 +198,9 @@ namespace michitai
             => Send<ServerTimeWithOffsetResponse>(HttpMethod.Get, Url(Endpoints.Time, $"&utc={utcOffset:+#;-#}"), null, ct);
 
         // ==================== GAME ROOMS ====================
-        public Task<RoomCreateResponse> CreateRoomAsync(string playerToken, string roomName, string? password = null, int maxPlayers = 4, CancellationToken ct = default)
+        public Task<RoomCreateResponse> CreateRoomAsync(string playerToken, string roomName, string? password = null, int maxPlayers = 4, object? rules = null, CancellationToken ct = default)
             => Send<RoomCreateResponse>(HttpMethod.Post, Url(Endpoints.GameRoomCreate, $"&player_token={playerToken}"),
-                new RoomCreateRequest { Room_name = roomName, Password = password, Max_players = maxPlayers }, ct);
+                new RoomCreateRequest { Room_name = roomName, Password = password, Max_players = maxPlayers, Rules = rules }, ct);
 
         public Task<RoomListResponse> GetRoomsAsync(CancellationToken ct = default)
             => Send<RoomListResponse>(HttpMethod.Get, Url(Endpoints.GameRoomList), null, ct);
@@ -426,6 +426,7 @@ namespace michitai
         public string Room_name { get; set; } = string.Empty;
         public string? Password { get; set; }
         public int Max_players { get; set; }
+        public object? Rules { get; set; }
     }
 
     public class RoomCreateResponse : ApiResponse
@@ -442,6 +443,7 @@ namespace michitai
         public int Max_players { get; set; }
         public int Current_players { get; set; }
         public int Has_password { get; set; }
+        public string? Rules { get; set; }
     }
 
     public class RoomListResponse : ApiResponse
@@ -621,6 +623,7 @@ namespace michitai
         public int Current_players { get; set; }
         public bool Has_password { get; set; }
         public bool Is_active { get; set; }
+        public string? Rules { get; set; }
         public string Player_name { get; set; } = string.Empty;
         public string Joined_at { get; set; } = string.Empty;
         public string Last_heartbeat { get; set; } = string.Empty;
