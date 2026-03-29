@@ -327,7 +327,7 @@ public class Game : MonoBehaviour
         foreach (var p in players.Values)
         {
             await SafeExecute(async () =>
-                await sdk.SubmitActionAsync(p.Token, "player_ready", new { ready = true }),
+                await sdk.SubmitActionAsync(p.Token, "player_ready", new ActionData { ready = true }),
                 $"SubmitAction {p.Name}");
         }
 
@@ -412,5 +412,13 @@ public class Game : MonoBehaviour
     {
         public string mode;
         public string map;
+    }
+
+    // ====================== ROOM DATA ========================
+
+    [System.Serializable]
+    private class ActionData
+    {
+        public bool ready;
     }
 }

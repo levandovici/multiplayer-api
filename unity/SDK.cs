@@ -204,9 +204,9 @@ namespace michitai
         public Task<HeartbeatResponse> SendRoomHeartbeatAsync(string playerToken, CancellationToken ct = default)
             => Send<HeartbeatResponse>(HttpMethod.Post, Url(Endpoints.GameRoomHeartbeat, $"&player_token={playerToken}"), null, ct);
 
-        public Task<ActionSubmitResponse> SubmitActionAsync(string playerToken, string actionType, object requestData, CancellationToken ct = default)
+        public Task<ActionSubmitResponse> SubmitActionAsync(string playerToken, string actionType, object requestData = null, CancellationToken ct = default)
             => Send<ActionSubmitResponse>(HttpMethod.Post, Url(Endpoints.GameRoomActions, $"&player_token={playerToken}"),
-                new { action_type = actionType, request_data = requestData }, ct);
+                new ActionSubmitRequest { action_type = actionType, request_data = requestData }, ct);
 
         public Task<ActionPollResponse> PollActionsAsync(string playerToken, CancellationToken ct = default)
             => Send<ActionPollResponse>(HttpMethod.Get, Url(Endpoints.GameRoomActionsPoll, $"&player_token={playerToken}"), null, ct);
@@ -492,6 +492,13 @@ namespace michitai
     public class HeartbeatResponse : ApiResponse
     {
         public string status;
+    }
+
+    [System.Serializable]
+    public class ActionSubmitRequest
+    {
+        public string action_type;
+        public object request_data;
     }
 
     [System.Serializable]
