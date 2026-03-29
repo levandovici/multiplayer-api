@@ -503,6 +503,30 @@ namespace michitai
         public string Action_type { get; set; } = string.Empty;
         public object? Response_data { get; set; }
         public string Status { get; set; } = string.Empty;
+
+
+
+        public RoomActionStatus GetStatus 
+        {
+            get
+            {
+                switch(Status)
+                {
+                    case "pending":
+                        return RoomActionStatus.Pending;
+                    case "processing":
+                        return RoomActionStatus.Processing;
+                    case "completed":
+                        return RoomActionStatus.Completed;
+                    case "failed":
+                        return RoomActionStatus.Failed;
+                    case "read":
+                        return RoomActionStatus.Read;
+                    default:
+                        throw new ArgumentException($"Unknown action status: {Status}");
+                }
+            }
+        }        
     }
 
     public class ActionPollResponse : ApiResponse

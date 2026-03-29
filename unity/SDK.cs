@@ -521,6 +521,30 @@ namespace michitai
         public string action_type;
         public string response_data_json;   // Unity mode
         public string status;
+
+
+
+        public RoomActionStatus GetStatus
+        {
+            get 
+            {
+                switch(status)
+                {
+                    case "pending":
+                        return RoomActionStatus.Pending;
+                    case "processing":
+                        return RoomActionStatus.Processing;
+                    case "completed":
+                        return RoomActionStatus.Completed;
+                    case "failed":
+                        return RoomActionStatus.Failed;
+                    case "read":
+                        return RoomActionStatus.Read;
+                    default:
+                        throw new System.ArgumentException($"Unknown action status: {status}");
+                }
+            }
+        }
     }
 
     [System.Serializable]
