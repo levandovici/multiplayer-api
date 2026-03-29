@@ -193,7 +193,7 @@ namespace michitai
 
         public Task<RoomJoinResponse> JoinRoomAsync(string playerToken, string roomId, string password = null, CancellationToken ct = default)
             => Send<RoomJoinResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomJoin, roomId), $"&player_token={playerToken}"),
-                password != null ? new { password } : null, ct);
+                password != null ? new RoomJoinRequest { password = password } : null, ct);
 
         public Task<RoomLeaveResponse> LeaveRoomAsync(string playerToken, CancellationToken ct = default)
             => Send<RoomLeaveResponse>(HttpMethod.Post, Url(Endpoints.GameRoomLeave, $"&player_token={playerToken}"), null, ct);
@@ -446,6 +446,12 @@ namespace michitai
         public int max_players;
         public int current_players;
         public int has_password;
+    }
+
+    [System.Serializable]
+    public class RoomJoinRequest
+    {
+        public string password;
     }
 
     [System.Serializable]

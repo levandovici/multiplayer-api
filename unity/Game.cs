@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using michitai;
 using UnityEngine;
+using michitai;
 
 public class Game : MonoBehaviour
 {
