@@ -200,7 +200,7 @@ namespace michitai
         // ==================== GAME ROOMS ====================
         public Task<RoomCreateResponse> CreateRoomAsync(string playerToken, string roomName, string? password = null, int maxPlayers = 4, CancellationToken ct = default)
             => Send<RoomCreateResponse>(HttpMethod.Post, Url(Endpoints.GameRoomCreate, $"&player_token={playerToken}"),
-                new { room_name = roomName, password, max_players = maxPlayers }, ct);
+                new RoomCreateRequest { Room_name = roomName, Password = password, Max_players = maxPlayers }, ct);
 
         public Task<RoomListResponse> GetRoomsAsync(CancellationToken ct = default)
             => Send<RoomListResponse>(HttpMethod.Get, Url(Endpoints.GameRoomList), null, ct);
@@ -414,6 +414,13 @@ namespace michitai
         public string Offset_string { get; set; } = string.Empty;
         public string Original_utc { get; set; } = string.Empty;
         public long Original_timestamp { get; set; }
+    }
+
+    public class RoomCreateRequest
+    {
+        public string Room_name { get; set; } = string.Empty;
+        public string? Password { get; set; }
+        public int Max_players { get; set; }
     }
 
     public class RoomCreateResponse : ApiResponse
