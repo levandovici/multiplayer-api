@@ -145,6 +145,8 @@ function formatForUnity($data) {
 // ====================== ENDPOINTS ======================
 
 function createRoom() {
+    global $isUnity;
+    
     $context = getAuthContext();
     $player = requirePlayer($context);
 
