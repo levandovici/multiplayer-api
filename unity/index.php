@@ -184,52 +184,6 @@ $site_twitter = "@michitai";
                         and proper serialization for mobile builds.
                     </p>
                     
-                    <!-- Feature Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-cube text-purple-400 mr-2"></i>
-                                <h5 class="text-white font-medium">JsonUtility Ready</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Full compatibility with Unity's JsonUtility serialization system</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-clock text-blue-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Coroutine Based</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Uses Unity coroutines for async operations and game loops</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-gamepad text-green-400 mr-2"></i>
-                                <h5 class="text-white font-medium">IL2CPP Safe</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Arrays instead of Lists, no reflection for mobile builds</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-users text-orange-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Multiplayer Ready</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Complete player management and matchmaking system</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-door-open text-cyan-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Game Rooms</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Real-time room management with actions and updates</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-trophy text-yellow-400 mr-2"></i>
-                                <h5 class="text-white font-medium">Leaderboards</h5>
-                            </div>
-                            <p class="text-white/60 text-sm">Competitive rankings and player statistics</p>
-                        </div>
-                    </div>
-                    
                     <!-- Download Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-6">
                         <button id="downloadUnitySdk" class="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
@@ -253,144 +207,6 @@ $site_twitter = "@michitai";
                                 <div class="text-xs opacity-80">Full Repository</div>
                             </div>
                         </a>
-                    </div>
-                    
-                    <!-- Installation Guide -->
-                    <div class="bg-blue-900/20 rounded-lg border border-blue-800/50 p-6">
-                        <h5 class="text-blue-300 font-bold mb-6 flex items-center">
-                            <i class="fas fa-rocket mr-2"></i> Quick Installation Guide
-                        </h5>
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <!-- Step 1 -->
-                            <div class="bg-blue-800/20 p-4 rounded-lg border border-blue-700/50">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">1</div>
-                                    <h6 class="text-blue-200 font-bold">Download & Add SDK</h6>
-                                </div>
-                                <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
-                                    <li>Click "Download Unity SDK" button</li>
-                                    <li>Save <code class="bg-blue-900/50 px-1 py-0.5 rounded">SDK.cs</code></li>
-                                    <li>In Unity: Assets → Import New Asset</li>
-                                    <li>Select the downloaded SDK file</li>
-                                    <li>Verify file appears in Project window</li>
-                                </ol>
-                                <div class="mt-3 p-2 bg-blue-900/30 rounded border border-blue-700/50">
-                                    <p class="text-blue-200 text-xs"><i class="fas fa-lightbulb mr-1"></i> Tip: Create a "Scripts" folder to organize your files</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Step 2 -->
-                            <div class="bg-blue-800/20 p-4 rounded-lg border border-blue-700/50">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">2</div>
-                                    <h6 class="text-blue-200 font-bold">Setup SDK Component</h6>
-                                </div>
-                                <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
-                                    <li>Create empty GameObject (GameObject → Create Empty)</li>
-                                    <li>Name it "MultiplayerManager" or similar</li>
-                                    <li>Select the GameObject in Hierarchy</li>
-                                    <li>Click "Add Component" in Inspector</li>
-                                    <li>Search and add "SDK" component</li>
-                                </ol>
-                                <div class="mt-3 p-2 bg-blue-900/30 rounded border border-blue-700/50">
-                                    <p class="text-blue-200 text-xs"><i class="fas fa-lightbulb mr-1"></i> Tip: Place this GameObject in your main scene for persistence</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Step 3 -->
-                            <div class="bg-blue-800/20 p-4 rounded-lg border border-blue-700/50">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">3</div>
-                                    <h6 class="text-blue-200 font-bold">Configure & Initialize</h6>
-                                </div>
-                                <ol class="text-blue-100/80 text-sm space-y-2 list-decimal list-inside">
-                                    <li>Get your API token from dashboard</li>
-                                    <li>Set token in SDK Inspector field (Api Token)</li>
-                                    <li>Get your private API token for player operations</li>
-                                    <li>Set private token in SDK Inspector field (Private Api Token)</li>
-                                    <li>Create new C# script for game logic</li>
-                                    <li>Download example code for reference</li>
-                                    <li>Replace <code class="bg-blue-900/50 px-1.5 py-0.5 rounded">YOUR_API_TOKEN</code> and <code class="bg-blue-900/50 px-1.5 py-0.5 rounded">YOUR_PRIVATE_API_TOKEN</code> with actual tokens</li>
-                                </ol>
-                                <div class="mt-3 p-2 bg-blue-900/30 rounded border border-blue-700/50">
-                                    <p class="text-blue-200 text-xs"><i class="fas fa-lightbulb mr-1"></i> Tip: Store API token in ScriptableObject for production</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Additional Setup Steps -->
-                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-green-900/20 p-4 rounded-lg border border-green-700/50">
-                                <h6 class="text-green-300 font-bold mb-3 flex items-center">
-                                    <i class="fas fa-play-circle mr-2"></i> Testing Your Setup
-                                </h6>
-                                <ol class="text-green-100/80 text-sm space-y-2 list-decimal list-inside">
-                                    <li>Attach your game script to a GameObject</li>
-                                    <li>Add reference to SDK component</li>
-                                    <li>Press Play in Unity Editor</li>
-                                    <li>Check Console for SDK initialization</li>
-                                    <li>Verify API calls work (test with RegisterPlayer)</li>
-                                </ol>
-                            </div>
-                            
-                            <div class="bg-purple-900/20 p-4 rounded-lg border border-purple-700/50">
-                                <h6 class="text-purple-300 font-bold mb-3 flex items-center">
-                                    <i class="fas fa-cogs mr-2"></i> Production Checklist
-                                </h6>
-                                <ul class="text-purple-100/80 text-sm space-y-2 list-disc list-inside">
-                                    <li>Secure API token (don't hardcode in builds)</li>
-                                    <li>Enable IL2CPP for mobile builds</li>
-                                    <li>Test on target platforms</li>
-                                    <li>Handle network errors gracefully</li>
-                                    <li>Implement proper authentication flow</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <!-- Common Issues -->
-                        <div class="mt-6 p-4 bg-yellow-900/20 rounded-lg border border-yellow-700/50">
-                            <h6 class="text-yellow-300 font-bold mb-2 flex items-center">
-                                <i class="fas fa-exclamation-triangle mr-2"></i> Common Issues & Solutions
-                            </h6>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                <div>
-                                    <p class="text-yellow-200 font-medium mb-1">Compilation Errors:</p>
-                                    <p class="text-yellow-100/80">Ensure .NET Framework compatibility in Player Settings</p>
-                                </div>
-                                <div>
-                                    <p class="text-yellow-200 font-medium mb-1">API Timeouts:</p>
-                                    <p class="text-yellow-100/80">Check internet connection and API token validity</p>
-                                </div>
-                                <div>
-                                    <p class="text-yellow-200 font-medium mb-1">JsonUtility Issues:</p>
-                                    <p class="text-yellow-100/80">Use [Serializable] classes and proper field names</p>
-                                </div>
-                                <div>
-                                    <p class="text-yellow-200 font-medium mb-1">Coroutine Problems:</p>
-                                    <p class="text-yellow-100/80">Start coroutines from MonoBehaviour instances</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Stats -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-purple-400">50+</div>
-                            <div class="text-white/60 text-sm">API Methods</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-blue-400">25+</div>
-                            <div class="text-white/60 text-sm">Response Classes</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-green-400">100%</div>
-                            <div class="text-white/60 text-sm">JsonUtility Compatible</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-orange-400">IL2CPP</div>
-                            <div class="text-white/60 text-sm">Mobile Safe</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -421,7 +237,6 @@ $site_twitter = "@michitai";
                             <a href="#room-updates" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Updates</a>
                             <a href="#matchmaking" class="block text-white/70 hover:text-white py-1 text-sm transition">Matchmaking</a>
                             <a href="#leaderboard" class="block text-white/70 hover:text-white py-1 text-sm transition">Leaderboard</a>
-                            <a href="#http-communication" class="block text-white/70 hover:text-white py-1 text-sm transition">HTTP Communication</a>
                             <a href="#utility-methods" class="block text-white/70 hover:text-white py-1 text-sm transition">Utility Methods</a>
                         </nav>
                     </div>
@@ -453,14 +268,6 @@ $site_twitter = "@michitai";
                                 <div class="border-l-4 border-purple-500 pl-4">
                                     <h4 class="text-white font-medium">void SetGamePlayerToken(string token)</h4>
                                     <p class="text-white/70 text-sm">Sets the player authentication token for player-specific operations</p>
-                                </div>
-                                <div class="border-l-4 border-purple-500 pl-4">
-                                    <h4 class="text-white font-medium">string SerializeToJson&lt;T&gt;(T obj)</h4>
-                                    <p class="text-white/70 text-sm">Serializes object to JSON using Unity's JsonUtility</p>
-                                </div>
-                                <div class="border-l-4 border-purple-500 pl-4">
-                                    <h4 class="text-white font-medium">T DeserializeFromJson&lt;T&gt;(string json)</h4>
-                                    <p class="text-white/70 text-sm">Deserializes JSON to object using Unity's JsonUtility</p>
                                 </div>
                             </div>
                         </div>
@@ -770,29 +577,6 @@ $site_twitter = "@michitai";
                         </div>
                     </div>
 
-                    <!-- HTTP Communication Section -->
-                    <div id="http-communication" class="glass-effect rounded-2xl overflow-hidden">
-                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 p-6">
-                            <h2 class="text-2xl font-bold text-white">HTTP Communication</h2>
-                            <p class="text-white/80">Internal HTTP request handling methods</p>
-                        </div>
-                        <div class="p-6">
-                            <div class="space-y-6">
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">SendRequest&lt;T&gt;</h3>
-                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>private void SendRequest&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Internal method for sending HTTP requests with authentication and error handling.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">SendRequestCoroutine&lt;T&gt;</h3>
-                                    <pre class="bg-black/30 text-gray-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>private IEnumerator SendRequestCoroutine&lt;T&gt;(string url, string method, string bodyJson, Action&lt;T&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Internal coroutine for async HTTP requests with comprehensive error handling.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Utility Methods Section -->
                     <div id="utility-methods" class="glass-effect rounded-2xl overflow-hidden">
                         <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6">
@@ -811,18 +595,6 @@ $site_twitter = "@michitai";
                                     <h3 class="text-white font-semibold mb-2">SetGamePlayerToken</h3>
                                     <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public void SetGamePlayerToken(string token)</code></pre>
                                     <p class="text-white/70 mt-2">Sets the player authentication token. Required for player-specific operations.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">SerializeToJson&lt;T&gt;</h3>
-                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public string SerializeToJson&lt;T&gt;(T obj)</code></pre>
-                                    <p class="text-white/70 mt-2">Serializes object to JSON using Unity's JsonUtility. Ensures Unity compatibility.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">DeserializeFromJson&lt;T&gt;</h3>
-                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public T DeserializeFromJson&lt;T&gt;(string json)</code></pre>
-                                    <p class="text-white/70 mt-2">Deserializes JSON to object using Unity's JsonUtility. For parsing API responses.</p>
                                 </div>
                             </div>
                         </div>
