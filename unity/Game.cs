@@ -259,7 +259,7 @@ public class Game : MonoBehaviour
             maxPlayers: 4,
             strictFull: false,
             joinByRequests: joinByRequests,
-            rules: JsonUtility.ToJson(rules)
+            rulesJson: JsonUtility.ToJson(rules)
         );
 
         Debug.Log($"[MATCHMAKING] Lobby created (requests mode: {joinByRequests})");

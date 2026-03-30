@@ -235,9 +235,9 @@ namespace michitai
             => Send<MatchmakingListResponse>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
         public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync(string playerToken, int maxPlayers = 4, bool strictFull = false,
-            bool joinByRequests = false, string rules = "", CancellationToken ct = default)
+            bool joinByRequests = false, string rulesJson = null, CancellationToken ct = default)
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new MatchmakingCreateRequest { max_players = maxPlayers, strict_full = strictFull, join_by_requests = joinByRequests, rules_json = rules }, ct);
+                new MatchmakingCreateRequest { max_players = maxPlayers, strict_full = strictFull, join_by_requests = joinByRequests, rules_json = rulesJson }, ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -625,15 +625,15 @@ namespace michitai
     [System.Serializable]
     public class UpdatePlayersRequest
     {
-        public object targetPlayerIds;   // "all" or string[]
+        public object target_player_ids;   // "all" or string[]
         public string type;
-        public string dataJson;          // must be a JSON string for Unity
+        public string data_json;          // must be a JSON string for Unity
 
         public UpdatePlayersRequest(object targetPlayerIds, string type, string dataJson)
         {
-            this.targetPlayerIds = targetPlayerIds;
+            this.target_player_ids = targetPlayerIds;
             this.type = type;
-            this.dataJson = dataJson;
+            this.data_json = dataJson;
         }
     }
 

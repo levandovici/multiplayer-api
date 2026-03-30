@@ -90,7 +90,7 @@ public object Response_data;
 Replace with:
 
 ```csharp
-public string data_json;
+public string data;
 ```
 
 ---
@@ -363,7 +363,7 @@ You must change these:
 * Dictionary<string, object> Player_data 
 * object Response_data 
 * object Request_data 
-* object DataJson 
+* object Data
 * object Rules 
 * all { get; set; } 
 * all interface responses

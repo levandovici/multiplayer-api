@@ -579,15 +579,15 @@ namespace michitai
 
     public class UpdatePlayersRequest
     {
-        public object? TargetPlayerIds { get; set; }   // "all" or string[]
+        public object? Target_player_ids { get; set; }   // "all" or string[]
         public string Type { get; set; } = string.Empty;
-        public object DataJson { get; set; } = new();
+        public object Data { get; set; } = new();
 
-        public UpdatePlayersRequest(object targetPlayerIds, string type, object dataJson)
+        public UpdatePlayersRequest(object targetPlayerIds, string type, object data)
         {
-            TargetPlayerIds = targetPlayerIds;
+            Target_player_ids = targetPlayerIds;
             Type = type;
-            DataJson = dataJson;
+            Data = data;
         }
     }
 
@@ -603,7 +603,7 @@ namespace michitai
         public string Update_id { get; set; } = string.Empty;
         public string From_player_id { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
-        public object Data_json { get; set; } = new();
+        public object Data { get; set; } = new();
         public string Created_at { get; set; } = string.Empty;
     }
 

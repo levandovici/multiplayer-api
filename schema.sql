@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS player_updates (
     from_player_id VARCHAR(36) NOT NULL,
     target_player_id VARCHAR(36) NOT NULL,
     type VARCHAR(50) NOT NULL COMMENT 'play_animation, spawn_effect, sync_state, etc.',
-    data_json JSON NOT NULL,
+    data JSON NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     delivered_at TIMESTAMP NULL COMMENT 'When the update was delivered to the target player',
     status ENUM('pending', 'delivered', 'read') DEFAULT 'pending',

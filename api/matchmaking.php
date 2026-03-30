@@ -162,10 +162,12 @@ function formatForUnity($data) {
     if (isset($data['rules'])) {
         if (is_string($data['rules']) && !empty($data['rules'])) {
             $decoded = json_decode($data['rules'], true);
-            $data['rules'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $data['rules_json'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         } else {
-            $data['rules'] = '{}';
+            $data['rules_json'] = '{}';
         }
+
+        unset($data['rules']);
     }
 
     // Handle nested in 'matchmaking' key (used in getCurrentMatchmakingStatus)
@@ -173,10 +175,12 @@ function formatForUnity($data) {
         if (isset($data['matchmaking']['rules'])) {
             if (is_string($data['matchmaking']['rules']) && !empty($data['matchmaking']['rules'])) {
                 $decoded = json_decode($data['matchmaking']['rules'], true);
-                $data['matchmaking']['rules'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                $data['matchmaking']['rules_json'] = json_encode($decoded ?: new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             } else {
-                $data['matchmaking']['rules'] = '{}';
+                $data['matchmaking']['rules_json'] = '{}';
             }
+            
+            unset($data['matchmaking']['rules']);
         }
     }
 
@@ -222,6 +226,8 @@ function listMatchmaking() {
 }
 
 function createMatchmaking() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -246,7 +252,22 @@ function createMatchmaking() {
     $maxPlayers = max(2, min(16, (int)$data['max_players']));
     $strictFull = !empty($data['strict_full']);
     $joinByRequests = !empty($data['join_by_requests']);
-    $rules = isset($data['rules']) ? json_encode($data['rules'], JSON_UNESCAPED_UNICODE) : null;
+
+    if($isUnity)
+    {
+        $rules = $data['rules_json'] ?? null;
+    }
+    else
+    {
+        $rules = $data['rules'] ?? null;
+    }
+
+    // Normalize rules to JSON string
+    if (is_string($rules)) {
+        $rulesJson = $rules !== '' ? $rules : '{}';
+    } else {
+        $rulesJson = isset($rules) ? json_encode($rules, JSON_UNESCAPED_UNICODE) : '{}';
+    }
 
     $matchmakingId = bin2hex(random_bytes(16));
 
@@ -259,7 +280,7 @@ function createMatchmaking() {
             (matchmaking_id, game_id, host_player_id, max_players, strict_full, join_by_requests, rules)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $rules]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $rulesJson]);
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 

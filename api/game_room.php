@@ -121,7 +121,7 @@ function formatForUnity($data) {
 
     $result = [];
     foreach ($data as $key => $value) {
-        if (in_array($key, ['request_data', 'response_data', 'player_data', 'rules'])) {
+        if (in_array($key, ['request_data', 'response_data', 'player_data', 'rules', 'data'])) {
             $jsonKey = $key . '_json';
             if (is_string($value)) {
                 $decoded = json_decode($value, true);
@@ -131,9 +131,6 @@ function formatForUnity($data) {
             } else {
                 $result[$jsonKey] = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             }
-        } elseif ($key === 'data_json') {
-            // Keep as data_json but ensure it's always a string
-            $result[$key] = is_string($value) ? $value : json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         } else {
             // Recurse into nested structures
             $result[$key] = (is_array($value) || is_object($value)) ? formatForUnity($value) : $value;
@@ -190,8 +187,7 @@ function createRoom() {
     if (is_string($rules)) {
         $rulesJson = $rules !== '' ? $rules : '{}';
     } else {
-        $rulesArray = is_array($rules) ? $rules : [];
-        $rulesJson = json_encode($rulesArray, JSON_UNESCAPED_UNICODE);
+        $rulesJson = isset($rules) ? json_encode($rules, JSON_UNESCAPED_UNICODE) : '{}';
     }
 
     try {
@@ -590,6 +586,8 @@ function completeAction($actionId) {
 
 // ====================== FIXED: sendUpdates() ======================
 function sendUpdates() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -604,18 +602,29 @@ function sendUpdates() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['type']) || !isset($data['dataJson'])) {
-        sendResponse(['success' => false, 'error' => 'Missing required fields: type, dataJson'], 400);
+    if (empty($data['type'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: type'], 400);
     }
 
     $updateType = trim($data['type']);
-    $dataJson = is_string($data['dataJson']) ? $data['dataJson'] : json_encode($data['dataJson'], JSON_UNESCAPED_UNICODE);
 
-    if (json_decode($dataJson) === null && json_last_error() !== JSON_ERROR_NONE) {
-        sendResponse(['success' => false, 'error' => 'Invalid JSON in dataJson field'], 400);
+    if($isUnity)
+    {
+        $data = $data['data_json'] ?? null;
+    }
+    else
+    {
+        $data = $data['data'] ?? null;
     }
 
-    $targetPlayerIds = $data['targetPlayerIds'] ?? 'all';
+    // Normalize rules to JSON string
+    if (is_string($data)) {
+        $dataJson = $data !== '' ? $data : '{}';
+    } else {
+        $dataJson = isset($data) ? json_encode($data, JSON_UNESCAPED_UNICODE) : '{}';
+    }
+
+    $targetPlayerIds = $data['target_player_ids'] ?? 'all';
     $targets = [];
 
     global $pdo;
@@ -649,7 +658,7 @@ function sendUpdates() {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO player_updates 
-            (update_id, room_id, game_id, from_player_id, target_player_id, type, data_json)
+            (update_id, room_id, game_id, from_player_id, target_player_id, type, data)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
 
@@ -693,7 +702,7 @@ function pollUpdates() {
     }
 
     $stmt = $pdo->prepare("
-        SELECT update_id, from_player_id, type, data_json, created_at
+        SELECT update_id, from_player_id, type, data, created_at
         FROM player_updates $whereClause
         ORDER BY created_at ASC LIMIT 50
     ");
@@ -749,7 +758,7 @@ function getCurrentGameRoomStatus() {
     $pendingActions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $stmt = $pdo->prepare("
-        SELECT update_id, from_player_id, type, data_json, created_at, status
+        SELECT update_id, from_player_id, type, data, created_at, status
         FROM player_updates 
         WHERE target_player_id = ? AND status = 'pending'
         ORDER BY created_at DESC LIMIT 5

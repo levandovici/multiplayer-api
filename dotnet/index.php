@@ -656,7 +656,7 @@ $site_twitter = "@michitai";
     string gamePlayerToken,
     string targetPlayerIds,
     string type,
-    object dataJson
+    object data
 )</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Sends updates to specific players or all players in the room.</p>
                             </div>

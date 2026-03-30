@@ -1592,9 +1592,9 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "targetPlayerIds": "all",
+    "target_player_ids": "all",
     "type": "play_animation",
-    "dataJson": {
+    "data": {
       "animation": "victory",
       "duration": 2.0
     }
@@ -1618,9 +1618,9 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "targetPlayerIds": ["47"],
+    "target_player_ids": ["47"],
     "type": "spawn_effect",
-    "dataJson": {
+    "data": {
       "effect": "explosion",
       "position": {
         "x": 10,
@@ -1653,7 +1653,7 @@ $site_twitter = "@michitai";
       "update_id": "a28388775fcf9478c6926cbe44f9d3ed",
       "from_player_id": "48",
       "type": "play_animation",
-      "data_json": {
+      "data": {
         "animation": "victory",
         "duration": 2
       },
@@ -1663,7 +1663,7 @@ $site_twitter = "@michitai";
       "update_id": "f26cbcdab3939b968f148edf68a9fe54",
       "from_player_id": "48",
       "type": "play_animation",
-      "data_json": {
+      "data": {
         "animation": "victory",
         "duration": 2
       },
@@ -1673,7 +1673,7 @@ $site_twitter = "@michitai";
       "update_id": "374ad8d18f1a1fddf09a856d61787c5c",
       "from_player_id": "48",
       "type": "play_animation",
-      "data_json": {
+      "data": {
         "animation": "victory",
         "duration": 2
       },
@@ -1700,7 +1700,7 @@ $site_twitter = "@michitai";
       "update_id": "f26cbcdab3939b968f148edf68a9fe54",
       "from_player_id": "48",
       "type": "play_animation",
-      "data_json": {
+      "data": {
         "animation": "victory",
         "duration": 2
       },
