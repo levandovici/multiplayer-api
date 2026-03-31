@@ -581,9 +581,11 @@ function getPendingActions() {
         {
             $decoded = json_decode($action['request_data']);
 
-            $action['request_data'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+            $action['request_data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
                 ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
                 : '{}';
+
+            unset($action['request_data']);
         }
         else
         {
@@ -755,9 +757,11 @@ function pollUpdates() {
         {
             $decoded = json_decode($update['data']);
 
-            $update['data'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+            $update['data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
                 ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
                 : '{}';
+
+            unset($update['data']);
         }
         else
         {
