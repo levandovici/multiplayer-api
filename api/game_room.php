@@ -217,6 +217,8 @@ function createRoom() {
 }
 
 function listRooms() {
+    global $isUnity;
+
     getAuthContext();
 
     global $pdo;
@@ -235,6 +237,24 @@ function listRooms() {
         ");
 
         $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($rooms as &$room) {
+            if($isUnity)
+            {
+                $decoded = json_decode($room['rules']);
+
+                $room['rules'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                    ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                    : '{}';
+            }
+            else
+            {
+                $room['rules'] = (json_last_error() === JSON_ERROR_NONE)
+                    ? json_decode($room['rules'])
+                    : null;
+            }
+        }
+
         sendResponse(['success' => true, 'rooms' => $rooms]);
     } catch (Exception $e) {
         error_log("List rooms failed: " . $e->getMessage());
@@ -533,6 +553,8 @@ function pollActions() {
 }
 
 function getPendingActions() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -553,6 +575,23 @@ function getPendingActions() {
     ");
     $stmt->execute([$roomId]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($actions as &$action) {
+        if($isUnity)
+        {
+            $decoded = json_decode($action['request_data']);
+
+            $action['request_data'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                : '{}';
+        }
+        else
+        {
+            $action['request_data'] = (json_last_error() === JSON_ERROR_NONE)
+                ? json_decode($action['request_data'])
+                : null;
+        }
+    }
 
     sendResponse(['success' => true, 'actions' => $actions]);
 }
@@ -684,6 +723,8 @@ function sendUpdates() {
 }
 
 function pollUpdates() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -709,6 +750,23 @@ function pollUpdates() {
     $stmt->execute($params);
     $updates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    foreach ($updates as &$update) {
+        if($isUnity)
+        {
+            $decoded = json_decode($update['data']);
+
+            $update['data'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                : '{}';
+        }
+        else
+        {
+            $update['data'] = (json_last_error() === JSON_ERROR_NONE)
+                ? json_decode($update['data'])
+                : null;
+        }
+    }
+
     sendResponse([
         'success' => true,
         'updates' => $updates,
@@ -717,6 +775,8 @@ function pollUpdates() {
 }
 
 function getCurrentGameRoomStatus() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -746,6 +806,21 @@ function getCurrentGameRoomStatus() {
             'in_room' => false,
             'message' => 'Player is not in any game room'
         ]);
+    }
+
+    if($isUnity)
+    {
+        $decoded = json_decode($room['rules']);
+
+        $rules = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+            ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+            : '{}';
+    }
+    else
+    {
+        $rules = (json_last_error() === JSON_ERROR_NONE)
+            ? json_decode($room['rules'])
+            : null;
     }
 
     $stmt = $pdo->prepare("
@@ -778,7 +853,7 @@ function getCurrentGameRoomStatus() {
             'current_players'    => (int)$room['current_players'],
             'has_password'       => (bool)$room['has_password'],
             'is_active'          => (bool)$room['is_active'],
-            'rules'              => $room['rules'],
+            'rules'              => $rules,
             'player_name'        => $room['player_name'],
             'joined_at'          => $room['joined_at'],
             'last_heartbeat'     => $room['last_heartbeat'],

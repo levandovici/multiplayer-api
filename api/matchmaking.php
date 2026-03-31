@@ -578,6 +578,8 @@ function removeMatchmaking() {
 }
 
 function getCurrentMatchmakingStatus() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -633,6 +635,21 @@ function getCurrentMatchmakingStatus() {
             $pendingRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        if($isUnity)
+        {
+            $decoded = json_decode($matchmaking['rules']);
+
+            $rules = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                : '{}';
+        }
+        else
+        {
+            $rules = (json_last_error() === JSON_ERROR_NONE)
+                ? json_decode($matchmaking['rules'])
+                : null;
+        }
+
         $responseData = [
             'success' => true,
             'in_matchmaking' => true,
@@ -643,7 +660,7 @@ function getCurrentMatchmakingStatus() {
                 'current_players' => (int)$matchmaking['current_players'],
                 'strict_full' => (bool)$matchmaking['strict_full'],
                 'join_by_requests' => (bool)$matchmaking['join_by_requests'],
-                'rules' => $matchmaking['rules'],   // raw from DB
+                'rules' => $rules,
                 'joined_at' => $matchmaking['joined_at'],
                 'player_status' => $matchmaking['player_status'],
                 'last_heartbeat' => $matchmaking['last_heartbeat'],
