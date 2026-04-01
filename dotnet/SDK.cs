@@ -232,15 +232,16 @@ namespace michitai
         public Task<ActionPendingResponse<T>> GetPendingActionsAsync<T>(string playerToken, CancellationToken ct = default) where T : class, new()
             => Send<ActionPendingResponse<T>>(HttpMethod.Get, Url(Endpoints.GameRoomActionsPending, $"&player_token={playerToken}"), null, ct);
 
-        public Task<ActionCompleteResponse> CompleteActionAsync<T>(string actionId, string playerToken, 
+        public Task<ActionCompleteResponse> CompleteActionAsync<T>(string actionId, string playerToken,
             ActionComplete<T> request, CancellationToken ct = default) where T : class, new()
             => Send<ActionCompleteResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomActionComplete, actionId),
-                $"&player_token={playerToken}"),  new ActionCompleteRequest<T>(request.Status, request.Response_data), ct);
+                $"&player_token={playerToken}"), new ActionCompleteRequest<T>(request.Status, request.Response_data), ct);
 
-        public Task<UpdatePlayersResponse> UpdatePlayersAsync<T>(string playerToken, UpdatePlayersRequest<T> request, CancellationToken ct = default) where T : class, new()
-            => Send<UpdatePlayersResponse>(HttpMethod.Post, Url(Endpoints.GameRoomUpdates, $"&player_token={playerToken}"), request, ct);
+        public Task<UpdatePlayersResponse> UpdatePlayersAsync<T>(string playerToken, UpdatePlayers<T> request, CancellationToken ct = default) where T : class, new()
+            => Send<UpdatePlayersResponse>(HttpMethod.Post, Url(Endpoints.GameRoomUpdates, $"&player_token={playerToken}"), 
+                new UpdatePlayersRequest<T>(request.Target_players, request.Type, request.Data, request.Target_players_ids), ct);
 
-        public Task<PollUpdatesResponse<T>> PollUpdatesAsync<T>(string playerToken, 
+        public Task<PollUpdatesResponse<T>> PollUpdatesAsync<T>(string playerToken,
             string? lastUpdateId = null, CancellationToken ct = default) where T : class, new()
         {
             string extra = $"&player_token={playerToken}";
@@ -296,6 +297,8 @@ namespace michitai
 
     public enum RoomCompleteActionStatus { Processing, Completed, Failed }
 
+    public enum RoomTargetPlayers { All, Others, Specific }
+
     public enum MatchmakingRequestAction { Approve, Reject }
 
     // ====================== ALL PARAMETERS CLASSES ====================
@@ -312,6 +315,28 @@ namespace michitai
         {
             Status = status;
             Response_data = responseData;
+        }
+    }
+
+    public class UpdatePlayers<T> where T : class, new()
+    {
+        [JsonInclude]
+        public RoomTargetPlayers Target_players { get; private set; } = RoomTargetPlayers.All;
+        [JsonInclude]
+        public int[]? Target_players_ids { get; private set; }
+        [JsonInclude]
+        public string Type { get; private set; } = string.Empty;
+        [JsonInclude]
+        public T? Data { get; private set; } = new();
+
+
+
+        public UpdatePlayers(RoomTargetPlayers targetPlayers, string type, T? data = null, int[]? targetPlayersIds = null)
+        {
+            Target_players = targetPlayers;
+            Target_players_ids = targetPlayersIds;
+            Type = type;
+            Data = data;
         }
     }
 
@@ -404,17 +429,20 @@ namespace michitai
     public class UpdatePlayersRequest<T> where T : class, new()
     {
         [JsonInclude]
-        private object? Target_player_ids { get; set; }   // "all" or string[]
+        private string Target_players { get; set; } = RoomTargetPlayers.All.ToString().ToLower();
+        [JsonInclude]
+        private int[]? Target_players_ids { get; set; }
         [JsonInclude]
         private string Type { get; set; } = string.Empty;
         [JsonInclude]
-        private T Data { get; set; } = new();
+        private T? Data { get; set; } = new();
 
 
 
-        public UpdatePlayersRequest(object targetPlayerIds, string type, T data)
+        public UpdatePlayersRequest(RoomTargetPlayers targetPlayers, string type, T? data = null, int[]? targetPlayersIds = null)
         {
-            Target_player_ids = targetPlayerIds;
+            Target_players = targetPlayers.ToString().ToLower();
+            Target_players_ids = targetPlayersIds;
             Type = type;
             Data = data;
         }
@@ -737,7 +765,7 @@ namespace michitai
     {
         public int Updates_sent { get; set; }
         public List<string> Update_ids { get; set; } = new();
-        public List<string> Target_players { get; set; } = new();
+        public List<int> Target_players_ids { get; set; } = new();
     }
 
     public class PlayerUpdate<T> where T : class, new()

@@ -643,11 +643,25 @@ function sendUpdates() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['type'])) {
+    if (!isset($data['target_players']) || empty($data['target_players'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: target_players'], 400);
+    }
+
+    $targetPlayers = $data['target_players'];
+
+    if (!isset($data['type']) || empty($data['type'])) {
         sendResponse(['success' => false, 'error' => 'Missing required field: type'], 400);
     }
 
     $updateType = trim($data['type']);
+
+    if ($targetPlayers === 'specific') {
+        if(!isset($data['target_players_ids']) || empty($data['target_players_ids'])) {
+            sendResponse(['success' => false, 'error' => 'Missing required field: target_players_ids'], 400);
+        }
+
+        $targetPlayersIds = $data['target_players_ids'];
+    } 
 
     if($isUnity)
     {
@@ -665,12 +679,19 @@ function sendUpdates() {
         $dataJson = isset($data) ? json_encode($data, JSON_UNESCAPED_UNICODE) : '{}';
     }
 
-    $targetPlayerIds = $data['target_player_ids'] ?? 'all';
     $targets = [];
 
     global $pdo;
 
-    if ($targetPlayerIds === 'all') {
+    if ($targetPlayers === 'all') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else if ($targetPlayers === 'others') {
         $stmt = $pdo->prepare("
             SELECT player_id 
             FROM room_players 
@@ -678,16 +699,26 @@ function sendUpdates() {
         ");
         $stmt->execute([$roomId, $player['id']]);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    } elseif (is_array($targetPlayerIds) && count($targetPlayerIds) > 0) {
-        $placeholders = implode(',', array_fill(0, count($targetPlayerIds), '?'));
-        $stmt = $pdo->prepare("
-            SELECT player_id 
-            FROM room_players 
-            WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE
-        ");
-        $params = array_merge([$roomId], $targetPlayerIds);
-        $stmt->execute($params);
-        $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } elseif ($targetPlayers === 'specific') {
+        if(is_array($targetPlayersIds) && count($targetPlayersIds) > 0) {
+            $placeholders = implode(',', array_fill(0, count($targetPlayersIds), '?'));
+            $stmt = $pdo->prepare("
+                SELECT player_id 
+                FROM room_players 
+                WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE
+            ");
+            $params = array_merge([$roomId], $targetPlayersIds);
+            $stmt->execute($params);
+            $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+        else
+        {
+            sendResponse(['success' => false, 'error' => 'Invalid target players ids'], 400);
+        }
+    }
+    else
+    {
+        sendResponse(['success' => false, 'error' => 'Invalid target players'], 400);
     }
 
     if (empty($targets)) {
@@ -711,11 +742,13 @@ function sendUpdates() {
 
         $pdo->commit();
 
+        $targets = array_map('intval', $targets);
+
         sendResponse([
             'success' => true,
             'updates_sent' => count($updateIds),
             'update_ids' => $updateIds,
-            'target_players' => $targets
+            'target_players_ids' => $targets
         ]);
     } catch (Exception $e) {
         $pdo->rollBack();
