@@ -515,9 +515,10 @@ $site_twitter = "@michitai";
                                 <h5 class="text-indigo-400 font-mono text-sm mb-2">SendUpdateAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;UpdateSendResponse&gt; SendUpdateAsync(
     string gamePlayerToken,
-    string targetPlayerIds,
+    string targetPlayers,
     string type,
-    object data
+    object data,
+    int[] targetPlayersIds
 )</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Sends updates to specific players or all players in the room.</p>
                             </div>

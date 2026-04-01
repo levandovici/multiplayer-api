@@ -464,7 +464,7 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SendUpdate</h3>
-                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendUpdate(string targetPlayerIds, string type, string dataJson, Action&lt;SendUpdateResponse&gt; callback)</code></pre>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendUpdate(string targetPlayers, string type, string dataJson, int[] targetPlayersIds, Action&lt;SendUpdateResponse&gt; callback)</code></pre>
                                     <p class="text-white/70 mt-2">Sends real-time updates to specific players or all players. Target can be "all" or JSON array of IDs.</p>
                                 </div>
                                 

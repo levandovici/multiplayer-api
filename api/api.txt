@@ -324,7 +324,7 @@ curl -X POST "https://api.michitai.com/api/game_room.php/actions/ACTION_ID/compl
 curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "target_player_ids": "all",
+    "target_players": "all",
     "type": "play_animation",
     "data": {
       "animation": "victory",
@@ -335,7 +335,8 @@ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=API_T
 curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "target_player_ids": ["47"],
+    "target_players": "specific",
+    "target_players_ids": [47],
     "type": "spawn_effect",
     "data": {
       "effect": "explosion",

@@ -1592,7 +1592,7 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "target_players_ids": "all",
+    "target_players": "all",
     "type": "play_animation",
     "data": {
       "animation": "victory",
@@ -1604,7 +1604,7 @@ $site_twitter = "@michitai";
   "success": true,
   "updates_sent": 1,
   "update_ids": ["ddb19c9d8722073762f5db33ff13712a"],
-  "target_players_ids": ["47"]
+  "target_players_ids": [47]
 }</code></pre>
                     </div>
 
@@ -1618,7 +1618,8 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "target_players_ids": ["47"],
+    "target_players": "specific",
+    "target_players_ids": [47],
     "type": "spawn_effect",
     "data": {
       "effect": "explosion",
@@ -1633,7 +1634,7 @@ $site_twitter = "@michitai";
   "success": true,
   "updates_sent": 1,
   "update_ids": ["377bfa1d4c56c3f72d9c87b0c081e6e8"],
-  "target_players_ids": ["47"]
+  "target_players_ids": [47]
 }</code></pre>
                     </div>
 

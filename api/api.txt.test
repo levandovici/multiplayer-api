@@ -64,11 +64,11 @@
 22) $ curl -X POST "https://api.michitai.com/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
 {"success":true,"message":"Action completed"}
 
-23) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_player_ids":"all","type":"play_animation","data":{"animation":"victory","duration":2.0}}'
-{"success":true,"updates_sent":1,"update_ids":["ddb19c9d8722073762f5db33ff13712a"],"target_players":["47"]}
+23) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_players":"all","type":"play_animation","data":{"animation":"victory","duration":2.0}}'
+{"success":true,"updates_sent":1,"update_ids":["ddb19c9d8722073762f5db33ff13712a"],"target_players_ids":[47]}
 
-24) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_player_ids":["47"],"type":"spawn_effect","data":{"effect":"explosion","position":{"x":10,"y":20}}}'
-{"success":true,"updates_sent":1,"update_ids":["377bfa1d4c56c3f72d9c87b0c081e6e8"],"target_players":["47"]}
+24) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_players":"all","target_players_ids":[47],"type":"spawn_effect","data":{"effect":"explosion","position":{"x":10,"y":20}}}'
+{"success":true,"updates_sent":1,"update_ids":["377bfa1d4c56c3f72d9c87b0c081e6e8"],"target_players_ids":[47]}
 
 25) $ curl "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441"
 {"success":true,"updates":[{"update_id":"a28388775fcf9478c6926cbe44f9d3ed","from_player_id":"48","type":"play_animation","data":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:51:40"},{"update_id":"f26cbcdab3939b968f148edf68a9fe54","from_player_id":"48","type":"play_animation","data_json":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:53:58"},{"update_id":"374ad8d18f1a1fddf09a856d61787c5c","from_player_id":"48","type":"play_animation","data_json":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:54:16"}],"last_update_id":"374ad8d18f1a1fddf09a856d61787c5c"}
