@@ -177,10 +177,10 @@ try {
                         'player_name'     => $player['player_name'],
                         'player_data_json'=> json_encode($playerData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
                         'is_active'       => (bool)$player['is_active'],
-                        'last_login'      => $player['last_login'],
-                        'last_logout'     => $player['last_logout'],
-                        'last_heartbeat'  => $player['last_heartbeat'],
-                        'created_at'      => $player['created_at']
+                        'last_login'      => isoUtc($player['last_login']),
+                        'last_logout'     => isoUtc($player['last_logout']),
+                        'last_heartbeat'  => isoUtc($player['last_heartbeat']),
+                        'created_at'      => isoUtc($player['created_at'])
                     ]
                 ];
             } else {
@@ -193,10 +193,10 @@ try {
                         'player_name'    => $player['player_name'],
                         'player_data'    => $playerData,
                         'is_active'      => (bool)$player['is_active'],
-                        'last_login'     => $player['last_login'],
-                        'last_logout'    => $player['last_logout'],
-                        'last_heartbeat' => $player['last_heartbeat'],
-                        'created_at'     => $player['created_at']
+                        'last_login'     => isoUtc($player['last_login']),
+                        'last_logout'    => isoUtc($player['last_logout']),
+                        'last_heartbeat' => isoUtc($player['last_heartbeat']),
+                        'created_at'     => isoUtc($player['created_at'])
                     ]
                 ];
             }
@@ -226,7 +226,7 @@ try {
                 sendResponse([
                     'success' => true,
                     'message' => 'Heartbeat updated',
-                    'last_heartbeat' => date('Y-m-d H:i:s')
+                    'last_heartbeat' => isoUtc(date('Y-m-d H:i:s'))
                 ]);
             } else {
                 sendResponse(['success' => false, 'error' => 'Failed to update heartbeat'], 500);
@@ -257,7 +257,7 @@ try {
             sendResponse([
                 'success' => true,
                 'message' => 'Player logged out successfully',
-                'last_logout' => date('Y-m-d H:i:s')
+                'last_logout' => isoUtc(date('Y-m-d H:i:s'))
             ]);
             break;
 
@@ -284,6 +284,11 @@ try {
             foreach ($players as &$player) {
                 $player['id']        = (int)$player['id'];
                 $player['is_active'] = ((int)$player['is_active'] === 1);
+
+                $player['last_login']     = isoUtc($player['last_login']);
+                $player['last_logout']    = isoUtc($player['last_logout']);
+                $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
+                $player['created_at']     = isoUtc($player['created_at']);
             }
 
             sendResponse([

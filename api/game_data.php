@@ -172,7 +172,7 @@ try {
                 sendResponse([
                     'success'    => true,
                     'message'    => 'Game data updated successfully',
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'updated_at' => isoUtc(date('Y-m-d H:i:s'))
                 ]);
             }
 
@@ -201,7 +201,7 @@ try {
                 sendResponse([
                     'success'    => true,
                     'message'    => 'Player data updated successfully',
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'updated_at' => isoUtc(date('Y-m-d H:i:s'))
                 ]);
             }
             else {

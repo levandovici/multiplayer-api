@@ -335,9 +335,11 @@ function listRoomPlayers() {
         $player['player_id'] = (int)$player['player_id'];
         $player['is_host']   = ((int)$player['is_host'] === 1);
         $player['is_online'] = ((int)$player['is_online'] === 1);
+
+        $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
     }
 
-    sendResponse(['success' => true, 'players' => $players, 'last_updated' => date('c')]);
+    sendResponse(['success' => true, 'players' => $players, 'last_updated' => isoUtc(date('c'))]);
 }
 
 function leaveRoom() {
@@ -538,6 +540,8 @@ function submitAction() {
 }
 
 function pollActions() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -554,6 +558,27 @@ function pollActions() {
     ");
     $stmt->execute([$player['id']]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($actions as &$action) {
+        if($isUnity)
+        {
+            $decoded = json_decode($action['response_data']);
+
+            $action['response_data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                : '{}';
+
+            unset($action['response_data']);
+        }
+        else
+        {
+            $action['response_data'] = (json_last_error() === JSON_ERROR_NONE)
+                ? json_decode($action['response_data'])
+                : null;
+        }
+
+        $action['processed_at'] = isoUtc($action['processed_at']);
+    }
 
     sendResponse(['success' => true, 'actions' => $actions]);
 }
@@ -601,6 +626,8 @@ function getPendingActions() {
                 ? json_decode($action['request_data'])
                 : null;
         }
+
+        $action['created_at'] = isoUtc($action['created_at']);
     }
 
     sendResponse(['success' => true, 'actions' => $actions]);
@@ -812,6 +839,8 @@ function pollUpdates() {
                 ? json_decode($update['data'])
                 : null;
         }
+
+        $update['created_at'] = isoUtc($update['created_at']);
     }
 
     sendResponse([
@@ -902,10 +931,10 @@ function getCurrentGameRoomStatus() {
             'is_active'          => (bool)$room['is_active'],
             'rules'              => $rules,
             'player_name'        => $room['player_name'],
-            'joined_at'          => $room['joined_at'],
-            'last_heartbeat'     => $room['last_heartbeat'],
-            'room_created_at'    => $room['room_created_at'],
-            'room_last_activity' => $room['room_last_activity']
+            'joined_at'          => isoUtc($room['joined_at']),
+            'last_heartbeat'     => isoUtc($room['last_heartbeat']),
+            'room_created_at'    => isoUtc($room['room_created_at']),
+            'room_last_activity' => isoUtc($room['room_last_activity'])
         ],
         'pending_actions' => $pendingActions,
         'pending_updates' => $pendingUpdates

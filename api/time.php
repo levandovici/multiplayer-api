@@ -109,7 +109,7 @@ try {
         $offsetInfo = [
             'offset_hours'   => $utcOffset,
             'offset_string'  => ($utcOffset >= 0 ? '+' : '') . $utcOffset,
-            'original_utc'   => gmdate('c'),
+            'original_utc'   => isoUtc(gmdate('c')),
             'original_timestamp' => time()
         ];
     }
@@ -120,7 +120,7 @@ try {
     // Build response
     $response = [
         'success'    => true,
-        'utc'        => $utc,
+        'utc'        => isoUtc($utc),
         'timestamp'  => $timestamp,
         'readable'   => $readable
     ];

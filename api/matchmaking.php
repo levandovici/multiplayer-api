@@ -506,12 +506,15 @@ function getMatchmakingPlayers() {
         foreach ($players as &$player) {
             $player['player_id'] = (int)$player['player_id'];
             $player['is_host']   = ((int)$player['is_host'] === 1);
+
+            $player['joined_at'] = isoUtc($player['joined_at']);
+            $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
         }
 
         sendResponse([
             'success' => true,
             'players' => $players,
-            'last_updated' => date('c')
+            'last_updated' => isoUtc(date('c'))
         ]);
     } catch (Exception $e) {
         error_log("Get matchmaking players failed: " . $e->getMessage());
@@ -638,6 +641,11 @@ function getCurrentMatchmakingStatus() {
             ");
             $stmt->execute([$matchmaking['matchmaking_id']]);
             $pendingRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($pendingRequests as &$request) {
+                $request['requested_at']     = isoUtc($request['requested_at']);
+                $request['responded_at']    = isoUtc($request['responded_at']);
+            }
         }
 
         if($isUnity)
@@ -666,12 +674,12 @@ function getCurrentMatchmakingStatus() {
                 'strict_full' => (bool)$matchmaking['strict_full'],
                 'join_by_requests' => (bool)$matchmaking['join_by_requests'],
                 'rules' => $rules,
-                'joined_at' => $matchmaking['joined_at'],
+                'joined_at' => isoUtc($matchmaking['joined_at']),
                 'player_status' => $matchmaking['player_status'],
-                'last_heartbeat' => $matchmaking['last_heartbeat'],
-                'lobby_heartbeat' => $matchmaking['lobby_heartbeat'],
+                'last_heartbeat' => isoUtc($matchmaking['last_heartbeat']),
+                'lobby_heartbeat' => isoUtc($matchmaking['lobby_heartbeat']),
                 'is_started' => (bool)$matchmaking['is_started'],
-                'started_at' => $matchmaking['started_at']
+                'started_at' => isoUtc($matchmaking['started_at'])
             ],
             'pending_requests' => $pendingRequests
         ];
@@ -715,8 +723,8 @@ function checkRequestStatus() {
             'request_id' => $request['request_id'],
             'matchmaking_id' => $request['matchmaking_id'],
             'status' => $request['status'],
-            'requested_at' => $request['requested_at'],
-            'responded_at' => $request['responded_at'],
+            'requested_at' => isoUtc($request['requested_at']),
+            'responded_at' => isoUtc($request['responded_at']),
             'responded_by' => $request['responded_by'],
             'responder_name' => $request['responder_name'],
             'join_by_requests' => (bool)$request['join_by_requests']

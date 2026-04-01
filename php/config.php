@@ -17,6 +17,8 @@ try {
     $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    // Force UTC at DB level
+    $pdo->exec("SET time_zone = '+00:00'");
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
@@ -31,5 +33,16 @@ function generate_uuid() {
         mt_rand(0, 0x3fff) | 0x8000,
         mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
     );
+}
+
+function isoUtc($value) {
+    if (empty($value)) return null;
+
+    // If your DB stores UTC already (recommended)
+    $dt = new DateTime($value, new DateTimeZone('UTC'));
+
+    // Force UTC and format with Z suffix
+    return $dt->setTimezone(new DateTimeZone('UTC'))
+              ->format('Y-m-d\TH:i:s\Z');
 }
 ?>
