@@ -73,10 +73,10 @@ function registerPlayer($gameId, $playerName, $playerData = []) {
     if ($stmt->rowCount() > 0) {
         return [
             'success'     => true,
-            'player_id'   => $pdo->lastInsertId(),
+            'player_id'   => (int)$pdo->lastInsertId(),
             'private_key' => $privateKey,
             'player_name' => $playerName,
-            'game_id'     => $gameId
+            'game_id'     => (int)$gameId
         ];
     }
     
@@ -281,6 +281,11 @@ try {
             $stmt->execute([$game['id']]);
             $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
+            foreach ($players as &$player) {
+                $player['id']        = (int)$player['id'];
+                $player['is_active'] = ((int)$player['is_active'] === 1);
+            }
+
             sendResponse([
                 'success' => true,
                 'count'   => count($players),

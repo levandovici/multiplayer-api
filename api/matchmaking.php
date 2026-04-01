@@ -503,6 +503,11 @@ function getMatchmakingPlayers() {
         $stmt->execute([$matchmakingId]);
         $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        foreach ($players as &$player) {
+            $player['player_id'] = (int)$player['player_id'];
+            $player['is_host']   = ((int)$player['is_host'] === 1);
+        }
+
         sendResponse([
             'success' => true,
             'players' => $players,

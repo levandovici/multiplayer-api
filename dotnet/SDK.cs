@@ -502,7 +502,7 @@ namespace michitai
 
     public class PlayerRegisterResponse : ApiResponse
     {
-        public string Player_id { get; set; } = string.Empty;
+        public int Player_id { get; set; }
         public string Private_key { get; set; } = string.Empty;
         public string Player_name { get; set; } = string.Empty;
         public int Game_id { get; set; }
@@ -523,7 +523,7 @@ namespace michitai
     {
         public int Id { get; set; }
         public string Player_name { get; set; } = string.Empty;
-        public int Is_active { get; set; }
+        public bool Is_active { get; set; }
         public string Last_login { get; set; } = string.Empty;
         public string Created_at { get; set; } = string.Empty;
     }
@@ -671,10 +671,10 @@ namespace michitai
 
     public class RoomPlayer
     {
-        public string Player_id { get; set; } = string.Empty;
+        public int Player_id { get; set; }
         public string Player_name { get; set; } = string.Empty;
-        public int Is_host { get; set; }
-        public int Is_online { get; set; }
+        public bool Is_host { get; set; }
+        public bool Is_online { get; set; }
         public string Last_heartbeat { get; set; } = string.Empty;
     }
 
@@ -744,7 +744,7 @@ namespace michitai
     public class PendingAction<T> where T : class, new()
     {
         public string Action_id { get; set; } = string.Empty;
-        public string Player_id { get; set; } = string.Empty;
+        public int Player_id { get; set; }
         public string Action_type { get; set; } = string.Empty;
         public string Created_at { get; set; } = string.Empty;
         public string Player_name { get; set; } = string.Empty;
@@ -771,7 +771,7 @@ namespace michitai
     public class PlayerUpdate<T> where T : class, new()
     {
         public string Update_id { get; set; } = string.Empty;
-        public string From_player_id { get; set; } = string.Empty;
+        public int From_player_id { get; set; }
         public string Type { get; set; } = string.Empty;
         public string Created_at { get; set; } = string.Empty;
         public T? Data { get; set; }
@@ -919,7 +919,7 @@ namespace michitai
         public string Status { get; set; } = string.Empty;
         public string Player_name { get; set; } = string.Empty;
         public int Seconds_since_heartbeat { get; set; }
-        public int Is_host { get; set; }
+        public bool Is_host { get; set; }
     }
 
     public class MatchmakingHeartbeatResponse : ApiResponse

@@ -393,7 +393,7 @@ public class Game : MonoBehaviour
     // ====================== PLAYER INFO ======================
     private class PlayerInfo
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Token { get; set; }
         public string Name { get; set; }
     }

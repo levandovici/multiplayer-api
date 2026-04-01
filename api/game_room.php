@@ -331,6 +331,12 @@ function listRoomPlayers() {
     $stmt->execute([$roomId]);
     $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    foreach ($players as &$player) {
+        $player['player_id'] = (int)$player['player_id'];
+        $player['is_host']   = ((int)$player['is_host'] === 1);
+        $player['is_online'] = ((int)$player['is_online'] === 1);
+    }
+
     sendResponse(['success' => true, 'players' => $players, 'last_updated' => date('c')]);
 }
 
@@ -577,6 +583,8 @@ function getPendingActions() {
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($actions as &$action) {
+        $action['player_id'] = (int)$action['player_id'];
+
         if($isUnity)
         {
             $decoded = json_decode($action['request_data']);
@@ -786,6 +794,8 @@ function pollUpdates() {
     $updates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($updates as &$update) {
+        $update['from_player_id'] = (int)$update['from_player_id'];
+
         if($isUnity)
         {
             $decoded = json_decode($update['data']);

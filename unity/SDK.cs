@@ -537,7 +537,7 @@ namespace michitai
     [System.Serializable]
     public class PlayerRegisterResponse : ApiResponse
     {
-        public string player_id;
+        public int player_id;
         public string private_key;
         public string player_name;
         public int game_id;
@@ -589,7 +589,7 @@ namespace michitai
     {
         public int id;
         public string player_name;
-        public int is_active;
+        public bool is_active;
         public string last_login;
         public string created_at;
     }
@@ -744,10 +744,10 @@ namespace michitai
     [System.Serializable]
     public class RoomPlayer
     {
-        public string player_id;
+        public int player_id;
         public string player_name;
-        public int is_host;
-        public int is_online;
+        public bool is_host;
+        public bool is_online;
         public string last_heartbeat;
     }
 
@@ -829,7 +829,7 @@ namespace michitai
 
 
         public string action_id;
-        public string player_id;
+        public int player_id;
         public string action_type;
         public string created_at;
         public string player_name;
@@ -870,7 +870,7 @@ namespace michitai
     public class PlayerUpdate
     {
         public string update_id;
-        public string from_player_id;
+        public int from_player_id;
         public string type;
         public string data_json;           // Unity mode
         public string created_at;
@@ -1045,7 +1045,7 @@ namespace michitai
         public string status;
         public string player_name;
         public int seconds_since_heartbeat;
-        public int is_host;
+        public bool is_host;
     }
 
     [System.Serializable]
