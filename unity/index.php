@@ -145,8 +145,8 @@ $site_twitter = "@michitai";
                     <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center mb-6 mx-auto">
                         <i class="fas fa-clock text-2xl text-white"></i>
                     </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Coroutine Based</h4>
-                    <p class="text-white/80 text-center">Uses Unity coroutines for async operations, perfect for game loops and frame-based updates.</p>
+                    <h4 class="text-xl font-bold text-white mb-3 text-center">Async/Await</h4>
+                    <p class="text-white/80 text-center">Modern async/await patterns with Task-based operations for responsive applications.</p>
                 </div>
                 
                 <!-- Feature 3 -->
@@ -237,7 +237,6 @@ $site_twitter = "@michitai";
                             <a href="#room-updates" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Updates</a>
                             <a href="#matchmaking" class="block text-white/70 hover:text-white py-1 text-sm transition">Matchmaking</a>
                             <a href="#leaderboard" class="block text-white/70 hover:text-white py-1 text-sm transition">Leaderboard</a>
-                            <a href="#utility-methods" class="block text-white/70 hover:text-white py-1 text-sm transition">Utility Methods</a>
                         </nav>
                     </div>
                 </div>
@@ -245,31 +244,17 @@ $site_twitter = "@michitai";
                 <!-- Main Content -->
                 <div class="lg:col-span-3 space-y-8">
                     
-                    <!-- MultiplayerSDK Class -->
+                    <!-- GameSDK Class -->
                     <div id="multiplayersdk" class="glass-effect rounded-2xl overflow-hidden">
                         <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-6">
-                            <h2 class="text-2xl font-bold text-white">MultiplayerSDK</h2>
+                            <h2 class="text-2xl font-bold text-white">GameSDK</h2>
                             <p class="text-white/80">Main SDK class for Unity multiplayer functionality</p>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-lg font-semibold text-white mb-3">Description</h3>
-                            <p class="text-white/80 mb-6">
-                                The MultiplayerSDK class provides complete multiplayer functionality for Unity games. 
-                                It handles player management, matchmaking, game rooms, real-time actions, and leaderboards 
-                                with full JsonUtility compatibility for Unity serialization.
-                            </p>
-                            
-                            <h3 class="text-lg font-semibold text-white mb-3">Public Methods</h3>
-                            <div class="space-y-4">
-                                <div class="border-l-4 border-purple-500 pl-4">
-                                    <h4 class="text-white font-medium">void SetApiToken(string token)</h4>
-                                    <p class="text-white/70 text-sm">Sets the API authentication token for all requests</p>
-                                </div>
-                                <div class="border-l-4 border-purple-500 pl-4">
-                                    <h4 class="text-white font-medium">void SetGamePlayerToken(string token)</h4>
-                                    <p class="text-white/70 text-sm">Sets the player authentication token for player-specific operations</p>
-                                </div>
-                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-3">Constructor</h3>
+                            <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public GameSDK(string apiToken, string apiPrivateToken, string baseUrl = "https://api.michitai.com/api", 
+               ILogger logger = null, HttpClient httpClient = null, bool useUnityFormat = true)</code></pre>
+                            <p class="text-white/70 mt-2">Initializes the SDK with API tokens and optional Unity formatting.</p>
                         </div>
                     </div>
 
@@ -283,32 +268,32 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">RegisterPlayer</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RegisterPlayer(string playerName, string playerDataJson, Action&lt;RegisterPlayerResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Registers a new player account. The playerDataJson should contain initial player data as a JSON string for Unity compatibility.</p>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerRegisterResponse&gt; RegisterPlayer&lt;T&gt;(string name, T playerData = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Registers a new player with optional custom data. Uses generic type for player data with JsonUtility serialization.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">LoginPlayer</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LoginPlayer(Action&lt;LoginResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Authenticates the player using the currently set game player token. Returns complete player information.</p>
+                                    <h3 class="text-white font-semibold mb-2">AuthenticatePlayer</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerAuthResponse&lt;T&gt;&gt; AuthenticatePlayer&lt;T&gt;(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Authenticates a player using their private token. Returns player information with typed data support.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">SendPlayerHeartbeat</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendPlayerHeartbeat(Action&lt;HeartbeatResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">SendPlayerHeartbeatAsync</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerHeartbeatResponse&gt; SendPlayerHeartbeatAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Sends a heartbeat to maintain the player's connection. Call every 30-60 seconds to prevent timeout.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">LogoutPlayer</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LogoutPlayer(Action&lt;LogoutResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">LogoutPlayerAsync</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerLogoutResponse&gt; LogoutPlayerAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Logs out the current player and invalidates their session. Updates last logout timestamp.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">ListPlayers</h3>
-                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListPlayers(Action&lt;ListPlayersResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Lists all registered players. Useful for admin dashboards or player discovery systems.</p>
+                                    <h3 class="text-white font-semibold mb-2">GetAllPlayers</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerListResponse&gt; GetAllPlayers(CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all registered players. Requires private API token. Useful for admin dashboards.</p>
                                 </div>
                             </div>
                         </div>
@@ -324,26 +309,26 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetGameData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetGameData(Action&lt;GameDataResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves global game data and settings. Data is returned as JSON string for Unity compatibility.</p>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;GameDataResponse&lt;T&gt;&gt; GetGameData&lt;T&gt;(CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves global game data with generic type support. Data is automatically deserialized using JsonUtility.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">UpdateGameData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void UpdateGameData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Updates global game data. The dataJson should contain the fields to update as JSON string.</p>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;SuccessResponse&gt; UpdateGameData&lt;T&gt;(T data, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Updates global game data. Requires private API token. Uses generic type for type safety.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetPlayerData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetPlayerData(Action&lt;PlayerDataResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves player-specific data. Requires player authentication token to be set.</p>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerDataResponse&lt;T&gt;&gt; GetPlayerData&lt;T&gt;(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves player-specific data with generic type support. Requires player authentication.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">UpdatePlayerData</h3>
-                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void UpdatePlayerData(string dataJson, Action&lt;UpdateDataResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Updates player-specific data. The dataJson should contain fields to update as JSON string.</p>
+                                    <pre class="bg-black/30 text-blue-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;SuccessResponse&gt; UpdatePlayerData&lt;T&gt;(string playerToken, T data, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Updates player-specific data with generic type support. Requires player authentication.</p>
                                 </div>
                             </div>
                         </div>
@@ -359,8 +344,14 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetServerTime</h3>
-                                    <pre class="bg-black/30 text-indigo-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetServerTime(Action&lt;TimeResponse&gt; callback, int utcOffset = 0)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves server time with optional UTC offset. Useful for time synchronization and anti-cheat measures.</p>
+                                    <pre class="bg-black/30 text-indigo-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ServerTimeResponse&gt; GetServerTime(CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves current server time in UTC and readable formats.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetServerTimeWithOffset</h3>
+                                    <pre class="bg-black/30 text-indigo-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ServerTimeWithOffsetResponse&gt; GetServerTimeWithOffset(int utcOffset, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves server time with specified UTC offset. Useful for time synchronization.</p>
                                 </div>
                             </div>
                         </div>
@@ -375,44 +366,44 @@ $site_twitter = "@michitai";
                         <div class="p-6">
                             <div class="space-y-6">
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">CreateRoom</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CreateRoom(string roomName, string password, int maxPlayers, Action&lt;CreateRoomResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Creates a new game room. The creating player becomes the room host.</p>
+                                    <h3 class="text-white font-semibold mb-2">CreateRoomAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomCreateResponse&gt; CreateRoomAsync&lt;T&gt;(string playerToken, string roomName, string password = null, int maxPlayers = 4, T rules = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Creates a new game room with optional password and rules. The creating player becomes the host.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">ListRooms</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListRooms(Action&lt;ListRoomsResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves all available game rooms. Useful for server browser functionality.</p>
+                                    <h3 class="text-white font-semibold mb-2">GetRoomsAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves all available game rooms with typed rules support. Useful for server browser.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">JoinRoom</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void JoinRoom(string roomId, string password, Action&lt;JoinRoomResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">JoinRoomAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomJoinResponse&gt; JoinRoomAsync(string playerToken, string roomId, string password = null, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Joins an existing room. Password required for private rooms.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">ListRoomPlayers</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListRoomPlayers(Action&lt;ListRoomPlayersResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Lists all players in the current room. Useful for displaying player lists and checking occupancy.</p>
+                                    <h3 class="text-white font-semibold mb-2">GetRoomPlayersAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomPlayersResponse&gt; GetRoomPlayersAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all players in the current room with heartbeat status.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">LeaveRoom</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LeaveRoom(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">LeaveRoomAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomLeaveResponse&gt; LeaveRoomAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Leaves the current room and updates player status.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">SendRoomHeartbeat</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendRoomHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">SendRoomHeartbeatAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;HeartbeatResponse&gt; SendRoomHeartbeatAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Sends heartbeat to maintain room connection. Call every 30-60 seconds while in room.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">GetCurrentRoomStatus</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetCurrentRoomStatus(Action&lt;CurrentRoomStatusResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">GetCurrentRoomAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;CurrentRoomResponse&gt; GetCurrentRoomAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Gets comprehensive room state including player lists and pending actions.</p>
                                 </div>
                             </div>
@@ -428,27 +419,27 @@ $site_twitter = "@michitai";
                         <div class="p-6">
                             <div class="space-y-6">
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">SubmitAction</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SubmitAction(string actionType, string requestDataJson, Action&lt;SubmitActionResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Submits an action for processing by other players. Actions are processed asynchronously.</p>
+                                    <h3 class="text-white font-semibold mb-2">SubmitActionAsync</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ActionSubmitResponse&gt; SubmitActionAsync&lt;T&gt;(string playerToken, string actionType, T requestData = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Submits an action for processing by other players. Uses generic type for request data.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">PollActions</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void PollActions(Action&lt;PollActionsResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">PollActionsAsync</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ActionPollResponse&gt; PollActionsAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Polls for completed actions from other players. Call periodically to check for new actions.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">GetPendingActions</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetPendingActions(Action&lt;GetPendingActionsResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Gets actions awaiting processing by the current player. Call to find actions to complete.</p>
+                                    <h3 class="text-white font-semibold mb-2">GetPendingActionsAsync</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ActionPendingResponse&lt;T&gt;&gt; GetPendingActionsAsync&lt;T&gt;(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Gets actions awaiting processing by the current player with typed request data.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">CompleteAction</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CompleteAction(string actionId, string status, string responseDataJson, Action&lt;CompleteActionResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Marks an action as completed with processing results. Used after processing pending actions.</p>
+                                    <h3 class="text-white font-semibold mb-2">CompleteActionAsync</h3>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ActionCompleteResponse&gt; CompleteActionAsync&lt;T&gt;(string actionId, string playerToken, ActionComplete&lt;T&gt; request, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Marks an action as completed with processing results using typed response data.</p>
                                 </div>
                             </div>
                         </div>
@@ -463,14 +454,14 @@ $site_twitter = "@michitai";
                         <div class="p-6">
                             <div class="space-y-6">
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">SendUpdate</h3>
-                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendUpdate(string targetPlayers, string type, string dataJson, int[] targetPlayersIds, Action&lt;SendUpdateResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Sends real-time updates to specific players or all players. Target can be "all" or JSON array of IDs.</p>
+                                    <h3 class="text-white font-semibold mb-2">UpdatePlayersAsync</h3>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;UpdatePlayersResponse&gt; UpdatePlayersAsync&lt;T&gt;(string playerToken, UpdatePlayers&lt;T&gt; request, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends real-time updates to specific players or all players. Uses typed UpdatePlayers parameter.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">PollUpdates</h3>
-                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void PollUpdates(string lastUpdateId, Action&lt;PollUpdatesResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">PollUpdatesAsync</h3>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PollUpdatesResponse&gt; PollUpdatesAsync(string playerToken, string lastUpdateId = null, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Polls for updates sent by other players. Supports incremental polling with lastUpdateId.</p>
                                 </div>
                             </div>
@@ -486,75 +477,75 @@ $site_twitter = "@michitai";
                         <div class="p-6">
                             <div class="space-y-6">
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">ListMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void ListMatchmaking(Action&lt;ListMatchmakingResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">GetMatchmakingLobbiesAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingListResponse&gt; GetMatchmakingLobbiesAsync(CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">CreateMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CreateMatchmaking(int maxPlayers, bool strictFull, bool joinByRequests, string rules, Action&lt;CreateMatchmakingResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby. The creating player becomes the lobby host.</p>
+                                    <h3 class="text-white font-semibold mb-2">CreateMatchmakingLobbyAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingCreateResponse&gt; CreateMatchmakingLobbyAsync&lt;T&gt;(string playerToken, int maxPlayers = 4, bool strictFull = false, bool joinByRequests = false, T rules = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby with typed rules support. The creating player becomes the host.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">RequestJoinMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RequestJoinMatchmaking(string matchmakingId, Action&lt;JoinRequestResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">RequestToJoinMatchmakingAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingJoinRequestResponse&gt; RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Requests to join a lobby that requires host approval. Returns request ID for tracking.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">JoinMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void JoinMatchmaking(string matchmakingId, Action&lt;JoinMatchmakingResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Joins a matchmaking lobby directly. Only works if lobby allows direct join.</p>
+                                    <h3 class="text-white font-semibold mb-2">RespondToJoinRequestAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingPermissionResponse&gt; RespondToJoinRequestAsync(string playerToken, string requestId, MatchmakingRequestAction action, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Responds to a join request (approve/reject). Only the lobby host can call this.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">LeaveMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void LeaveMatchmaking(Action&lt;LeaveMatchmakingResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Leaves the current matchmaking lobby and updates player status.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">GetMatchmakingPlayers</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetMatchmakingPlayers(Action&lt;GetMatchmakingPlayersResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Lists all players in the current matchmaking lobby. Useful for displaying player lists.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">SendMatchmakingHeartbeat</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void SendMatchmakingHeartbeat(Action&lt;BaseResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Sends heartbeat to maintain lobby connection. Call every 30-60 seconds while in lobby.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">RemoveMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RemoveMatchmaking(Action&lt;BaseResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Removes the matchmaking lobby and kicks all players. Only the lobby host can call this.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">StartMatchmaking</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void StartMatchmaking(Action&lt;StartMatchmakingResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Starts a game from matchmaking lobby. Transfers all players to a new game room.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">GetCurrentMatchmakingStatus</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetCurrentMatchmakingStatus(Action&lt;CurrentMatchmakingStatusResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Gets comprehensive lobby state including player status and pending requests.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">CheckRequestStatus</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void CheckRequestStatus(string requestId, Action&lt;CheckRequestStatusResponse&gt; callback)</code></pre>
+                                    <h3 class="text-white font-semibold mb-2">CheckJoinRequestStatusAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingRequestStatusResponse&gt; CheckJoinRequestStatusAsync(string playerToken, string requestId, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Checks the status of a join request. Useful for tracking approval/rejection status.</p>
                                 </div>
                                 
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">RespondToRequest</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void RespondToRequest(string requestId, string action, Action&lt;RespondToRequestResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Responds to a join request (approve/reject). Only the lobby host can call this.</p>
+                                    <h3 class="text-white font-semibold mb-2">GetCurrentMatchmakingStatusAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingCurrentResponse&lt;T&gt;&gt; GetCurrentMatchmakingStatusAsync&lt;T&gt;(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Gets comprehensive lobby state with typed rules including player status and pending requests.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">JoinMatchmakingDirectlyAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingDirectJoinResponse&gt; JoinMatchmakingDirectlyAsync(string playerToken, string matchmakingId, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Joins a matchmaking lobby directly. Only works if lobby allows direct join.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">LeaveMatchmakingAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingLeaveResponse&gt; LeaveMatchmakingAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Leaves the current matchmaking lobby and updates player status.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetMatchmakingPlayersAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingPlayersResponse&gt; GetMatchmakingPlayersAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all players in the current matchmaking lobby. Useful for displaying player lists.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendMatchmakingHeartbeatAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingHeartbeatResponse&gt; SendMatchmakingHeartbeatAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends heartbeat to maintain lobby connection. Call every 30-60 seconds while in lobby.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">RemoveMatchmakingLobbyAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingRemoveResponse&gt; RemoveMatchmakingLobbyAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Removes the matchmaking lobby and kicks all players. Only the lobby host can call this.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">StartGameFromMatchmakingAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingStartResponse&gt; StartGameFromMatchmakingAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Starts a game from matchmaking lobby. Transfers all players to a new game room.</p>
                                 </div>
                             </div>
                         </div>
@@ -569,84 +560,9 @@ $site_twitter = "@michitai";
                         <div class="p-6">
                             <div class="space-y-6">
                                 <div>
-                                    <h3 class="text-white font-semibold mb-2">GetLeaderboard</h3>
-                                    <pre class="bg-black/30 text-yellow-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>void GetLeaderboard(string[] sortBy, int limit, Action&lt;LeaderboardResponse&gt; callback)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves ranked players with configurable sorting criteria. Supports multiple sort fields.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Utility Methods Section -->
-                    <div id="utility-methods" class="glass-effect rounded-2xl overflow-hidden">
-                        <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6">
-                            <h2 class="text-2xl font-bold text-white">Utility Methods</h2>
-                            <p class="text-white/80">Helper methods for JSON serialization and token management</p>
-                        </div>
-                        <div class="p-6">
-                            <div class="space-y-6">
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">SetApiToken</h3>
-                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public void SetApiToken(string token)</code></pre>
-                                    <p class="text-white/70 mt-2">Sets the API authentication token. Required for all API calls.</p>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2">SetGamePlayerToken</h3>
-                                    <pre class="bg-black/30 text-emerald-400 p-3 rounded text-sm"><code>public void SetGamePlayerToken(string token)</code></pre>
-                                    <p class="text-white/70 mt-2">Sets the player authentication token. Required for player-specific operations.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Response Classes -->
-                    <div class="glass-effect rounded-2xl overflow-hidden">
-                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 p-6">
-                            <h2 class="text-2xl font-bold text-white">Response Classes</h2>
-                            <p class="text-white/80">Data classes for API responses with JsonUtility compatibility</p>
-                        </div>
-                        <div class="p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">BaseResponse</h4>
-                                    <p class="text-white/60 text-sm">Base class for all API responses with success/error fields</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">RegisterPlayerResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from player registration with player credentials</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">LoginResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from player login with complete player info</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">CreateRoomResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from room creation with room details</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">CreateMatchmakingResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from matchmaking lobby creation</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">LeaderboardResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from leaderboard with ranked players</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">TimeResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from server time with timezone information</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">GameDataResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from game data retrieval</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">PlayerDataResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from player data retrieval</p>
-                                </div>
-                                <div class="bg-black/20 p-4 rounded">
-                                    <h4 class="text-white font-medium">UpdateDataResponse</h4>
-                                    <p class="text-white/60 text-sm">Response from data update operations</p>
+                                    <h3 class="text-white font-semibold mb-2">GetLeaderboardAsync</h3>
+                                    <pre class="bg-black/30 text-yellow-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;LeaderboardResponse&lt;T&gt;&gt; GetLeaderboardAsync&lt;T&gt;(string[] sortBy, int limit = 10, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves ranked players with configurable sorting criteria and typed player data support.</p>
                                 </div>
                             </div>
                         </div>
