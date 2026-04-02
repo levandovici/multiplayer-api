@@ -245,13 +245,13 @@ function createMatchmaking() {
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (empty($data['max_players'])) {
+    if (!isset($data['max_players']) || empty($data['max_players'])) {
         sendResponse(['success' => false, 'error' => 'Missing required field: max_players'], 400);
     }
 
     $maxPlayers = max(2, min(16, (int)$data['max_players']));
-    $strictFull = !empty($data['strict_full']);
-    $joinByRequests = !empty($data['join_by_requests']);
+    $strictFull = (bool) ($data['strict_full'] ?? false);
+    $joinByRequests = (bool) ($data['join_by_requests'] ?? false);
 
     if($isUnity)
     {
@@ -739,7 +739,7 @@ function respondToRequest() {
     $requestId = $_GET['requestId'] ?? null;
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    if (!$requestId || empty($data['action'])) {
+    if (!$requestId || !isset($data['action']) || empty($data['action'])) {
         sendResponse(['success' => false, 'error' => 'Missing required fields: requestId and action'], 400);
     }
 

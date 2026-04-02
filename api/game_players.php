@@ -115,10 +115,11 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid API token'], 401);
             }
             
-            $playerName = $input['player_name'] ?? '';
-            if (empty($playerName)) {
+            if (!isset($input['player_name']) || empty($input['player_name'])) {
                 sendResponse(['success' => false, 'error' => 'Player name is required'], 400);
             }
+
+            $playerName = $input['player_name'];
             
             if($isUnity)
             {

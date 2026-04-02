@@ -171,7 +171,7 @@ function createRoom() {
     $roomName = trim($data['room_name'] ?? 'Game Room ' . substr($roomId, 0, 6));
     $roomName = mb_substr($roomName, 0, 120);
 
-    $password = !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
+    $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
     $maxPlayers = max(2, min(16, (int)($data['max_players'] ?? 6)));
 
     if($isUnity)
@@ -498,24 +498,40 @@ function updateHeartbeat() {
 }
 
 function submitAction() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    $actionType = $data['action_type'] ?? null;
-    $requestData = $data['request_data'] ?? null;
-
-    if (empty($actionType)) {
+    if (!isset($data['action_type']) || empty($data['action_type'])) {
         sendResponse(['success' => false, 'error' => 'Missing action_type'], 400);
     }
 
-    if (isset($data['request_data_json']) && is_string($data['request_data_json'])) {
+    $actionType = $data['action_type'];
+
+    $requestData = null;
+
+    if($isUnity)
+    {
+        if (!isset($data['request_data_json']) || empty($data['request_data_json'])) {
+            sendResponse(['success' => false, 'error' => 'Missing request_data_json'], 400);
+        }
+        else if(!is_string($data['request_data_json']))
+        {
+            sendResponse(['success' => false, 'error' => 'request_data_json must be a string'], 400);
+        }
+
         $requestData = json_decode($data['request_data_json'], true);
     }
+    else
+    {
+        if (!isset($data['request_data']) || empty($data['request_data'])) {
+            sendResponse(['success' => false, 'error' => 'Missing request_data'], 400);
+        }
 
-    if ($requestData === null) {
-        sendResponse(['success' => false, 'error' => 'Missing request_data or request_data_json'], 400);
+        $requestData = $data['request_data'];
     }
 
     $roomId = getPlayerRoom($player['id']);
@@ -750,14 +766,14 @@ function sendUpdates() {
         {
             sendResponse(['success' => false, 'error' => 'Invalid target players ids'], 400);
         }
+
+        if (empty($targets)) {
+            sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
+        }
     }
     else
     {
         sendResponse(['success' => false, 'error' => 'Invalid target players'], 400);
-    }
-
-    if (empty($targets)) {
-        sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
     }
 
     $updateIds = [];
