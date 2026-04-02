@@ -16,7 +16,7 @@ function getCurrentUrl() {
 
 // Default values
 $defaultTitle = "Multiplayer API – Core Cells";
-$defaultDescription = "A powerful multiplayer API for real-time gaming experiences";
+$defaultDescription = "A powerful multiplayer API for game developers";
 $defaultImage = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
 $defaultUrl = getCurrentUrl();
 

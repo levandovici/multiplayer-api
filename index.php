@@ -3,8 +3,8 @@ session_start();
 require_once 'php/config.php';
 
 // Set page-specific meta tag variables
-$title = "Multiplayer API – Core Cells";
-$description = "A powerful multiplayer API for real-time gaming experiences. Build multiplayer games with ease using our comprehensive SDK and API.";
+$title = "Multiplayer API – Cross-platform";
+$description = "A powerful multiplayer API for game developers. Build multiplayer games with ease using our comprehensive SDK and API.";
 $image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -296,14 +296,10 @@ pre::-webkit-scrollbar-thumb:hover {
                 Multiplayer API for<br>
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">Game Developers</span>
             </h1>
-            <p class="text-xl text-white/90 max-w-3xl mx-auto mb-10">
-                A scalable, secure REST API to connect any game to a shared multiplayer backend. 
-                Manage users, project keys, JSON game states, matchmaking, and RTS sessions — all from one unified interface.
-            </p>
             
             <!-- Platform Selection -->
             <div class="mb-12">
-                <h3 class="text-2xl font-bold text-white mb-6 text-center">Choose Your Platform</h3>
+                <h3 class="text-2xl font-bold text-white mb-6 text-center">Cross-Platform</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                     <!-- Unity Platform -->
                     <a href="unity/index.php" class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-300 group">
@@ -311,9 +307,9 @@ pre::-webkit-scrollbar-thumb:hover {
                             <i class="fab fa-unity text-3xl text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-white mb-3 text-center">Unity</h4>
-                        <p class="text-white/80 text-center mb-4">JsonUtility-compatible SDK for Unity games</p>
+                        <p class="text-white/80 text-center mb-4">SDK for JsonUtility</p>
                         <div class="flex items-center justify-center space-x-4">
-                            <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>JsonUtility Ready</span>
+                            <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>JsonUtility</span>
                             <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>C#</span>
                         </div>
                     </a>
@@ -324,7 +320,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <i class="fab fa-microsoft text-3xl text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-white mb-3 text-center">.NET</h4>
-                        <p class="text-white/80 text-center mb-4">System.Text.Json SDK for C# applications</p>
+                        <p class="text-white/80 text-center mb-4">SDK for System.Text.Json</p>
                         <div class="flex items-center justify-center space-x-4">
                             <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>Modern</span>
                             <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>C#</span>
@@ -337,51 +333,12 @@ pre::-webkit-scrollbar-thumb:hover {
                             <i class="fas fa-plug text-3xl text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-white mb-3 text-center">REST API</h4>
-                        <p class="text-white/80 text-center mb-4">Direct REST API for any platform or language</p>
+                        <p class="text-white/80 text-center mb-4">Direct REST API</p>
                         <div class="flex items-center justify-center space-x-4">
                             <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>Universal</span>
                             <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>JSON</span>
                         </div>
                     </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-20">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl font-black text-white mb-6">Powerful Features</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Everything you need to build, deploy, and scale multiplayer games</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-key text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Per-Game API Keys</h4>
-                    <p class="text-white/80 text-center">Each project gets a unique key for secure access and complete data isolation between games.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-users text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Shared User Base</h4>
-                    <p class="text-white/80 text-center">Players register once and can access multiple games with a single account.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-gamepad text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Multiplayer Logic</h4>
-                    <p class="text-white/80 text-center">Built-in support for matchmaking, real-time game sessions, and player state management.</p>
                 </div>
             </div>
         </div>

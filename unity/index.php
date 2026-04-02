@@ -3,13 +3,13 @@ session_start();
 require_once '../php/config.php';
 
 // Set page-specific meta tag variables
-$title = "Unity Multiplayer API – JsonUtility Compatible";
-$description = "Unity multiplayer API with JsonUtility compatibility. Complete SDK and documentation for Unity game developers.";
+$title = "Multiplayer API – Unity";
+$description = "Multiplayer API with JsonUtility compatibility. Complete SDK and documentation for Unity game developers.";
 $image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 // Platform-specific meta tags for better social sharing
-$platform_name = "Unity Multiplayer API";
+$platform_name = "Multiplayer API";
 $platform_type = "developer_tools";
 $card_type = "summary_large_image";
 $site_twitter = "@michitai";
@@ -104,10 +104,6 @@ $site_twitter = "@michitai";
                 Unity SDK for<br>
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">Multiplayer Games</span>
             </h1>
-            <p class="text-xl text-white/90 max-w-3xl mx-auto mb-10">
-                JsonUtility-compatible SDK designed specifically for Unity developers. 
-                Full serialization support, coroutines, and seamless integration with your Unity projects.
-            </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#sdk" class="glass-effect text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition">
                     <i class="fas fa-download mr-2"></i>Download Unity SDK
@@ -119,51 +115,11 @@ $site_twitter = "@michitai";
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-20">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl font-black text-white mb-6">Unity-Specific Features</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Built with Unity developers in mind</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-cube text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">JsonUtility Ready</h4>
-                    <p class="text-white/80 text-center">Full compatibility with Unity's JsonUtility serialization system. No reflection or complex JSON handling needed.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-clock text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Async/Await</h4>
-                    <p class="text-white/80 text-center">Modern async/await patterns with Task-based operations for responsive applications.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-gamepad text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">IL2CPP Safe</h4>
-                    <p class="text-white/80 text-center">Arrays instead of Lists, no reflection, and IL2CPP-compatible serialization for mobile builds.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- SDK Section -->
     <section id="sdk" class="py-20">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h3 class="text-4xl font-black text-white mb-6">Unity SDK</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Complete JsonUtility-compatible SDK for Unity developers</p>
             </div>
             
             <div class="max-w-7xl mx-auto space-y-8">
@@ -175,11 +131,6 @@ $site_twitter = "@michitai";
                         </div>
                         <h4 class="text-xl font-bold text-white">Unity SDK Download</h4>
                     </div>
-                    <p class="text-white/80 mb-8">
-                        Complete JsonUtility-compatible SDK designed specifically for Unity developers. 
-                        Includes comprehensive multiplayer functionality with coroutines, authentication, 
-                        and proper serialization for mobile builds.
-                    </p>
                     
                     <!-- Download Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-6">
@@ -187,21 +138,21 @@ $site_twitter = "@michitai";
                             <i class="fas fa-download mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download Unity SDK</div>
-                                <div class="text-xs opacity-80">SDK.cs - 50KB</div>
+                                <div class="text-xs opacity-80">SDK.cs</div>
                             </div>
                         </button>
                         <button id="downloadUnityExample" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
                             <i class="fas fa-code mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download Example</div>
-                                <div class="text-xs opacity-80">Game.cs Demo - 25KB</div>
+                                <div class="text-xs opacity-80">Game.cs</div>
                             </div>
                         </button>
                         <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
                             <i class="fab fa-github mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">View on GitHub</div>
-                                <div class="text-xs opacity-80">Full Repository</div>
+                                <div class="text-xs opacity-80">Repository</div>
                             </div>
                         </a>
                     </div>
@@ -214,8 +165,7 @@ $site_twitter = "@michitai";
     <section id="docs" class="py-16 bg-gradient-to-b from-black/20 to-transparent">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h3 class="text-4xl font-black text-white mb-6">Unity Scripting API</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Complete Unity-compatible API documentation for multiplayer games</p>
+                <h3 class="text-4xl font-black text-white mb-6">Unity API Documentation</h3>
             </div>
             
             <!-- Navigation Sidebar Style -->
@@ -446,14 +396,14 @@ $site_twitter = "@michitai";
                     <div id="room-updates" class="glass-effect rounded-2xl overflow-hidden">
                         <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-6">
                             <h2 class="text-2xl font-bold text-white">Room Updates</h2>
-                            <p class="text-white/80">Methods for real-time data synchronization between players</p>
+                            <p class="text-white/80">Methods for data synchronization between players</p>
                         </div>
                         <div class="p-6">
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">UpdatePlayersAsync</h3>
                                     <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;UpdatePlayersResponse&gt; UpdatePlayersAsync&lt;T&gt;(string playerToken, UpdatePlayers&lt;T&gt; request, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Sends real-time updates to specific players or all players. Uses typed UpdatePlayers parameter.</p>
+                                    <p class="text-white/70 mt-2">Sends updates to specific players or all players. Uses typed UpdatePlayers parameter.</p>
                                 </div>
                                 
                                 <div>

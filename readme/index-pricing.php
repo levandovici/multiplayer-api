@@ -4,7 +4,7 @@ require_once 'php/config.php';
 
 // Set page-specific meta tag variables
 $title = "Multiplayer API – Core Cells";
-$description = "A powerful multiplayer API for real-time gaming experiences. Build multiplayer games with ease using our comprehensive SDK and API.";
+$description = "A powerful multiplayer API for game developers. Build multiplayer games with ease using our comprehensive SDK and API.";
 $image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -365,7 +365,7 @@ $site_twitter = "@michitai";
             </h1>
             <p class="text-xl text-white/90 max-w-3xl mx-auto mb-10">
                 A scalable, secure REST API to connect any game to a shared multiplayer backend. 
-                Manage users, project keys, JSON game states, matchmaking, and RTS sessions — all from one unified interface.
+                Manage users, project keys, JSON game states and matchmaking — all from one unified interface.
             </p>
             
             <!-- Platform Selection -->
@@ -435,7 +435,7 @@ $site_twitter = "@michitai";
                         <i class="fas fa-gamepad text-2xl text-white"></i>
                     </div>
                     <h4 class="text-xl font-bold text-white mb-3 text-center">Multiplayer Logic</h4>
-                    <p class="text-white/80 text-center">Built-in support for matchmaking, real-time game sessions, and player state management.</p>
+                    <p class="text-white/80 text-center">Built-in support for matchmaking, game sessions, and player state management.</p>
                 </div>
             </div>
         </div>
@@ -704,7 +704,7 @@ $site_twitter = "@michitai";
                         <div class="flex items-start">
                             <i class="fas fa-check-circle feature-check mt-1 mr-3 flex-shrink-0"></i>
                             <div>
-                                <h4 class="font-semibold mb-1">Real-time Analytics</h4>
+                                <h4 class="font-semibold mb-1">Analytics</h4>
                                 <p class="text-sm text-white/70">Player metrics, game performance data</p>
                             </div>
                         </div>
@@ -782,7 +782,7 @@ $site_twitter = "@michitai";
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>
                             </tr>
                             <tr>
-                                <td class="py-4 px-4">Real-time Sync</td>
+                                <td class="py-4 px-4">Sync</td>
                                 <td class="text-center py-4 px-4"><i class="fas fa-times text-red-400"></i></td>
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>

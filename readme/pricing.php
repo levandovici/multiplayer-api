@@ -412,7 +412,7 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                         <div class="flex items-start">
                             <i class="fas fa-check-circle feature-check mt-1 mr-3 flex-shrink-0"></i>
                             <div>
-                                <h4 class="font-semibold mb-1">Real-time Analytics</h4>
+                                <h4 class="font-semibold mb-1">Analytics</h4>
                                 <p class="text-sm text-white/70">Player metrics, game performance data</p>
                             </div>
                         </div>
@@ -490,7 +490,7 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>
                             </tr>
                             <tr>
-                                <td class="py-4 px-4">Real-time Sync</td>
+                                <td class="py-4 px-4">Sync</td>
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>
                                 <td class="text-center py-4 px-4"><i class="fas fa-check text-green-400"></i></td>

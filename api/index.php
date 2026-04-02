@@ -3,8 +3,8 @@ session_start();
 require_once '../php/config.php';
 
 // Set page-specific meta tag variables
-$title = "REST API – Multiplayer API Documentation";
-$description = "Complete REST API documentation for multiplayer games. JSON responses, authentication, and real-time features.";
+$title = "Multiplayer API – REST API";
+$description = "Complete REST API documentation for multiplayer games. JSON responses, authentication, and other features.";
 $image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -190,11 +190,6 @@ $site_twitter = "@michitai";
                 REST API for<br>
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">Multiplayer Games</span>
             </h1>
-            <p class="text-xl text-white/90 max-w-3xl mx-auto mb-10">
-                Complete REST API with JSON responses. 
-                Real-time multiplayer, matchmaking, and game rooms.
-            </p>
-            <p class="text-white/80 mb-8">Complete REST API documentation with examples for Unity and other platforms.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#docs" class="glass-effect text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition">
                     <i class="fas fa-code mr-2"></i>View Endpoints
@@ -209,51 +204,11 @@ $site_twitter = "@michitai";
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-20">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl font-black text-white mb-6">API Features</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Built for modern multiplayer development</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-plug text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">RESTful Design</h4>
-                    <p class="text-white/80 text-center">Standard HTTP methods with predictable endpoints and consistent JSON responses.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-shield-alt text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Secure Auth</h4>
-                    <p class="text-white/80 text-center">API token authentication with player-specific private keys for secure access.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-transform">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-users text-2xl text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Real-time Multiplayer</h4>
-                    <p class="text-white/80 text-center">Matchmaking, game rooms, real-time updates, and player management systems.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- API Endpoints -->
     <section id="docs" class="py-16 bg-gradient-to-b from-black/20 to-transparent">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h3 class="text-4xl font-black text-white mb-6">API Endpoints</h3>
-                <p class="text-xl text-white/70 max-w-3xl mx-auto">Complete Unity-compatible API Endpoints</p>
             </div>
             
             <div class="glass-effect rounded-2xl overflow-hidden">
