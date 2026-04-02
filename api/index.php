@@ -33,7 +33,7 @@ $site_twitter = "@michitai";
     
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
             --success-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             --glass-bg: rgba(255, 255, 255, 0.1);
@@ -55,12 +55,12 @@ $site_twitter = "@michitai";
         .btn-primary {
             background: var(--primary-gradient);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
         }
         
         .animated-bg {
@@ -174,11 +174,8 @@ $site_twitter = "@michitai";
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="../index.php" class="text-white/80 hover:text-white px-4 py-2 rounded-lg hover:bg-white/10 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>Back to Main
-                    </a>
-                    <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="text-white/80 hover:text-white px-4 py-2 rounded-lg hover:bg-white/10 transition">
-                        <i class="fab fa-github mr-2"></i>GitHub
+                    <a href="https://api.michitai.com" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <i class="fas fa-home mr-2"></i>Home
                     </a>
                 </div>
             </div>
@@ -199,7 +196,7 @@ $site_twitter = "@michitai";
             </p>
             <p class="text-white/80 mb-8">Complete REST API documentation with examples for Unity and other platforms.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#docs" class="btn-primary text-white px-8 py-4 rounded-xl text-lg font-semibold">
+                <a href="#docs" class="glass-effect text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition">
                     <i class="fas fa-code mr-2"></i>View Endpoints
                 </a>
                 <a href="#authentication" class="glass-effect text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition">

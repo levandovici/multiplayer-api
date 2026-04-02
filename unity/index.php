@@ -88,11 +88,8 @@ $site_twitter = "@michitai";
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="../index.php" class="text-white/80 hover:text-white px-4 py-2 rounded-lg hover:bg-white/10 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>Back to Main
-                    </a>
-                    <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="text-white/80 hover:text-white px-4 py-2 rounded-lg hover:bg-white/10 transition">
-                        <i class="fab fa-github mr-2"></i>GitHub
+                    <a href="https://api.michitai.com" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <i class="fas fa-home mr-2"></i>Home
                     </a>
                 </div>
             </div>
@@ -112,7 +109,7 @@ $site_twitter = "@michitai";
                 Full serialization support, coroutines, and seamless integration with your Unity projects.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#sdk" class="btn-primary text-white px-8 py-4 rounded-xl text-lg font-semibold">
+                <a href="#sdk" class="glass-effect text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition">
                     <i class="fas fa-download mr-2"></i>Download Unity SDK
                 </a>
                 <a href="#docs" class="glass-effect text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition">
@@ -186,7 +183,7 @@ $site_twitter = "@michitai";
                     
                     <!-- Download Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-6">
-                        <button id="downloadUnitySdk" class="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                        <button id="downloadUnitySdk" class="flex-1 glass-effect text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:bg-white/20 flex items-center justify-center">
                             <i class="fas fa-download mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download Unity SDK</div>
