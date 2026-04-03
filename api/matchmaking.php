@@ -253,6 +253,8 @@ function createMatchmaking() {
     $strictFull = (bool) ($data['strict_full'] ?? false);
     $joinByRequests = (bool) ($data['join_by_requests'] ?? false);
 
+    $rules = null;
+
     if($isUnity)
     {
         $rules = $data['rules_json'] ?? null;

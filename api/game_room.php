@@ -515,23 +515,20 @@ function submitAction() {
 
     if($isUnity)
     {
-        if (!isset($data['request_data_json']) || empty($data['request_data_json'])) {
-            sendResponse(['success' => false, 'error' => 'Missing request_data_json'], 400);
-        }
-        else if(!is_string($data['request_data_json']))
-        {
-            sendResponse(['success' => false, 'error' => 'request_data_json must be a string'], 400);
-        }
+        if (isset($data['request_data_json']) && !empty($data['request_data_json'])) {
+            if(!is_string($data['request_data_json']))
+            {
+                sendResponse(['success' => false, 'error' => 'request_data_json must be a string'], 400);
+            }
 
-        $requestData = json_decode($data['request_data_json'], true);
+            $requestData = json_decode($data['request_data_json'], true);
+        }
     }
     else
     {
-        if (!isset($data['request_data']) || empty($data['request_data'])) {
-            sendResponse(['success' => false, 'error' => 'Missing request_data'], 400);
+        if (isset($data['request_data']) && !empty($data['request_data'])) {
+            $requestData = $data['request_data'];
         }
-
-        $requestData = $data['request_data'];
     }
 
     $roomId = getPlayerRoom($player['id']);
@@ -650,6 +647,8 @@ function getPendingActions() {
 }
 
 function completeAction($actionId) {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -658,8 +657,42 @@ function completeAction($actionId) {
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
-    $status = in_array($data['status'] ?? 'completed', ['completed', 'failed']) ? $data['status'] : 'completed';
-    $responseData = isset($data['response_data']) ? json_encode($data['response_data'], JSON_UNESCAPED_UNICODE) : null;
+
+    if(!isset($data['status']) || empty($data['status']))
+    {
+        sendResponse(['success' => false, 'error' => 'Status is required'], 400);
+    }
+
+    $status = in_array($data['status'] ?? 'completed', ['[processing', 'completed', 'failed']) ? $data['status'] : 'processing';
+
+    $responseData = null;
+
+    if($isUnity)
+    {
+       if(isset($data['response_data_json']) && !empty($data['response_data_json']))
+       {
+           if(!is_string($data['response_data_json']))
+           {
+               sendResponse(['success' => false, 'error' => 'response_data_json must be a string'], 400);
+           }
+
+            $responseData = $data['response_data_json'];
+       }
+    }
+    else
+    {
+        if(isset($data['response_data']) && !empty($data['response_data']))
+        {
+            $responseData = json_encode($data['response_data'], JSON_UNESCAPED_UNICODE);
+
+            if(json_last_error() !== JSON_ERROR_NONE)
+            {
+                sendResponse(['success' => false, 'error' => 'response_data is not valid JSON'], 400);
+            }
+        }
+    }
+
+    
 
     global $pdo;
     $stmt = $pdo->prepare("
