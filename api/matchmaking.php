@@ -267,7 +267,22 @@ function createMatchmaking() {
 
     $matchmakingName = mb_substr($matchmakingName, 0, 120);
 
-    $rules = null;
+
+    if($isUnity)
+    {
+        $playerData = $data['player_data_json'] ?? null;
+    }
+    else
+    {
+        $playerData = $data['player_data'] ?? null;
+    }
+
+    if (is_string($playerData)) {
+        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    } else {
+        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
+    }
+
 
     if($isUnity)
     {
@@ -278,7 +293,6 @@ function createMatchmaking() {
         $rules = $data['rules'] ?? null;
     }
 
-    // Normalize rules to JSON string
     if (is_string($rules)) {
         $rulesJson = $rules !== '' ? $rules : '{}';
     } else {
@@ -298,10 +312,10 @@ function createMatchmaking() {
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
-            (matchmaking_id, game_id, player_id)
-            VALUES (?, ?, ?)
+            (matchmaking_id, game_id, player_id, player_data)
+            VALUES (?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id']]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $playerDataJson]);
 
         $pdo->commit();
 
@@ -386,6 +400,8 @@ function requestJoin() {
 }
 
 function joinMatchmaking() {
+    global $isUnity;
+    
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -397,6 +413,23 @@ function joinMatchmaking() {
     $existingLobby = getPlayerMatchmaking($player['id']);
     if ($existingLobby) {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
+    }
+
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+
+    if($isUnity)
+    {
+        $playerData = $data['player_data_json'] ?? null;
+    }
+    else
+    {
+        $playerData = $data['player_data'] ?? null;
+    }
+
+    if (is_string($playerData)) {
+        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    } else {
+        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
     }
 
     global $pdo;
@@ -418,10 +451,10 @@ function joinMatchmaking() {
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
-            (matchmaking_id, game_id, player_id)
-            VALUES (?, ?, ?)
+            (matchmaking_id, game_id, player_id, player_data)
+            VALUES (?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $matchmaking['game_id'], $player['id']]);
+        $stmt->execute([$matchmakingId, $matchmaking['game_id'], $player['id'], $playerDataJson]);
 
         checkAndReassignHost($matchmakingId);
 
@@ -492,6 +525,7 @@ function getMatchmakingPlayers() {
                 mp.joined_at,
                 mp.last_heartbeat,
                 mp.is_online,
+                mp.player_data,
                 gp.player_name,
                 TIMESTAMPDIFF(SECOND, mp.last_heartbeat, NOW()) as seconds_since_heartbeat,
                 (m.host_player_id = mp.player_id) as is_host
@@ -510,6 +544,24 @@ function getMatchmakingPlayers() {
 
             $player['joined_at'] = isoUtc($player['joined_at']);
             $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
+            
+            // Handle player_data formatting for Unity
+            global $isUnity;
+            if($isUnity)
+            {
+                $decoded = json_decode($player['player_data']);
+                $player['player_data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                    ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                    : '{}';
+                unset($player['player_data']);
+            }
+            else
+            {
+                $decoded = json_decode($player['player_data']);
+                $player['player_data'] = (json_last_error() === JSON_ERROR_NONE)
+                    ? $decoded
+                    : null;
+            }
         }
 
         sendResponse([
@@ -927,10 +979,10 @@ function startMatchmaking() {
         ")->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmaking['host_switch'], $matchmakingId, $matchmaking['rules']]);
 
         $pdo->prepare("
-            INSERT INTO room_players (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online)
+            INSERT INTO room_players (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online, player_data)
             SELECT mp.player_id, ?, mp.game_id, gp.player_name, 
                    (m.host_player_id = mp.player_id) as is_host, 
-                   mp.last_heartbeat, mp.joined_at, TRUE
+                   mp.last_heartbeat, mp.joined_at, TRUE, mp.player_data
             FROM matchmaking_players mp
             JOIN game_players gp ON mp.player_id = gp.id
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id

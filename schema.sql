@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS room_players (
     is_online BOOLEAN DEFAULT TRUE,
     last_heartbeat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    player_data JSON DEFAULT (JSON_OBJECT()),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES game_rooms(room_id) ON DELETE CASCADE,
     FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
@@ -165,6 +166,7 @@ CREATE TABLE IF NOT EXISTS matchmaking_players (
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_heartbeat TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_online BOOLEAN DEFAULT TRUE,
+    player_data JSON DEFAULT (JSON_OBJECT()),
     
     PRIMARY KEY (matchmaking_id, player_id),
     INDEX idx_player_lobbies (player_id, is_online),

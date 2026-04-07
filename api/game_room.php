@@ -88,12 +88,12 @@ function getPlayerRoom($playerId) {
     return $result ? $result['room_id'] : null;
 }
 
-function addPlayerToRoom($roomId, $playerId, $playerName, $gameId, $isHost = false) {
+function addPlayerToRoom($roomId, $playerId, $playerName, $gameId, $isHost = false, $playerDataJson = '{}') {
     global $pdo;
     $stmt = $pdo->prepare("
         INSERT INTO room_players 
-            (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online) 
-        VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE)
+            (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online, player_data) 
+        VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, ?)
         ON DUPLICATE KEY UPDATE 
             room_id = VALUES(room_id),
             game_id = VALUES(game_id),
@@ -101,9 +101,10 @@ function addPlayerToRoom($roomId, $playerId, $playerName, $gameId, $isHost = fal
             is_host = VALUES(is_host),
             last_heartbeat = CURRENT_TIMESTAMP,
             joined_at = CURRENT_TIMESTAMP,
-            is_online = TRUE
+            is_online = TRUE,
+            player_data = VALUES(player_data)
     ");
-    $stmt->execute([$playerId, $roomId, $gameId, $playerName, $isHost ? 1 : 0]);
+    $stmt->execute([$playerId, $roomId, $gameId, $playerName, $isHost ? 1 : 0, $playerDataJson]);
 }
 
 function isHost($playerId) {
@@ -190,6 +191,23 @@ function createRoom() {
         $rules = $data['rules'] ?? null;
     }
 
+    // Handle player_data
+    if($isUnity)
+    {
+        $playerData = $data['player_data_json'] ?? null;
+    }
+    else
+    {
+        $playerData = $data['player_data'] ?? null;
+    }
+
+    // Normalize player_data to JSON string
+    if (is_string($playerData)) {
+        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    } else {
+        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
+    }
+
     // Normalize rules to JSON string
     if (is_string($rules)) {
         $rulesJson = $rules !== '' ? $rules : '{}';
@@ -203,7 +221,7 @@ function createRoom() {
         $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, host_switch, rules) VALUES (?, ?, ?, ?, ?, ?, ?)")
             ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $hostSwitch, $rulesJson]);
 
-        addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true);
+        addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true, $playerDataJson);
 
         $pdo->prepare("UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?")
             ->execute([$player['id'], $roomId]);
@@ -270,10 +288,29 @@ function listRooms() {
 }
 
 function joinRoom($roomId) {
+    global $isUnity;
+    
     $context = getAuthContext();
     $player = requirePlayer($context);
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
+
+    // Handle player_data
+    if($isUnity)
+    {
+        $playerData = $data['player_data_json'] ?? null;
+    }
+    else
+    {
+        $playerData = $data['player_data'] ?? null;
+    }
+
+    // Normalize player_data to JSON string
+    if (is_string($playerData)) {
+        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    } else {
+        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
+    }
 
     global $pdo;
     try {
@@ -302,7 +339,7 @@ function joinRoom($roomId) {
             }
         }
 
-        addPlayerToRoom($roomId, $player['id'], $player['player_name'], $room['game_id']);
+        addPlayerToRoom($roomId, $player['id'], $player['player_name'], $room['game_id'], false, $playerDataJson);
         checkAndReassignHost($roomId);
 
         $pdo->commit();
@@ -330,7 +367,7 @@ function listRoomPlayers() {
 
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT rp.player_id, rp.player_name, rp.is_host, rp.is_online, rp.last_heartbeat
+        SELECT rp.player_id, rp.player_name, rp.is_host, rp.is_online, rp.last_heartbeat, rp.player_data
         FROM room_players rp
         WHERE rp.room_id = ?
         ORDER BY rp.is_host DESC, rp.joined_at ASC, rp.player_name ASC
@@ -344,6 +381,24 @@ function listRoomPlayers() {
         $player['is_online'] = ((int)$player['is_online'] === 1);
 
         $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
+        
+        // Handle player_data formatting for Unity
+        global $isUnity;
+        if($isUnity)
+        {
+            $decoded = json_decode($player['player_data']);
+            $player['player_data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+                ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                : '{}';
+            unset($player['player_data']);
+        }
+        else
+        {
+            $decoded = json_decode($player['player_data']);
+            $player['player_data'] = (json_last_error() === JSON_ERROR_NONE)
+                ? $decoded
+                : null;
+        }
     }
 
     sendResponse(['success' => true, 'players' => $players, 'last_updated' => isoUtc(date('c'))]);
