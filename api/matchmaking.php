@@ -415,16 +415,7 @@ function joinMatchmaking() {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
     }
 
-    $data = json_decode(file_get_contents('php://input'), true) ?: [];
-
-    if($isUnity)
-    {
-        $playerData = $data['player_data_json'] ?? null;
-    }
-    else
-    {
-        $playerData = $data['player_data'] ?? null;
-    }
+    $playerData = json_decode(file_get_contents('php://input'), true) ?: [];
 
     if (is_string($playerData)) {
         $playerDataJson = $playerData !== '' ? $playerData : '{}';
