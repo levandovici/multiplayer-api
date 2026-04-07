@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS player_updates (
 CREATE TABLE IF NOT EXISTS matchmaking (
     matchmaking_id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     game_id INT NOT NULL,
+    matchmaking_name VARCHAR(255) NOT NULL,
     host_player_id INT NOT NULL,
     max_players INT NOT NULL DEFAULT 4 CHECK (max_players BETWEEN 2 AND 16),
     strict_full BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Game can start only when full',

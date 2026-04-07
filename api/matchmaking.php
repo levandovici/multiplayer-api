@@ -199,6 +199,7 @@ function listMatchmaking() {
         $stmt = $pdo->query("
             SELECT 
                 m.matchmaking_id,
+                m.matchmaking_name,
                 m.host_player_id,
                 m.max_players,
                 m.strict_full,
@@ -253,6 +254,10 @@ function createMatchmaking() {
     $strictFull = (bool) ($data['strict_full'] ?? false);
     $joinByRequests = (bool) ($data['join_by_requests'] ?? false);
 
+    $matchmakingId = bin2hex(random_bytes(16));
+    $matchmakingName = trim($data['matchmaking_name'] ?? 'Matchmaking ' . substr($matchmakingId, 0, 6));
+    $matchmakingName = mb_substr($matchmakingName, 0, 120);
+
     $rules = null;
 
     if($isUnity)
@@ -271,18 +276,16 @@ function createMatchmaking() {
         $rulesJson = isset($rules) ? json_encode($rules, JSON_UNESCAPED_UNICODE) : '{}';
     }
 
-    $matchmakingId = bin2hex(random_bytes(16));
-
     global $pdo;
     $pdo->beginTransaction();
     
     try {
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking 
-            (matchmaking_id, game_id, host_player_id, max_players, strict_full, join_by_requests, rules)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (matchmaking_id, game_id, matchmaking_name, host_player_id, max_players, strict_full, join_by_requests, rules)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $context['api']['id'], $player['id'], $maxPlayers, $strictFull, $joinByRequests, $rulesJson]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $matchmakingName, $player['id'], $maxPlayers, $strictFull, $joinByRequests, $rulesJson]);
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
@@ -296,6 +299,7 @@ function createMatchmaking() {
         sendResponse([
             'success' => true,
             'matchmaking_id' => $matchmakingId,
+            'matchmaking_name' => $matchmakingName,
             'max_players' => $maxPlayers,
             'strict_full' => $strictFull,
             'join_by_requests' => $joinByRequests,
@@ -603,6 +607,7 @@ function getCurrentMatchmakingStatus() {
                 mp.last_heartbeat,
                 mp.status as player_status,
                 m.host_player_id,
+                m.matchmaking_name,
                 m.max_players,
                 m.strict_full,
                 m.join_by_requests,
@@ -670,6 +675,7 @@ function getCurrentMatchmakingStatus() {
             'in_matchmaking' => true,
             'matchmaking' => [
                 'matchmaking_id' => $matchmaking['matchmaking_id'],
+                'matchmaking_name' => $matchmaking['matchmaking_name'],
                 'is_host' => (bool)$matchmaking['is_host'],
                 'max_players' => (int)$matchmaking['max_players'],
                 'current_players' => (int)$matchmaking['current_players'],
@@ -845,7 +851,7 @@ function startMatchmaking() {
         }
 
         $roomId = bin2hex(random_bytes(16));
-        $roomName = 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
+        $roomName = $matchmaking['matchmaking_name'] ?? 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
 
         $pdo->prepare("
             INSERT INTO game_rooms (room_id, game_id, room_name, max_players, matchmaking_id, rules)

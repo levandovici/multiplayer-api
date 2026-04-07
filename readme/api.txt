@@ -364,6 +364,7 @@ curl "https://api.michitai.com/api/matchmaking.php/list?api_token=API_TOKEN"
 curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
+    "matchmaking_name": "My Matchmaking",
     "maxPlayers": 4,
     "strictFull": true,
     "joinByRequests": true,
