@@ -195,7 +195,7 @@ namespace michitai
 
         // ==================== GAME ROOMS ====================
         public Task<RoomCreateResponse> CreateRoomAsync<TPlayerData, TRules>(string playerToken, string roomName, string password = null,
-            int maxPlayers = 4, bool hostSwitch = false, TPlayerData playerData = null, TRules rules = null, CancellationToken ct = default) 
+            int maxPlayers = 4, bool hostSwitch = false, TPlayerData playerData = null, TRules rules = null, CancellationToken ct = default)
             where TPlayerData : class, new() where TRules : class, new()
             => Send<RoomCreateResponse>(HttpMethod.Post, Url(Endpoints.GameRoomCreate, $"&player_token={playerToken}"),
                 new RoomCreateRequest(roomName, password, maxPlayers, hostSwitch, JsonUtility.ToJson(playerData), JsonUtility.ToJson(rules)), ct);
@@ -253,8 +253,8 @@ namespace michitai
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
                 new MatchmakingCreateRequest(matchmakingName, maxPlayers, strictFull, joinByRequests, hostSwitch, JsonUtility.ToJson(playerData), JsonUtility.ToJson(rules)), ct);
 
-        public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
-            => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
+        public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync<T>(string playerToken, string matchmakingId, T playerData = null, CancellationToken ct = default) where T : class, new()
+            => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), playerData, ct);
 
         public Task<MatchmakingPermissionResponse> RespondToJoinRequestAsync(string playerToken, string requestId, MatchmakingRequestAction action, CancellationToken ct = default)
             => Send<MatchmakingPermissionResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingResponse, requestId), $"&player_token={playerToken}"),
