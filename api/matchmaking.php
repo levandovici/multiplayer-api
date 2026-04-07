@@ -90,7 +90,7 @@ function getPlayerMatchmaking($playerId) {
         SELECT mp.matchmaking_id
         FROM matchmaking_players mp
         JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-        WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
+        WHERE mp.player_id = ? AND mp.is_online = TRUE AND m.is_started = FALSE
         LIMIT 1
     ");
     $stmt->execute([$playerId]);
@@ -119,7 +119,7 @@ function getPlayerMatchmakingDetails($playerId) {
             mp.matchmaking_id, 
             m.host_player_id,
             (m.host_player_id = ?) as is_host,
-            mp.status as player_status,
+            mp.is_online as is_online,
             mp.joined_at,
             mp.last_heartbeat,
             m.max_players,
@@ -132,7 +132,7 @@ function getPlayerMatchmakingDetails($playerId) {
             m.last_heartbeat as lobby_heartbeat
         FROM matchmaking_players mp
         JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-        WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
+        WHERE mp.player_id = ? AND mp.is_online = TRUE AND m.is_started = FALSE
         LIMIT 1
     ");
     $stmt->execute([$playerId, $playerId]);
@@ -211,7 +211,7 @@ function listMatchmaking() {
                 COUNT(mp.player_id) as current_players,
                 gp.player_name as host_name
             FROM matchmaking m
-            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.status = 'active'
+            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.is_online = TRUE
             LEFT JOIN game_players gp ON m.host_player_id = gp.id
             WHERE m.is_started = FALSE
             GROUP BY m.matchmaking_id
@@ -353,7 +353,7 @@ function requestJoin() {
         $stmt = $pdo->prepare("
             SELECT m.*, COUNT(mp.player_id) as current_players
             FROM matchmaking m
-            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.status = 'active'
+            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.is_online = TRUE
             WHERE m.matchmaking_id = ? AND m.is_started = FALSE
             GROUP BY m.matchmaking_id
         ");
@@ -405,7 +405,7 @@ function joinMatchmaking() {
         $stmt = $pdo->prepare("
             SELECT m.*, COUNT(mp.player_id) as current_players
             FROM matchmaking m
-            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.status = 'active'
+            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.is_online = TRUE
             WHERE m.matchmaking_id = ? AND m.is_started = FALSE
             GROUP BY m.matchmaking_id
         ");
@@ -450,7 +450,7 @@ function leaveMatchmaking() {
             SELECT mp.matchmaking_id, m.host_player_id, m.host_switch
             FROM matchmaking_players mp
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-            WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
+            WHERE mp.player_id = ? AND mp.is_online = TRUE AND m.is_started = FALSE
             LIMIT 1
         ");
         $stmt->execute([$player['id']]);
@@ -491,7 +491,7 @@ function getMatchmakingPlayers() {
                 mp.player_id,
                 mp.joined_at,
                 mp.last_heartbeat,
-                mp.status,
+                mp.is_online,
                 gp.player_name,
                 TIMESTAMPDIFF(SECOND, mp.last_heartbeat, NOW()) as seconds_since_heartbeat,
                 (m.host_player_id = mp.player_id) as is_host
@@ -537,7 +537,7 @@ function updateMatchmakingHeartbeat() {
     try {
         $pdo->prepare("
             UPDATE matchmaking_players 
-            SET last_heartbeat = CURRENT_TIMESTAMP, status = 'active'
+            SET last_heartbeat = CURRENT_TIMESTAMP, is_online = TRUE
             WHERE matchmaking_id = ? AND player_id = ?
         ")->execute([$matchmakingId, $player['id']]);
 
@@ -580,7 +580,7 @@ function checkAndReassignHost($matchmakingId) {
     $stmt->execute([$matchmakingId, $matchmakingId]);
     $currentHost = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $hostOffline = !$currentHost || ($currentHost['status'] !== 'active');
+    $hostOffline = !$currentHost || (!$currentHost['is_online']);
 
     if ($hostOffline) {
         if ($currentHost && $hostSwitch === true) {
@@ -598,7 +598,7 @@ function checkAndReassignHost($matchmakingId) {
                 SELECT player_id 
                 FROM matchmaking_players 
                 WHERE matchmaking_id = ? 
-                  AND status = 'active'
+                  AND is_online = TRUE
                 ORDER BY joined_at ASC
                 LIMIT 1
             ");
@@ -671,7 +671,7 @@ function getCurrentMatchmakingStatus() {
                 mp.player_id,
                 mp.joined_at,
                 mp.last_heartbeat,
-                mp.status as player_status,
+                mp.is_online as is_online,
                 m.host_player_id,
                 m.matchmaking_name,
                 m.max_players,
@@ -684,7 +684,7 @@ function getCurrentMatchmakingStatus() {
                 m.is_started,
                 m.started_at,
                 (mp.player_id = m.host_player_id) as is_host,
-                COUNT(CASE WHEN mp2.status = 'active' THEN 1 END) as current_players
+                COUNT(CASE WHEN mp2.is_online = TRUE THEN 1 END) as current_players
             FROM matchmaking_players mp
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
             LEFT JOIN matchmaking_players mp2 ON m.matchmaking_id = mp2.matchmaking_id
@@ -751,7 +751,7 @@ function getCurrentMatchmakingStatus() {
                 'host_switch' => (bool)$matchmaking['host_switch'],
                 'rules' => $rules,
                 'joined_at' => isoUtc($matchmaking['joined_at']),
-                'player_status' => $matchmaking['player_status'],
+                'is_online' => (bool)$matchmaking['is_online'],
                 'last_heartbeat' => isoUtc($matchmaking['last_heartbeat']),
                 'lobby_heartbeat' => isoUtc($matchmaking['lobby_heartbeat']),
                 'is_started' => (bool)$matchmaking['is_started'],
@@ -842,7 +842,7 @@ function respondToRequest() {
         $stmt = $pdo->prepare("
             SELECT COUNT(*) as current_players, max_players
             FROM matchmaking m
-            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.status = 'active'
+            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.is_online = TRUE
             WHERE m.matchmaking_id = ? AND m.is_started = FALSE
             GROUP BY m.matchmaking_id
         ");
@@ -866,7 +866,7 @@ function respondToRequest() {
             $pdo->prepare("
                 INSERT INTO matchmaking_players (matchmaking_id, game_id, player_id)
                 VALUES (?, ?, ?)
-                ON DUPLICATE KEY UPDATE status = 'active', joined_at = CURRENT_TIMESTAMP, last_heartbeat = CURRENT_TIMESTAMP
+                ON DUPLICATE KEY UPDATE is_online = TRUE, joined_at = CURRENT_TIMESTAMP, last_heartbeat = CURRENT_TIMESTAMP
             ")->execute([$request['matchmaking_id'], $request['game_id'], $request['player_id']]);
         }
 
@@ -906,7 +906,7 @@ function startMatchmaking() {
         $stmt = $pdo->prepare("
             SELECT m.*, COUNT(mp.player_id) as current_players
             FROM matchmaking m
-            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.status = 'active'
+            LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.is_online = TRUE
             WHERE m.matchmaking_id = ? AND m.is_started = FALSE
             GROUP BY m.matchmaking_id
         ");
@@ -934,7 +934,7 @@ function startMatchmaking() {
             FROM matchmaking_players mp
             JOIN game_players gp ON mp.player_id = gp.id
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-            WHERE mp.matchmaking_id = ? AND mp.status = 'active'
+            WHERE mp.matchmaking_id = ? AND mp.is_online = TRUE
         ")->execute([$roomId, $matchmakingId]);
 
         $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND player_id = ?");

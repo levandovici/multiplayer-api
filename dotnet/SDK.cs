@@ -902,7 +902,7 @@ namespace michitai
         public bool Join_by_requests { get; set; }
         public bool Host_switch { get; set; }
         public DateTimeOffset Joined_at { get; set; }
-        public string Player_status { get; set; } = string.Empty;
+        public bool Is_online { get; set; }
         public DateTimeOffset Last_heartbeat { get; set; }
         public DateTimeOffset Lobby_heartbeat { get; set; }
         public bool Is_started { get; set; }

@@ -164,12 +164,12 @@ CREATE TABLE IF NOT EXISTS matchmaking_players (
     player_id INT NOT NULL,
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_heartbeat TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    status ENUM('active', 'disconnected') DEFAULT 'active',
+    is_online BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (matchmaking_id, player_id),
-    INDEX idx_player_lobbies (player_id, status),
-    INDEX idx_game_players (game_id, status),
-    INDEX idx_lobby_players (matchmaking_id, status),
+    INDEX idx_player_lobbies (player_id, is_online),
+    INDEX idx_game_players (game_id, is_online),
+    INDEX idx_lobby_players (matchmaking_id, is_online),
     
     FOREIGN KEY (matchmaking_id) REFERENCES matchmaking(matchmaking_id) ON DELETE CASCADE,
     FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,

@@ -1250,7 +1250,7 @@ namespace michitai
         public bool strict_full;
         public bool join_by_requests;
         public bool host_switch;
-        public string player_status;
+        public bool is_online;
         public bool is_started;
 
 
