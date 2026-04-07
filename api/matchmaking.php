@@ -444,7 +444,7 @@ function leaveMatchmaking() {
     $pdo->beginTransaction();
     try {
         $stmt = $pdo->prepare("
-            SELECT mp.matchmaking_id, m.host_player_id
+            SELECT mp.matchmaking_id, m.host_player_id, m.host_switch
             FROM matchmaking_players mp
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
             WHERE mp.player_id = ? AND mp.status = 'active' AND m.is_started = FALSE
@@ -457,26 +457,32 @@ function leaveMatchmaking() {
 
         $matchmakingId = $playerLobby['matchmaking_id'];
         $isHost = ($playerLobby['host_player_id'] === $player['id']);
+        $hostSwitch = (bool) $playerLobby['host_switch'];
 
         $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ? AND player_id = ?")
              ->execute([$matchmakingId, $player['id']]);
 
         if ($isHost) {
-            $stmt = $pdo->prepare("
-                SELECT player_id 
-                FROM matchmaking_players 
-                WHERE matchmaking_id = ? AND status = 'active'
-                ORDER BY joined_at ASC
-                LIMIT 1
-            ");
-            $stmt->execute([$matchmakingId]);
-            $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($newHost) {
-                $pdo->prepare("UPDATE matchmaking SET host_player_id = ? WHERE matchmaking_id = ?")
-                     ->execute([$newHost['player_id'], $matchmakingId]);
-            } else {
+            if ($hostSwitch === false) {
+                $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
                 $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            } else {
+                $stmt = $pdo->prepare("
+                    SELECT player_id 
+                    FROM matchmaking_players 
+                    WHERE matchmaking_id = ? AND status = 'active'
+                    ORDER BY joined_at ASC
+                    LIMIT 1
+                ");
+                $stmt->execute([$matchmakingId]);
+                $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($newHost) {
+                    $pdo->prepare("UPDATE matchmaking SET host_player_id = ? WHERE matchmaking_id = ?")
+                         ->execute([$newHost['player_id'], $matchmakingId]);
+                } else {
+                    $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                }
             }
         }
 
