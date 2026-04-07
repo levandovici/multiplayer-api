@@ -357,6 +357,8 @@ function joinRoom($roomId) {
 }
 
 function listRoomPlayers() {
+    global $isUnity;
+
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -377,13 +379,12 @@ function listRoomPlayers() {
 
     foreach ($players as &$player) {
         $player['player_id'] = (int)$player['player_id'];
-        $player['is_host']   = ((int)$player['is_host'] === 1);
-        $player['is_online'] = ((int)$player['is_online'] === 1);
+        $player['is_host']   = (bool)$player['is_host'];
+        $player['is_online'] = (bool)$player['is_online'];
 
         $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
         
         // Handle player_data formatting for Unity
-        global $isUnity;
         if($isUnity)
         {
             $decoded = json_decode($player['player_data']);
