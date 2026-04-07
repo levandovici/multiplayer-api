@@ -337,6 +337,8 @@ function createMatchmaking() {
 }
 
 function requestJoin() {
+    global $isUnity;
+    
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -362,6 +364,14 @@ function requestJoin() {
         sendResponse(['success' => false, 'error' => 'You already have a pending request to this matchmaking lobby'], 400);
     }
 
+    $playerData = json_decode(file_get_contents('php://input'), true) ?: [];
+
+    if (is_string($playerData)) {
+        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    } else {
+        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
+    }
+
     $pdo->beginTransaction();
     try {
         $stmt = $pdo->prepare("
@@ -380,10 +390,10 @@ function requestJoin() {
         $requestId = bin2hex(random_bytes(16));
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_requests 
-            (request_id, matchmaking_id, game_id, player_id)
-            VALUES (?, ?, ?, ?)
+            (request_id, matchmaking_id, game_id, player_id, player_data)
+            VALUES (?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$requestId, $matchmakingId, $matchmaking['game_id'], $player['id']]);
+        $stmt->execute([$requestId, $matchmakingId, $matchmaking['game_id'], $player['id'], $playerDataJson]);
 
         $pdo->commit();
 
@@ -907,10 +917,10 @@ function respondToRequest() {
             }
 
             $pdo->prepare("
-                INSERT INTO matchmaking_players (matchmaking_id, game_id, player_id)
-                VALUES (?, ?, ?)
-                ON DUPLICATE KEY UPDATE is_online = TRUE, joined_at = CURRENT_TIMESTAMP, last_heartbeat = CURRENT_TIMESTAMP
-            ")->execute([$request['matchmaking_id'], $request['game_id'], $request['player_id']]);
+                INSERT INTO matchmaking_players (matchmaking_id, game_id, player_id, player_data)
+                VALUES (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE is_online = TRUE, joined_at = CURRENT_TIMESTAMP, last_heartbeat = CURRENT_TIMESTAMP, player_data = VALUES(player_data)
+            ")->execute([$request['matchmaking_id'], $request['game_id'], $request['player_id'], $request['player_data']]);
         }
 
         $pdo->commit();

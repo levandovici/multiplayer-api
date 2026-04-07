@@ -188,6 +188,7 @@ CREATE TABLE IF NOT EXISTS matchmaking_requests (
     status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     responded_at TIMESTAMP NULL,
     responded_by INT NULL COMMENT 'Host player who approved/rejected',
+    player_data JSON DEFAULT (JSON_OBJECT()),
     
     INDEX idx_lobby_requests (matchmaking_id, status),
     INDEX idx_game_requests (game_id, status),
