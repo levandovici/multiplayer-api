@@ -200,23 +200,23 @@ namespace michitai
             => Send<ServerTimeWithOffsetResponse>(HttpMethod.Get, Url(Endpoints.Time, $"&utc={utcOffset:+#;-#}"), null, ct);
 
         // ==================== GAME ROOMS ====================
-        public Task<RoomCreateResponse> CreateRoomAsync<T>(string playerToken, string roomName, int maxPlayers = 4,
-            string? password = null, bool hostSwitch = false, T? rules = null, CancellationToken ct = default) where T : class, new()
+        public Task<RoomCreateResponse> CreateRoomAsync<TPlayerData, TRules>(string playerToken, string roomName, int maxPlayers = 4,
+            string? password = null, bool hostSwitch = false, TPlayerData? playerData = null, TRules? rules = null, CancellationToken ct = default) where TPlayerData : class, new() where TRules : class, new()
             => Send<RoomCreateResponse>(HttpMethod.Post, Url(Endpoints.GameRoomCreate, $"&player_token={playerToken}"),
-                new RoomCreateRequest<T>(roomName, maxPlayers, password, hostSwitch, rules), ct);
+                new RoomCreateRequest<TPlayerData, TRules>(roomName, maxPlayers, password, hostSwitch, playerData, rules), ct);
 
         public Task<RoomListResponse<T>> GetRoomsAsync<T>(CancellationToken ct = default) where T : class, new()
             => Send<RoomListResponse<T>>(HttpMethod.Get, Url(Endpoints.GameRoomList), null, ct);
 
-        public Task<RoomJoinResponse> JoinRoomAsync(string playerToken, string roomId, string? password = null, CancellationToken ct = default)
+        public Task<RoomJoinResponse> JoinRoomAsync<T>(string playerToken, string roomId, string? password = null, T? playerData = null, CancellationToken ct = default) where T : class, new()
             => Send<RoomJoinResponse>(HttpMethod.Post, Url(string.Format(Endpoints.GameRoomJoin, roomId), $"&player_token={playerToken}"),
-                password != null ? new RoomJoinRequest(password) : null, ct);
+                (password != null || playerData != null) ? new RoomJoinRequest<T>(password, playerData) : null, ct);
 
         public Task<RoomLeaveResponse> LeaveRoomAsync(string playerToken, CancellationToken ct = default)
             => Send<RoomLeaveResponse>(HttpMethod.Post, Url(Endpoints.GameRoomLeave, $"&player_token={playerToken}"), null, ct);
 
-        public Task<RoomPlayersResponse> GetRoomPlayersAsync(string playerToken, CancellationToken ct = default)
-            => Send<RoomPlayersResponse>(HttpMethod.Get, Url(Endpoints.GameRoomPlayers, $"&player_token={playerToken}"), null, ct);
+        public Task<RoomPlayersResponse<T>> GetRoomPlayersAsync<T>(string playerToken, CancellationToken ct = default) where T : class, new()
+            => Send<RoomPlayersResponse<T>>(HttpMethod.Get, Url(Endpoints.GameRoomPlayers, $"&player_token={playerToken}"), null, ct);
 
         public Task<HeartbeatResponse> SendRoomHeartbeatAsync(string playerToken, CancellationToken ct = default)
             => Send<HeartbeatResponse>(HttpMethod.Post, Url(Endpoints.GameRoomHeartbeat, $"&player_token={playerToken}"), null, ct);
@@ -256,10 +256,10 @@ namespace michitai
         public Task<MatchmakingListResponse<T>> GetMatchmakingLobbiesAsync<T>(CancellationToken ct = default) where T : class, new()
             => Send<MatchmakingListResponse<T>>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
-        public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<T>(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false,
-            bool joinByRequests = false, bool hostSwitch = false, T? rules = null, CancellationToken ct = default) where T : class, new()
+        public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<TPlayerData, TRules>(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false,
+            bool joinByRequests = false, bool hostSwitch = false, TPlayerData? playerData = null, TRules? rules = null, CancellationToken ct = default) where TPlayerData : class, new() where TRules : class, new()
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new MatchmakingCreateRequest<T>(matchmakingName, maxPlayers, strictFull, joinByRequests, hostSwitch, rules), ct);
+                new MatchmakingCreateRequest<TPlayerData, TRules>(matchmakingName, maxPlayers, strictFull, joinByRequests, hostSwitch, playerData, rules), ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -274,14 +274,14 @@ namespace michitai
         public Task<MatchmakingCurrentResponse<T>> GetCurrentMatchmakingStatusAsync<T>(string playerToken, CancellationToken ct = default) where T : class, new()
             => Send<MatchmakingCurrentResponse<T>>(HttpMethod.Get, Url(Endpoints.MatchmakingCurrent, $"&player_token={playerToken}"), null, ct);
 
-        public Task<MatchmakingDirectJoinResponse> JoinMatchmakingDirectlyAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
-            => Send<MatchmakingDirectJoinResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingJoin, matchmakingId), $"&player_token={playerToken}"), null, ct);
+        public Task<MatchmakingDirectJoinResponse> JoinMatchmakingDirectlyAsync<T>(string playerToken, string matchmakingId, T? playerData = null, CancellationToken ct = default) where T : class, new()
+            => Send<MatchmakingDirectJoinResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingJoin, matchmakingId), $"&player_token={playerToken}"), playerData, ct);
 
         public Task<MatchmakingLeaveResponse> LeaveMatchmakingAsync(string playerToken, CancellationToken ct = default)
             => Send<MatchmakingLeaveResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingLeave, $"&player_token={playerToken}"), null, ct);
 
-        public Task<MatchmakingPlayersResponse> GetMatchmakingPlayersAsync(string playerToken, CancellationToken ct = default)
-            => Send<MatchmakingPlayersResponse>(HttpMethod.Get, Url(Endpoints.MatchmakingPlayers, $"&player_token={playerToken}"), null, ct);
+        public Task<MatchmakingPlayersResponse<T>> GetMatchmakingPlayersAsync<T>(string playerToken, CancellationToken ct = default) where T : class, new()
+            => Send<MatchmakingPlayersResponse<T>>(HttpMethod.Get, Url(Endpoints.MatchmakingPlayers, $"&player_token={playerToken}"), null, ct);
 
         public Task<MatchmakingHeartbeatResponse> SendMatchmakingHeartbeatAsync(string playerToken, CancellationToken ct = default)
             => Send<MatchmakingHeartbeatResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingHeartbeat, $"&player_token={playerToken}"), null, ct);
@@ -359,7 +359,8 @@ namespace michitai
         }
     }
 
-    public class RoomCreateRequest<T> where T : class, new()
+    public class RoomCreateRequest<TPlayerData, TRules> 
+        where TPlayerData : class, new() where TRules : class, new()
     {
         [JsonInclude]
         private string Room_name { get; set; } = string.Empty;
@@ -370,30 +371,37 @@ namespace michitai
         [JsonInclude]
         private bool Host_switch { get; set; }
         [JsonInclude]
-        private T? Rules { get; set; }
+        private TPlayerData? Player_data { get; set; }
+        [JsonInclude]
+        private TRules? Rules { get; set; }
 
 
 
-        public RoomCreateRequest(string room_name, int max_players, string? password = null, bool hostSwitch = false, T? rules = null)
+        public RoomCreateRequest(string room_name, int max_players, string? password = null,
+            bool hostSwitch = false, TPlayerData? playerData = null, TRules? rules = null)
         {
             Room_name = room_name;
             Password = password;
             Max_players = max_players;
             Host_switch = hostSwitch;
+            Player_data = playerData;
             Rules = rules;
         }
     }
 
-    public class RoomJoinRequest
+    public class RoomJoinRequest<T> where T : class, new()
     {
         [JsonInclude]
         private string? Password { get; set; }
+        [JsonInclude]
+        private T? Player_data { get; set; }
 
 
 
-        public RoomJoinRequest(string? password = null)
+        public RoomJoinRequest(string? password = null, T? playerData = null)
         {
             this.Password = password;
+            this.Player_data = playerData;
         }
     }
 
@@ -451,7 +459,8 @@ namespace michitai
         }
     }
 
-    public class MatchmakingCreateRequest<T> where T : class, new()
+    public class MatchmakingCreateRequest<TPlayerData, TRules> 
+        where TPlayerData : class where TRules : class, new()
     {
         [JsonInclude]
         private string Matchmaking_name { get; set; } = string.Empty;
@@ -464,17 +473,21 @@ namespace michitai
         [JsonInclude]
         private bool Host_switch { get; set; }
         [JsonInclude]
-        private T? Rules { get; set; }
+        private TPlayerData? Player_data { get; set; }
+        [JsonInclude]
+        private TRules? Rules { get; set; }
 
 
 
-        public MatchmakingCreateRequest(string matchmakingName, int maxPlayers, bool strictFull, bool joinByRequests = false, bool hostSwitch = false, T? rules = null)
+        public MatchmakingCreateRequest(string matchmakingName, int maxPlayers, bool strictFull,
+            bool joinByRequests = false, bool hostSwitch = false, TPlayerData? playerData = null, TRules? rules = null)
         {
             this.Matchmaking_name = matchmakingName;
             this.Max_players = maxPlayers;
             this.Strict_full = strictFull;
             this.Join_by_requests = joinByRequests;
             this.Host_switch = hostSwitch;
+            this.Player_data = playerData;
             this.Rules = rules;
         }
     }
@@ -676,18 +689,19 @@ namespace michitai
         public string Message { get; set; } = string.Empty;
     }
 
-    public class RoomPlayer
+    public class RoomPlayer<T> where T : class, new()
     {
         public int Player_id { get; set; }
         public string Player_name { get; set; } = string.Empty;
         public bool Is_host { get; set; }
         public bool Is_online { get; set; }
         public DateTimeOffset Last_heartbeat { get; set; }
+        public T? Player_data { get; set; }
     }
 
-    public class RoomPlayersResponse : ApiResponse
+    public class RoomPlayersResponse<T> : ApiResponse where T : class, new()
     {
-        public List<RoomPlayer> Players { get; set; } = new();
+        public List<RoomPlayer<T>> Players { get; set; } = new();
         public string Last_updated { get; set; } = string.Empty;
     }
 
@@ -921,20 +935,21 @@ namespace michitai
         public string Message { get; set; } = string.Empty;
     }
 
-    public class MatchmakingPlayersResponse : ApiResponse
+    public class MatchmakingPlayersResponse<T> : ApiResponse where T : class, new()
     {
-        public List<MatchmakingPlayer> Players { get; set; } = new();
+        public List<MatchmakingPlayer<T>> Players { get; set; } = new();
     }
 
-    public class MatchmakingPlayer
+    public class MatchmakingPlayer<T> where T : class, new()
     {
         public int Player_id { get; set; }
         public DateTimeOffset Joined_at { get; set; }
         public DateTimeOffset Last_heartbeat { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public bool Is_online { get; set; }
         public string Player_name { get; set; } = string.Empty;
         public int Seconds_since_heartbeat { get; set; }
         public bool Is_host { get; set; }
+        public T? Player_data { get; set; }
     }
 
     public class MatchmakingHeartbeatResponse : ApiResponse
