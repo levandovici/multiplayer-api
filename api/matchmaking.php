@@ -203,6 +203,7 @@ function listMatchmaking() {
                 m.host_player_id,
                 m.max_players,
                 m.strict_full,
+                m.join_by_requests,
                 m.host_switch,
                 m.rules,
                 m.created_at,
