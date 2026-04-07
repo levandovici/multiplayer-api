@@ -255,7 +255,13 @@ function createMatchmaking() {
     $joinByRequests = (bool) ($data['join_by_requests'] ?? false);
 
     $matchmakingId = bin2hex(random_bytes(16));
-    $matchmakingName = trim($data['matchmaking_name'] ?? 'Matchmaking ' . substr($matchmakingId, 0, 6));
+
+    if(isset($data['matchmaking_name']) && !empty($data['matchmaking_name'])) {
+        $matchmakingName = $data['matchmaking_name'];
+    } else {
+        $matchmakingName = 'Matchmaking ' . substr($matchmakingId, 0, 6);
+    }
+
     $matchmakingName = mb_substr($matchmakingName, 0, 120);
 
     $rules = null;

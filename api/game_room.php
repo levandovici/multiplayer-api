@@ -168,7 +168,13 @@ function createRoom() {
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
     $roomId = bin2hex(random_bytes(16));
-    $roomName = trim($data['room_name'] ?? 'Game Room ' . substr($roomId, 0, 6));
+
+    if(isset($data['room_name']) && !empty($data['room_name'])) {
+        $roomName = $data['room_name'];
+    } else {
+        $roomName = 'Game Room ' . substr($roomId, 0, 6);
+    }
+
     $roomName = mb_substr($roomName, 0, 120);
 
     $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
