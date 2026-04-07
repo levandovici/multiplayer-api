@@ -91,11 +91,11 @@ public class Game
 
         string matchmakingId = await CreateMatchmakingLobby("DEMO 1 Matchmaking", joinByRequests: true);
 
-        string req1 = await RequestToJoinMatchmaking(players["p1"].Token, matchmakingId);
+        string req1 = await RequestToJoinMatchmaking(players["p1"].Token, matchmakingId, null);
         await CheckJoinRequestStatus(players["p1"].Token, req1);
         await ApproveJoinRequest(players["host"].Token, req1);
 
-        string req2 = await RequestToJoinMatchmaking(players["p2"].Token, matchmakingId);
+        string req2 = await RequestToJoinMatchmaking(players["p2"].Token, matchmakingId, new PlayerData());
         await CheckJoinRequestStatus(players["p2"].Token, req2);
 
         await GetCurrentMatchmakingStatus();
@@ -124,7 +124,7 @@ public class Game
             if (players["host"].Token == p.Token)
                 continue;
 
-            await JoinMatchmakingDirectly(p.Token, matchmakingId);
+            await JoinMatchmakingDirectly(p.Token, matchmakingId, new PlayerData());
         }
 
         await GetCurrentMatchmakingStatus();
@@ -249,14 +249,16 @@ public class Game
     {
         RulesData rules = new RulesData { Mode = "tdm", Map = "arena" };
 
-        var res = await sdk!.CreateMatchmakingLobbyAsync(matchmakingName, players["host"].Token, 4, false, joinByRequests, false, new PlayerData(), rules);
+        PlayerData playerData = new PlayerData { Level = 3, Rank = "Diamond" };
+
+        var res = await sdk!.CreateMatchmakingLobbyAsync<PlayerData, RulesData>(players["host"].Token, matchmakingName, 4, false, joinByRequests, false, playerData, rules);
         Console.WriteLine($"[MATCHMAKING] Lobby created (requests={joinByRequests})");
         return res.Matchmaking_id;
     }
 
-    private static async Task<string> RequestToJoinMatchmaking(string token, string matchmakingId)
+    private static async Task<string> RequestToJoinMatchmaking(string token, string matchmakingId, PlayerData? playerData = null)
     {
-        var req = await sdk!.RequestToJoinMatchmakingAsync(token, matchmakingId);
+        var req = await sdk!.RequestToJoinMatchmakingAsync<PlayerData>(token, matchmakingId, playerData);
         Console.WriteLine($"[REQUEST] Sent: {req.Request_id}");
         return req.Request_id;
     }
@@ -273,9 +275,9 @@ public class Game
         Console.WriteLine($"[APPROVE] {resp.Message}");
     }
 
-    private static async Task JoinMatchmakingDirectly(string token, string matchmakingId)
+    private static async Task JoinMatchmakingDirectly(string token, string matchmakingId, PlayerData? playerData = null)
     {
-        await sdk!.JoinMatchmakingDirectlyAsync<PlayerData>(token, matchmakingId);
+        await sdk!.JoinMatchmakingDirectlyAsync<PlayerData>(token, matchmakingId, playerData);
         Console.WriteLine("[JOIN] Player joined directly");
     }
 
@@ -338,8 +340,7 @@ public class Game
         foreach (var p in players.Values)
             await SafeExecute(async () => await sdk!.SendRoomHeartbeatAsync(p.Token), $"RoomHeartbeat {p.Name}");
 
-        foreach (var p in players.Values)
-            await SafeExecute(async () => await sdk!.LeaveRoomAsync(p.Token), $"LeaveRoom {p.Name}");
+        await SafeExecute(async () => await sdk!.LeaveRoomAsync(players["host"].Token), $"LeaveRoom {players["host"].Name}");
     }
 
     private static async Task SafeExecute(Func<Task> action, string operation)
@@ -379,6 +380,15 @@ public class Game
         public int Level { get; set; }
 
         public string Rank { get; set; } = string.Empty;
+
+
+
+        public PlayerData()
+        {
+            Level = 1;
+
+            Rank = "Default";
+        }
     }
 
     private class RulesData

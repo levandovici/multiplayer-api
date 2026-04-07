@@ -261,8 +261,8 @@ namespace michitai
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
                 new MatchmakingCreateRequest<TPlayerData, TRules>(matchmakingName, maxPlayers, strictFull, joinByRequests, hostSwitch, playerData, rules), ct);
 
-        public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
-            => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
+        public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync<T>(string playerToken, string matchmakingId, T? playerData = null, CancellationToken ct = default) where T : class, new()
+            => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), playerData, ct);
 
         public Task<MatchmakingPermissionResponse> RespondToJoinRequestAsync(string playerToken, string requestId, MatchmakingRequestAction action, CancellationToken ct = default)
             => Send<MatchmakingPermissionResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingResponse, requestId), $"&player_token={playerToken}"),
@@ -359,7 +359,7 @@ namespace michitai
         }
     }
 
-    public class RoomCreateRequest<TPlayerData, TRules> 
+    public class RoomCreateRequest<TPlayerData, TRules>
         where TPlayerData : class, new() where TRules : class, new()
     {
         [JsonInclude]
@@ -459,7 +459,7 @@ namespace michitai
         }
     }
 
-    public class MatchmakingCreateRequest<TPlayerData, TRules> 
+    public class MatchmakingCreateRequest<TPlayerData, TRules>
         where TPlayerData : class where TRules : class, new()
     {
         [JsonInclude]
