@@ -372,15 +372,14 @@ function leaveRoom() {
             ->execute([$player['id'], $roomId]);
 
         if ($isHost) {
-            $stmt = $pdo->prepare("SELECT player_id FROM room_players WHERE room_id = ? AND is_online = TRUE ORDER BY joined_at ASC LIMIT 1");
+            // Get host_switch setting for this room
+            $stmt = $pdo->prepare("SELECT host_switch FROM game_rooms WHERE room_id = ?");
             $stmt->execute([$roomId]);
-            $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
+            $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
+            $hostSwitch = (bool) ($roomData['host_switch'] ?? false);
 
-            if ($newHost) {
-                $pdo->prepare("UPDATE room_players SET is_host = FALSE WHERE room_id = ?")->execute([$roomId]);
-                $pdo->prepare("UPDATE room_players SET is_host = TRUE WHERE player_id = ? AND room_id = ?")->execute([$newHost['player_id'], $roomId]);
-                $pdo->prepare("UPDATE game_rooms SET host_player_id = ? WHERE room_id = ?")->execute([$newHost['player_id'], $roomId]);
-            } else {
+            if ($hostSwitch === false) {
+                // If host_switch is false, delete the entire room
                 $stmt = $pdo->prepare("SELECT matchmaking_id FROM game_rooms WHERE room_id = ?");
                 $stmt->execute([$roomId]);
                 $matchmakingId = $stmt->fetchColumn();
@@ -394,7 +393,13 @@ function leaveRoom() {
                 $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
+            } else {
+                // If host_switch is true, use checkAndReassignHost to handle host transfer
+                checkAndReassignHost($roomId);
             }
+        } else {
+            // If not host, still check if room needs cleanup
+            checkAndReassignHost($roomId);
         }
 
         $pdo->commit();
@@ -408,6 +413,12 @@ function leaveRoom() {
 
 function checkAndReassignHost($roomId) {
     global $pdo;
+
+    // Get host_switch setting for this room
+    $stmt = $pdo->prepare("SELECT host_switch FROM game_rooms WHERE room_id = ?");
+    $stmt->execute([$roomId]);
+    $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
+    $hostSwitch = (bool) ($roomData['host_switch'] ?? false);
 
     $stmt = $pdo->prepare("
         SELECT player_id, is_online, last_heartbeat,
@@ -423,8 +434,8 @@ function checkAndReassignHost($roomId) {
     $hostOffline = !$currentHost || !$currentHost['is_online'];
 
     if ($hostOffline) {
-        if ($currentHost) {
-            // Remove host status from current (stale) host
+        if ($currentHost && $hostSwitch === true) {
+            // Only remove host status if host_switch is true (allows host transfer)
             $pdo->prepare("
                 UPDATE room_players 
                 SET is_host = FALSE 
@@ -432,36 +443,53 @@ function checkAndReassignHost($roomId) {
             ")->execute([$currentHost['player_id'], $roomId]);
         }
 
-        // Find next available online player (oldest joined first)
-        $stmt = $pdo->prepare("
-            SELECT player_id 
-            FROM room_players 
-            WHERE room_id = ? 
-              AND is_online = TRUE
-            ORDER BY joined_at ASC
-            LIMIT 1
-        ");
-        $stmt->execute([$roomId]);
-        $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($hostSwitch === true) {
+            // Find next available online player (oldest joined first)
+            $stmt = $pdo->prepare("
+                SELECT player_id 
+                FROM room_players 
+                WHERE room_id = ? 
+                  AND is_online = TRUE
+                ORDER BY joined_at ASC
+                LIMIT 1
+            ");
+            $stmt->execute([$roomId]);
+            $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($newHost) {
-            // Assign new host and reactivate room if needed
-            $pdo->prepare("
-                UPDATE room_players 
-                SET is_host = TRUE
-                WHERE player_id = ? AND room_id = ?
-            ")->execute([$newHost['player_id'], $roomId]);
+            if ($newHost) {
+                // Assign new host and reactivate room if needed
+                $pdo->prepare("
+                    UPDATE room_players 
+                    SET is_host = TRUE
+                    WHERE player_id = ? AND room_id = ?
+                ")->execute([$newHost['player_id'], $roomId]);
 
-            $pdo->prepare("
-                UPDATE game_rooms 
-                SET host_player_id = ?,
-                    is_active = TRUE
-                WHERE room_id = ?
-            ")->execute([$newHost['player_id'], $roomId]);
+                $pdo->prepare("
+                    UPDATE game_rooms 
+                    SET host_player_id = ?,
+                        is_active = TRUE
+                    WHERE room_id = ?
+                ")->execute([$newHost['player_id'], $roomId]);
+            } else {
+                // No players left -> clean up and deactivate
+                $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
+                $pdo->prepare("UPDATE game_rooms SET is_active = FALSE WHERE room_id = ?")->execute([$roomId]);
+            }
         } else {
-            // No players left → clean up and deactivate
+            // If host_switch is false and host left, delete the entire room
+            $stmt = $pdo->prepare("SELECT matchmaking_id FROM game_rooms WHERE room_id = ?");
+            $stmt->execute([$roomId]);
+            $matchmakingId = $stmt->fetchColumn();
+
+            if ($matchmakingId) {
+                $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            }
+
             $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
-            $pdo->prepare("UPDATE game_rooms SET is_active = FALSE WHERE room_id = ?")->execute([$roomId]);
+            $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
+            $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
         }
     }
 }
