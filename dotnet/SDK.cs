@@ -256,10 +256,10 @@ namespace michitai
         public Task<MatchmakingListResponse<T>> GetMatchmakingLobbiesAsync<T>(CancellationToken ct = default) where T : class, new()
             => Send<MatchmakingListResponse<T>>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
-        public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<T>(string playerToken, int maxPlayers = 4, bool strictFull = false,
+        public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<T>(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false,
             bool joinByRequests = false, T? rules = null, CancellationToken ct = default) where T : class, new()
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new MatchmakingCreateRequest<T>(maxPlayers, strictFull, joinByRequests, rules), ct);
+                new MatchmakingCreateRequest<T>(matchmakingName, maxPlayers, strictFull, joinByRequests, rules), ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -451,6 +451,8 @@ namespace michitai
     public class MatchmakingCreateRequest<T> where T : class, new()
     {
         [JsonInclude]
+        private string Matchmaking_name { get; set; } = string.Empty;
+        [JsonInclude]
         private int Max_players { get; set; }
         [JsonInclude]
         private bool Strict_full { get; set; }
@@ -461,8 +463,9 @@ namespace michitai
 
 
 
-        public MatchmakingCreateRequest(int maxPlayers, bool strictFull, bool joinByRequests, T? rules)
+        public MatchmakingCreateRequest(string matchmakingName, int maxPlayers, bool strictFull, bool joinByRequests, T? rules)
         {
+            this.Matchmaking_name = matchmakingName;
             this.Max_players = maxPlayers;
             this.Strict_full = strictFull;
             this.Join_by_requests = joinByRequests;
@@ -814,6 +817,7 @@ namespace michitai
     public class MatchmakingLobby<T> where T : class, new()
     {
         public string Matchmaking_id { get; set; } = string.Empty;
+        public string Matchmaking_name { get; set; } = string.Empty;
         public int Host_player_id { get; set; }
         public int Max_players { get; set; }
         public int Strict_full { get; set; }
@@ -827,6 +831,7 @@ namespace michitai
     public class MatchmakingCreateResponse : ApiResponse
     {
         public string Matchmaking_id { get; set; } = string.Empty;
+        public string Matchmaking_name { get; set; } = string.Empty;
         public int Max_players { get; set; }
         public bool Strict_full { get; set; }
         public bool Join_by_requests { get; set; }
@@ -878,6 +883,7 @@ namespace michitai
     public class MatchmakingInfo<T> where T : class, new()
     {
         public string Matchmaking_id { get; set; } = string.Empty;
+        public string Matchmaking_name { get; set; } = string.Empty;
         public bool Is_host { get; set; }
         public int Max_players { get; set; }
         public int Current_players { get; set; }

@@ -89,7 +89,7 @@ public class Game
         Console.WriteLine("\n=== DEMO 1: MATCHMAKING WITH JOIN REQUESTS ===\n");
         await SetupPlayers();
 
-        string matchmakingId = await CreateMatchmakingLobby(joinByRequests: true);
+        string matchmakingId = await CreateMatchmakingLobby("DEMO 1 Matchmaking", joinByRequests: true);
 
         string req1 = await RequestToJoinMatchmaking(players["p1"].Token, matchmakingId);
         await CheckJoinRequestStatus(players["p1"].Token, req1);
@@ -117,7 +117,7 @@ public class Game
         Console.WriteLine("\n=== DEMO 2: MATCHMAKING DIRECT JOIN ===\n");
         await SetupPlayers();
 
-        string matchmakingId = await CreateMatchmakingLobby(joinByRequests: false);
+        string matchmakingId = await CreateMatchmakingLobby("DEMO 2 Matchmaking", joinByRequests: false);
 
         foreach (var p in players.Values)
         {
@@ -245,11 +245,11 @@ public class Game
         return res;
     }
 
-    private static async Task<string> CreateMatchmakingLobby(bool joinByRequests)
+    private static async Task<string> CreateMatchmakingLobby(string matchmakingName, bool joinByRequests)
     {
         RulesData rules = new RulesData { Mode = "tdm", Map = "arena" };
 
-        var res = await sdk!.CreateMatchmakingLobbyAsync(players["host"].Token, 4, false, joinByRequests, rules);
+        var res = await sdk!.CreateMatchmakingLobbyAsync(matchmakingName, players["host"].Token, 4, false, joinByRequests, rules);
         Console.WriteLine($"[MATCHMAKING] Lobby created (requests={joinByRequests})");
         return res.Matchmaking_id;
     }
