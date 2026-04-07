@@ -194,9 +194,9 @@ namespace michitai
             => Send<ServerTimeWithOffsetResponse>(HttpMethod.Get, Url(Endpoints.Time, $"&utc={utcOffset:+#;-#}"), null, ct);
 
         // ==================== GAME ROOMS ====================
-        public Task<RoomCreateResponse> CreateRoomAsync<T>(string playerToken, string roomName, string password = null, int maxPlayers = 4, T rules = null, CancellationToken ct = default) where T : class, new()
+        public Task<RoomCreateResponse> CreateRoomAsync<T>(string playerToken, string roomName, string password = null, int maxPlayers = 4, bool hostSwitch = false, T rules = null, CancellationToken ct = default) where T : class, new()
             => Send<RoomCreateResponse>(HttpMethod.Post, Url(Endpoints.GameRoomCreate, $"&player_token={playerToken}"),
-                new RoomCreateRequest(roomName, password, maxPlayers, JsonUtility.ToJson(rules)), ct);
+                new RoomCreateRequest(roomName, password, maxPlayers, hostSwitch, JsonUtility.ToJson(rules)), ct);
 
         public Task<RoomListResponse<T>> GetRoomsAsync<T>(CancellationToken ct = default) where T : class, new()
             => Send<RoomListResponse<T>>(HttpMethod.Get, Url(Endpoints.GameRoomList), null, ct);
@@ -247,9 +247,9 @@ namespace michitai
             => Send<MatchmakingListResponse>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
         public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<T>(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false,
-            bool joinByRequests = false, T rules = null, CancellationToken ct = default) where T : class, new()
+            bool joinByRequests = false, bool hostSwitch = false, T rules = null, CancellationToken ct = default) where T : class, new()
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new MatchmakingCreateRequest(matchmakingName, maxPlayers, strictFull, joinByRequests, JsonUtility.ToJson(rules)), ct);
+                new MatchmakingCreateRequest(matchmakingName, maxPlayers, strictFull, joinByRequests, hostSwitch, JsonUtility.ToJson(rules)), ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -431,11 +431,19 @@ namespace michitai
         public string room_name;
         public string password;
         public int max_players;
+        public bool host_switch;
         public string rules_json;   // Unity mode
 
 
 
-        public RoomCreateRequest(string roomName, string password, int maxPlayers, string rulesJson)
+        public RoomCreateRequest(string roomName, string password, int maxPlayers, bool hostSwitch, string rulesJson)
+        {
+            this.room_name = roomName;
+            this.password = password;
+            this.max_players = maxPlayers;
+            this.host_switch = hostSwitch;
+            this.rules_json = rulesJson;
+        }
         {
             this.room_name = roomName;
             this.password = password;
@@ -508,16 +516,18 @@ namespace michitai
         public int max_players;
         public bool strict_full;
         public bool join_by_requests;
+        public bool host_switch;
         public string rules_json;   //Unity mode
 
 
 
-        public MatchmakingCreateRequest(string matchmakingName, int maxPlayers, bool strictFull, bool joinByRequests, string rulesJson)
+        public MatchmakingCreateRequest(string matchmakingName, int maxPlayers, bool strictFull, bool joinByRequests, bool hostSwitch, string rulesJson)
         {
             this.matchmaking_name = matchmakingName;
             this.max_players = maxPlayers;
             this.strict_full = strictFull;
             this.join_by_requests = joinByRequests;
+            this.host_switch = hostSwitch;
             this.rules_json = rulesJson;
         }
     }
@@ -816,7 +826,8 @@ namespace michitai
         public string room_name;
         public int max_players;
         public int current_players;
-        public int has_password;
+        public bool has_password;
+        public bool host_switch;
 
 
 
@@ -1044,6 +1055,7 @@ namespace michitai
         public int max_players;
         public int current_players;
         public bool has_password;
+        public bool host_switch;
         public bool is_active;
         public string rules_json;   // Unity mode
         public string player_name;
@@ -1105,7 +1117,9 @@ namespace michitai
         public string matchmaking_name;
         public int host_player_id;
         public int max_players;
-        public int strict_full;
+        public bool strict_full;
+        public bool join_by_requests;
+        public bool host_switch;
         public string rules_json;           // Unity mode
         public int current_players;
         public string host_name;
@@ -1137,6 +1151,7 @@ namespace michitai
         public int max_players;
         public bool strict_full;
         public bool join_by_requests;
+        public bool host_switch;
         public bool is_host;
     }
 
@@ -1234,6 +1249,7 @@ namespace michitai
         public int current_players;
         public bool strict_full;
         public bool join_by_requests;
+        public bool host_switch;
         public string player_status;
         public bool is_started;
 
