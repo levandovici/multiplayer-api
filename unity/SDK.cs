@@ -582,7 +582,7 @@ namespace michitai
         public int id;
         public int game_id;
         public string player_name;
-        public bool is_active;
+        public bool is_online;
         public string last_login;
         public string last_logout;
         public string last_heartbeat;
@@ -618,7 +618,7 @@ namespace michitai
 
         public int id;
         public string player_name;
-        public bool is_active;
+        public bool is_online;
 
         
 

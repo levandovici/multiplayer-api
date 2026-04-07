@@ -177,7 +177,7 @@ try {
                         'game_id'         => (int)$player['game_id'],
                         'player_name'     => $player['player_name'],
                         'player_data_json'=> json_encode($playerData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-                        'is_active'       => (bool)$player['is_active'],
+                        'is_online'       => (bool)$player['is_online'],
                         'last_login'      => isoUtc($player['last_login']),
                         'last_logout'     => isoUtc($player['last_logout']),
                         'last_heartbeat'  => isoUtc($player['last_heartbeat']),
@@ -193,7 +193,7 @@ try {
                         'game_id'        => (int)$player['game_id'],
                         'player_name'    => $player['player_name'],
                         'player_data'    => $playerData,
-                        'is_active'      => (bool)$player['is_active'],
+                        'is_online'      => (bool)$player['is_online'],
                         'last_login'     => isoUtc($player['last_login']),
                         'last_logout'    => isoUtc($player['last_logout']),
                         'last_heartbeat' => isoUtc($player['last_heartbeat']),
@@ -252,7 +252,7 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid player token'], 403);
             }
             
-            $pdo->prepare("UPDATE game_players SET last_logout = NOW(), is_active = 0 WHERE id = ?")
+            $pdo->prepare("UPDATE game_players SET last_logout = NOW(), is_online = FALSE WHERE id = ?")
                 ->execute([$player['id']]);
             
             sendResponse([
@@ -277,14 +277,14 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid API credentials'], 401);
             }
             
-            $stmt = $pdo->prepare("SELECT id, player_name, is_active, last_login, last_logout, last_heartbeat, created_at 
+            $stmt = $pdo->prepare("SELECT id, player_name, is_online, last_login, last_logout, last_heartbeat, created_at 
                                    FROM game_players WHERE game_id = ?");
             $stmt->execute([$game['id']]);
             $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             foreach ($players as &$player) {
                 $player['id']        = (int)$player['id'];
-                $player['is_active'] = ((int)$player['is_active'] === 1);
+                $player['is_online'] = (bool)$player['is_online'];
 
                 $player['last_login']     = isoUtc($player['last_login']);
                 $player['last_logout']    = isoUtc($player['last_logout']);

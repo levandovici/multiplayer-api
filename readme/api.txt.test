@@ -2,7 +2,7 @@
 {"success":true,"player_id":"3","private_key":"cf24626c48177c7459b7bbcaa86538a93913","player_name":"TestPlayer","game_id":2}
 
 2) $ curl -X PUT "https://api.michitai.com/api/game_players.php/login?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&player_token=cf24626c48177c7459b7bbcaa86538a93913" -H "Content-Type: application/json"
-{"success":true,"player":{"id":3,"game_id":2,"player_name":"TestPlayer","player_data":{"level":1,"score":0,"inventory":["sword","shield"]},"is_active":1,"last_login":null,"last_heartbeat":null,"last_logout":null,"created_at":"2026-03-13 09:39:06","updated_at":"2026-03-13 09:39:06"}}
+{"success":true,"player":{"id":3,"game_id":2,"player_name":"TestPlayer","player_data":{"level":1,"score":0,"inventory":["sword","shield"]},"is_online":true,"last_login":null,"last_heartbeat":null,"last_logout":null,"created_at":"2026-03-13 09:39:06","updated_at":"2026-03-13 09:39:06"}}
 
 3) $ curl -X POST "https://api.michitai.com/api/game_players.php/heartbeat?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&player_token=cf24626c48177c7459b7bbcaa86538a93913" -H "Content-Type: application/json"
 {"success":true,"message":"Heartbeat updated","last_heartbeat":"2026-03-13 09:46:13"}
@@ -11,7 +11,7 @@
 {"success":true,"message":"Player logged out successfully","last_logout":"2026-03-13 09:46:37"}
 
 5) $ curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&private_token=25f77965f41ef117e4f8e570685c51c4ebdc"
-{"success":true,"count":3,"players":[{"id":1,"player_name":"TestPlayer","is_active":1,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:37:47"},{"id":3,"player_name":"TestPlayer","is_active":1,"last_login":"2026-03-13 09:40:35","last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:39:06"},{"id":2,"player_name":"TestPlayer","is_active":1,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:38:01"}]}
+{"success":true,"count":3,"players":[{"id":1,"player_name":"TestPlayer","is_online":ture,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:37:47"},{"id":3,"player_name":"TestPlayer","is_online":true,"last_login":"2026-03-13 09:40:35","last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:39:06"},{"id":2,"player_name":"TestPlayer","is_online":true,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:38:01"}]}
 
 6) $ curl -X GET "https://api.michitai.com/api/game_data.php/game/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
 {"success":true,"type":"game","game_id":4,"data":{"text":"hello world","game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}}

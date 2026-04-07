@@ -532,7 +532,7 @@ namespace michitai
     {
         public int Id { get; set; }
         public string Player_name { get; set; } = string.Empty;
-        public bool Is_active { get; set; }
+        public bool Is_online { get; set; }
         public DateTimeOffset? Last_login { get; set; }
         public DateTimeOffset Created_at { get; set; }
     }
@@ -547,7 +547,7 @@ namespace michitai
         public int Id { get; set; }
         public int Game_id { get; set; }
         public string Player_name { get; set; } = string.Empty;
-        public bool Is_active { get; set; }
+        public bool Is_online { get; set; }
         public DateTimeOffset? Last_login { get; set; }
         public DateTimeOffset Created_at { get; set; }
         public DateTimeOffset Updated_at { get; set; }

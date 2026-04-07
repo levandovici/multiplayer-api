@@ -26,7 +26,7 @@ CREATE TABLE game_players (
     player_name VARCHAR(100) NOT NULL,
     private_key VARCHAR(36) UNIQUE NOT NULL,
     player_data JSON DEFAULT (JSON_OBJECT()),
-    is_active BOOLEAN DEFAULT TRUE,
+    is_online BOOLEAN DEFAULT TRUE,
     last_login TIMESTAMP NULL,
     last_heartbeat TIMESTAMP NULL,
     last_logout TIMESTAMP NULL,
