@@ -364,12 +364,14 @@ function requestJoin() {
         sendResponse(['success' => false, 'error' => 'You already have a pending request to this matchmaking lobby'], 400);
     }
 
-    $playerData = json_decode(file_get_contents('php://input'), true) ?: [];
+    $rawInput = file_get_contents('php://input');
 
-    if (is_string($playerData)) {
-        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    $decoded = json_decode($rawInput, true);
+
+    if (json_last_error() === JSON_ERROR_NONE) {
+        $playerDataJson = $rawInput; // valid JSON, keep as-is
     } else {
-        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
+        $playerDataJson = '{}'; // fallback
     }
 
     $pdo->beginTransaction();
@@ -425,12 +427,14 @@ function joinMatchmaking() {
         sendResponse(['success' => false, 'error' => 'You are already in a matchmaking lobby'], 400);
     }
 
-    $playerData = json_decode(file_get_contents('php://input'), true) ?: [];
+    $rawInput = file_get_contents('php://input');
 
-    if (is_string($playerData)) {
-        $playerDataJson = $playerData !== '' ? $playerData : '{}';
+    $decoded = json_decode($rawInput, true);
+
+    if (json_last_error() === JSON_ERROR_NONE) {
+        $playerDataJson = $rawInput; // valid JSON, keep as-is
     } else {
-        $playerDataJson = isset($playerData) ? json_encode($playerData, JSON_UNESCAPED_UNICODE) : '{}';
+        $playerDataJson = '{}'; // fallback
     }
 
     global $pdo;
@@ -542,6 +546,7 @@ function getMatchmakingPlayers() {
         foreach ($players as &$player) {
             $player['player_id'] = (int)$player['player_id'];
             $player['is_host']   = (bool)$player['is_host'];
+            $player['is_online'] = (bool)$player['is_online'];
 
             $player['joined_at'] = isoUtc($player['joined_at']);
             $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
@@ -624,7 +629,8 @@ function checkAndReassignHost($matchmakingId) {
         SELECT mp.player_id, mp.last_heartbeat,
                TIMESTAMPDIFF(SECOND, mp.last_heartbeat, NOW()) as seconds_since_heartbeat,
                gp.last_heartbeat as player_last_heartbeat,
-               TIMESTAMPDIFF(SECOND, gp.last_heartbeat, NOW()) as player_seconds_since_heartbeat
+               TIMESTAMPDIFF(SECOND, gp.last_heartbeat, NOW()) as player_seconds_since_heartbeat,
+               mp.is_online
         FROM matchmaking_players mp
         JOIN game_players gp ON mp.player_id = gp.id
         WHERE mp.matchmaking_id = ? AND mp.player_id = (SELECT host_player_id FROM matchmaking WHERE matchmaking_id = ?)

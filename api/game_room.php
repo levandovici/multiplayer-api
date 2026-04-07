@@ -264,6 +264,9 @@ function listRooms() {
         $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         foreach ($rooms as &$room) {
+            $room['has_password'] = (bool)$room['has_password'];
+            $room['host_switch'] = (bool)$room['host_switch'];
+
             if($isUnity)
             {
                 $decoded = json_decode($room['rules']);
