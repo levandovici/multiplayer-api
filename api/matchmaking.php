@@ -422,6 +422,8 @@ function joinMatchmaking() {
         ");
         $stmt->execute([$matchmakingId, $matchmaking['game_id'], $player['id']]);
 
+        checkAndReassignHost($matchmakingId);
+
         $pdo->commit();
 
         sendResponse([
@@ -457,34 +459,11 @@ function leaveMatchmaking() {
 
         $matchmakingId = $playerLobby['matchmaking_id'];
         $isHost = ($playerLobby['host_player_id'] === $player['id']);
-        $hostSwitch = (bool) $playerLobby['host_switch'];
 
         $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ? AND player_id = ?")
              ->execute([$matchmakingId, $player['id']]);
 
-        if ($isHost) {
-            if ($hostSwitch === false) {
-                $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
-                $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
-            } else {
-                $stmt = $pdo->prepare("
-                    SELECT player_id 
-                    FROM matchmaking_players 
-                    WHERE matchmaking_id = ? AND status = 'active'
-                    ORDER BY joined_at ASC
-                    LIMIT 1
-                ");
-                $stmt->execute([$matchmakingId]);
-                $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($newHost) {
-                    $pdo->prepare("UPDATE matchmaking SET host_player_id = ? WHERE matchmaking_id = ?")
-                         ->execute([$newHost['player_id'], $matchmakingId]);
-                } else {
-                    $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
-                }
-            }
-        }
+        checkAndReassignHost($matchmakingId);
 
         $pdo->commit();
         sendResponse(['success' => true, 'message' => 'Successfully left matchmaking lobby']);
@@ -567,12 +546,83 @@ function updateMatchmakingHeartbeat() {
         $pdo->prepare("UPDATE game_players SET last_heartbeat = CURRENT_TIMESTAMP WHERE id = ?")
              ->execute([$player['id']]);
 
+        checkAndReassignHost($matchmakingId);
+
         $pdo->commit();
         sendResponse(['success' => true, 'status' => 'ok']);
     } catch (Exception $e) {
         $pdo->rollBack();
         error_log("Matchmaking heartbeat update failed: " . $e->getMessage());
         sendResponse(['success' => false, 'error' => 'Failed to update heartbeat'], 500);
+    }
+}
+
+function checkAndReassignHost($matchmakingId) {
+    global $pdo;
+
+    // Get host_switch setting for this matchmaking
+    $stmt = $pdo->prepare("SELECT host_switch FROM matchmaking WHERE matchmaking_id = ?");
+    $stmt->execute([$matchmakingId]);
+    $matchmakingData = $stmt->fetch(PDO::FETCH_ASSOC);
+    $hostSwitch = (bool) ($matchmakingData['host_switch'] ?? false);
+
+    $stmt = $pdo->prepare("
+        SELECT mp.player_id, mp.last_heartbeat,
+               TIMESTAMPDIFF(SECOND, mp.last_heartbeat, NOW()) as seconds_since_heartbeat,
+               gp.last_heartbeat as player_last_heartbeat,
+               TIMESTAMPDIFF(SECOND, gp.last_heartbeat, NOW()) as player_seconds_since_heartbeat
+        FROM matchmaking_players mp
+        JOIN game_players gp ON mp.player_id = gp.id
+        WHERE mp.matchmaking_id = ? AND mp.player_id = (SELECT host_player_id FROM matchmaking WHERE matchmaking_id = ?)
+        LIMIT 1
+    ");
+    $stmt->execute([$matchmakingId, $matchmakingId]);
+    $currentHost = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $hostOffline = !$currentHost || ($currentHost['status'] !== 'active');
+
+    if ($hostOffline) {
+        if ($currentHost && $hostSwitch === true) {
+            // Only remove host status if host_switch is true (allows host transfer)
+            $pdo->prepare("
+                UPDATE matchmaking 
+                SET host_player_id = NULL
+                WHERE matchmaking_id = ?
+            ")->execute([$matchmakingId]);
+        }
+
+        if ($hostSwitch === true) {
+            // Find next available active player (oldest joined first)
+            $stmt = $pdo->prepare("
+                SELECT player_id 
+                FROM matchmaking_players 
+                WHERE matchmaking_id = ? 
+                  AND status = 'active'
+                ORDER BY joined_at ASC
+                LIMIT 1
+            ");
+            $stmt->execute([$matchmakingId]);
+            $newHost = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($newHost) {
+                // Assign new host
+                $pdo->prepare("
+                    UPDATE matchmaking 
+                    SET host_player_id = ?
+                    WHERE matchmaking_id = ?
+                ")->execute([$newHost['player_id'], $matchmakingId]);
+            } else {
+                // No players left -> delete the entire matchmaking
+                $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+                $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            }
+        } else {
+            // If host_switch is false and host left, delete the entire matchmaking
+            $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+        }
     }
 }
 
