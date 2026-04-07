@@ -158,7 +158,7 @@ public class Game : MonoBehaviour
         Debug.Log("\n=== DEMO 3: DIRECT ROOM CREATION ===\n");
         await SetupPlayers();
 
-        var create = await sdk.CreateRoomAsync<RulesData>(players["host"].Token, "Direct Battle Arena", null, 4);
+        var create = await sdk.CreateRoomAsync<PlayerData, RulesData>(players["host"].Token, "Direct Battle Arena", null, 4);
         string roomId = create.room_id;
 
         await JoinRoom(players["p1"].Token, roomId);
@@ -243,7 +243,7 @@ public class Game : MonoBehaviour
 
         foreach (PlayerShort player in list.players)
         {
-            Debug.Log($"[PLAYERS LIST] Id: {player.id}, Name: {player.player_name}, Online: {player.is_active}, Login: {player.LastLogin}, Created: {player.CreatedAt}");
+            Debug.Log($"[PLAYERS LIST] Id: {player.id}, Name: {player.player_name}, Online: {player.is_online}, Login: {player.LastLogin}, Created: {player.CreatedAt}");
         }
     }
 
@@ -265,7 +265,7 @@ public class Game : MonoBehaviour
     {
         RulesData rules = new RulesData { mode = "tdm", map = "arena" };
 
-        var res = await sdk.CreateMatchmakingLobbyAsync(
+        var res = await sdk.CreateMatchmakingLobbyAsync<PlayerData, RulesData>(
             matchmakingName,
             players["host"].Token,
             maxPlayers: 4,
@@ -299,7 +299,7 @@ public class Game : MonoBehaviour
 
     private async Task JoinMatchmakingDirectly(string token, string matchmakingId)
     {
-        await sdk.JoinMatchmakingDirectlyAsync(token, matchmakingId);
+        await sdk.JoinMatchmakingDirectlyAsync<PlayerData>(token, matchmakingId);
         Debug.Log("[JOIN] Player joined matchmaking directly");
     }
 
@@ -312,7 +312,7 @@ public class Game : MonoBehaviour
 
     private async Task GetMatchmakingPlayers()
     {
-        var list = await sdk.GetMatchmakingPlayersAsync(players["host"].Token);
+        var list = await sdk.GetMatchmakingPlayersAsync<PlayerData>(players["host"].Token);
         Debug.Log($"[MATCHMAKING PLAYERS] {list.players.Count} players");
     }
 
@@ -325,7 +325,7 @@ public class Game : MonoBehaviour
 
     private async Task JoinRoom(string token, string roomId)
     {
-        await sdk.JoinRoomAsync(token, roomId);
+        await sdk.JoinRoomAsync<PlayerData>(token, roomId);
         Debug.Log($"[ROOM] Player joined room {roomId}");
     }
 
@@ -334,7 +334,7 @@ public class Game : MonoBehaviour
         Debug.Log("\n=== GAME ROOM FLOW ===\n");
 
         await sdk.GetRoomsAsync<RulesData>();
-        await sdk.GetCurrentRoomAsync(players["host"].Token);
+        await sdk.GetCurrentRoomAsync<RulesData>(players["host"].Token);
 
         // Players submit actions
         foreach (var p in players.Values)
@@ -364,7 +364,7 @@ public class Game : MonoBehaviour
         foreach (var p in players.Values)
             await SafeExecute(async () => await sdk.PollUpdatesAsync(p.Token), $"PollUpdates {p.Name}");
 
-        await sdk.GetRoomPlayersAsync(players["host"].Token);
+        await sdk.GetRoomPlayersAsync<PlayerData>(players["host"].Token);
 
         // Heartbeats
         foreach (var p in players.Values)
