@@ -246,10 +246,10 @@ namespace michitai
         public Task<MatchmakingListResponse> GetMatchmakingLobbiesAsync(CancellationToken ct = default)
             => Send<MatchmakingListResponse>(HttpMethod.Get, Url(Endpoints.MatchmakingList), null, ct);
 
-        public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<T>(string playerToken, int maxPlayers = 4, bool strictFull = false,
+        public Task<MatchmakingCreateResponse> CreateMatchmakingLobbyAsync<T>(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false,
             bool joinByRequests = false, T rules = null, CancellationToken ct = default) where T : class, new()
             => Send<MatchmakingCreateResponse>(HttpMethod.Post, Url(Endpoints.MatchmakingCreate, $"&player_token={playerToken}"),
-                new MatchmakingCreateRequest(maxPlayers, strictFull, joinByRequests, JsonUtility.ToJson(rules)), ct);
+                new MatchmakingCreateRequest(matchmakingName, maxPlayers, strictFull, joinByRequests, JsonUtility.ToJson(rules)), ct);
 
         public Task<MatchmakingJoinRequestResponse> RequestToJoinMatchmakingAsync(string playerToken, string matchmakingId, CancellationToken ct = default)
             => Send<MatchmakingJoinRequestResponse>(HttpMethod.Post, Url(string.Format(Endpoints.MatchmakingRequest, matchmakingId), $"&player_token={playerToken}"), null, ct);
@@ -504,6 +504,7 @@ namespace michitai
     [System.Serializable]
     public class MatchmakingCreateRequest
     {
+        public string matchmaking_name;
         public int max_players;
         public bool strict_full;
         public bool join_by_requests;
@@ -511,8 +512,9 @@ namespace michitai
 
 
 
-        public MatchmakingCreateRequest(int maxPlayers, bool strictFull, bool joinByRequests, string rulesJson)
+        public MatchmakingCreateRequest(string matchmakingName, int maxPlayers, bool strictFull, bool joinByRequests, string rulesJson)
         {
+            this.matchmaking_name = matchmakingName;
             this.max_players = maxPlayers;
             this.strict_full = strictFull;
             this.join_by_requests = joinByRequests;
@@ -1100,6 +1102,7 @@ namespace michitai
 
 
         public string matchmaking_id;
+        public string matchmaking_name;
         public int host_player_id;
         public int max_players;
         public int strict_full;
@@ -1130,6 +1133,7 @@ namespace michitai
     public class MatchmakingCreateResponse : ApiResponse
     {
         public string matchmaking_id;
+        public string matchmaking_name;
         public int max_players;
         public bool strict_full;
         public bool join_by_requests;
@@ -1224,6 +1228,7 @@ namespace michitai
 
 
         public string matchmaking_id;
+        public string matchmaking_name;
         public bool is_host;
         public int max_players;
         public int current_players;

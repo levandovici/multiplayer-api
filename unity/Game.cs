@@ -107,7 +107,7 @@ public class Game : MonoBehaviour
         Debug.Log("\n=== DEMO 1: MATCHMAKING WITH JOIN REQUESTS ===\n");
         await SetupPlayers();
 
-        string matchmakingId = await CreateMatchmakingLobby(joinByRequests: true);
+        string matchmakingId = await CreateMatchmakingLobby("DEMO 1 Matchmaking", joinByRequests: true);
 
         string req1 = await RequestToJoinMatchmaking(players["p1"].Token, matchmakingId);
         await CheckJoinRequestStatus(players["p1"].Token, req1);
@@ -135,7 +135,7 @@ public class Game : MonoBehaviour
         Debug.Log("\n=== DEMO 2: MATCHMAKING DIRECT JOIN ===\n");
         await SetupPlayers();
 
-        string matchmakingId = await CreateMatchmakingLobby(joinByRequests: false);
+        string matchmakingId = await CreateMatchmakingLobby("DEMO 2 Matchmaking", joinByRequests: false);
 
         foreach (var p in players.Values)
         {
@@ -261,11 +261,12 @@ public class Game : MonoBehaviour
         return res;
     }
 
-    private async Task<string> CreateMatchmakingLobby(bool joinByRequests)
+    private async Task<string> CreateMatchmakingLobby(string matchmakingName, bool joinByRequests)
     {
         RulesData rules = new RulesData { mode = "tdm", map = "arena" };
 
         var res = await sdk.CreateMatchmakingLobbyAsync(
+            matchmakingName,
             players["host"].Token,
             maxPlayers: 4,
             strictFull: false,
