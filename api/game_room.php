@@ -179,6 +179,7 @@ function createRoom() {
 
     $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
     $maxPlayers = max(2, min(16, (int)($data['max_players'] ?? 6)));
+    $hostSwitch = (bool) ($data['host_switch'] ?? false);
 
     if($isUnity)
     {
@@ -199,8 +200,8 @@ function createRoom() {
     try {
         $pdo->beginTransaction();
 
-        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, rules) VALUES (?, ?, ?, ?, ?, ?)")
-            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $rulesJson]);
+        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, host_switch, rules) VALUES (?, ?, ?, ?, ?, ?, ?)")
+            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $hostSwitch, $rulesJson]);
 
         addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true);
 
@@ -233,7 +234,7 @@ function listRooms() {
             SELECT r.room_id, r.room_name, r.max_players, 
                    COUNT(rp.player_id) as current_players,
                    r.password IS NOT NULL as has_password,
-                   r.rules
+                   r.host_switch, r.rules
             FROM game_rooms r
             LEFT JOIN room_players rp ON r.room_id = rp.room_id
             WHERE r.is_active = TRUE
@@ -918,8 +919,8 @@ function getCurrentGameRoomStatus() {
             rp.room_id, rp.player_id, rp.player_name, rp.is_host, rp.is_online, 
             rp.last_heartbeat, rp.joined_at,
             gr.room_name, gr.max_players, gr.password IS NOT NULL as has_password, 
-            gr.is_active, gr.rules, gr.created_at as room_created_at, gr.updated_at, 
-            gr.last_activity as room_last_activity,
+            gr.host_switch, gr.is_active, gr.rules, gr.created_at as room_created_at,
+            gr.updated_at, gr.last_activity as room_last_activity,
             COUNT(rp2.player_id) as current_players
         FROM room_players rp
         JOIN game_rooms gr ON rp.room_id = gr.room_id
@@ -983,6 +984,7 @@ function getCurrentGameRoomStatus() {
             'max_players'        => (int)$room['max_players'],
             'current_players'    => (int)$room['current_players'],
             'has_password'       => (bool)$room['has_password'],
+            'host_switch'        => (bool)$room['host_switch'],
             'is_active'          => (bool)$room['is_active'],
             'rules'              => $rules,
             'player_name'        => $room['player_name'],
