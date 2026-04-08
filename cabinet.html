@@ -90,6 +90,64 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+        
+        /* Mobile table styles */
+        @media (max-width: 768px) {
+            .mobile-table {
+                display: none;
+            }
+            
+            .mobile-cards {
+                display: block;
+            }
+            
+            .api-key-card {
+                background: var(--glass-bg);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--glass-border);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 12px;
+                transition: all 0.3s ease;
+            }
+            
+            .api-key-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-table {
+                display: table;
+            }
+            
+            .mobile-cards {
+                display: none;
+            }
+        }
+        
+        /* Copy button styles */
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .copy-btn.copied {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
     </style>
 </head>
 <body class="min-h-screen animated-bg">
@@ -116,53 +174,53 @@
     </header>
 
     <!-- User Cabinet -->
-    <section class="min-h-[calc(100vh-4rem)] py-12 px-4">
-        <div class="max-w-6xl mx-auto">
+    <section class="min-h-[calc(100vh-4rem)] py-6 px-3 sm:px-4 lg:px-6">
+        <div class="max-w-7xl mx-auto">
             <!-- Page Header -->
-            <div class="text-center mb-12">
-                <h1 class="text-4xl font-black text-white mb-4">User Cabinet</h1>
-                <p class="text-xl text-white/70">Manage your account and API keys</p>
+            <div class="text-center mb-8">
+                <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">User Cabinet</h1>
+                <p class="text-lg sm:text-xl text-white/70">Manage your account and API keys</p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
                 <!-- User Info Card -->
-                <div class="glass-effect rounded-2xl p-6 floating-card lg:col-span-1">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center text-white text-2xl mr-4">
+                <div class="glass-effect rounded-2xl p-5 floating-card xl:col-span-1">
+                    <div class="flex items-center mb-5">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center text-white text-xl mr-3">
                             <i class="fas fa-user"></i>
                         </div>
                         <div>
-                            <h2 class="text-xl font-bold text-white">Account Details</h2>
-                            <p class="text-white/70 text-sm">Manage your profile information</p>
+                            <h2 class="text-lg font-bold text-white">Account Details</h2>
+                            <p class="text-white/70 text-xs sm:text-sm">Manage your profile information</p>
                         </div>
                     </div>
                     
-                    <div id="user-info" class="space-y-4">
+                    <div id="user-info" class="space-y-3">
                         <div class="flex items-center">
-                            <i class="fas fa-envelope text-white/50 w-6"></i>
-                            <div class="ml-3">
-                                <p class="text-sm text-white/70">Email</p>
-                                <p id="email" class="text-white font-medium">loading...</p>
+                            <i class="fas fa-envelope text-white/50 w-5 text-sm"></i>
+                            <div class="ml-2">
+                                <p class="text-xs text-white/70">Email</p>
+                                <p id="email" class="text-white font-medium text-sm break-all">loading...</p>
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-key text-white/50 w-6"></i>
-                            <div class="ml-3">
-                                <p class="text-sm text-white/70">Account Status</p>
-                                <p class="text-green-400 font-medium">Active</p>
+                            <i class="fas fa-key text-white/50 w-5 text-sm"></i>
+                            <div class="ml-2">
+                                <p class="text-xs text-white/70">Account Status</p>
+                                <p class="text-green-400 font-medium text-sm">Active</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- API Keys Section -->
-                <div class="glass-effect rounded-2xl p-6 floating-card lg:col-span-2">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                <div class="glass-effect rounded-2xl p-5 floating-card xl:col-span-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5">
                         <div>
-                            <h2 class="text-2xl font-bold text-white">API Keys</h2>
-                            <p class="text-white/70">Manage your project API keys</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">API Keys</h2>
+                            <p class="text-white/70 text-sm">Manage your project API keys</p>
                         </div>
-                        <button onclick="openNewKeyModal()" class="btn-primary text-white px-6 py-2.5 rounded-lg font-medium flex items-center justify-center mt-4 sm:mt-0">
+                        <button onclick="openNewKeyModal()" class="btn-primary text-white px-5 py-2 rounded-lg font-medium flex items-center justify-center mt-3 sm:mt-0 text-sm">
                             <i class="fas fa-plus mr-2"></i> New API Key
                         </button>
                     </div>
@@ -194,27 +252,37 @@
                     </form>
                     
                     <!-- API Keys List -->
-                    <div class="overflow-x-auto rounded-xl">
-                        <table class="min-w-full divide-y divide-white/10">
-                            <thead class="bg-white/5">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Project</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">API Key</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">API Private Key</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Created</th>
-                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-white/70 uppercase tracking-wider">Reset Private Key</th>
-                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-white/70 uppercase tracking-wider">Remove API Key</th>
-                                </tr>
-                            </thead>
-                            <tbody id="api-keys" class="divide-y divide-white/5">
-                                <!-- API keys will be loaded here via JavaScript -->
-                                <tr>
-                                    <td colspan="4" class="px-6 py-4 text-center text-white/60">
-                                        Loading your API keys...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="rounded-xl">
+                        <!-- Desktop Table View -->
+                        <div class="mobile-table overflow-x-auto">
+                            <table class="min-w-full divide-y divide-white/10">
+                                <thead class="bg-white/5">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Project</th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">API Key</th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Private Key</th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Created</th>
+                                        <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="api-keys" class="divide-y divide-white/5">
+                                    <!-- API keys will be loaded here via JavaScript -->
+                                    <tr>
+                                        <td colspan="5" class="px-4 py-4 text-center text-white/60">
+                                            Loading your API keys...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Mobile Card View -->
+                        <div id="mobile-api-keys" class="mobile-cards space-y-3">
+                            <!-- Mobile cards will be loaded here via JavaScript -->
+                            <div class="api-key-card text-center text-white/60">
+                                Loading your API keys...
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="mt-6 text-sm text-white/50 text-center">
@@ -324,27 +392,91 @@
                 }
                 document.getElementById('email').textContent = data.user.email;
                 const tbody = document.getElementById('api-keys');
-                data.api_keys.forEach(key => {
-                    const row = document.createElement('tr');
-                    row.dataset.keyId = key.id; // Store the key ID in a data attribute
-                    row.innerHTML = `
-                        <td class="px-6 py-4">${key.project_name}</td>
-                        <td class="px-6 py-4 font-mono">${key.api_key}</td>
-                        <td class="px-6 py-4 font-mono api-private-key">${key.api_private_key}</td>
-                        <td class="px-6 py-4 updated-at">${new Date(key.created_at).toLocaleString()}</td>
-                        <td class="px-6 py-4 text-right">
-                            <button onclick="resetApiKey('${key.id}')" class="btn-secondary text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center">
-                                <i class="fas fa-key mr-2"></i> Reset
-                            </button>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <button onclick="removeApiKey('${key.id}')" class="btn-secondary text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center">
-                                <i class="fas fa-trash-alt mr-2"></i> Remove
-                            </button>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
+                const mobileContainer = document.getElementById('mobile-api-keys');
+                
+                // Clear existing content
+                tbody.innerHTML = '';
+                mobileContainer.innerHTML = '';
+                
+                if (data.api_keys.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-4 text-center text-white/60">No API keys found. Create your first one!</td></tr>';
+                    mobileContainer.innerHTML = '<div class="api-key-card text-center text-white/60">No API keys found. Create your first one!</div>';
+                } else {
+                    data.api_keys.forEach(key => {
+                        // Desktop table row
+                        const row = document.createElement('tr');
+                        row.dataset.keyId = key.id;
+                        row.innerHTML = `
+                            <td class="px-4 py-3 font-medium">${key.project_name}</td>
+                            <td class="px-4 py-3 font-mono text-sm">
+                                <span class="inline-flex items-center gap-2">
+                                    <span class="break-all max-w-[200px]">${key.api_key}</span>
+                                    <button onclick="copyToClipboard('${key.api_key}', this)" class="copy-btn" title="Copy API key">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 font-mono text-sm api-private-key">
+                                <span class="inline-flex items-center gap-2">
+                                    <span class="break-all max-w-[200px]">${key.api_private_key}</span>
+                                    <button onclick="copyToClipboard('${key.api_private_key}', this)" class="copy-btn" title="Copy private key">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-sm">${new Date(key.created_at).toLocaleDateString()}</td>
+                            <td class="px-4 py-3 text-center">
+                                <button onclick="resetApiKey('${key.id}')" class="btn-secondary text-white px-3 py-1.5 rounded text-xs font-medium mb-1 inline-block">
+                                    <i class="fas fa-key mr-1"></i> Reset
+                                </button>
+                                <button onclick="removeApiKey('${key.id}')" class="btn-secondary text-white px-3 py-1.5 rounded text-xs font-medium inline-block">
+                                    <i class="fas fa-trash-alt mr-1"></i> Remove
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                        
+                        // Mobile card
+                        const card = document.createElement('div');
+                        card.className = 'api-key-card';
+                        card.dataset.keyId = key.id;
+                        card.innerHTML = `
+                            <div class="mb-3">
+                                <h4 class="text-white font-semibold text-lg mb-1">${key.project_name}</h4>
+                                <p class="text-white/50 text-xs">Created: ${new Date(key.created_at).toLocaleDateString()}</p>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div>
+                                    <p class="text-white/70 text-xs mb-1">API Key:</p>
+                                    <div class="flex items-start gap-2">
+                                        <p class="font-mono text-sm text-white break-all flex-1">${key.api_key}</p>
+                                        <button onclick="copyToClipboard('${key.api_key}', this)" class="copy-btn mt-1" title="Copy API key">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-white/70 text-xs mb-1">Private Key:</p>
+                                    <div class="flex items-start gap-2">
+                                        <p class="font-mono text-sm text-white break-all flex-1 api-private-key">${key.api_private_key}</p>
+                                        <button onclick="copyToClipboard('${key.api_private_key}', this)" class="copy-btn mt-1" title="Copy private key">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="resetApiKey('${key.id}')" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm font-medium flex-1">
+                                    <i class="fas fa-key mr-2"></i> Reset
+                                </button>
+                                <button onclick="removeApiKey('${key.id}')" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm font-medium flex-1">
+                                    <i class="fas fa-trash-alt mr-2"></i> Remove
+                                </button>
+                            </div>
+                        `;
+                        mobileContainer.appendChild(card);
+                    });
+                }
             })
             .catch(error => {
                 console.error('Error loading user data:', error);
@@ -379,25 +511,46 @@
                 return response.json();
             })
             .then(data => {
+                // Update desktop table
                 const row = document.querySelector(`tr[data-key-id="${keyId}"]`);
-                console.log('Row to reset:', row);
-
                 if (row) {
                     const privateCell = row.querySelector('.api-private-key');
-                    const updatedCell = row.querySelector('.updated-at');
+                    const updatedCell = row.querySelector('td:nth-child(4)');
                     
                     const newKey = String(data.new_private_key).trim();
                     
                     if (privateCell) {
-                        privateCell.innerText = "";            // wipe old key
-                        privateCell.textContent = newKey;      // set new key
+                        // Update with new layout including copy button
+                        privateCell.innerHTML = `
+                            <span class="inline-flex items-center gap-2">
+                                <span class="break-all max-w-[200px]">${newKey}</span>
+                                <button onclick="copyToClipboard('${newKey}', this)" class="copy-btn" title="Copy private key">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </span>
+                        `;
                     }
-
-                    if (updatedCell) {
-                        updatedCell.textContent = new Date().toLocaleString();
+                }
+                
+                // Update mobile card
+                const card = document.querySelector(`.api-key-card[data-key-id="${keyId}"]`);
+                if (card) {
+                    const privateCell = card.querySelector('.api-private-key');
+                    const dateCell = card.querySelector('.text-white/50.text-xs');
+                    
+                    const newKey = String(data.new_private_key).trim();
+                    
+                    if (privateCell) {
+                        // Update with new layout including copy button
+                        privateCell.parentElement.innerHTML = `
+                            <div class="flex items-start gap-2">
+                                <p class="font-mono text-sm text-white break-all flex-1 api-private-key">${newKey}</p>
+                                <button onclick="copyToClipboard('${newKey}', this)" class="copy-btn mt-1" title="Copy private key">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        `;
                     }
-
-                    console.log('Row updated in UI');
                 }
 
                 alert('API key reset successfully');
@@ -439,19 +592,50 @@
                 if (data.error) {
                     alert('Error: ' + data.error);
                 } else {
-                    // Remove the deleted row from the table
+                    // Remove from desktop table
                     const row = document.querySelector(`tr[data-key-id="${keyId}"]`);
-                    console.log('Row to remove:', row);
                     if (row) {
                         row.remove();
-                        console.log('Row removed from UI');
                     }
+                    
+                    // Remove from mobile cards
+                    const card = document.querySelector(`.api-key-card[data-key-id="${keyId}"]`);
+                    if (card) {
+                        card.remove();
+                    }
+                    
+                    // Check if empty and show empty state
+                    const tbody = document.getElementById('api-keys');
+                    const mobileContainer = document.getElementById('mobile-api-keys');
+                    
+                    if (tbody.children.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-4 text-center text-white/60">No API keys found. Create your first one!</td></tr>';
+                        mobileContainer.innerHTML = '<div class="api-key-card text-center text-white/60">No API keys found. Create your first one!</div>';
+                    }
+                    
                     alert('API key deleted successfully');
                 }
             })
             .catch(error => {
                 console.error('Error deleting API key:', error);
                 alert('Error: ' + (error.message || 'An error occurred while deleting the API key'));
+            });
+        }
+        
+        // Copy to clipboard function
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i>';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard');
             });
         }
     </script>
