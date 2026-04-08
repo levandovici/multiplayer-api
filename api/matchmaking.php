@@ -90,7 +90,7 @@ function getPlayerMatchmaking($playerId) {
         SELECT mp.matchmaking_id
         FROM matchmaking_players mp
         JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-        WHERE mp.player_id = ? AND mp.is_online = TRUE AND m.is_started = FALSE
+        WHERE mp.player_id = ? AND mp.is_online = TRUE
         LIMIT 1
     ");
     $stmt->execute([$playerId]);
@@ -132,7 +132,7 @@ function getPlayerMatchmakingDetails($playerId) {
             m.last_heartbeat as lobby_heartbeat
         FROM matchmaking_players mp
         JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-        WHERE mp.player_id = ? AND mp.is_online = TRUE AND m.is_started = FALSE
+        WHERE mp.player_id = ? AND mp.is_online = TRUE
         LIMIT 1
     ");
     $stmt->execute([$playerId, $playerId]);
@@ -747,7 +747,7 @@ function getCurrentMatchmakingStatus() {
             FROM matchmaking_players mp
             JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
             LEFT JOIN matchmaking_players mp2 ON m.matchmaking_id = mp2.matchmaking_id
-            WHERE mp.player_id = ? AND m.is_started = FALSE
+            WHERE mp.player_id = ?
             GROUP BY m.matchmaking_id
             LIMIT 1
         ");
