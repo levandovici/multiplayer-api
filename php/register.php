@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Send confirmation email
         $verify_url = $_ENV['BASE_URL'] . "/php/verify.php?token=$token";
-        $subject = "Verify Your Levandovici API Account";
+        $subject = "Verify Your Multiplayer API Account";
         $message = "Please verify your email by clicking this link: $verify_url";
         $headers = "From: " . $_ENV['EMAIL_FROM'] . "\r\n";
         if (!mail($email, $subject, $message, $headers)) {
