@@ -158,7 +158,7 @@ function createRoom() {
         SELECT mp.matchmaking_id
         FROM matchmaking_players mp
         JOIN matchmaking m ON mp.matchmaking_id = m.matchmaking_id
-        WHERE mp.player_id = ? AND mp.is_online = TRUE AND m.is_started = FALSE
+        WHERE mp.player_id = ? AND mp.is_online = TRUE
         LIMIT 1
     ");
     $stmt->execute([$player['id']]);
