@@ -237,7 +237,7 @@ namespace michitai
         public Task<PollUpdatesResponse> PollUpdatesAsync(string playerToken, string lastUpdateId = null, CancellationToken ct = default)
         {
             string extra = $"&player_token={playerToken}";
-            if (!string.IsNullOrEmpty(lastUpdateId)) extra += $"&lastUpdateId={lastUpdateId}";
+            if (!string.IsNullOrEmpty(lastUpdateId)) extra += $"&last_update={lastUpdateId}";
             return Send<PollUpdatesResponse>(HttpMethod.Get, Url(Endpoints.GameRoomUpdatesPoll, extra), null, ct);
         }
 
@@ -1024,7 +1024,7 @@ namespace michitai
     public class PollUpdatesResponse : ApiResponse
     {
         public List<PlayerUpdate> updates = new();
-        public string last_update_id;
+        public string last_update;
     }
 
     [System.Serializable]

@@ -965,7 +965,7 @@ function pollUpdates() {
     $roomId = getPlayerRoom($player['id']);
     if (!$roomId) sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
 
-    $lastUpdateId = $_GET['lastUpdateId'] ?? null;
+    $lastUpdateId = $_GET['last_update'] ?? null;
 
     global $pdo;
     $whereClause = "WHERE target_player_id = ? AND room_id = ?";
@@ -1010,7 +1010,7 @@ function pollUpdates() {
     sendResponse([
         'success' => true,
         'updates' => $updates,
-        'last_update_id' => !empty($updates) ? end($updates)['update_id'] : $lastUpdateId
+        'last_update' => !empty($updates) ? end($updates)['update_id'] : $lastUpdateId
     ]);
 }
 

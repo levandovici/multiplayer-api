@@ -245,7 +245,7 @@ namespace michitai
             string? lastUpdateId = null, CancellationToken ct = default) where T : class, new()
         {
             string extra = $"&player_token={playerToken}";
-            if (!string.IsNullOrEmpty(lastUpdateId)) extra += $"&lastUpdateId={lastUpdateId}";
+            if (!string.IsNullOrEmpty(lastUpdateId)) extra += $"&last_update={lastUpdateId}";
             return Send<PollUpdatesResponse<T>>(HttpMethod.Get, Url(Endpoints.GameRoomUpdatesPoll, extra), null, ct);
         }
 
@@ -806,7 +806,7 @@ namespace michitai
     public class PollUpdatesResponse<T> : ApiResponse where T : class, new()
     {
         public List<PlayerUpdate<T>> Updates { get; set; } = new();
-        public string Last_update_id { get; set; } = string.Empty;
+        public string Last_update { get; set; } = string.Empty;
     }
 
     public class CurrentRoomInfo<T> where T : class, new()
