@@ -218,8 +218,8 @@ function createRoom() {
     try {
         $pdo->beginTransaction();
 
-        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, host_switch, rules) VALUES (?, ?, ?, ?, ?, ?, ?)")
-            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $hostSwitch, $rulesJson]);
+        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, host_switch, can_leave, rules) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $hostSwitch, true, $rulesJson]);
 
         addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true, $playerDataJson);
 
@@ -252,7 +252,7 @@ function listRooms() {
             SELECT r.room_id, r.room_name, r.max_players, 
                    COUNT(rp.player_id) as current_players,
                    r.password IS NOT NULL as has_password,
-                   r.host_switch, r.rules
+                   r.host_switch, r.can_leave, r.rules
             FROM game_rooms r
             LEFT JOIN room_players rp ON r.room_id = rp.room_id
             WHERE r.is_active = TRUE
@@ -266,6 +266,7 @@ function listRooms() {
         foreach ($rooms as &$room) {
             $room['has_password'] = (bool)$room['has_password'];
             $room['host_switch'] = (bool)$room['host_switch'];
+            $room['can_leave'] = (bool)$room['can_leave'];
 
             if($isUnity)
             {
@@ -427,8 +428,28 @@ function leaveRoom() {
 
         $isHost = (bool)$playerData['is_host'];
 
+        // Check if players can leave this room
+        $stmt = $pdo->prepare("SELECT can_leave, matchmaking_id FROM game_rooms WHERE room_id = ?");
+        $stmt->execute([$roomId]);
+        $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$roomData) throw new Exception('Room not found');
+
+        $canLeave = (bool) ($roomData['can_leave'] ?? true);
+        $matchmakingId = $roomData['matchmaking_id'];
+
+        if (!$isHost && !$canLeave) {
+            sendResponse(['success' => false, 'error' => 'Players are not allowed to leave this room'], 403);
+        }
+
         $pdo->prepare("DELETE FROM room_players WHERE player_id = ? AND room_id = ?")
             ->execute([$player['id'], $roomId]);
+
+        // If this room was created from matchmaking, also leave the matchmaking
+        if ($matchmakingId) {
+            $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ? AND player_id = ?")
+                ->execute([$matchmakingId, $player['id']]);
+        }
 
         if ($isHost) {
             // Get host_switch setting for this room
@@ -1006,7 +1027,8 @@ function getCurrentGameRoomStatus() {
             rp.room_id, rp.player_id, rp.player_name, rp.is_host, rp.is_online, 
             rp.last_heartbeat, rp.joined_at,
             gr.room_name, gr.max_players, gr.password IS NOT NULL as has_password, 
-            gr.host_switch, gr.is_active, gr.rules, gr.created_at as room_created_at,
+            gr.host_switch, gr.can_leave, gr.is_active, gr.rules, 
+            gr.created_at as room_created_at,
             gr.updated_at, gr.last_activity as room_last_activity,
             COUNT(rp2.player_id) as current_players
         FROM room_players rp
@@ -1072,6 +1094,7 @@ function getCurrentGameRoomStatus() {
             'current_players'    => (int)$room['current_players'],
             'has_password'       => (bool)$room['has_password'],
             'host_switch'        => (bool)$room['host_switch'],
+            'can_leave'          => (bool)$room['can_leave'],
             'is_active'          => (bool)$room['is_active'],
             'rules'              => $rules,
             'player_name'        => $room['player_name'],
