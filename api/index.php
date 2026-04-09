@@ -563,7 +563,7 @@ $site_twitter = "@michitai";
       "score": 0,
       "inventory": ["sword", "shield"]
     },
-    "is_active": 1,
+    "is_online": true,
     "last_login": null,
     "last_heartbeat": null,
     "last_logout": null,
@@ -623,7 +623,7 @@ $site_twitter = "@michitai";
     {
       "id": 1,
       "player_name": "TestPlayer",
-      "is_active": 1,
+      "is_online": true,
       "last_login": null,
       "last_logout": null,
       "last_heartbeat": null,
@@ -632,7 +632,7 @@ $site_twitter = "@michitai";
     {
       "id": 3,
       "player_name": "TestPlayer",
-      "is_active": 1,
+      "is_online": true,
       "last_login": "2026-03-13 09:40:35",
       "last_logout": null,
       "last_heartbeat": null,
@@ -641,7 +641,7 @@ $site_twitter = "@michitai";
     {
       "id": 2,
       "player_name": "TestPlayer",
-      "is_active": 1,
+      "is_online": true,
       "last_login": null,
       "last_logout": null,
       "last_heartbeat": null,
@@ -754,7 +754,7 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "sortBy": ["level"],
+    "sort_by": ["level"],
     "limit": 10
   }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
@@ -820,7 +820,7 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "sortBy": ["level", "score"],
+    "sort_by": ["level", "score"],
     "limit": 10
   }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
@@ -893,7 +893,7 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "sortBy": ["score", "level"],
+    "sort_by": ["score", "level"],
     "limit": 10
   }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
@@ -1037,7 +1037,7 @@ $site_twitter = "@michitai";
       "max_players": 4,
       "strict_full": 1,
       "rules": {
-        "minLevel": 10,
+        "min_level": 10,
         "rank": "gold"
       },
       "created_at": "2026-03-10 15:16:58",
@@ -1059,12 +1059,20 @@ $site_twitter = "@michitai";
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
+    "matchmaking_name": "My Matchmaking",
     "maxPlayers": 4,
     "strictFull": true,
-    "joinByRequests": true,
+    "join_by_requests": true,
+    "host_switch": false,
+    "can_leave_room": true,
     "rules": {
-      "minLevel": 10,
+      "min_level": 10,
       "rank": "gold"
+    },
+    "player_data": {
+      "level": 20,
+      "class": "paladin",
+      "inventory": ["sword", "shield", "armor"]
     }
   }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
@@ -1180,7 +1188,7 @@ $site_twitter = "@michitai";
     "strict_full": true,
     "join_by_requests": false,
     "rules": {
-      "minLevel": 10,
+      "min_level": 10,
       "rank": "gold"
     },
     "joined_at": "2026-03-06 17:23:53",
@@ -1319,8 +1327,15 @@ $site_twitter = "@michitai";
   -H "Content-Type: application/json" \
   -d '{
     "room_name": "My Game Room",
+    "max_players": 4,
     "password": "secret123",
-    "max_players": 4
+    "host_switch": false,
+    "can_leave_room": true,
+    "player_data": {
+      "level": 15,
+      "class": "warrior",
+      "inventory": ["sword", "shield"]
+    }
   }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
@@ -1633,7 +1648,7 @@ $site_twitter = "@michitai";
       "created_at": "2026-03-09 10:54:16"
     }
   ],
-  "last_update_id": "374ad8d18f1a1fddf09a856d61787c5c"
+  "last_update": "374ad8d18f1a1fddf09a856d61787c5c"
 }</code></pre>
                     </div>
 
@@ -1641,10 +1656,10 @@ $site_twitter = "@michitai";
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-blue-400 mb-2">
                             <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=UPDATE_ID</span>
+                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&last_update=UPDATE_ID</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&last_update=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1660,7 +1675,7 @@ $site_twitter = "@michitai";
       "created_at": "2026-03-09 10:53:58"
     }
   ],
-  "last_update_id": "f26cbcdab3939b968f148edf68a9fe54"
+  "last_update": "f26cbcdab3939b968f148edf68a9fe54"
 }</code></pre>
                     </div>
 

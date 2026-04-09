@@ -314,8 +314,8 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateRoomAsync</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomCreateResponse&gt; CreateRoomAsync&lt;T&gt;(string playerToken, string roomName, string password = null, int maxPlayers = 4, T rules = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Creates a new game room with optional password and rules. The creating player becomes the host.</p>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomCreateResponse&gt; CreateRoomAsync&lt;T&gt;(string playerToken, string roomName, int maxPlayers = 4, string password = null, bool hostSwitch = false, bool canLeaveRoom = true, T rules = null, T playerData = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Creates a new game room with optional password, host switching, player data and rules. The creating player becomes the host.</p>
                                 </div>
                                 
                                 <div>
@@ -326,8 +326,8 @@ $site_twitter = "@michitai";
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">JoinRoomAsync</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomJoinResponse&gt; JoinRoomAsync(string playerToken, string roomId, string password = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Joins an existing room. Password required for private rooms.</p>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomJoinResponse&gt; JoinRoomAsync(string playerToken, string roomId, string password = null, T playerData = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Joins an existing room with password and player data. Password required for private rooms.</p>
                                 </div>
                                 
                                 <div>
@@ -431,8 +431,8 @@ $site_twitter = "@michitai";
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateMatchmakingLobbyAsync</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingCreateResponse&gt; CreateMatchmakingLobbyAsync&lt;T&gt;(string playerToken, int maxPlayers = 4, bool strictFull = false, bool joinByRequests = false, T rules = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby with typed rules support. The creating player becomes the host.</p>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingCreateResponse&gt; CreateMatchmakingLobbyAsync&lt;T&gt;(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false, bool joinByRequests = false, bool hostSwitch = false, bool canLeaveRoom = true, T rules = null, T playerData = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby with name, typed rules support, host switching, and player data. The creating player becomes the host.</p>
                                 </div>
                                 
                                 <div>

@@ -36,7 +36,7 @@ curl -X PUT "https://api.michitai.com/api/game_players.php/login?api_token=API_T
       "score": 0,
       "inventory": ["sword", "shield"]
     },
-    "is_active": 1,
+    "is_online": true,
     "last_login": null,
     "last_heartbeat": null,
     "last_logout": null,
@@ -79,7 +79,7 @@ curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=API_TO
     {
       "id": 1,
       "player_name": "TestPlayer",
-      "is_active": 1,
+      "is_online": true,
       "last_login": null,
       "last_logout": null,
       "last_heartbeat": null,
@@ -88,7 +88,7 @@ curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=API_TO
     {
       "id": 3,
       "player_name": "TestPlayer",
-      "is_active": 1,
+      "is_online": true,
       "last_login": "2026-03-13 09:40:35",
       "last_logout": null,
       "last_heartbeat": null,
@@ -97,7 +97,7 @@ curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=API_TO
     {
       "id": 2,
       "player_name": "TestPlayer",
-      "is_active": 1,
+      "is_online": true,
       "last_login": null,
       "last_logout": null,
       "last_heartbeat": null,
@@ -222,7 +222,14 @@ curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=API_TO
   -d '{
     "room_name": "My Game Room",
     "password": "secret123",
-    "max_players": 4
+    "max_players": 4,
+    "host_switch": false,
+    "can_leave_room": true,
+    "player_data": {
+      "level": 15,
+      "class": "warrior",
+      "inventory": ["sword", "shield"]
+    }
   }'
 
 //Response:
@@ -242,13 +249,12 @@ curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=API_TOKEN
 curl -X POST "https://api.michitai.com/api/game_room.php/ROOM_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "password": "secret123"
-  }'
-
-curl -X POST "https://api.michitai.com/api/game_room.php/ROOM_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "password": "secret123"
+    "password": "secret123",
+    "player_data": {
+      "level": 12,
+      "class": "mage",
+      "inventory": ["staff", "potion"]
+    }
   }'
 
 //List All Players in Current Room
@@ -351,7 +357,7 @@ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=API_T
 
 curl "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
 
-curl "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&lastUpdateId=LAST_UPDATE_ID"
+curl "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&last_update=LAST_UPDATE"
 
 //Matchmaking
 
@@ -369,9 +375,15 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=API_
     "strict_full": true,
     "join_by_requests": true,
     "host_switch": false,
+    "can_leave_room": true,
     "rules": {
-      "minLevel": 10,
+      "min_level": 10,
       "rank": "gold"
+    },
+    "player_data": {
+      "level": 20,
+      "class": "paladin",
+      "inventory": ["sword", "shield", "armor"]
     }
   }'
 
@@ -403,7 +415,15 @@ curl "https://api.michitai.com/api/matchmaking.php/current?api_token=API_TOKEN&p
 
 //Join Matchmaking Lobby Directly
 
-curl -X POST "https://api.michitai.com/api/matchmaking.php/MATCHMAKING_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
+curl -X POST "https://api.michitai.com/api/matchmaking.php/MATCHMAKING_ID/join?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "player_data": {
+      "level": 18,
+      "class": "ranger",
+      "inventory": ["bow", "arrows", "dagger"]
+    }
+  }'
 
 //Leave Matchmaking Lobby
 
@@ -432,7 +452,7 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/start?api_token=API_T
 curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "sortBy": ["level"],
+    "sort_by": ["level"],
     "limit": 10
   }'
 
@@ -491,13 +511,13 @@ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=API_TOKEN" 
 curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "sortBy": ["level", "score"],
+    "sort_by": ["level", "score"],
     "limit": 10
   }'
 
 curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "sortBy": ["score", "level"],
+    "sort_by": ["score", "level"],
     "limit": 10
   }'

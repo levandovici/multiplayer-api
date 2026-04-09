@@ -331,11 +331,14 @@ $site_twitter = "@michitai";
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">CreateRoomAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;RoomCreateResponse&gt; CreateRoomAsync&lt;T&gt;(string gamePlayerToken,
     string roomName,
-    string? password = null,
     int maxPlayers = 4,
+    string? password = null,
+    bool hostSwitch = false,
+    bool canLeaveRoom = true,
     T? rules = null,
+    T? playerData = null,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Creates a new game room for multiplayer sessions with typed rules support.</p>
+                                <p class="text-gray-400 text-sm mt-2">Creates a new game room for multiplayer sessions with typed rules support, host switching, and player data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -350,8 +353,9 @@ $site_twitter = "@michitai";
     string gamePlayerToken,
     string roomId,
     string? password = null,
+    T? playerData = null,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Joins an existing game room with optional password.</p>
+                                <p class="text-gray-400 text-sm mt-2">Joins an existing game room with optional password and player data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -477,12 +481,16 @@ $site_twitter = "@michitai";
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-orange-400 font-mono text-sm mb-2">CreateMatchmakingLobbyAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;MatchmakingCreateResponse&gt; CreateMatchmakingLobbyAsync&lt;T&gt;(string gamePlayerToken,
+    string matchmakingName,
     int maxPlayers = 4,
     bool strictFull = false,
     bool joinByRequests = false,
+    bool hostSwitch = false,
+    bool canLeaveRoom = true,
     T? rules = null,
+    T? playerData = null,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with typed rules support and configurable settings.</p>
+                                <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with name, typed rules support, host switching, and player data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
