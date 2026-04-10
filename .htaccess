@@ -11,3 +11,24 @@
     Order allow,deny
     Deny from all
 </Files>
+
+# Protect JSON files from direct access
+<Files "*.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Allow access to log files for debugging
+<Files "*.log">
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Additional security headers
+<IfModule mod_headers.c>
+    # Prevent JSON files from being served
+    <FilesMatch "\.json$">
+        Header always set X-Content-Type-Options nosniff
+        Header always set X-Frame-Options DENY
+    </FilesMatch>
+</IfModule>
