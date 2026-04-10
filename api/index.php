@@ -1252,7 +1252,8 @@ $site_twitter = "@michitai";
       "status": "active",
       "player_name": "TestPlayer",
       "seconds_since_heartbeat": 726,
-      "is_host": 1
+      "is_host": 1,
+      "is_local": true
     },
     {
       "player_id": 46,
@@ -1261,7 +1262,8 @@ $site_twitter = "@michitai";
       "status": "active",
       "player_name": "TestPlayer",
       "seconds_since_heartbeat": 58,
-      "is_host": 0
+      "is_host": 0,
+      "is_local": false
     }
   ],
   "last_updated": "2026-03-06T17:35:59+00:00"
@@ -1406,6 +1408,7 @@ $site_twitter = "@michitai";
       "player_name": "TestPlayer",
       "is_host": 1,
       "is_online": 1,
+      "is_local": true,
       "last_heartbeat": "2026-03-09 09:39:34"
     },
     {
@@ -1413,6 +1416,7 @@ $site_twitter = "@michitai";
       "player_name": "TestPlayer",
       "is_host": 0,
       "is_online": 1,
+      "is_local": false,
       "last_heartbeat": "2026-03-09 09:44:39"
     }
   ],

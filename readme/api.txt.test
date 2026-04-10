@@ -44,7 +44,7 @@
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","message":"Successfully joined room"}
 
 16) $ curl -X GET "https://api.michitai.com/api/game_room.php/players?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
-{"success":true,"players":[{"player_id":"48","player_name":"TestPlayer","is_host":true,"is_online":true,"last_heartbeat":"2026-03-09 09:39:34","player_data":{"level":15,"class":"warrior","inventory":["sword","shield"]}},{"player_id":"49","player_name":"TestPlayer","is_host":false,"is_online":true,"last_heartbeat":"2026-03-09 09:44:39","player_data":{"level":12,"class":"mage","inventory":["staff","potion"]}}],"last_updated":"2026-03-09T09:56:21+00:00"}
+{"success":true,"players":[{"player_id":"48","player_name":"TestPlayer","is_host":true,"is_online":true,"is_local":true,"last_heartbeat":"2026-03-09 09:39:34","player_data":{"level":15,"class":"warrior","inventory":["sword","shield"]}},{"player_id":"49","player_name":"TestPlayer","is_host":false,"is_online":true,"is_local":false,"last_heartbeat":"2026-03-09 09:44:39","player_data":{"level":12,"class":"mage","inventory":["staff","potion"]}}],"last_updated":"2026-03-09T09:56:21+00:00"}
 
 17) $ curl -X POST "https://api.michitai.com/api/game_room.php/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"message":"Successfully left the room"}
@@ -107,7 +107,7 @@
 {"success":true,"message":"Successfully left matchmaking lobby"}
 
 37) $ curl "https://api.michitai.com/api/matchmaking.php/players?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb"
-{"success":true,"players":[{"player_id":47,"joined_at":"2026-03-06 17:23:53","last_heartbeat":"2026-03-06 17:23:53","status":"active","player_name":"TestPlayer","seconds_since_heartbeat":726,"is_host":1,"player_data":{"level":20,"class":"paladin","inventory":["sword","shield","armor"]}},{"player_id":46,"joined_at":"2026-03-06 17:35:01","last_heartbeat":"2026-03-06 17:35:01","status":"active","player_name":"TestPlayer","seconds_since_heartbeat":58,"is_host":0,"player_data":{"level":18,"class":"ranger","inventory":["bow","arrows","dagger"]}}],"last_updated":"2026-03-06T17:35:59+00:00"}
+{"success":true,"players":[{"player_id":47,"joined_at":"2026-03-06 17:23:53","last_heartbeat":"2026-03-06 17:23:53","status":"active","player_name":"TestPlayer","seconds_since_heartbeat":726,"is_host":1,"is_local":true,"player_data":{"level":20,"class":"paladin","inventory":["sword","shield","armor"]}},{"player_id":46,"joined_at":"2026-03-06 17:35:01","last_heartbeat":"2026-03-06 17:35:01","status":"active","player_name":"TestPlayer","seconds_since_heartbeat":58,"is_host":0,"is_local":false,"player_data":{"level":18,"class":"ranger","inventory":["bow","arrows","dagger"]}}],"last_updated":"2026-03-06T17:35:59+00:00"}
 
 38) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/heartbeat?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb"
 {"success":true,"status":"ok"}

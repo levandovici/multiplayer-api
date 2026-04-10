@@ -557,6 +557,7 @@ function getMatchmakingPlayers() {
             $player['player_id'] = (int)$player['player_id'];
             $player['is_host']   = (bool)$player['is_host'];
             $player['is_online'] = (bool)$player['is_online'];
+            $player['is_local']  = ($player['player_id'] === $player['id']);
 
             $player['joined_at'] = isoUtc($player['joined_at']);
             $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
