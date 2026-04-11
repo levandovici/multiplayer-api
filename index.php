@@ -785,13 +785,6 @@ pre::-webkit-scrollbar-thumb:hover {
                     </div>
                 </div>
             </div>
-            
-            <div class="glass-effect p-6 rounded-2xl">
-                <h4 class="text-xl font-bold text-white mb-4">Recent Development Activity</h4>
-                <div id="recentCommits" class="space-y-2 max-h-64 overflow-y-auto">
-                    <!-- Commits will be loaded here -->
-                </div>
-            </div>
         </div>
     </section>
 
@@ -931,28 +924,6 @@ pre::-webkit-scrollbar-thumb:hover {
                             }
                         }
                     }
-                });
-                
-                // Load recent commits
-                const recentCommits = data.data.slice(-10).reverse();
-                const recentCommitsContainer = document.getElementById('recentCommits');
-                
-                recentCommits.forEach(commit => {
-                    const commitElement = document.createElement('div');
-                    commitElement.className = 'flex items-start space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors';
-                    
-                    const date = new Date(commit.date);
-                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-                    
-                    commitElement.innerHTML = `
-                        <i class="fas fa-code-commit text-cyan-400 mt-1 text-sm"></i>
-                        <div class="flex-1">
-                            <div class="text-white/90 text-sm font-medium">${commit.message}</div>
-                            <div class="text-white/50 text-xs">${formattedDate} (${commit.hash})</div>
-                        </div>
-                    `;
-                    
-                    recentCommitsContainer.appendChild(commitElement);
                 });
                 
             } catch (error) {
