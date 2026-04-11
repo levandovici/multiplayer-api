@@ -1,0 +1,128 @@
+{
+  "folder_stats": {
+    "php": {
+      "total_lines": 558,
+      "file_count": 12,
+      "files": {
+        "php\\cleanup_rooms.php": 99,
+        "php\\config.php": 40,
+        "php\\create_project.php": 23,
+        "php\\delete_key.php": 68,
+        "php\\generate_key.php": 58,
+        "php\\get_user_data.php": 23,
+        "php\\login.php": 33,
+        "php\\logout.php": 7,
+        "php\\meta-tags.php": 55,
+        "php\\register.php": 48,
+        "php\\reset_key.php": 76,
+        "php\\verify.php": 28
+      }
+    },
+    "unity": {
+      "total_lines": 2056,
+      "file_count": 3,
+      "files": {
+        "unity\\Game.cs": 364,
+        "unity\\index.php": 526,
+        "unity\\SDK.cs": 1166
+      }
+    },
+    "api": {
+      "total_lines": 4274,
+      "file_count": 7,
+      "files": {
+        "api\\game_data.php": 188,
+        "api\\game_players.php": 258,
+        "api\\game_room.php": 955,
+        "api\\index.php": 1685,
+        "api\\leaderboard.php": 141,
+        "api\\matchmaking.php": 924,
+        "api\\time.php": 123
+      }
+    },
+    "dotnet": {
+      "total_lines": 1772,
+      "file_count": 3,
+      "files": {
+        "dotnet\\Game.cs": 323,
+        "dotnet\\index.php": 611,
+        "dotnet\\SDK.cs": 838
+      }
+    }
+  },
+  "web_stats": {
+    "index_files": {
+      "total_lines": 731,
+      "files": {
+        "index.php": 731
+      }
+    },
+    "html_files": {
+      "total_lines": 1367,
+      "files": {
+        "cabinet.html": 582,
+        "login.html": 152,
+        "privacy.html": 209,
+        "register.html": 176,
+        "terms.html": 248
+      }
+    },
+    "php_folder": {
+      "total_lines": 558,
+      "file_count": 12,
+      "files": {
+        "php\\cleanup_rooms.php": 99,
+        "php\\config.php": 40,
+        "php\\create_project.php": 23,
+        "php\\delete_key.php": 68,
+        "php\\generate_key.php": 58,
+        "php\\get_user_data.php": 23,
+        "php\\login.php": 33,
+        "php\\logout.php": 7,
+        "php\\meta-tags.php": 55,
+        "php\\register.php": 48,
+        "php\\reset_key.php": 76,
+        "php\\verify.php": 28
+      }
+    },
+    "total_web": {
+      "total_lines": 2656,
+      "components": {
+        "index_files": 731,
+        "html_files": 1367,
+        "php_folder": 558
+      }
+    }
+  },
+  "backend_stats": {
+    "api_folder": {
+      "total_lines": 2589,
+      "file_count": 7,
+      "files": {
+        "api\\game_data.php": 188,
+        "api\\game_players.php": 258,
+        "api\\game_room.php": 955,
+        "api\\index.php": 1685,
+        "api\\leaderboard.php": 141,
+        "api\\matchmaking.php": 924,
+        "api\\time.php": 123
+      }
+    }
+  },
+  "dotnet_sdk_stats": {
+    "total_lines": 1161,
+    "file_count": 2,
+    "files": {
+      "dotnet\\SDK.cs": 838,
+      "dotnet\\Game.cs": 323
+    }
+  },
+  "unity_sdk_stats": {
+    "total_lines": 1530,
+    "file_count": 2,
+    "files": {
+      "unity\\SDK.cs": 1166,
+      "unity\\Game.cs": 364
+    }
+  }
+}

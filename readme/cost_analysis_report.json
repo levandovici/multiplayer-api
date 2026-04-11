@@ -1,0 +1,328 @@
+{
+  "analysis_date": "2026-04-11T13:25:14.906130",
+  "currency": "USD",
+  "summary": {
+    "most_expensive_folder": "unity",
+    "most_expensive_file": {
+      "file": "unity\\SDK.cs",
+      "lines": 1166,
+      "complexity": "very_complex",
+      "hours": 233.2,
+      "level": "senior",
+      "cost": 17490.0
+    },
+    "cost_distribution": {
+      "php": 279.0,
+      "unity": 21940.0,
+      "api": 18304.0,
+      "dotnet": 17240.0,
+      "dotnet_sdk": 14185.0,
+      "unity_sdk": 19310.0
+    },
+    "complexity_breakdown": {
+      "file_counts": {
+        "simple": 15,
+        "moderate": 1,
+        "complex": 9,
+        "very_complex": 4
+      },
+      "costs": {
+        "simple": 505.0,
+        "moderate": 258.0,
+        "complex": 30375.0,
+        "very_complex": 60120.0
+      }
+    }
+  },
+  "folders": {
+    "php": {
+      "total_hours": 11.160000000000002,
+      "total_cost": 279.0,
+      "file_count": 12,
+      "average_cost_per_file": 23.25,
+      "files": [
+        {
+          "file": "php\\cleanup_rooms.php",
+          "lines": 99,
+          "complexity": "simple",
+          "hours": 1.98,
+          "level": "junior",
+          "cost": 49.5
+        },
+        {
+          "file": "php\\config.php",
+          "lines": 40,
+          "complexity": "simple",
+          "hours": 0.8,
+          "level": "junior",
+          "cost": 20.0
+        },
+        {
+          "file": "php\\create_project.php",
+          "lines": 23,
+          "complexity": "simple",
+          "hours": 0.46,
+          "level": "junior",
+          "cost": 11.5
+        },
+        {
+          "file": "php\\delete_key.php",
+          "lines": 68,
+          "complexity": "simple",
+          "hours": 1.36,
+          "level": "junior",
+          "cost": 34.0
+        },
+        {
+          "file": "php\\generate_key.php",
+          "lines": 58,
+          "complexity": "simple",
+          "hours": 1.16,
+          "level": "junior",
+          "cost": 28.999999999999996
+        },
+        {
+          "file": "php\\get_user_data.php",
+          "lines": 23,
+          "complexity": "simple",
+          "hours": 0.46,
+          "level": "junior",
+          "cost": 11.5
+        },
+        {
+          "file": "php\\login.php",
+          "lines": 33,
+          "complexity": "simple",
+          "hours": 0.66,
+          "level": "junior",
+          "cost": 16.5
+        },
+        {
+          "file": "php\\logout.php",
+          "lines": 7,
+          "complexity": "simple",
+          "hours": 0.14,
+          "level": "junior",
+          "cost": 3.5000000000000004
+        },
+        {
+          "file": "php\\meta-tags.php",
+          "lines": 55,
+          "complexity": "simple",
+          "hours": 1.1,
+          "level": "junior",
+          "cost": 27.500000000000004
+        },
+        {
+          "file": "php\\register.php",
+          "lines": 48,
+          "complexity": "simple",
+          "hours": 0.96,
+          "level": "junior",
+          "cost": 24.0
+        },
+        {
+          "file": "php\\reset_key.php",
+          "lines": 76,
+          "complexity": "simple",
+          "hours": 1.52,
+          "level": "junior",
+          "cost": 38.0
+        },
+        {
+          "file": "php\\verify.php",
+          "lines": 28,
+          "complexity": "simple",
+          "hours": 0.56,
+          "level": "junior",
+          "cost": 14.000000000000002
+        }
+      ]
+    },
+    "unity": {
+      "total_hours": 322.2,
+      "total_cost": 21940.0,
+      "file_count": 3,
+      "average_cost_per_file": 7313.333333333333,
+      "files": [
+        {
+          "file": "unity\\Game.cs",
+          "lines": 364,
+          "complexity": "complex",
+          "hours": 36.4,
+          "level": "mid",
+          "cost": 1820.0
+        },
+        {
+          "file": "unity\\index.php",
+          "lines": 526,
+          "complexity": "complex",
+          "hours": 52.6,
+          "level": "mid",
+          "cost": 2630.0
+        },
+        {
+          "file": "unity\\SDK.cs",
+          "lines": 1166,
+          "complexity": "very_complex",
+          "hours": 233.2,
+          "level": "senior",
+          "cost": 17490.0
+        }
+      ]
+    },
+    "api": {
+      "total_hours": 375.75999999999993,
+      "total_cost": 18304.0,
+      "file_count": 7,
+      "average_cost_per_file": 2614.8571428571427,
+      "files": [
+        {
+          "file": "api\\game_data.php",
+          "lines": 188,
+          "complexity": "simple",
+          "hours": 3.76,
+          "level": "junior",
+          "cost": 94.0
+        },
+        {
+          "file": "api\\game_players.php",
+          "lines": 258,
+          "complexity": "moderate",
+          "hours": 10.32,
+          "level": "junior",
+          "cost": 258.0
+        },
+        {
+          "file": "api\\game_room.php",
+          "lines": 955,
+          "complexity": "complex",
+          "hours": 95.5,
+          "level": "mid",
+          "cost": 4775.0
+        },
+        {
+          "file": "api\\index.php",
+          "lines": 1685,
+          "complexity": "complex",
+          "hours": 168.5,
+          "level": "mid",
+          "cost": 8425.0
+        },
+        {
+          "file": "api\\leaderboard.php",
+          "lines": 141,
+          "complexity": "simple",
+          "hours": 2.82,
+          "level": "junior",
+          "cost": 70.5
+        },
+        {
+          "file": "api\\matchmaking.php",
+          "lines": 924,
+          "complexity": "complex",
+          "hours": 92.4,
+          "level": "mid",
+          "cost": 4620.0
+        },
+        {
+          "file": "api\\time.php",
+          "lines": 123,
+          "complexity": "simple",
+          "hours": 2.46,
+          "level": "junior",
+          "cost": 61.5
+        }
+      ]
+    },
+    "dotnet": {
+      "total_hours": 261.0,
+      "total_cost": 17240.0,
+      "file_count": 3,
+      "average_cost_per_file": 5746.666666666667,
+      "files": [
+        {
+          "file": "dotnet\\Game.cs",
+          "lines": 323,
+          "complexity": "complex",
+          "hours": 32.3,
+          "level": "mid",
+          "cost": 1614.9999999999998
+        },
+        {
+          "file": "dotnet\\index.php",
+          "lines": 611,
+          "complexity": "complex",
+          "hours": 61.1,
+          "level": "mid",
+          "cost": 3055.0
+        },
+        {
+          "file": "dotnet\\SDK.cs",
+          "lines": 838,
+          "complexity": "very_complex",
+          "hours": 167.6,
+          "level": "senior",
+          "cost": 12570.0
+        }
+      ]
+    }
+  },
+  "components": {
+    "dotnet_sdk": {
+      "total_hours": 199.89999999999998,
+      "total_cost": 14185.0,
+      "file_count": 2,
+      "average_cost_per_file": 7092.5,
+      "files": [
+        {
+          "file": "dotnet\\SDK.cs",
+          "lines": 838,
+          "complexity": "very_complex",
+          "hours": 167.6,
+          "level": "senior",
+          "cost": 12570.0
+        },
+        {
+          "file": "dotnet\\Game.cs",
+          "lines": 323,
+          "complexity": "complex",
+          "hours": 32.3,
+          "level": "mid",
+          "cost": 1614.9999999999998
+        }
+      ]
+    },
+    "unity_sdk": {
+      "total_hours": 269.59999999999997,
+      "total_cost": 19310.0,
+      "file_count": 2,
+      "average_cost_per_file": 9655.0,
+      "files": [
+        {
+          "file": "unity\\SDK.cs",
+          "lines": 1166,
+          "complexity": "very_complex",
+          "hours": 233.2,
+          "level": "senior",
+          "cost": 17490.0
+        },
+        {
+          "file": "unity\\Game.cs",
+          "lines": 364,
+          "complexity": "complex",
+          "hours": 36.4,
+          "level": "mid",
+          "cost": 1820.0
+        }
+      ]
+    }
+  },
+  "total_project": {
+    "total_hours": 1439.62,
+    "total_cost": 91258.0,
+    "total_files": 29,
+    "average_cost_per_file": 3146.8275862068967,
+    "average_hours_per_file": 49.64206896551724
+  }
+}
