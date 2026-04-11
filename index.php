@@ -262,6 +262,8 @@ $site_twitter = "@michitai";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     
     <style>
         :root {
@@ -750,6 +752,49 @@ pre::-webkit-scrollbar-thumb:hover {
         </div>
     </section>
 
+    <!-- Development Analytics Section -->
+    <section class="relative py-16 overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white mb-12 text-center">
+                Development Analytics
+            </h2>
+            
+            <div class="glass-effect p-8 rounded-2xl mb-8">
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <i class="fas fa-chart-line text-green-400 mr-3"></i>
+                    Lines of Code Over Time
+                </h3>
+                
+                <div class="bg-white/5 rounded-lg p-6 mb-6">
+                    <canvas id="locChart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white/5 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-green-400" id="totalCommits">0</div>
+                        <div class="text-white/70 text-sm">Total Commits</div>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-blue-400" id="totalLOC">0</div>
+                        <div class="text-white/70 text-sm">Lines of Code</div>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-purple-400" id="projectAge">0</div>
+                        <div class="text-white/70 text-sm">Days Active</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-effect p-6 rounded-2xl">
+                <h4 class="text-xl font-bold text-white mb-4">Recent Development Activity</h4>
+                <div id="recentCommits" class="space-y-2 max-h-64 overflow-y-auto">
+                    <!-- Commits will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="glass-effect border-t border-white/10 mt-16">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 text-center">
@@ -792,6 +837,133 @@ pre::-webkit-scrollbar-thumb:hover {
             el.classList.add('opacity-0', 'transition-opacity', 'duration-500');
             observer.observe(el);
         });
+
+        // Load and display lines of code graph
+        async function loadLOCGraph() {
+            try {
+                // Embed graph data directly to avoid JSON file access issues
+                const data = <?php
+                    $graphFile = __DIR__ . '/graph_data.json';
+                    if (file_exists($graphFile)) {
+                        echo file_get_contents($graphFile);
+                    } else {
+                        echo '{"metadata":{"total_commits":0,"total_loc":0},"data":[]}';
+                    }
+                ?>;
+                
+                // Update statistics
+                document.getElementById('totalCommits').textContent = data.metadata.total_commits.toLocaleString();
+                document.getElementById('totalLOC').textContent = data.metadata.total_loc.toLocaleString();
+                
+                // Calculate project age (days from first commit to now)
+                const firstCommit = new Date(data.data[0].date);
+                const now = new Date();
+                const daysActive = Math.floor((now - firstCommit) / (1000 * 60 * 60 * 24));
+                document.getElementById('projectAge').textContent = daysActive.toLocaleString();
+                
+                // Prepare chart data
+                const chartData = data.data.map(point => ({
+                    x: point.x, // Use the timestamp directly
+                    y: point.y
+                }));
+                
+                const ctx = document.getElementById('locChart').getContext('2d');
+                
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: 'Lines of Code',
+                            data: chartData,
+                            borderColor: 'rgb(75, 192, 192)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            tension: 0.1,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(context) {
+                                        return new Date(context[0].parsed.x).toLocaleDateString();
+                                    },
+                                    label: function(context) {
+                                        return `Lines of Code: ${context.parsed.y.toLocaleString()}`;
+                                    }
+                                }
+                            },
+                            datetime: {
+                                displayFormats: {
+                                    month: 'MMM yyyy'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'month'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.7)'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.7)',
+                                    callback: function(value) {
+                                        return value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Load recent commits
+                const recentCommits = data.data.slice(-10).reverse();
+                const recentCommitsContainer = document.getElementById('recentCommits');
+                
+                recentCommits.forEach(commit => {
+                    const commitElement = document.createElement('div');
+                    commitElement.className = 'flex items-start space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors';
+                    
+                    const date = new Date(commit.date);
+                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                    
+                    commitElement.innerHTML = `
+                        <i class="fas fa-code-commit text-cyan-400 mt-1 text-sm"></i>
+                        <div class="flex-1">
+                            <div class="text-white/90 text-sm font-medium">${commit.message}</div>
+                            <div class="text-white/50 text-xs">${formattedDate} (${commit.hash})</div>
+                        </div>
+                    `;
+                    
+                    recentCommitsContainer.appendChild(commitElement);
+                });
+                
+            } catch (error) {
+                console.error('Error loading LOC graph data:', error);
+                document.getElementById('locChart').parentElement.innerHTML = 
+                    '<div class="text-center text-white/50 p-8">Unable to load development analytics data</div>';
+            }
+        }
+        
+        // Load the graph when the page loads
+        loadLOCGraph();
     </script>
     
     <style>

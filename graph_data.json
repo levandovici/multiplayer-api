@@ -1,0 +1,1257 @@
+{
+  "metadata": {
+    "title": "Lines of Code Over Time",
+    "description": "Cumulative lines of code in the multiplayer-api project",
+    "generated": "2026-04-11 16:13:31",
+    "total_commits": 178,
+    "total_loc": 16778
+  },
+  "data": [
+    {
+      "x": 1772204434000,
+      "y": 6161,
+      "date": "2026-02-27 17:00:34 +0200",
+      "message": "api v2 deprecated",
+      "hash": "3a2f8cf"
+    },
+    {
+      "x": 1772730774000,
+      "y": 7196,
+      "date": "2026-03-05 19:12:54 +0200",
+      "message": "added game rooms updates, matchmaking system",
+      "hash": "f2820a4"
+    },
+    {
+      "x": 1772793037000,
+      "y": 7204,
+      "date": "2026-03-06 12:30:37 +0200",
+      "message": "game room updates",
+      "hash": "5442548"
+    },
+    {
+      "x": 1772813816000,
+      "y": 7206,
+      "date": "2026-03-06 18:16:56 +0200",
+      "message": "schema update",
+      "hash": "439682f"
+    },
+    {
+      "x": 1772814135000,
+      "y": 7206,
+      "date": "2026-03-06 18:22:15 +0200",
+      "message": "schema fix",
+      "hash": "915b4bf"
+    },
+    {
+      "x": 1772814527000,
+      "y": 7206,
+      "date": "2026-03-06 18:28:47 +0200",
+      "message": "matchmaking create and list tests",
+      "hash": "e572556"
+    },
+    {
+      "x": 1772816570000,
+      "y": 7316,
+      "date": "2026-03-06 19:02:50 +0200",
+      "message": "matchmaking request, response",
+      "hash": "6348b1a"
+    },
+    {
+      "x": 1772817680000,
+      "y": 7384,
+      "date": "2026-03-06 19:21:20 +0200",
+      "message": "matchmaking status, join",
+      "hash": "e6e2f6a"
+    },
+    {
+      "x": 1772818008000,
+      "y": 7384,
+      "date": "2026-03-06 19:26:48 +0200",
+      "message": "matchmaking leave",
+      "hash": "e3e8004"
+    },
+    {
+      "x": 1772819257000,
+      "y": 7474,
+      "date": "2026-03-06 19:47:37 +0200",
+      "message": "matchmaking players, heartbeat, remove, current",
+      "hash": "cf6bd98"
+    },
+    {
+      "x": 1772819550000,
+      "y": 7493,
+      "date": "2026-03-06 19:52:30 +0200",
+      "message": "matchmaking start",
+      "hash": "0cbf3b2"
+    },
+    {
+      "x": 1772821365000,
+      "y": 7599,
+      "date": "2026-03-06 20:22:45 +0200",
+      "message": "game room current, game room updates",
+      "hash": "fdc43d5"
+    },
+    {
+      "x": 1773049712000,
+      "y": 7599,
+      "date": "2026-03-09 11:48:32 +0200",
+      "message": "fix server time request, game players, game data, time",
+      "hash": "e17b737"
+    },
+    {
+      "x": 1773050325000,
+      "y": 7599,
+      "date": "2026-03-09 11:58:45 +0200",
+      "message": "fix list players in a room",
+      "hash": "211c437"
+    },
+    {
+      "x": 1773050913000,
+      "y": 7601,
+      "date": "2026-03-09 12:08:33 +0200",
+      "message": "fix heartbeat request",
+      "hash": "e9d0fb1"
+    },
+    {
+      "x": 1773052141000,
+      "y": 7619,
+      "date": "2026-03-09 12:29:01 +0200",
+      "message": "fix actions poll and pending requests",
+      "hash": "b09c460"
+    },
+    {
+      "x": 1773053932000,
+      "y": 7618,
+      "date": "2026-03-09 12:58:52 +0200",
+      "message": "update send updates request",
+      "hash": "549e96d"
+    },
+    {
+      "x": 1773054596000,
+      "y": 7621,
+      "date": "2026-03-09 13:09:56 +0200",
+      "message": "test udates poll",
+      "hash": "182d727"
+    },
+    {
+      "x": 1773054817000,
+      "y": 7621,
+      "date": "2026-03-09 13:13:37 +0200",
+      "message": "update index",
+      "hash": "50e0a67"
+    },
+    {
+      "x": 1773055571000,
+      "y": 7807,
+      "date": "2026-03-09 13:26:11 +0200",
+      "message": "added updates, current to the index endpoints and rest api",
+      "hash": "3c3ef88"
+    },
+    {
+      "x": 1773068275000,
+      "y": 7807,
+      "date": "2026-03-09 16:57:55 +0200",
+      "message": "update index - time request",
+      "hash": "9d95e18"
+    },
+    {
+      "x": 1773068951000,
+      "y": 7808,
+      "date": "2026-03-09 17:09:11 +0200",
+      "message": "update SDK - list players in a room",
+      "hash": "fd411a4"
+    },
+    {
+      "x": 1773069786000,
+      "y": 7812,
+      "date": "2026-03-09 17:23:06 +0200",
+      "message": "update SDK - actions poll and pending requests",
+      "hash": "b7a03d6"
+    },
+    {
+      "x": 1773072662000,
+      "y": 7999,
+      "date": "2026-03-09 18:11:02 +0200",
+      "message": "update SDK - updates, current endpoints implemented, fix game room",
+      "hash": "2032407"
+    },
+    {
+      "x": 1773156224000,
+      "y": 8009,
+      "date": "2026-03-10 17:23:44 +0200",
+      "message": "fix matchmaking list response",
+      "hash": "ef74352"
+    },
+    {
+      "x": 1773158253000,
+      "y": 8008,
+      "date": "2026-03-10 17:57:33 +0200",
+      "message": "fix matchmaking request",
+      "hash": "62a161a"
+    },
+    {
+      "x": 1773158588000,
+      "y": 8023,
+      "date": "2026-03-10 18:03:08 +0200",
+      "message": "fix matchmaking request processing",
+      "hash": "1b9cbb9"
+    },
+    {
+      "x": 1773159599000,
+      "y": 8024,
+      "date": "2026-03-10 18:19:59 +0200",
+      "message": "fix matchmaking response request",
+      "hash": "0bb92f5"
+    },
+    {
+      "x": 1773160155000,
+      "y": 8025,
+      "date": "2026-03-10 18:29:15 +0200",
+      "message": "fix matchmaking status request",
+      "hash": "5ffa714"
+    },
+    {
+      "x": 1773160630000,
+      "y": 8028,
+      "date": "2026-03-10 18:37:10 +0200",
+      "message": "fix matchmaking current request processing",
+      "hash": "f23dac3"
+    },
+    {
+      "x": 1773161151000,
+      "y": 8027,
+      "date": "2026-03-10 18:45:51 +0200",
+      "message": "fix matchmaking join request",
+      "hash": "1748d2c"
+    },
+    {
+      "x": 1773161786000,
+      "y": 8027,
+      "date": "2026-03-10 18:56:26 +0200",
+      "message": "fix matchmaking remove request",
+      "hash": "c16e1e0"
+    },
+    {
+      "x": 1773162404000,
+      "y": 8027,
+      "date": "2026-03-10 19:06:44 +0200",
+      "message": "fix matchmaking start request",
+      "hash": "b8528d6"
+    },
+    {
+      "x": 1773235237000,
+      "y": 8059,
+      "date": "2026-03-11 15:20:37 +0200",
+      "message": "fix matchmaking remove and start requests",
+      "hash": "392c0fc"
+    },
+    {
+      "x": 1773237834000,
+      "y": 8126,
+      "date": "2026-03-11 16:03:54 +0200",
+      "message": "update index - matchmaking endpoints",
+      "hash": "80c3704"
+    },
+    {
+      "x": 1773239020000,
+      "y": 8439,
+      "date": "2026-03-11 16:23:40 +0200",
+      "message": "update index - matchmaking rest api",
+      "hash": "bdd6690"
+    },
+    {
+      "x": 1773239951000,
+      "y": 8464,
+      "date": "2026-03-11 16:39:11 +0200",
+      "message": "fix database schema, update game room and matchmaking processing",
+      "hash": "759bf74"
+    },
+    {
+      "x": 1773240854000,
+      "y": 8465,
+      "date": "2026-03-11 16:54:14 +0200",
+      "message": "fix game room - leave processing",
+      "hash": "2e749f2"
+    },
+    {
+      "x": 1773247637000,
+      "y": 9059,
+      "date": "2026-03-11 18:47:17 +0200",
+      "message": "update SDK",
+      "hash": "13f0f12"
+    },
+    {
+      "x": 1773333964000,
+      "y": 9079,
+      "date": "2026-03-12 18:46:04 +0200",
+      "message": "fix matchmaking - create processing",
+      "hash": "aff1c45"
+    },
+    {
+      "x": 1773333991000,
+      "y": 9100,
+      "date": "2026-03-12 18:46:31 +0200",
+      "message": "fix game room - create processing",
+      "hash": "4eee46e"
+    },
+    {
+      "x": 1773335953000,
+      "y": 9114,
+      "date": "2026-03-12 19:19:13 +0200",
+      "message": "fix game room - remove matchmaking when game ends",
+      "hash": "36b96a1"
+    },
+    {
+      "x": 1773394346000,
+      "y": 9117,
+      "date": "2026-03-13 11:32:26 +0200",
+      "message": "update database schema",
+      "hash": "d0540a4"
+    },
+    {
+      "x": 1773394453000,
+      "y": 9221,
+      "date": "2026-03-13 11:34:13 +0200",
+      "message": "update game players - routing, add game players - heartbeat, logout",
+      "hash": "3d94115"
+    },
+    {
+      "x": 1773395311000,
+      "y": 9221,
+      "date": "2026-03-13 11:48:31 +0200",
+      "message": "fix game players logout",
+      "hash": "4fed73e"
+    },
+    {
+      "x": 1773395511000,
+      "y": 9227,
+      "date": "2026-03-13 11:51:51 +0200",
+      "message": "update game players - rest api tests",
+      "hash": "2e909ee"
+    },
+    {
+      "x": 1773395739000,
+      "y": 9237,
+      "date": "2026-03-13 11:55:39 +0200",
+      "message": "update index - api endpoints",
+      "hash": "a2e622c"
+    },
+    {
+      "x": 1773396091000,
+      "y": 9275,
+      "date": "2026-03-13 12:01:31 +0200",
+      "message": "update index - rest api",
+      "hash": "2902eb5"
+    },
+    {
+      "x": 1773396357000,
+      "y": 9283,
+      "date": "2026-03-13 12:05:57 +0200",
+      "message": "update game room - heartbeat",
+      "hash": "9039ea7"
+    },
+    {
+      "x": 1773396375000,
+      "y": 9291,
+      "date": "2026-03-13 12:06:15 +0200",
+      "message": "update matchmaking - heartbeat",
+      "hash": "d66de51"
+    },
+    {
+      "x": 1773396617000,
+      "y": 9291,
+      "date": "2026-03-13 12:10:17 +0200",
+      "message": "update game room - heartbeat routing",
+      "hash": "eb2caec"
+    },
+    {
+      "x": 1773397541000,
+      "y": 9333,
+      "date": "2026-03-13 12:25:41 +0200",
+      "message": "update SDK - game players heartbeat and logout",
+      "hash": "4595ce5"
+    },
+    {
+      "x": 1773397561000,
+      "y": 9365,
+      "date": "2026-03-13 12:26:01 +0200",
+      "message": "update SDK - example for game players heartbeat and logout",
+      "hash": "8c17770"
+    },
+    {
+      "x": 1773397961000,
+      "y": 9365,
+      "date": "2026-03-13 12:32:41 +0200",
+      "message": "fix SDK - game players routing",
+      "hash": "342552d"
+    },
+    {
+      "x": 1773401032000,
+      "y": 9377,
+      "date": "2026-03-13 13:23:52 +0200",
+      "message": "update game data - routing",
+      "hash": "5b4e126"
+    },
+    {
+      "x": 1773401516000,
+      "y": 9377,
+      "date": "2026-03-13 13:31:56 +0200",
+      "message": "update index - game data routing",
+      "hash": "0c33fa2"
+    },
+    {
+      "x": 1773401539000,
+      "y": 9377,
+      "date": "2026-03-13 13:32:19 +0200",
+      "message": "update game data - rest api tests",
+      "hash": "8ea90b3"
+    },
+    {
+      "x": 1773401551000,
+      "y": 9377,
+      "date": "2026-03-13 13:32:31 +0200",
+      "message": "update SDK - game data routing",
+      "hash": "2818e0f"
+    },
+    {
+      "x": 1773403720000,
+      "y": 9390,
+      "date": "2026-03-13 14:08:40 +0200",
+      "message": "fix game data - processing",
+      "hash": "b854294"
+    },
+    {
+      "x": 1773410902000,
+      "y": 9426,
+      "date": "2026-03-13 16:08:22 +0200",
+      "message": "update time - optional utc parameter",
+      "hash": "18e68d5"
+    },
+    {
+      "x": 1773411116000,
+      "y": 9436,
+      "date": "2026-03-13 16:11:56 +0200",
+      "message": "update index - time endpoint",
+      "hash": "75cfa6e"
+    },
+    {
+      "x": 1773411714000,
+      "y": 9488,
+      "date": "2026-03-13 16:21:54 +0200",
+      "message": "update index - rest api",
+      "hash": "f50538e"
+    },
+    {
+      "x": 1773411802000,
+      "y": 9494,
+      "date": "2026-03-13 16:23:22 +0200",
+      "message": "update time - rest api tests",
+      "hash": "e3c2e05"
+    },
+    {
+      "x": 1773411956000,
+      "y": 9524,
+      "date": "2026-03-13 16:25:56 +0200",
+      "message": "update SDK - time offset",
+      "hash": "bed6afe"
+    },
+    {
+      "x": 1773411970000,
+      "y": 9556,
+      "date": "2026-03-13 16:26:10 +0200",
+      "message": "update SDK - example for time offset",
+      "hash": "4ce34ec"
+    },
+    {
+      "x": 1773427667000,
+      "y": 9709,
+      "date": "2026-03-13 20:47:47 +0200",
+      "message": "add leaderboard - sortBy and limit filters",
+      "hash": "4b265bd"
+    },
+    {
+      "x": 1773427688000,
+      "y": 9710,
+      "date": "2026-03-13 20:48:08 +0200",
+      "message": "fix config - leaderboard processing",
+      "hash": "90f79be"
+    },
+    {
+      "x": 1773427719000,
+      "y": 9937,
+      "date": "2026-03-13 20:48:39 +0200",
+      "message": "update index - api endpoints, rest api",
+      "hash": "09d67d2"
+    },
+    {
+      "x": 1773427772000,
+      "y": 9946,
+      "date": "2026-03-13 20:49:32 +0200",
+      "message": "leaderboard - rest api tests",
+      "hash": "a3e8e79"
+    },
+    {
+      "x": 1773427918000,
+      "y": 9978,
+      "date": "2026-03-13 20:51:58 +0200",
+      "message": "update SDK - leaderboard",
+      "hash": "8208f5b"
+    },
+    {
+      "x": 1773427932000,
+      "y": 10071,
+      "date": "2026-03-13 20:52:12 +0200",
+      "message": "update SDK - example for leaderboard",
+      "hash": "f38e098"
+    },
+    {
+      "x": 1773429784000,
+      "y": 10116,
+      "date": "2026-03-13 21:23:04 +0200",
+      "message": "LICENSE",
+      "hash": "34db10d"
+    },
+    {
+      "x": 1773430879000,
+      "y": 9506,
+      "date": "2026-03-13 21:41:19 +0200",
+      "message": "clean",
+      "hash": "741545e"
+    },
+    {
+      "x": 1773430898000,
+      "y": 9507,
+      "date": "2026-03-13 21:41:38 +0200",
+      "message": "update",
+      "hash": "9fc64a3"
+    },
+    {
+      "x": 1773431083000,
+      "y": 9503,
+      "date": "2026-03-13 21:44:43 +0200",
+      "message": "production",
+      "hash": "5f29fd0"
+    },
+    {
+      "x": 1773432478000,
+      "y": 9503,
+      "date": "2026-03-13 22:07:58 +0200",
+      "message": "hot fix",
+      "hash": "5f34867"
+    },
+    {
+      "x": 1773489660000,
+      "y": 9568,
+      "date": "2026-03-14 14:01:00 +0200",
+      "message": "update index - open graph link preview",
+      "hash": "d0fa39a"
+    },
+    {
+      "x": 1774109898000,
+      "y": 9568,
+      "date": "2026-03-21 18:18:18 +0200",
+      "message": "update dotnet",
+      "hash": "7b8fbcf"
+    },
+    {
+      "x": 1774173359000,
+      "y": 9941,
+      "date": "2026-03-22 11:55:59 +0200",
+      "message": "dotnet docs",
+      "hash": "b6ccaa0"
+    },
+    {
+      "x": 1774175600000,
+      "y": 9941,
+      "date": "2026-03-22 12:33:20 +0200",
+      "message": "update index",
+      "hash": "6d5ea9c"
+    },
+    {
+      "x": 1774176552000,
+      "y": 17070,
+      "date": "2026-03-22 12:49:12 +0200",
+      "message": "release unity version",
+      "hash": "619187e"
+    },
+    {
+      "x": 1774180512000,
+      "y": 20228,
+      "date": "2026-03-22 13:55:12 +0200",
+      "message": "update indexes",
+      "hash": "d1352b3"
+    },
+    {
+      "x": 1774192069000,
+      "y": 22046,
+      "date": "2026-03-22 17:07:49 +0200",
+      "message": "release rest api version",
+      "hash": "871b3b3"
+    },
+    {
+      "x": 1774196274000,
+      "y": 24550,
+      "date": "2026-03-22 18:17:54 +0200",
+      "message": "unity SDK docs",
+      "hash": "0e2877c"
+    },
+    {
+      "x": 1774198947000,
+      "y": 24080,
+      "date": "2026-03-22 19:02:27 +0200",
+      "message": "update unity index",
+      "hash": "94d70a4"
+    },
+    {
+      "x": 1774200454000,
+      "y": 23378,
+      "date": "2026-03-22 19:27:34 +0200",
+      "message": "update .net index",
+      "hash": "3a16130"
+    },
+    {
+      "x": 1774264425000,
+      "y": 23378,
+      "date": "2026-03-23 13:13:45 +0200",
+      "message": "fix unity index",
+      "hash": "5148533"
+    },
+    {
+      "x": 1774265000000,
+      "y": 23374,
+      "date": "2026-03-23 13:23:20 +0200",
+      "message": "fix indexes",
+      "hash": "8e82632"
+    },
+    {
+      "x": 1774270770000,
+      "y": 23677,
+      "date": "2026-03-23 14:59:30 +0200",
+      "message": "fix unity SDK",
+      "hash": "259d50f"
+    },
+    {
+      "x": 1774341264000,
+      "y": 23677,
+      "date": "2026-03-24 10:34:24 +0200",
+      "message": "update api - rest api and index",
+      "hash": "be992f5"
+    },
+    {
+      "x": 1774342205000,
+      "y": 23677,
+      "date": "2026-03-24 10:50:05 +0200",
+      "message": "update dotnet - SDK and index",
+      "hash": "3f5a156"
+    },
+    {
+      "x": 1774342855000,
+      "y": 23677,
+      "date": "2026-03-24 11:00:55 +0200",
+      "message": "update api - rest api and index",
+      "hash": "c143745"
+    },
+    {
+      "x": 1774342938000,
+      "y": 23677,
+      "date": "2026-03-24 11:02:18 +0200",
+      "message": "update dotnet - SDK",
+      "hash": "8f47886"
+    },
+    {
+      "x": 1774343333000,
+      "y": 23677,
+      "date": "2026-03-24 11:08:53 +0200",
+      "message": "api update - simplify",
+      "hash": "87c47be"
+    },
+    {
+      "x": 1774345699000,
+      "y": 23677,
+      "date": "2026-03-24 11:48:19 +0200",
+      "message": "update api - index order",
+      "hash": "aebb6b4"
+    },
+    {
+      "x": 1774358524000,
+      "y": 23631,
+      "date": "2026-03-24 15:22:04 +0200",
+      "message": "update dotnet - simplify",
+      "hash": "af1f5cc"
+    },
+    {
+      "x": 1774359458000,
+      "y": 23631,
+      "date": "2026-03-24 15:37:38 +0200",
+      "message": "fix indexes logo",
+      "hash": "790f7d3"
+    },
+    {
+      "x": 1774362155000,
+      "y": 22684,
+      "date": "2026-03-24 16:22:35 +0200",
+      "message": "update dotnet - SDK",
+      "hash": "e9f207c"
+    },
+    {
+      "x": 1774363364000,
+      "y": 22685,
+      "date": "2026-03-24 16:42:44 +0200",
+      "message": "fix dotnet - SDK",
+      "hash": "847add5"
+    },
+    {
+      "x": 1774365966000,
+      "y": 22698,
+      "date": "2026-03-24 17:26:06 +0200",
+      "message": "fix api - add CORS headers to rest api",
+      "hash": "5b3453f"
+    },
+    {
+      "x": 1774435331000,
+      "y": 17476,
+      "date": "2026-03-25 12:42:11 +0200",
+      "message": "update api - format query parameter, unity support",
+      "hash": "5689f71"
+    },
+    {
+      "x": 1774437728000,
+      "y": 17494,
+      "date": "2026-03-25 13:22:08 +0200",
+      "message": "Bug 1: game_players.php \u0432\u2020\u2019 login endpoint returns wrong structure",
+      "hash": "bd822ef"
+    },
+    {
+      "x": 1774451367000,
+      "y": 17438,
+      "date": "2026-03-25 17:09:27 +0200",
+      "message": "Bug 3: game_room.php \u0432\u0402\u201c formatForUnity",
+      "hash": "54fa760"
+    },
+    {
+      "x": 1774453226000,
+      "y": 17468,
+      "date": "2026-03-25 17:40:26 +0200",
+      "message": "Bug 4: game_room.php \u0432\u0402\u201c checkAndReassignHost",
+      "hash": "2c2cc77"
+    },
+    {
+      "x": 1774453871000,
+      "y": 17512,
+      "date": "2026-03-25 17:51:11 +0200",
+      "message": "Bug 5: matchmaking.php \u0432\u0402\u201c inconsistent extra_json_string",
+      "hash": "55fbc29"
+    },
+    {
+      "x": 1774454376000,
+      "y": 17523,
+      "date": "2026-03-25 17:59:36 +0200",
+      "message": "Bug 6: leaderboard.php",
+      "hash": "169f619"
+    },
+    {
+      "x": 1774456128000,
+      "y": 17523,
+      "date": "2026-03-25 18:28:48 +0200",
+      "message": "update database - rename extra_json_string to rules",
+      "hash": "44f2b9a"
+    },
+    {
+      "x": 1774460047000,
+      "y": 17621,
+      "date": "2026-03-25 19:34:07 +0200",
+      "message": "update .NET - example",
+      "hash": "446d134"
+    },
+    {
+      "x": 1774463431000,
+      "y": 13966,
+      "date": "2026-03-25 20:30:31 +0200",
+      "message": "update unity - SDK",
+      "hash": "b2f7c3a"
+    },
+    {
+      "x": 1774519355000,
+      "y": 14009,
+      "date": "2026-03-26 12:02:35 +0200",
+      "message": "update - register player",
+      "hash": "aa4ff60"
+    },
+    {
+      "x": 1774520402000,
+      "y": 14023,
+      "date": "2026-03-26 12:20:02 +0200",
+      "message": "update - login player",
+      "hash": "9e46310"
+    },
+    {
+      "x": 1774521310000,
+      "y": 14033,
+      "date": "2026-03-26 12:35:10 +0200",
+      "message": "update - get all players",
+      "hash": "23c47a1"
+    },
+    {
+      "x": 1774535407000,
+      "y": 14054,
+      "date": "2026-03-26 16:30:07 +0200",
+      "message": "update - player heartbeat",
+      "hash": "7dbe23c"
+    },
+    {
+      "x": 1774542558000,
+      "y": 14119,
+      "date": "2026-03-26 18:29:18 +0200",
+      "message": "update .NET - game data",
+      "hash": "0a2384c"
+    },
+    {
+      "x": 1774549554000,
+      "y": 14230,
+      "date": "2026-03-26 20:25:54 +0200",
+      "message": "update Unity - game data",
+      "hash": "769ab8b"
+    },
+    {
+      "x": 1774628909000,
+      "y": 14264,
+      "date": "2026-03-27 18:28:29 +0200",
+      "message": "update - leaderboard",
+      "hash": "99060da"
+    },
+    {
+      "x": 1774632374000,
+      "y": 14300,
+      "date": "2026-03-27 19:26:14 +0200",
+      "message": "update - matchmaking create",
+      "hash": "0c74dec"
+    },
+    {
+      "x": 1774633837000,
+      "y": 14311,
+      "date": "2026-03-27 19:50:37 +0200",
+      "message": "update - matchmaking join request response",
+      "hash": "62a1f62"
+    },
+    {
+      "x": 1774788029000,
+      "y": 14327,
+      "date": "2026-03-29 15:40:29 +0300",
+      "message": "update - game rooms create",
+      "hash": "a9bfc95"
+    },
+    {
+      "x": 1774788429000,
+      "y": 14338,
+      "date": "2026-03-29 15:47:09 +0300",
+      "message": "update - game rooms join",
+      "hash": "9edb6d0"
+    },
+    {
+      "x": 1774790330000,
+      "y": 14405,
+      "date": "2026-03-29 16:18:50 +0300",
+      "message": "update - game rooms action complete",
+      "hash": "01a41b2"
+    },
+    {
+      "x": 1774791227000,
+      "y": 14431,
+      "date": "2026-03-29 16:33:47 +0300",
+      "message": "update - game rooms submit action",
+      "hash": "c00c85b"
+    },
+    {
+      "x": 1774791708000,
+      "y": 14479,
+      "date": "2026-03-29 16:41:48 +0300",
+      "message": "update - game rooms poll actions",
+      "hash": "3ece58b"
+    },
+    {
+      "x": 1774793781000,
+      "y": 14481,
+      "date": "2026-03-29 17:16:21 +0300",
+      "message": "fix unity - game rooms submit action",
+      "hash": "0d42c54"
+    },
+    {
+      "x": 1774806336000,
+      "y": 14482,
+      "date": "2026-03-29 20:45:36 +0300",
+      "message": "update database - game rooms rules",
+      "hash": "24178ae"
+    },
+    {
+      "x": 1774808232000,
+      "y": 14507,
+      "date": "2026-03-29 21:17:12 +0300",
+      "message": "update - game rooms rules",
+      "hash": "b47fa02"
+    },
+    {
+      "x": 1774849567000,
+      "y": 14509,
+      "date": "2026-03-30 08:46:07 +0300",
+      "message": "fix api - game rooms processing",
+      "hash": "ee37a60"
+    },
+    {
+      "x": 1774856740000,
+      "y": 14539,
+      "date": "2026-03-30 10:45:40 +0300",
+      "message": "update - database schema, matchmaking rules, game room: data, target player ids",
+      "hash": "ab74541"
+    },
+    {
+      "x": 1774858748000,
+      "y": 14344,
+      "date": "2026-03-30 11:19:08 +0300",
+      "message": "update .NET - web page",
+      "hash": "8ef7e9e"
+    },
+    {
+      "x": 1774859905000,
+      "y": 14116,
+      "date": "2026-03-30 11:38:25 +0300",
+      "message": "update Unity - web page",
+      "hash": "d85de1b"
+    },
+    {
+      "x": 1774878833000,
+      "y": 14283,
+      "date": "2026-03-30 16:53:53 +0300",
+      "message": "refactor Unity - SDK",
+      "hash": "ad93328"
+    },
+    {
+      "x": 1774879262000,
+      "y": 14291,
+      "date": "2026-03-30 17:01:02 +0300",
+      "message": "refactor .NET - SDK",
+      "hash": "9f3e254"
+    },
+    {
+      "x": 1774969259000,
+      "y": 14516,
+      "date": "2026-03-31 18:00:59 +0300",
+      "message": "refactor - api, .NET SDK",
+      "hash": "8bff9ac"
+    },
+    {
+      "x": 1774971193000,
+      "y": 14570,
+      "date": "2026-03-31 18:33:13 +0300",
+      "message": "refactor - api, Unity SDK",
+      "hash": "4781495"
+    },
+    {
+      "x": 1775032540000,
+      "y": 14650,
+      "date": "2026-04-01 11:35:40 +0300",
+      "message": "update - game room send updates",
+      "hash": "2e5a832"
+    },
+    {
+      "x": 1775033031000,
+      "y": 14653,
+      "date": "2026-04-01 11:43:51 +0300",
+      "message": "update - indexes",
+      "hash": "01abe7e"
+    },
+    {
+      "x": 1775036325000,
+      "y": 14673,
+      "date": "2026-04-01 12:38:45 +0300",
+      "message": "update - playerId, isHost, isOnline, isActive",
+      "hash": "7a9d964"
+    },
+    {
+      "x": 1775058653000,
+      "y": 15007,
+      "date": "2026-04-01 18:50:53 +0300",
+      "message": "update time - api, SDK",
+      "hash": "089d173"
+    },
+    {
+      "x": 1775135423000,
+      "y": 15024,
+      "date": "2026-04-02 16:10:23 +0300",
+      "message": "refactor api",
+      "hash": "e31f320"
+    },
+    {
+      "x": 1775136044000,
+      "y": 15024,
+      "date": "2026-04-02 16:20:44 +0300",
+      "message": "cleaning",
+      "hash": "2c07db9"
+    },
+    {
+      "x": 1775138134000,
+      "y": 14857,
+      "date": "2026-04-02 16:55:34 +0300",
+      "message": "update docs",
+      "hash": "5e40b04"
+    },
+    {
+      "x": 1775139033000,
+      "y": 14848,
+      "date": "2026-04-02 17:10:33 +0300",
+      "message": "update indexes style",
+      "hash": "7f928e5"
+    },
+    {
+      "x": 1775141180000,
+      "y": 14660,
+      "date": "2026-04-02 17:46:20 +0300",
+      "message": "update indexes",
+      "hash": "2f83727"
+    },
+    {
+      "x": 1775229335000,
+      "y": 14695,
+      "date": "2026-04-03 18:15:35 +0300",
+      "message": "fix api",
+      "hash": "82ce1f8"
+    },
+    {
+      "x": 1775373955000,
+      "y": 14697,
+      "date": "2026-04-05 10:25:55 +0300",
+      "message": "update cabinet",
+      "hash": "aa6e406"
+    },
+    {
+      "x": 1775553416000,
+      "y": 14705,
+      "date": "2026-04-07 12:16:56 +0300",
+      "message": "update api - added matchmaking name",
+      "hash": "8ce4af5"
+    },
+    {
+      "x": 1775554122000,
+      "y": 14717,
+      "date": "2026-04-07 12:28:42 +0300",
+      "message": "fix api - matchmaking name, room name",
+      "hash": "f00f67b"
+    },
+    {
+      "x": 1775554474000,
+      "y": 14723,
+      "date": "2026-04-07 12:34:34 +0300",
+      "message": "update .NET - added matchmaking name",
+      "hash": "4e200b2"
+    },
+    {
+      "x": 1775554679000,
+      "y": 14729,
+      "date": "2026-04-07 12:37:59 +0300",
+      "message": "update Unity - added matchmaking name",
+      "hash": "8536483"
+    },
+    {
+      "x": 1775558011000,
+      "y": 14739,
+      "date": "2026-04-07 13:33:31 +0300",
+      "message": "update api - matchmaking and room host switch",
+      "hash": "a4d42e1"
+    },
+    {
+      "x": 1775558589000,
+      "y": 14745,
+      "date": "2026-04-07 13:43:09 +0300",
+      "message": "update api - matchmaking leave",
+      "hash": "86dce4c"
+    },
+    {
+      "x": 1775559379000,
+      "y": 14773,
+      "date": "2026-04-07 13:56:19 +0300",
+      "message": "update api - game room leave",
+      "hash": "3a380ab"
+    },
+    {
+      "x": 1775560407000,
+      "y": 14823,
+      "date": "2026-04-07 14:13:27 +0300",
+      "message": "update api - added checkAndReassignHost",
+      "hash": "51d816a"
+    },
+    {
+      "x": 1775562112000,
+      "y": 14824,
+      "date": "2026-04-07 14:41:52 +0300",
+      "message": "update api - matchmaking list",
+      "hash": "555cf7d"
+    },
+    {
+      "x": 1775562616000,
+      "y": 14836,
+      "date": "2026-04-07 14:50:16 +0300",
+      "message": "update .NET - room host siwtch, matchmaking list, host siwtch",
+      "hash": "8f0031a"
+    },
+    {
+      "x": 1775563117000,
+      "y": 14852,
+      "date": "2026-04-07 14:58:37 +0300",
+      "message": "update Unity - room host siwtch, matchmaking list, host siwtch",
+      "hash": "69e26d1"
+    },
+    {
+      "x": 1775569544000,
+      "y": 14852,
+      "date": "2026-04-07 16:45:44 +0300",
+      "message": "update - change matchmaking player status to is_online",
+      "hash": "87e921b"
+    },
+    {
+      "x": 1775570605000,
+      "y": 14852,
+      "date": "2026-04-07 17:03:25 +0300",
+      "message": "update - game players is_active to is_online",
+      "hash": "1438577"
+    },
+    {
+      "x": 1775572717000,
+      "y": 14961,
+      "date": "2026-04-07 17:38:37 +0300",
+      "message": "update api - added matchmaking/room player data",
+      "hash": "0eee9b2"
+    },
+    {
+      "x": 1775573816000,
+      "y": 14962,
+      "date": "2026-04-07 17:56:56 +0300",
+      "message": "fix casting",
+      "hash": "bc6b65b"
+    },
+    {
+      "x": 1775575761000,
+      "y": 14977,
+      "date": "2026-04-07 18:29:21 +0300",
+      "message": "update .NET - SDK",
+      "hash": "2866d76"
+    },
+    {
+      "x": 1775579005000,
+      "y": 15034,
+      "date": "2026-04-07 19:23:25 +0300",
+      "message": "update Unity - SDK",
+      "hash": "30c25b4"
+    },
+    {
+      "x": 1775579073000,
+      "y": 15025,
+      "date": "2026-04-07 19:24:33 +0300",
+      "message": "fix api - matchmaking join",
+      "hash": "b59879e"
+    },
+    {
+      "x": 1775579777000,
+      "y": 15036,
+      "date": "2026-04-07 19:36:17 +0300",
+      "message": "update api - added matchmaking with requests player data",
+      "hash": "492749a"
+    },
+    {
+      "x": 1775589027000,
+      "y": 15045,
+      "date": "2026-04-07 22:10:27 +0300",
+      "message": "fix api",
+      "hash": "0e111bb"
+    },
+    {
+      "x": 1775589924000,
+      "y": 15055,
+      "date": "2026-04-07 22:25:24 +0300",
+      "message": "update .NET - added matchmaking with requests player data",
+      "hash": "e419293"
+    },
+    {
+      "x": 1775590858000,
+      "y": 15069,
+      "date": "2026-04-07 22:40:58 +0300",
+      "message": "update Unity - added matchmaking with requests player data",
+      "hash": "e9d92b6"
+    },
+    {
+      "x": 1775640011000,
+      "y": 15069,
+      "date": "2026-04-08 12:20:11 +0300",
+      "message": "update",
+      "hash": "e617fc1"
+    },
+    {
+      "x": 1775651408000,
+      "y": 15253,
+      "date": "2026-04-08 15:30:08 +0300",
+      "message": "update cabinet",
+      "hash": "4308d08"
+    },
+    {
+      "x": 1775660309000,
+      "y": 15253,
+      "date": "2026-04-08 17:58:29 +0300",
+      "message": "fix api - matchmaking",
+      "hash": "f25d5ac"
+    },
+    {
+      "x": 1775660615000,
+      "y": 15253,
+      "date": "2026-04-08 18:03:35 +0300",
+      "message": "fix api - game room",
+      "hash": "5f25f89"
+    },
+    {
+      "x": 1775722307000,
+      "y": 15290,
+      "date": "2026-04-09 11:11:47 +0300",
+      "message": "update api - matchmaking/room can_leave_room parameter",
+      "hash": "6ed9de4"
+    },
+    {
+      "x": 1775723355000,
+      "y": 15308,
+      "date": "2026-04-09 11:29:15 +0300",
+      "message": "update SDK - matchmaking/room can_leave_room parameter",
+      "hash": "ce7389c"
+    },
+    {
+      "x": 1775742006000,
+      "y": 15308,
+      "date": "2026-04-09 16:40:06 +0300",
+      "message": "update api, SDK",
+      "hash": "c8862d6"
+    },
+    {
+      "x": 1775740452000,
+      "y": 15351,
+      "date": "2026-04-09 16:14:12 +0300",
+      "message": "update indexes",
+      "hash": "5ad4300"
+    },
+    {
+      "x": 1775817151000,
+      "y": 15785,
+      "date": "2026-04-10 13:32:31 +0300",
+      "message": "update index - development roadmap",
+      "hash": "04f944f"
+    },
+    {
+      "x": 1775835509000,
+      "y": 15795,
+      "date": "2026-04-10 18:38:29 +0300",
+      "message": "update - added is_local to players lists",
+      "hash": "4abb2b7"
+    },
+    {
+      "x": 1775903693000,
+      "y": 16778,
+      "date": "2026-04-11 13:34:53 +0300",
+      "message": "code analysis",
+      "hash": "1fe760c"
+    }
+  ]
+}
