@@ -2,13 +2,13 @@
 session_start();
 require_once 'php/config.php';
 
-// Function to get and parse Telegram message
+// Function to get roadmap from webhook-updated cache
 function getTelegramRoadmap() {
     $logFile = __DIR__ . '/index.log';
     
     // Log function start
     $timestamp = date('Y-m-d H:i:s');
-    $logMessage = "[{$timestamp}] [INFO] getTelegramRoadmap() called" . PHP_EOL;
+    $logMessage = "[{$timestamp}] [INFO] getTelegramRoadmap() called - reading from webhook cache" . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
     $cacheFile = __DIR__ . '/cached.json';
@@ -22,117 +22,14 @@ function getTelegramRoadmap() {
     $cacheData = json_decode(file_get_contents($cacheFile), true);
     
     // Log cache state for debugging
-    $logMessage = "[{$timestamp}] [DEBUG] Cache state - Bot token: " . (empty($cacheData['telegram_bot_token']) ? 'EMPTY' : 'SET') . ", Chat ID: {$cacheData['chat_id']}, Message: " . (empty($cacheData['telegram_message']) ? 'EMPTY' : 'SET') . ", Last updated: {$cacheData['last_updated']}" . PHP_EOL;
+    $updateSource = $cacheData['update_source'] ?? 'unknown';
+    $logMessage = "[{$timestamp}] [DEBUG] Cache state - Update source: {$updateSource}, Chat ID: {$cacheData['chat_id']}, Message: " . (empty($cacheData['telegram_message']) ? 'EMPTY' : 'SET') . ", Last updated: {$cacheData['last_updated']}" . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
     if (!$cacheData['telegram_message']) {
-        $logMessage = "[{$timestamp}] [WARNING] No telegram_message found in cache" . PHP_EOL;
+        $logMessage = "[{$timestamp}] [WARNING] No telegram_message found in cache - webhook may not be set up yet" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-        
-        // Try to fetch from Telegram API if we have a bot token
-        if (!empty($cacheData['telegram_bot_token'])) {
-            $logMessage = "[{$timestamp}] [INFO] Attempting to fetch from Telegram API since cache is empty" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-            
-            // Use getUpdates method instead (more reliable)
-            $ch = curl_init();
-            $url = "https://api.telegram.org/bot{$cacheData['telegram_bot_token']}/getUpdates";
-            $params = [
-                'limit' => 100,
-                'offset' => 0,
-                'timeout' => 0
-            ];
-            
-            curl_setopt($ch, CURLOPT_URL, $url . '?' . http_build_query($params));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $curlError = curl_error($ch);
-            curl_close($ch);
-            
-            $logMessage = "[{$timestamp}] [DEBUG] getUpdates API call - HTTP: {$httpCode}, Error: {$curlError}" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-            
-            if ($httpCode === 200) {
-                $data = json_decode($response, true);
-                if ($data['ok'] && isset($data['result'])) {
-                    $logMessage = "[{$timestamp}] [DEBUG] Found " . count($data['result']) . " updates" . PHP_EOL;
-                    file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                    
-                    foreach ($data['result'] as $index => $update) {
-                        $logMessage = "[{$timestamp}] [DEBUG] Update {$index}: " . json_encode($update, JSON_PRETTY_PRINT) . PHP_EOL;
-                        file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                        
-                        // Handle both regular messages and channel posts
-                        $message = null;
-                        $messageType = '';
-                        
-                        if (isset($update['message'])) {
-                            $message = $update['message'];
-                            $messageType = 'message';
-                        } elseif (isset($update['channel_post'])) {
-                            $message = $update['channel_post'];
-                            $messageType = 'channel_post';
-                        }
-                        
-                        if ($message) {
-                            $chatIdFromUpdate = $message['chat']['id'] ?? 'N/A';
-                            $chatType = $message['chat']['type'] ?? 'N/A';
-                            $chatTitle = $message['chat']['title'] ?? $message['chat']['username'] ?? 'N/A';
-                            $text = $message['text'] ?? 'No text';
-                            $messageId = $message['message_id'] ?? 'N/A';
-                            $date = $message['date'] ?? 'N/A';
-                            $fromUser = $message['from']['username'] ?? $message['from']['first_name'] ?? 'Channel Post';
-                            
-                            $logMessage = "[{$timestamp}] [DEBUG] {$messageType} {$messageId} from {$fromUser} in chat {$chatIdFromUpdate} ({$chatType}, {$chatTitle}) at {$date}: " . substr($text, 0, 100) . "..." . PHP_EOL;
-                            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                            
-                            // Check for roadmap message
-                            if (strpos($text, 'Upcoming updates:') !== false) {
-                                $logMessage = "[{$timestamp}] [SUCCESS] FOUND ROADMAP MESSAGE! Chat: {$chatIdFromUpdate}, Type: {$chatType}, Title: {$chatTitle}, Message Type: {$messageType}" . PHP_EOL;
-                                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                                
-                                // Update cache with found message
-                                $cacheData['telegram_message'] = $text;
-                                $cacheData['last_updated'] = date('Y-m-d H:i:s');
-                                // Also update chat_id to the working one
-                                $cacheData['chat_id'] = $chatIdFromUpdate;
-                                file_put_contents($cacheFile, json_encode($cacheData, JSON_PRETTY_PRINT));
-                                
-                                $logMessage = "[{$timestamp}] [SUCCESS] Updated cache with chat ID {$chatIdFromUpdate}" . PHP_EOL;
-                                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                                
-                                $logMessage = "[{$timestamp}] [INFO] Cache updated, continuing to parse message" . PHP_EOL;
-                                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                                
-                                // Reload cache data after update
-                                $cacheData = json_decode(file_get_contents($cacheFile), true);
-                                $logMessage = "[{$timestamp}] [DEBUG] Reloaded cache data after update" . PHP_EOL;
-                                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                            } else {
-                                $logMessage = "[{$timestamp}] [DEBUG] Not a roadmap message (doesn't contain 'Upcoming updates:')" . PHP_EOL;
-                                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                            }
-                        } else {
-                            $logMessage = "[{$timestamp}] [DEBUG] Update {$index} has no message or channel_post field" . PHP_EOL;
-                            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                        }
-                    }
-                    
-                    $logMessage = "[{$timestamp}] [WARNING] No roadmap message found in updates" . PHP_EOL;
-                    file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                }
-            }
-        }
-        
-        // Check if we have a message after trying to fetch
-        if (!$cacheData['telegram_message']) {
-            $logMessage = "[{$timestamp}] [ERROR] Still no telegram_message after API fetch" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-            return null;
-        }
+        return null;
     }
     
     $logMessage = "[{$timestamp}] [INFO] Parsing telegram message, length: " . strlen($cacheData['telegram_message']) . " characters" . PHP_EOL;
@@ -149,14 +46,8 @@ function getTelegramRoadmap() {
         $line = trim($line);
         
         if (empty($line) || $line === '---------------------------------------------------------------') {
-            $logMessage = "[{$timestamp}] [DEBUG] Line {$lineIndex}: Skipping empty or separator line" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
             continue;
         }
-        
-        // Log every line for debugging
-        $logMessage = "[{$timestamp}] [DEBUG] Line {$lineIndex}: '{$line}'" . PHP_EOL;
-        file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
         
         // Check if line is a section header (ends with ':')
         if (preg_match('/^(.+):$/', $line, $matches)) {
@@ -168,8 +59,6 @@ function getTelegramRoadmap() {
             ];
             $sections[] = $currentSection;
             $sectionCount++;
-            $logMessage = "[{$timestamp}] [DEBUG] Found section: {$sectionTitle}" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
             continue;
         }
         
@@ -184,27 +73,20 @@ function getTelegramRoadmap() {
             ];
             $sections[] = $currentSection;
             $sectionCount++;
-            $logMessage = "[{$timestamp}] [DEBUG] Found delimiter: {$delimiterTitle}" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
             continue;
         }
         
         // Check if line is a task item (starts with star or escaped star)
         $isTask = false;
-        $starType = '';
         
-        // Check for various star patterns - the logs show actual star character
+        // Check for various star patterns
         if (preg_match('/^[\x{2605}\x{2606}\x{2726}\x{2727}STARstar*]/u', $line)) {
             $isTask = true;
-            $starType = 'star character';
         }
-        
-        $logMessage = "[{$timestamp}] [DEBUG] Line {$lineIndex} star check: isTask=" . ($isTask ? 'YES' : 'NO') . ", starType='{$starType}', hasCurrentSection=" . ($currentSection ? 'YES' : 'NO') . PHP_EOL;
-        file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
         
         if ($isTask && $currentSection) {
             $task = trim($line);
-            // Remove star and any extra whitespace - handle both escaped and actual Unicode
+            // Remove star and any extra whitespace
             $task = preg_replace('/^[\x{2605}\x{2606}\x{2726}\x{2727}STARstar*]\s*/u', '', $task);
             
             // Find the current section index and update it directly
@@ -212,23 +94,11 @@ function getTelegramRoadmap() {
             if ($currentSectionIndex >= 0) {
                 $sections[$currentSectionIndex]['items'][] = $task;
                 $taskCount++;
-                $logMessage = "[{$timestamp}] [DEBUG] Found task: '{$task}' (from star type: {$starType})" . PHP_EOL;
-                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-                // Debug: Log the current section items after adding
-                $logMessage = "[{$timestamp}] [DEBUG] Section '{$sections[$currentSectionIndex]['title']}' now has " . count($sections[$currentSectionIndex]['items']) . " items" . PHP_EOL;
-                file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
             }
-        } elseif ($isTask && !$currentSection) {
-            $logMessage = "[{$timestamp}] [WARNING] Found task but no current section: '{$line}'" . PHP_EOL;
-            file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
         }
     }
     
     $logMessage = "[{$timestamp}] [INFO] Parsed {$sectionCount} sections with {$taskCount} total tasks" . PHP_EOL;
-    file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-    
-    // Debug: Log what we're about to return
-    $logMessage = "[{$timestamp}] [DEBUG] Returning sections data: " . json_encode($sections) . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
     return $sections;

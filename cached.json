@@ -1,7 +1,6 @@
 {
     "telegram_message": "",
     "last_updated": null,
-    "cache_duration": 300,
     "telegram_bot_token": "",
     "chat_id": -1
 }
