@@ -45,9 +45,10 @@ function handleTelegramUpdate($update) {
     $logMessage = "[{$timestamp}] [INFO] Processing update" . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
-    // Handle both regular messages and channel posts
+    // Handle both regular messages and channel posts, including edited versions
     $message = null;
     $messageType = '';
+    $isEdited = false;
     
     if (isset($update['message'])) {
         $message = $update['message'];
@@ -55,8 +56,16 @@ function handleTelegramUpdate($update) {
     } elseif (isset($update['channel_post'])) {
         $message = $update['channel_post'];
         $messageType = 'channel_post';
+    } elseif (isset($update['edited_message'])) {
+        $message = $update['edited_message'];
+        $messageType = 'edited_message';
+        $isEdited = true;
+    } elseif (isset($update['edited_channel_post'])) {
+        $message = $update['edited_channel_post'];
+        $messageType = 'edited_channel_post';
+        $isEdited = true;
     } else {
-        $logMessage = "[{$timestamp}] [DEBUG] No message or channel_post in update" . PHP_EOL;
+        $logMessage = "[{$timestamp}] [DEBUG] No message, channel_post, edited_message, or edited_channel_post in update" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
         return;
     }
@@ -67,30 +76,34 @@ function handleTelegramUpdate($update) {
     $text = $message['text'] ?? 'No text';
     $messageId = $message['message_id'] ?? 'N/A';
     $date = $message['date'] ?? 'N/A';
+    $editDate = $message['edit_date'] ?? null;
     $fromUser = $message['from']['username'] ?? $message['from']['first_name'] ?? 'Channel Post';
     
-    $logMessage = "[{$timestamp}] [DEBUG] {$messageType} {$messageId} from {$fromUser} in chat {$chatId} ({$chatType}, {$chatTitle}) at {$date}: " . substr($text, 0, 100) . "..." . PHP_EOL;
+    $editInfo = $isEdited ? " (edited at " . ($editDate ? date('Y-m-d H:i:s', $editDate) : 'unknown time') . ")" : "";
+    $logMessage = "[{$timestamp}] [DEBUG] {$messageType} {$messageId} from {$fromUser} in chat {$chatId} ({$chatType}, {$chatTitle}) at {$date}{$editInfo}: " . substr($text, 0, 100) . "..." . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
     // Check if this is a roadmap message
     if (strpos($text, 'Upcoming updates:') !== false) {
-        $logMessage = "[{$timestamp}] [SUCCESS] FOUND ROADMAP MESSAGE! Chat: {$chatId}, Type: {$chatType}, Title: {$chatTitle}, Message Type: {$messageType}" . PHP_EOL;
+        $actionType = $isEdited ? 'UPDATED' : 'FOUND';
+        $logMessage = "[{$timestamp}] [SUCCESS] {$actionType} ROADMAP MESSAGE! Chat: {$chatId}, Type: {$chatType}, Title: {$chatTitle}, Message Type: {$messageType}" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
         
-        // Update the cache file
-        updateRoadmapCache($text, $chatId);
+        // Update cache file
+        updateRoadmapCache($text, $chatId, $isEdited);
     } else {
         $logMessage = "[{$timestamp}] [DEBUG] Not a roadmap message (doesn't contain 'Upcoming updates:')" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     }
 }
 
-function updateRoadmapCache($message, $chatId) {
+function updateRoadmapCache($message, $chatId, $isEdited = false) {
     global $logFile, $timestamp;
     
     $cacheFile = __DIR__ . '/cached.json';
     
-    $logMessage = "[{$timestamp}] [INFO] Updating roadmap cache" . PHP_EOL;
+    $actionType = $isEdited ? 'Updating (edited message)' : 'Updating';
+    $logMessage = "[{$timestamp}] [INFO] {$actionType} roadmap cache" . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
     // Load existing cache or create new
@@ -181,7 +194,7 @@ function setWebhook($webhookUrl) {
     
     $params = [
         'url' => $webhookUrl,
-        'allowed_updates' => ['message', 'channel_post']
+        'allowed_updates' => ['message', 'channel_post', 'edited_message', 'edited_channel_post']
     ];
     
     curl_setopt($ch, CURLOPT_URL, $url);
