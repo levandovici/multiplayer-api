@@ -1,0 +1,130 @@
+# API Error Responses Collection
+
+## game_data.php:
+{"message":"API token is required", "code":"401"}
+{"message":"Invalid API token", "code":"401"}
+{"message":"Game player token is required", "code":"401"}
+{"message":"Invalid game player token", "code":"401"}
+{"message":"Player does not belong to this game", "code":"403"}
+{"message":"Invalid endpoint", "code":"404"}
+{"message":"API private token is required", "code":"401"}
+{"message":"Invalid API token or private token", "code":"401"}
+{"message":"Invalid player or does not belong to game", "code":"403"}
+{"message":"Method not allowed", "code":"405"}
+{"message":"Database error", "code":"500"}
+{"message":"An unexpected error occurred", "code":"500"}
+
+## game_players.php:
+{"message":"Method not allowed", "code":"405"}
+{"message":"API token is required", "code":"401"}
+{"message":"Invalid API token", "code":"401"}
+{"message":"Player name is required", "code":"400"}
+{"message":"Failed to register player", "code":"500"}
+{"message":"API token and game player token are required", "code":"401"}
+{"message":"Invalid game player token", "code":"403"}
+{"message":"Failed to update heartbeat", "code":"500"}
+{"message":"New name is required", "code":"400"}
+{"message":"Player name must be between 2 and 50 characters", "code":"400"}
+{"message":"Failed to update player name", "code":"500"}
+{"message":"API token and private token are required", "code":"401"}
+{"message":"Invalid API credentials", "code":"401"}
+{"message":"Endpoint not found", "code":"404"}
+{"message":"Internal server error", "code":"500"}
+
+## game_room.php:
+{"message":"API token is required", "code":"401"}
+{"message":"Invalid API token", "code":"401"}
+{"message":"Invalid player token", "code":"401"}
+{"message":"Player token is required", "code":"401"}
+{"message":"You are already in a game room. Leave current room first.", "code":"400"}
+{"message":"You cannot create a game room while in a matchmaking lobby.", "code":"400"}
+{"message":"Failed to create room", "code":"500"}
+{"message":"Failed to list rooms", "code":"500"}
+{"message":"You are not in any room", "code":"400"}
+{"message":"Players are not allowed to leave this room", "code":"403"}
+{"message":"Player is not in any room", "code":"400"}
+{"message":"Failed to update heartbeat", "code":"500"}
+{"message":"Missing action_type", "code":"400"}
+{"message":"request_data_json must be a string", "code":"400"}
+{"message":"Player is not in any room", "code":"400"}
+{"message":"Only host can view pending actions", "code":"403"}
+{"message":"You are not in any room", "code":"400"}
+{"message":"Only host can complete actions", "code":"403"}
+{"message":"Status is required", "code":"400"}
+{"message":"response_data_json must be a string", "code":"400"}
+{"message":"response_data is not valid JSON", "code":"400"}
+{"message":"Action not found or already processed", "code":"404"}
+{"message":"Player is not in any room", "code":"400"}
+{"message":"Only host can send updates", "code":"403"}
+{"message":"Missing required field: target_players", "code":"400"}
+{"message":"Missing required field: type", "code":"400"}
+{"message":"Missing required field: target_players_ids", "code":"400"}
+{"message":"Invalid target players ids", "code":"400"}
+{"message":"No valid target players found", "code":"400"}
+{"message":"Invalid target players", "code":"400"}
+{"message":"Failed to send updates", "code":"500"}
+{"message":"Player is not in any room", "code":"400"}
+{"message":"Not found", "code":"404"}
+{"message":"Internal server error", "code":"500"}
+{"message":"You are already in another room", "code":"400"}
+{"message":"Room not found", "code":"400"}
+{"message":"Room inactive", "code":"400"}
+{"message":"Room is full", "code":"400"}
+{"message":"Incorrect password", "code":"400"}
+{"message":"You are not in any room", "code":"400"}
+{"message":"You are not in this room", "code":"400"}
+{"message":"Room not found", "code":"400"}
+
+## matchmaking.php:
+{"message":"API token is required", "code":"401"}
+{"message":"Invalid API token", "code":"401"}
+{"message":"Invalid player token", "code":"401"}
+{"message":"Player token is required", "code":"401"}
+{"message":"Failed to list matchmaking lobbies", "code":"500"}
+{"message":"You are already in a matchmaking lobby", "code":"400"}
+{"message":"You cannot create matchmaking while in a game room. Leave the room first.", "code":"400"}
+{"message":"Missing required field: max_players", "code":"400"}
+{"message":"Failed to create matchmaking lobby", "code":"500"}
+{"message":"Missing required parameter: matchmakingId", "code":"400"}
+{"message":"You are already in a matchmaking lobby", "code":"400"}
+{"message":"You already have a pending request to this matchmaking lobby", "code":"400"}
+{"message":"Missing required parameter: matchmakingId", "code":"400"}
+{"message":"You are already in a matchmaking lobby", "code":"400"}
+{"message":"Players are not allowed to leave this matchmaking lobby", "code":"403"}
+{"message":"You are not in any matchmaking lobby", "code":"400"}
+{"message":"Failed to get players", "code":"500"}
+{"message":"You are not in any matchmaking lobby", "code":"400"}
+{"message":"Failed to update heartbeat", "code":"500"}
+{"message":"You are not in a matchmaking lobby", "code":"400"}
+{"message":"Only host can remove matchmaking lobby", "code":"403"}
+{"message":"Failed to remove matchmaking lobby", "code":"500"}
+{"message":"Failed to get matchmaking status", "code":"500"}
+{"message":"Missing required parameter: requestId", "code":"400"}
+{"message":"Request not found or you are not the requester", "code":"404"}
+{"message":"Missing required fields: requestId and action", "code":"400"}
+{"message":"Action must be \"approve\" or \"reject\"", "code":"400"}
+{"message":"Matchmaking lobby not found or already started", "code":"400"}
+{"message":"Matchmaking lobby is full", "code":"400"}
+{"message":"This matchmaking lobby requires host approval. Use /request endpoint instead.", "code":"400"}
+{"message":"You are not in any matchmaking lobby", "code":"400"}
+{"message":"Request not found or already processed", "code":"400"}
+{"message":"Only the host can respond to join requests", "code":"400"}
+{"message":"Matchmaking lobby not found or already started", "code":"400"}
+{"message":"Lobby must be full to start (strict_full enabled)", "code":"400"}
+
+## leaderboard.php:
+{"message":"Method not allowed. Use POST.", "code":"405"}
+{"message":"api_token is required", "code":"400"}
+{"message":"Invalid or expired api_token", "code":"401"}
+{"message":"Invalid JSON body", "code":"400"}
+{"message":"sort_by must be a non-empty array of field names", "code":"400"}
+{"message":"limit must be between 1 and 1000", "code":"400"}
+{"message":"No valid sort fields provided after sanitization", "code":"400"}
+{"message":"Database error", "code":"500"}
+{"message":"Server error", "code":"500"}
+
+## time.php:
+{"message":"Method not allowed", "code":"405"}
+{"message":"API key is required", "code":"401"}
+{"message":"Invalid API key", "code":"403"}
+{"message":"Internal server error", "code":"500"}
