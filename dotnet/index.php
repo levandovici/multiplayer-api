@@ -252,6 +252,12 @@ $site_twitter = "@michitai";
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;PlayerLogoutResponse&gt; LogoutPlayerAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Logs out a player and updates their last logout timestamp.</p>
                             </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-blue-400 font-mono text-sm mb-2">RenamePlayerAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;PlayerRenameResponse&gt; RenamePlayerAsync(string playerToken, string newName, CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Renames a player to a new name. Validates name length (2-50 characters) and requires player authentication.</p>
+                            </div>
                         </div>
                     </div>
                     

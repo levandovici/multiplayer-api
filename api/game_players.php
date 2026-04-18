@@ -262,6 +262,47 @@ try {
             ]);
             break;
 
+        // ====================== RENAME ======================
+        case 'rename':
+            if ($method !== 'PUT') {
+                sendResponse(['success' => false, 'error' => 'Method not allowed'], 405);
+            }
+            
+            if (empty($apiToken) || empty($gamePlayerToken)) {
+                sendResponse(['success' => false, 'error' => 'API token and game player token are required'], 401);
+            }
+            
+            $game = validateApiKey($apiToken);
+            if (!$game) sendResponse(['success' => false, 'error' => 'Invalid API token'], 401);
+            
+            $player = validatePrivateKey($gamePlayerToken);
+            if (!$player || $player['game_id'] != $game['id']) {
+                sendResponse(['success' => false, 'error' => 'Invalid player token'], 403);
+            }
+            
+            if (!isset($input['new_name']) || empty($input['new_name'])) {
+                sendResponse(['success' => false, 'error' => 'New name is required'], 400);
+            }
+            
+            $newName = trim($input['new_name']);
+            
+            if (strlen($newName) < 2 || strlen($newName) > 50) {
+                sendResponse(['success' => false, 'error' => 'Player name must be between 2 and 50 characters'], 400);
+            }
+            
+            $stmt = $pdo->prepare("UPDATE game_players SET player_name = ? WHERE id = ?");
+            if ($stmt->execute([$newName, $player['id']])) {
+                sendResponse([
+                    'success' => true,
+                    'message' => 'Player name updated successfully',
+                    'new_name' => $newName,
+                    'player_id' => (int)$player['id']
+                ]);
+            } else {
+                sendResponse(['success' => false, 'error' => 'Failed to update player name'], 500);
+            }
+            break;
+
         // ====================== LIST ======================
         case 'list':
             if ($method !== 'GET') {

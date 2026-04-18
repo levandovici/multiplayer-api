@@ -67,6 +67,22 @@ curl -X POST "https://api.michitai.com/api/game_players.php/logout?api_token=API
   "last_logout": "2026-03-13 09:46:37"
 }
 
+//Rename Player
+
+curl -X PUT "https://api.michitai.com/api/game_players.php/rename?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "new_name": "NewPlayerName"
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Player name updated successfully",
+  "new_name": "NewPlayerName",
+  "player_id": 3
+}
+
 //List All Players
 
 curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=API_TOKEN&private_token=PRIVATE_TOKEN"

@@ -242,6 +242,12 @@ $site_twitter = "@michitai";
                                     <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerListResponse&gt; GetAllPlayers(CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Lists all registered players. Requires private API token. Useful for admin dashboards.</p>
                                 </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">RenamePlayerAsync</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerRenameResponse&gt; RenamePlayerAsync(string playerToken, string newName, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Renames a player to a new name. Validates name length (2-50 characters) and requires player authentication.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
