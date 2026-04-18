@@ -54,8 +54,7 @@ try {
     if ($method !== 'GET') {
         sendResponse([
             'success' => false,
-            'error' => 'Method not allowed',
-            'allowed_methods' => ['GET']
+            'error' => 'Method not allowed'
         ], 405);
     }
 
@@ -64,8 +63,7 @@ try {
     if (empty($apiToken)) {
         sendResponse([
             'success' => false,
-            'error' => 'API key is required',
-            'hint' => 'Add ?api_token=YOUR_API_KEY to your request'
+            'error' => 'API key is required'
         ], 401);
     }
 
@@ -86,8 +84,7 @@ try {
     if (!$keyData) {
         sendResponse([
             'success' => false,
-            'error' => 'Invalid API key',
-            'hint' => 'Please check your API key and try again'
+            'error' => 'Invalid API key'
         ], 403);
     }
 
@@ -141,8 +138,7 @@ try {
     
     sendResponse([
         'success' => false,
-        'error'   => 'Internal server error',
-        'message' => $e->getMessage()
+        'error'   => 'Internal server error' . $e->getMessage()
     ], 500);
 }
 ?>
