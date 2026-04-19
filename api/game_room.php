@@ -381,27 +381,30 @@ function listRoomPlayers() {
     $stmt->execute([$roomId]);
     $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($players as &$player) {
-        $player['player_id'] = (int)$player['player_id'];
-        $player['is_host']   = (bool)$player['is_host'];
-        $player['is_online'] = (bool)$player['is_online'];
-        $player['is_local']  = ($player['player_id'] === $player['id']);
+    $context = getAuthContext();
+    $player = requirePlayer($context);
 
-        $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
+    foreach ($players as &$playerData) {
+        $playerData['player_id'] = (int)$playerData['player_id'];
+        $playerData['is_host']   = (bool)$playerData['is_host'];
+        $playerData['is_online'] = (bool)$playerData['is_online'];
+        $playerData['is_local']  = ($playerData['player_id'] === $player['id']);
+
+        $playerData['last_heartbeat'] = isoUtc($playerData['last_heartbeat']);
         
         // Handle player_data formatting for Unity
         if($isUnity)
         {
-            $decoded = json_decode($player['player_data']);
-            $player['player_data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
+            $decoded = json_decode($playerData['player_data']);
+            $playerData['player_data_json'] = (json_last_error() === JSON_ERROR_NONE && $decoded !== null)
                 ? json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
                 : '{}';
-            unset($player['player_data']);
+            unset($playerData['player_data']);
         }
         else
         {
-            $decoded = json_decode($player['player_data']);
-            $player['player_data'] = (json_last_error() === JSON_ERROR_NONE)
+            $decoded = json_decode($playerData['player_data']);
+            $playerData['player_data'] = (json_last_error() === JSON_ERROR_NONE)
                 ? $decoded
                 : null;
         }
