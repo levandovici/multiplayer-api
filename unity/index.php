@@ -138,7 +138,7 @@ $site_twitter = "@michitai";
                             <i class="fas fa-download mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download Unity SDK</div>
-                                <div class="text-xs opacity-80">SDK.cs</div>
+                                <div class="text-xs opacity-80">SDK.zip</div>
                             </div>
                         </button>
                         <button id="downloadUnityExample" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
@@ -585,7 +585,7 @@ $site_twitter = "@michitai";
         }
         
         document.getElementById('downloadUnitySdk').addEventListener('click', (event) => {
-            triggerDownload('SDK.cs', 'Unity-SDK.cs');
+            triggerDownload('SDK.zip', 'Unity-SDK.zip');
         });
         
         document.getElementById('downloadUnityExample').addEventListener('click', (event) => {

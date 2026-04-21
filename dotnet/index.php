@@ -138,7 +138,7 @@ $site_twitter = "@michitai";
                             <i class="fas fa-download mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download .NET SDK</div>
-                                <div class="text-xs opacity-80">SDK.cs - 45KB</div>
+                                <div class="text-xs opacity-80">SDK.zip - 45KB</div>
                             </div>
                         </button>
                         <button id="downloadDotnetExample" class="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
@@ -679,7 +679,7 @@ foreach (var entry in response.Leaderboard) {
         }
         
         document.getElementById('downloadDotnetSdk').addEventListener('click', (event) => {
-            triggerDownload('SDK.cs', 'NET-SDK.cs');
+            triggerDownload('SDK.zip', 'NET-SDK.zip');
         });
         
         document.getElementById('downloadDotnetExample').addEventListener('click', (event) => {
