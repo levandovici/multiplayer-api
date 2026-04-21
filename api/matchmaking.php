@@ -1073,7 +1073,7 @@ try {
     } elseif ($method === 'POST' && preg_match('#/start/?$#', $path)) {
         startMatchmaking();
     } else {
-        sendResponse(['success' => false, 'error' => 'Not found'], 404);
+        sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }
 } catch (Exception $e) {
     error_log("Critical error in matchmaking.php: " . $e->getMessage());

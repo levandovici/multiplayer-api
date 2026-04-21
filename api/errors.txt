@@ -68,7 +68,7 @@
 
 ### endpoint: default:
 {"message":"Method not allowed", "success": false}
-{"message":"Endpoint not found", "success": false}
+{"message":"Invalid endpoint", "success": false}
 {"message":"Internal server error", "success": false}
 
 ## game_room.php:
@@ -187,7 +187,7 @@
 {"message":"Player token is required", "success": false}
 
 ### endpoint: default:
-{"message":"Not found", "success": false}
+{"message":"Invalid endpoint", "success": false}
 {"message":"Internal server error", "success": false}
 
 ## leaderboard.php:
@@ -314,7 +314,7 @@
 {"message":"Lobby must be full to start (strict_full enabled)", "success": false}
 
 ### endpoint: default:
-{"message":"Not found", "success": false}
+{"message":"Invalid endpoint", "success": false}
 {"message":"Internal server error", "success": false}
 
 ## time.php:

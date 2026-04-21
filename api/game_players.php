@@ -341,7 +341,7 @@ try {
             break;
             
         default:
-            sendResponse(['success' => false, 'error' => 'Endpoint not found'], 404);
+            sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 400);
     }
     
 } catch (Exception $e) {

@@ -11,13 +11,11 @@ namespace michitai
         ApiTokenIsRequired,
         InvalidApiToken,
         MethodNotAllowed,
-        EndpointNotFound,
         InternalServerError,
         FailedToDeserializeResponse,
         InvalidEndpoint,
         DatabaseError,
-        AnUnexpectedErrorOccurred,
-        NotFound
+        AnUnexpectedErrorOccurred
     }
 
     // ====================== GAME_DATA.PHP ERRORS ======================

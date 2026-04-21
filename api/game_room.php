@@ -1146,7 +1146,7 @@ try {
     } elseif ($method === 'GET' && preg_match('#/current/?$#', $path)) {
         getCurrentGameRoomStatus();
     } else {
-        sendResponse(['success' => false, 'error' => 'Not found'], 404);
+        sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }
 } catch (Exception $e) {
     error_log("Critical error in game_room.php: " . $e->getMessage());

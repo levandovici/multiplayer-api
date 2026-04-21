@@ -14,9 +14,11 @@ namespace michitai
             { "API token is required", nameof(ECommonError.ApiTokenIsRequired) },
             { "Invalid API token", nameof(ECommonError.InvalidApiToken) },
             { "Method not allowed", nameof(ECommonError.MethodNotAllowed) },
-            { "Endpoint not found", nameof(ECommonError.EndpointNotFound) },
             { "Internal server error", nameof(ECommonError.InternalServerError) },
             { "Failed to deserialize response", nameof(ECommonError.FailedToDeserializeResponse) },
+            { "Invalid endpoint", nameof(ECommonError.InvalidEndpoint) },
+            { "Database error", nameof(ECommonError.DatabaseError) },
+            { "An unexpected error occurred", nameof(ECommonError.AnUnexpectedErrorOccurred) },
             
             // Game data errors
             { "Game player token is required", nameof(EGameDataPlayerGetError.GamePlayerTokenIsRequired) },
@@ -25,9 +27,6 @@ namespace michitai
             { "API private token is required", nameof(EGameDataGameUpdateError.ApiPrivateTokenIsRequired) },
             { "Invalid API token or private token", nameof(EGameDataGameUpdateError.InvalidApiTokenOrPrivateToken) },
             { "Invalid player or does not belong to game", nameof(EGameDataPlayerUpdateError.InvalidPlayerOrDoesNotBelongToGame) },
-            { "Invalid endpoint", nameof(ECommonError.InvalidEndpoint) },
-            { "Database error", nameof(ECommonError.DatabaseError) },
-            { "An unexpected error occurred", nameof(ECommonError.AnUnexpectedErrorOccurred) },
             
             // Player errors
             { "Player name is required", nameof(EPlayerRegisterError.PlayerNameIsRequired) },
@@ -74,7 +73,6 @@ namespace michitai
             { "No valid target players found", nameof(ERoomUpdatesError.NoValidTargetPlayersFound) },
             { "Invalid target players", nameof(ERoomUpdatesError.InvalidTargetPlayers) },
             { "Failed to send updates", nameof(ERoomUpdatesError.FailedToSendUpdates) },
-            { "Not found", nameof(ECommonError.NotFound) },
             
             // Leaderboard errors
             { "Method not allowed. Use POST.", nameof(ELeaderboardError.MethodNotAllowedUsePost) },
