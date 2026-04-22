@@ -1,9 +1,9 @@
 using System;
 
-namespace michitai
+namespace Michitai.Multiplayer.Errors
 {
     // ====================== BASE ERROR ENUMS ======================
-    
+
     // Common default errors that apply to most endpoints
     public enum ECommonError
     {
@@ -19,15 +19,15 @@ namespace michitai
     }
 
     // ====================== GAME_DATA.PHP ERRORS ======================
-    
-    public enum EGameDataGameGetError 
+
+    public enum EGameDataGameGetError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
         InvalidApiToken = ECommonError.InvalidApiToken
     }
 
-    public enum EGameDataPlayerGetError 
+    public enum EGameDataPlayerGetError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -37,7 +37,7 @@ namespace michitai
         PlayerDoesNotBelongToThisGame
     }
 
-    public enum EGameDataGameUpdateError 
+    public enum EGameDataGameUpdateError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -45,7 +45,7 @@ namespace michitai
         ApiPrivateTokenIsRequired
     }
 
-    public enum EGameDataPlayerUpdateError 
+    public enum EGameDataPlayerUpdateError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -55,8 +55,8 @@ namespace michitai
     }
 
     // ====================== GAME_PLAYERS.PHP ERRORS ======================
-    
-    public enum EPlayerRegisterError 
+
+    public enum EPlayerRegisterError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -65,7 +65,7 @@ namespace michitai
         FailedToRegisterPlayer
     }
 
-    public enum EPlayerLoginError 
+    public enum EPlayerLoginError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenAndGamePlayerTokenAreRequired,
@@ -73,7 +73,7 @@ namespace michitai
         InvalidGamePlayerToken
     }
 
-    public enum EPlayerHeartbeatError 
+    public enum EPlayerHeartbeatError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenAndGamePlayerTokenAreRequired,
@@ -82,7 +82,7 @@ namespace michitai
         FailedToUpdateHeartbeat
     }
 
-    public enum EPlayerLogoutError 
+    public enum EPlayerLogoutError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenAndGamePlayerTokenAreRequired,
@@ -90,7 +90,7 @@ namespace michitai
         InvalidPlayerToken
     }
 
-    public enum EPlayerRenameError 
+    public enum EPlayerRenameError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenAndGamePlayerTokenAreRequired,
@@ -101,7 +101,7 @@ namespace michitai
         FailedToUpdatePlayerName
     }
 
-    public enum EPlayerListError 
+    public enum EPlayerListError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenAndPrivateTokenAreRequired,
@@ -109,8 +109,8 @@ namespace michitai
     }
 
     // ====================== GAME_ROOM.PHP ERRORS ======================
-    
-    public enum ERoomCreateError 
+
+    public enum ERoomCreateError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -122,7 +122,7 @@ namespace michitai
         FailedToCreateRoom
     }
 
-    public enum ERoomListError 
+    public enum ERoomListError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -130,7 +130,7 @@ namespace michitai
         FailedToListRooms
     }
 
-    public enum ERoomJoinError 
+    public enum ERoomJoinError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -144,7 +144,7 @@ namespace michitai
         IncorrectPassword
     }
 
-    public enum ERoomPlayersError 
+    public enum ERoomPlayersError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -154,7 +154,7 @@ namespace michitai
         YouAreNotInAnyRoom
     }
 
-    public enum ERoomLeaveError 
+    public enum ERoomLeaveError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -167,7 +167,7 @@ namespace michitai
         PlayersAreNotAllowedToLeaveThisRoom
     }
 
-    public enum ERoomHeartbeatError 
+    public enum ERoomHeartbeatError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -178,7 +178,7 @@ namespace michitai
         FailedToUpdateHeartbeat
     }
 
-    public enum ERoomActionsError 
+    public enum ERoomActionsError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -187,16 +187,10 @@ namespace michitai
         PlayerTokenIsRequired,
         MissingActionType,
         RequestDataJsonMustBeAString,
-        PlayerIsNotInAnyRoom,
-        MissingRequiredFieldTargetPlayers,
-        MissingRequiredFieldTargetPlayersIds,
-        InvalidTargetPlayersIds,
-        NoValidTargetPlayersFound,
-        InvalidTargetPlayers,
-        FailedToSubmitActions
+        PlayerIsNotInAnyRoom
     }
 
-    public enum ERoomActionsPollError 
+    public enum ERoomActionsPollError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -206,31 +200,32 @@ namespace michitai
         PlayerIsNotInAnyRoom
     }
 
-    public enum ERoomActionsPendingError 
+    public enum ERoomActionsPendingError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
         InvalidApiToken = ECommonError.InvalidApiToken,
         InvalidPlayerToken,
         PlayerTokenIsRequired,
+        OnlyHostCanViewPendingActions,
         YouAreNotInAnyRoom
     }
 
-    public enum ERoomActionsCompleteError 
+    public enum ERoomActionsCompleteError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
         InvalidApiToken = ECommonError.InvalidApiToken,
         InvalidPlayerToken,
         PlayerTokenIsRequired,
-        PlayerNotFound,
+        OnlyHostCanCompleteActions,
         StatusIsRequired,
         ResponseDataJsonMustBeAString,
         ResponseDataIsNotValidJson,
         ActionNotFoundOrAlreadyProcessed
     }
 
-    public enum ERoomUpdatesError 
+    public enum ERoomUpdatesError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -248,7 +243,7 @@ namespace michitai
         FailedToSendUpdates
     }
 
-    public enum ERoomUpdatesPollError 
+    public enum ERoomUpdatesPollError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -258,7 +253,7 @@ namespace michitai
         PlayerIsNotInAnyRoom
     }
 
-    public enum ERoomCurrentError 
+    public enum ERoomCurrentError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -268,8 +263,8 @@ namespace michitai
     }
 
     // ====================== LEADERBOARD.PHP ERRORS ======================
-    
-    public enum ELeaderboardError 
+
+    public enum ELeaderboardError
     {
         Unknown = ECommonError.Unknown,
         MethodNotAllowedUsePost,
@@ -284,8 +279,8 @@ namespace michitai
     }
 
     // ====================== MATCHMAKING.PHP ERRORS ======================
-    
-    public enum EMatchmakingListError 
+
+    public enum EMatchmakingListError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -294,7 +289,7 @@ namespace michitai
         PlayerTokenIsRequired
     }
 
-    public enum EMatchmakingCreateError 
+    public enum EMatchmakingCreateError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -307,7 +302,7 @@ namespace michitai
         FailedToCreateMatchmakingLobby
     }
 
-    public enum EMatchmakingRequestError 
+    public enum EMatchmakingRequestError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -321,7 +316,7 @@ namespace michitai
         MatchmakingLobbyIsFull
     }
 
-    public enum EMatchmakingJoinError 
+    public enum EMatchmakingJoinError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -335,7 +330,7 @@ namespace michitai
         MatchmakingLobbyIsFull
     }
 
-    public enum EMatchmakingLeaveError 
+    public enum EMatchmakingLeaveError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -346,7 +341,7 @@ namespace michitai
         PlayersAreNotAllowedToLeaveThisMatchmakingLobby
     }
 
-    public enum EMatchmakingPlayersError 
+    public enum EMatchmakingPlayersError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -357,7 +352,7 @@ namespace michitai
         FailedToGetPlayers
     }
 
-    public enum EMatchmakingHeartbeatError 
+    public enum EMatchmakingHeartbeatError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -368,7 +363,7 @@ namespace michitai
         FailedToUpdateHeartbeat
     }
 
-    public enum EMatchmakingRemoveError 
+    public enum EMatchmakingRemoveError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -380,7 +375,7 @@ namespace michitai
         FailedToRemoveMatchmakingLobby
     }
 
-    public enum EMatchmakingCurrentError 
+    public enum EMatchmakingCurrentError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -390,7 +385,7 @@ namespace michitai
         FailedToGetMatchmakingStatus
     }
 
-    public enum EMatchmakingStatusError 
+    public enum EMatchmakingStatusError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -401,7 +396,7 @@ namespace michitai
         RequestNotFoundOrYouAreNotTheRequester
     }
 
-    public enum EMatchmakingResponseError 
+    public enum EMatchmakingResponseError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -416,7 +411,7 @@ namespace michitai
         MatchmakingLobbyIsFull
     }
 
-    public enum EMatchmakingStartError 
+    public enum EMatchmakingStartError
     {
         Unknown = ECommonError.Unknown,
         ApiTokenIsRequired = ECommonError.ApiTokenIsRequired,
@@ -430,8 +425,8 @@ namespace michitai
     }
 
     // ====================== TIME.PHP ERRORS ======================
-    
-    public enum ETimeError 
+
+    public enum ETimeError
     {
         Unknown = ECommonError.Unknown,
         MethodNotAllowed = ECommonError.MethodNotAllowed,
