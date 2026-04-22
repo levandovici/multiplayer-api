@@ -187,7 +187,13 @@ namespace michitai
         PlayerTokenIsRequired,
         MissingActionType,
         RequestDataJsonMustBeAString,
-        PlayerIsNotInAnyRoom
+        PlayerIsNotInAnyRoom,
+        MissingRequiredFieldTargetPlayers,
+        MissingRequiredFieldTargetPlayersIds,
+        InvalidTargetPlayersIds,
+        NoValidTargetPlayersFound,
+        InvalidTargetPlayers,
+        FailedToSubmitActions
     }
 
     public enum ERoomActionsPollError 
@@ -207,7 +213,6 @@ namespace michitai
         InvalidApiToken = ECommonError.InvalidApiToken,
         InvalidPlayerToken,
         PlayerTokenIsRequired,
-        OnlyHostCanViewPendingActions,
         YouAreNotInAnyRoom
     }
 
@@ -218,7 +223,7 @@ namespace michitai
         InvalidApiToken = ECommonError.InvalidApiToken,
         InvalidPlayerToken,
         PlayerTokenIsRequired,
-        OnlyHostCanCompleteActions,
+        PlayerNotFound,
         StatusIsRequired,
         ResponseDataJsonMustBeAString,
         ResponseDataIsNotValidJson,

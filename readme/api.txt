@@ -294,6 +294,7 @@ curl "https://api.michitai.com/api/game_room.php/current?api_token=API_TOKEN&pla
 curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
+    "target_players": "host",
     "action_type": "move",
     "request_data": {
       "x": 10,
@@ -304,20 +305,109 @@ curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=API_T
 curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "action_type": "move",
+    "target_players": "all",
+    "action_type": "game_event",
     "request_data": {
-      "x": 10,
-      "y": 20
+      "event": "boss_spawn",
+      "data": {
+        "boss_id": "dragon_001",
+        "position": {"x": 100, "y": 200}
+      }
     }
   }'
+
+curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target_players": "specific",
+    "target_players_ids": [47, 48, 49],
+    "action_type": "private_message",
+    "request_data": {
+      "message": "Secret quest available!",
+      "quest_id": "quest_123"
+    }
+  }'
+
+//Response:
+{
+  "success": true,
+  "actions_sent": 3,
+  "action_ids": ["a1b2c3d4e5f6", "f6e5d4c3b2a1", "b2c3d4e5f6a1"],
+  "target_players_ids": [47, 48, 49]
+}
 
 //Poll for Action Response
 
 curl "https://api.michitai.com/api/game_room.php/actions/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
 
+//Response:
+{
+  "success": true,
+  "actions": [
+    {
+      "action_id": "a1b2c3d4e5f6",
+      "action_type": "move",
+      "response_data": {
+        "success": true,
+        "message": "Moved successfully",
+        "new_position": {"x": 10, "y": 20}
+      },
+      "status": "completed",
+      "target_id": 47,
+      "is_host": false,
+      "processed_at": "2026-03-13T10:15:30+00:00"
+    },
+    {
+      "action_id": "f6e5d4c3b2a1",
+      "action_type": "game_event",
+      "response_data": {
+        "event_processed": true,
+        "timestamp": "2026-03-13T10:16:00+00:00"
+      },
+      "status": "completed",
+      "target_id": 48,
+      "is_host": true,
+      "processed_at": "2026-03-13T10:16:05+00:00"
+    }
+  ]
+}
+
 //Get Pending Actions
 
 curl "https://api.michitai.com/api/game_room.php/actions/pending?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "actions": [
+    {
+      "action_id": "b2c3d4e5f6a1",
+      "player_id": 48,
+      "target_id": 49,
+      "action_type": "move",
+      "request_data": {
+        "x": 15,
+        "y": 25
+      },
+      "created_at": "2026-03-13T10:20:15+00:00",
+      "player_name": "GameHost",
+      "is_host": true
+    },
+    {
+      "action_id": "c3d4e5f6a1b2",
+      "player_id": 47,
+      "target_id": 49,
+      "action_type": "attack",
+      "request_data": {
+        "target": "enemy_001",
+        "damage": 25
+      },
+      "created_at": "2026-03-13T10:21:30+00:00",
+      "player_name": "Player1",
+      "is_host": false
+    }
+  ]
+}
 
 //Complete Action
 

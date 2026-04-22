@@ -1486,10 +1486,11 @@ $site_twitter = "@michitai";
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
                             <span class="font-mono">/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
-                        <div class="text-xs text-gray-400 mb-2">Request:</div>
+                        <div class="text-xs text-gray-400 mb-2">Request (send to host):</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
+    "target_players": "host",
     "action_type": "move",
     "request_data": {
       "x": 10,
@@ -1499,8 +1500,9 @@ $site_twitter = "@michitai";
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
-  "action_id": "1c2bbd859e36dc7d7e5e9b4f263c88ce",
-  "status": "pending"
+  "actions_sent": 1,
+  "action_ids": ["1c2bbd859e36dc7d7e5e9b4f263c88ce"],
+  "target_players_ids": [48]
 }</code></pre>
                     </div>
 
@@ -1523,7 +1525,10 @@ $site_twitter = "@michitai";
         "success": true,
         "message": "Moved successfully"
       },
-      "status": "completed"
+      "status": "completed",
+      "target_id": 48,
+      "is_host": true,
+      "processed_at": "2026-03-13T10:15:30+00:00"
     }
   ]
 }</code></pre>
@@ -1543,14 +1548,16 @@ $site_twitter = "@michitai";
   "actions": [
     {
       "action_id": "efc5ea74e3a37e41a4f57d948cfb2538",
-      "player_id": "49",
+      "player_id": 49,
+      "target_id": 48,
       "action_type": "move",
       "request_data": {
         "x": 10,
         "y": 20
       },
       "created_at": "2026-03-09 10:10:10",
-      "player_name": "TestPlayer"
+      "player_name": "TestPlayer",
+      "is_host": false
     }
   ]
 }</code></pre>

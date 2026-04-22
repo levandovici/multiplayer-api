@@ -630,6 +630,19 @@ function submitAction() {
 
     $actionType = $data['action_type'];
 
+    if (!isset($data['target_players']) || empty($data['target_players'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: target_players'], 400);
+    }
+
+    $targetPlayers = $data['target_players'];
+
+    if ($targetPlayers === 'specific') {
+        if(!isset($data['target_players_ids']) || empty($data['target_players_ids'])) {
+            sendResponse(['success' => false, 'error' => 'Missing required field: target_players_ids'], 400);
+        }
+        $targetPlayersIds = $data['target_players_ids'];
+    }
+
     $requestData = null;
 
     if($isUnity)
@@ -655,20 +668,97 @@ function submitAction() {
         sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
     }
 
-    $actionId = bin2hex(random_bytes(16));
+    // Normalize request_data to JSON string
+    if (is_string($requestData)) {
+        $requestDataJson = $requestData !== '' ? $requestData : '{}';
+    } else {
+        $requestDataJson = isset($requestData) ? json_encode($requestData, JSON_UNESCAPED_UNICODE) : '{}';
+    }
+
+    $targets = [];
 
     global $pdo;
-    $stmt = $pdo->prepare("
-        INSERT INTO action_queue (action_id, room_id, game_id, player_id, action_type, request_data, status)
-        VALUES (?, ?, ?, ?, ?, ?, 'pending')
-    ");
-    $stmt->execute([$actionId, $roomId, $context['api']['id'], $player['id'], $actionType, json_encode($requestData, JSON_UNESCAPED_UNICODE)]);
 
-    sendResponse([
-        'success' => true,
-        'action_id' => $actionId,
-        'status' => 'pending'
-    ]);
+    if ($targetPlayers === 'all') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else if ($targetPlayers === 'host') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_host = TRUE AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else if ($targetPlayers === 'others') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND player_id != ? AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId, $player['id']]);
+        $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } elseif ($targetPlayers === 'specific') {
+        if(is_array($targetPlayersIds) && count($targetPlayersIds) > 0) {
+            $placeholders = implode(',', array_fill(0, count($targetPlayersIds), '?'));
+            $stmt = $pdo->prepare("
+                SELECT player_id 
+                FROM room_players 
+                WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE
+            ");
+            $params = array_merge([$roomId], $targetPlayersIds);
+            $stmt->execute($params);
+            $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+        else
+        {
+            sendResponse(['success' => false, 'error' => 'Invalid target players ids'], 400);
+        }
+
+        if (empty($targets)) {
+            sendResponse(['success' => false, 'error' => 'No valid target players found'], 400);
+        }
+    }
+    else
+    {
+        sendResponse(['success' => false, 'error' => 'Invalid target players'], 400);
+    }
+
+    $actionIds = [];
+    $pdo->beginTransaction();
+    try {
+        $stmt = $pdo->prepare("
+            INSERT INTO action_queue 
+            (action_id, room_id, game_id, player_id, target_id, action_type, request_data, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+        ");
+
+        foreach ($targets as $targetPlayerId) {
+            $actionId = bin2hex(random_bytes(16));
+            $stmt->execute([$actionId, $roomId, $context['api']['id'], $player['id'], $targetPlayerId, $actionType, $requestDataJson]);
+            $actionIds[] = $actionId;
+        }
+
+        $pdo->commit();
+
+        $targets = array_map('intval', $targets);
+
+        sendResponse([
+            'success' => true,
+            'actions_sent' => count($actionIds),
+            'action_ids' => $actionIds,
+            'target_players_ids' => $targets
+        ]);
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        error_log("Submit actions failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to submit actions'], 500);
+    }
 }
 
 function pollActions() {
@@ -682,7 +772,7 @@ function pollActions() {
 
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT action_id, action_type, response_data, status
+        SELECT action_id, action_type, response_data, status, target_id, processed_at
         FROM action_queue
         WHERE player_id = ? AND status IN ('completed', 'failed')
         AND processed_at > NOW() - INTERVAL 1 HOUR
@@ -692,6 +782,14 @@ function pollActions() {
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($actions as &$action) {
+        // Determine if this action was sent to a host player
+        $action['is_host'] = false;
+        if ($action['target_id']) {
+            $stmt = $pdo->prepare("SELECT is_host FROM room_players WHERE player_id = ? AND room_id = ?");
+            $stmt->execute([$action['target_id'], $roomId]);
+            $action['is_host'] = (bool)$stmt->fetchColumn();
+        }
+
         if($isUnity)
         {
             $decoded = json_decode($action['response_data']);
@@ -721,26 +819,28 @@ function getPendingActions() {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    if (!isHost($player['id'])) {
-        sendResponse(['success' => false, 'error' => 'Only host can view pending actions'], 403);
-    }
-
     $roomId = getPlayerRoom($player['id']);
     if (!$roomId) sendResponse(['success' => false, 'error' => 'You are not in any room'], 400);
 
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT a.action_id, a.player_id, a.action_type, a.request_data, a.created_at, rp.player_name
+        SELECT a.action_id, a.player_id, a.target_id, a.action_type, a.request_data, a.created_at, rp.player_name
         FROM action_queue a
         JOIN room_players rp ON a.player_id = rp.player_id
-        WHERE a.room_id = ? AND a.status = 'pending'
+        WHERE a.room_id = ? AND a.status = 'pending' AND a.target_id = ?
         ORDER BY a.created_at ASC
     ");
-    $stmt->execute([$roomId]);
+    $stmt->execute([$roomId, $player['id']]);
     $actions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($actions as &$action) {
         $action['player_id'] = (int)$action['player_id'];
+        $action['target_id'] = (int)$action['target_id'];
+        
+        // Determine if this action was sent from a host player
+        $stmt = $pdo->prepare("SELECT is_host FROM room_players WHERE player_id = ? AND room_id = ?");
+        $stmt->execute([$action['player_id'], $roomId]);
+        $action['is_host'] = (bool)$stmt->fetchColumn();
 
         if($isUnity)
         {
@@ -771,8 +871,8 @@ function completeAction($actionId) {
     $context = getAuthContext();
     $player = requirePlayer($context);
 
-    if (!isHost($player['id'])) {
-        sendResponse(['success' => false, 'error' => 'Only host can complete actions'], 403);
+    if (!$player) {
+        sendResponse(['success' => false, 'error' => 'Player not found'], 404);
     }
 
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
@@ -817,9 +917,9 @@ function completeAction($actionId) {
     $stmt = $pdo->prepare("
         UPDATE action_queue 
         SET status = ?, response_data = ?, processed_at = CURRENT_TIMESTAMP
-        WHERE action_id = ? AND status = 'pending'
+        WHERE action_id = ? AND status = 'pending' AND target_id = ?
     ");
-    $stmt->execute([$status, $responseData, $actionId]);
+    $stmt->execute([$status, $responseData, $actionId, $player['id']]);
 
     if ($stmt->rowCount() === 0) {
         sendResponse(['success' => false, 'error' => 'Action not found or already processed'], 404);

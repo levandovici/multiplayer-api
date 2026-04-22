@@ -373,8 +373,8 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">SubmitActionAsync</h3>
-                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ActionSubmitResponse&gt; SubmitActionAsync&lt;T&gt;(string playerToken, string actionType, T requestData = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Submits an action for processing by other players. Uses generic type for request data.</p>
+                                    <pre class="bg-black/30 text-teal-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;ActionSubmitResponse&gt; SubmitActionAsync&lt;T&gt;(string playerToken, SubmitAction&lt;T&gt; request, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Submits an action to specific targets (host, all, others, or specific players) with typed request data.</p>
                                 </div>
                                 
                                 <div>

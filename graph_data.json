@@ -2,9 +2,9 @@
   "metadata": {
     "title": "Lines of Code Over Time",
     "description": "Cumulative lines of code in the multiplayer-api project",
-    "generated": "2026-04-11 16:13:31",
-    "total_commits": 178,
-    "total_loc": 16778
+    "generated": "2026-04-22 13:01:20",
+    "total_commits": 196,
+    "total_loc": 20409
   },
   "data": [
     {
@@ -1252,6 +1252,132 @@
       "date": "2026-04-11 13:34:53 +0300",
       "message": "code analysis",
       "hash": "1fe760c"
+    },
+    {
+      "x": 1775914026000,
+      "y": 18341,
+      "date": "2026-04-11 16:27:06 +0300",
+      "message": "update index - add graph",
+      "hash": "67a8ca2"
+    },
+    {
+      "x": 1775914477000,
+      "y": 18312,
+      "date": "2026-04-11 16:34:37 +0300",
+      "message": "update index - remove commits from graph",
+      "hash": "998add1"
+    },
+    {
+      "x": 1775916442000,
+      "y": 18316,
+      "date": "2026-04-11 17:07:22 +0300",
+      "message": "update login, register",
+      "hash": "93d7dd9"
+    },
+    {
+      "x": 1775917834000,
+      "y": 18316,
+      "date": "2026-04-11 17:30:34 +0300",
+      "message": "fix style",
+      "hash": "659322e"
+    },
+    {
+      "x": 1775918092000,
+      "y": 18316,
+      "date": "2026-04-11 17:34:52 +0300",
+      "message": "fix login layout",
+      "hash": "4bdfcce"
+    },
+    {
+      "x": 1776275710000,
+      "y": 18443,
+      "date": "2026-04-15 20:55:10 +0300",
+      "message": "update index - development road map",
+      "hash": "4f34b9a"
+    },
+    {
+      "x": 1776360450000,
+      "y": 18456,
+      "date": "2026-04-16 20:27:30 +0300",
+      "message": "update bot - support edited messages",
+      "hash": "810abe0"
+    },
+    {
+      "x": 1776533120000,
+      "y": 18603,
+      "date": "2026-04-18 20:25:20 +0300",
+      "message": "update - players rename",
+      "hash": "61e7873"
+    },
+    {
+      "x": 1776535857000,
+      "y": 18599,
+      "date": "2026-04-18 21:10:57 +0300",
+      "message": "update time",
+      "hash": "ad48154"
+    },
+    {
+      "x": 1776535481000,
+      "y": 18729,
+      "date": "2026-04-18 21:04:41 +0300",
+      "message": "update - errors list",
+      "hash": "0b9a69c"
+    },
+    {
+      "x": 1776605163000,
+      "y": 18925,
+      "date": "2026-04-19 16:26:03 +0300",
+      "message": "update - errors list",
+      "hash": "b06089d"
+    },
+    {
+      "x": 1776622987000,
+      "y": 19507,
+      "date": "2026-04-19 21:23:07 +0300",
+      "message": "update .NET - errors handling",
+      "hash": "d4af895"
+    },
+    {
+      "x": 1776625541000,
+      "y": 19510,
+      "date": "2026-04-19 22:05:41 +0300",
+      "message": "fix api",
+      "hash": "acf8f1c"
+    },
+    {
+      "x": 1776789628000,
+      "y": 19506,
+      "date": "2026-04-21 19:40:28 +0300",
+      "message": "update - errors handling",
+      "hash": "7e693ca"
+    },
+    {
+      "x": 1776791354000,
+      "y": 20082,
+      "date": "2026-04-21 20:09:14 +0300",
+      "message": "update Unity - errors handling",
+      "hash": "e687bb4"
+    },
+    {
+      "x": 1776791766000,
+      "y": 20082,
+      "date": "2026-04-21 20:16:06 +0300",
+      "message": "update indexes",
+      "hash": "a773b81"
+    },
+    {
+      "x": 1776843878000,
+      "y": 20090,
+      "date": "2026-04-22 10:44:38 +0300",
+      "message": "update - send updates",
+      "hash": "b5e6212"
+    },
+    {
+      "x": 1776845112000,
+      "y": 20409,
+      "date": "2026-04-22 11:05:12 +0300",
+      "message": "update - actions",
+      "hash": "6ab1944"
     }
   ]
 }

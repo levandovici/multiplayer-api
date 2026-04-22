@@ -410,11 +410,10 @@ $site_twitter = "@michitai";
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-red-400 font-mono text-sm mb-2">SubmitActionAsync</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;ActionSubmitResponse&gt; SubmitActionAsync&lt;T&gt;(string gamePlayerToken,
-    string actionType,
-    T? requestData = null,
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;ActionSubmitResponse&gt; SubmitActionAsync&lt;T&gt;(string playerToken,
+    SubmitAction&lt;T&gt; request,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Submits a game action for processing by other players with typed request data.</p>
+                                <p class="text-gray-400 text-sm mt-2">Submits a game action to specific targets (host, all, others, or specific players) with typed request data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">

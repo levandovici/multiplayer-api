@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS action_queue (
     room_id VARCHAR(36) NOT NULL,
     game_id INT NOT NULL,
     player_id VARCHAR(36) NOT NULL,
+    target_id VARCHAR(36) NULL,
     action_type VARCHAR(50) NOT NULL,
     request_data JSON,
     response_data JSON,
@@ -98,6 +99,7 @@ CREATE TABLE IF NOT EXISTS action_queue (
     INDEX idx_room_status (room_id, status),
     INDEX idx_game_status (game_id, status),
     INDEX idx_player_status (player_id, status),
+    INDEX idx_target_status (target_id, status),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
