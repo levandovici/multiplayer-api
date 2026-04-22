@@ -894,6 +894,14 @@ function sendUpdates() {
         ");
         $stmt->execute([$roomId]);
         $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else if ($targetPlayers === 'host') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_host = TRUE AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $targets = $stmt->fetchAll(PDO::FETCH_COLUMN);
     } else if ($targetPlayers === 'others') {
         $stmt = $pdo->prepare("
             SELECT player_id 

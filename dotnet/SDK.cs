@@ -313,7 +313,7 @@ namespace michitai
 
     public enum RoomCompleteActionStatus { Processing, Completed, Failed }
 
-    public enum RoomTargetPlayers { All, Others, Specific }
+    public enum RoomTargetPlayers { All, Host, Others, Specific }
 
     public enum MatchmakingRequestAction { Approve, Reject }
 
