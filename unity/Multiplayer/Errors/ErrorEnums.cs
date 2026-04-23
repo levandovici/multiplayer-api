@@ -1,6 +1,6 @@
 using System;
 
-namespace michitai
+namespace Michitai.Multiplayer.Errors
 {
     // ====================== BASE ERROR ENUMS ======================
     
@@ -187,13 +187,7 @@ namespace michitai
         PlayerTokenIsRequired,
         MissingActionType,
         RequestDataJsonMustBeAString,
-        PlayerIsNotInAnyRoom,
-        MissingRequiredFieldTargetPlayers,
-        MissingRequiredFieldTargetPlayersIds,
-        InvalidTargetPlayersIds,
-        NoValidTargetPlayersFound,
-        InvalidTargetPlayers,
-        FailedToSubmitActions
+        PlayerIsNotInAnyRoom
     }
 
     public enum ERoomActionsPollError 
@@ -213,6 +207,7 @@ namespace michitai
         InvalidApiToken = ECommonError.InvalidApiToken,
         InvalidPlayerToken,
         PlayerTokenIsRequired,
+        OnlyHostCanViewPendingActions,
         YouAreNotInAnyRoom
     }
 
@@ -223,7 +218,7 @@ namespace michitai
         InvalidApiToken = ECommonError.InvalidApiToken,
         InvalidPlayerToken,
         PlayerTokenIsRequired,
-        PlayerNotFound,
+        OnlyHostCanCompleteActions,
         StatusIsRequired,
         ResponseDataJsonMustBeAString,
         ResponseDataIsNotValidJson,

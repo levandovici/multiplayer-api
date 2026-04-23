@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace michitai
+namespace Michitai.Multiplayer.Errors
 {
     // ====================== ERROR CONVERTER ======================
     
@@ -59,14 +59,9 @@ namespace michitai
             { "Player is not in any room", nameof(ERoomHeartbeatError.PlayerIsNotInAnyRoom) },
             { "Missing action_type", nameof(ERoomActionsError.MissingActionType) },
             { "request_data_json must be a string", nameof(ERoomActionsError.RequestDataJsonMustBeAString) },
-            { "Missing required field: target_players", nameof(ERoomActionsError.MissingRequiredFieldTargetPlayers) },
-            { "Missing required field: target_players_ids", nameof(ERoomActionsError.MissingRequiredFieldTargetPlayersIds) },
-            { "Invalid target players ids", nameof(ERoomActionsError.InvalidTargetPlayersIds) },
-            { "No valid target players found", nameof(ERoomActionsError.NoValidTargetPlayersFound) },
-            { "Invalid target players", nameof(ERoomActionsError.InvalidTargetPlayers) },
-            { "Failed to submit actions", nameof(ERoomActionsError.FailedToSubmitActions) },
+            { "Only host can view pending actions", nameof(ERoomActionsPendingError.OnlyHostCanViewPendingActions) },
+            { "Only host can complete actions", nameof(ERoomActionsCompleteError.OnlyHostCanCompleteActions) },
             { "Status is required", nameof(ERoomActionsCompleteError.StatusIsRequired) },
-            { "Player not found", nameof(ERoomActionsCompleteError.PlayerNotFound) },
             { "response_data_json must be a string", nameof(ERoomActionsCompleteError.ResponseDataJsonMustBeAString) },
             { "response_data is not valid JSON", nameof(ERoomActionsCompleteError.ResponseDataIsNotValidJson) },
             { "Action not found or already processed", nameof(ERoomActionsCompleteError.ActionNotFoundOrAlreadyProcessed) },
