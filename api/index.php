@@ -443,7 +443,7 @@ $site_twitter = "@michitai";
                             <div class="col-span-6">Send updates to players (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/updates/poll</div>
                             <div class="col-span-6">Poll for updates (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
@@ -1644,12 +1644,17 @@ $site_twitter = "@michitai";
 
                     <!-- 41. Poll Updates -->
                     <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
                             <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_players": "host",
+    "last_update": null
+  }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,
@@ -1691,12 +1696,17 @@ $site_twitter = "@michitai";
 
             <!-- 42. Poll Updates with Last Update ID -->
                     <div class="bg-black/50 p-4 rounded-lg">
-                        <div class="flex items-center text-sm text-blue-400 mb-2">
-                            <span class="font-mono bg-blue-900/50 px-2 py-1 rounded mr-2">GET</span>
-                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&last_update=UPDATE_ID</span>
+                        <div class="flex items-center text-sm text-green-400 mb-2">
+                            <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
+                            <span class="font-mono">/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN</span>
                         </div>
                         <div class="text-xs text-gray-400 mb-2">Request:</div>
-                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&last_update=a28388775fcf9478c6926cbe44f9d3ed"</code></pre>
+                        <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-bash">$ curl -X POST "/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_players": "host",
+    "last_update": "a28388775fcf9478c6926cbe44f9d3ed"
+  }'</code></pre>
                         <div class="text-xs text-gray-400 mb-2">Response:</div>
                         <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap break-all"><code class="language-json">{
   "success": true,

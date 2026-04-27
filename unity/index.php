@@ -414,8 +414,8 @@ $site_twitter = "@michitai";
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">PollUpdatesAsync</h3>
-                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PollUpdatesResponse&gt; PollUpdatesAsync(string playerToken, string lastUpdateId = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Polls for updates sent by other players. Supports incremental polling with lastUpdateId.</p>
+                                    <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PollUpdatesResponse&gt; PollUpdatesAsync(string playerToken, PollUpdates request, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Polls for updates from specific source players. Use PollUpdates request object to specify from_players, from_players_ids, and lastUpdate.</p>
                                 </div>
                             </div>
                         </div>

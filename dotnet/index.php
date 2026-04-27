@@ -460,9 +460,9 @@ $site_twitter = "@michitai";
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-indigo-400 font-mono text-sm mb-2">PollUpdatesAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;PollUpdatesResponse&lt;T&gt;&gt; PollUpdatesAsync&lt;T&gt;(string gamePlayerToken,
-    string? lastUpdateId = null,
+    PollUpdates request,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Polls for updates from other players with optional incremental polling and typed data.</p>
+                                <p class="text-gray-400 text-sm mt-2">Polls for updates from specific source players with typed data support. Use PollUpdates request object to specify from_players, from_players_ids, and last_update.</p>
                             </div>
                         </div>
                     </div>

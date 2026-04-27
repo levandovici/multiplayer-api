@@ -162,7 +162,6 @@
 {"message":"Invalid player token", "success": false}
 {"message":"Player token is required", "success": false}
 {"message":"Player is not in any room", "success": false}
-{"message":"Only host can send updates", "success": false}
 {"message":"Missing required field: target_players", "success": false}
 {"message":"Missing required field: type", "success": false}
 {"message":"Missing required field: target_players_ids", "success": false}
@@ -177,6 +176,8 @@
 {"message":"Invalid player token", "success": false}
 {"message":"Player token is required", "success": false}
 {"message":"Player is not in any room", "success": false}
+{"message":"No valid source players found", "success": false}
+{"message":"Invalid from players", "success": false}
 
 ### endpoint: current:
 {"message":"API token is required", "success": false}

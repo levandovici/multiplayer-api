@@ -940,10 +940,6 @@ function sendUpdates() {
         sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
     }
 
-    if (!isHost($player['id'])) {
-        sendResponse(['success' => false, 'error' => 'Only host can send updates'], 403);
-    }
-
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
     if (!isset($data['target_players']) || empty($data['target_players'])) {
@@ -1077,11 +1073,70 @@ function pollUpdates() {
     $roomId = getPlayerRoom($player['id']);
     if (!$roomId) sendResponse(['success' => false, 'error' => 'Player is not in any room'], 400);
 
-    $lastUpdateId = $_GET['last_update'] ?? null;
+    // Read from_players and last_update from request body (for .NET compatibility)
+    $requestData = json_decode(file_get_contents('php://input'), true) ?: [];
+    $fromPlayers = $requestData['from_players'] ?? 'host'; // Default to host to match .NET implementation
+    $fromPlayersIds = $requestData['from_players_ids'] ?? null;
+    $lastUpdateId = $requestData['last_update'] ?? null;
 
     global $pdo;
-    $whereClause = "WHERE target_player_id = ? AND room_id = ?";
-    $params = [$player['id'], $roomId];
+    
+    // Build source player list based on from_players parameter (filter by who sent updates)
+    $sourcePlayers = [];
+    
+    if ($fromPlayers === 'all') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $sourcePlayers = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else if ($fromPlayers === 'host') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_host = TRUE AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $sourcePlayers = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else if ($fromPlayers === 'others') {
+        $stmt = $pdo->prepare("
+            SELECT player_id 
+            FROM room_players 
+            WHERE room_id = ? AND is_host = FALSE AND is_online = TRUE
+        ");
+        $stmt->execute([$roomId]);
+        $sourcePlayers = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } elseif ($fromPlayers === 'specific') {
+        if(is_array($fromPlayersIds) && count($fromPlayersIds) > 0) {
+            $placeholders = implode(',', array_fill(0, count($fromPlayersIds), '?'));
+            $stmt = $pdo->prepare("
+                SELECT player_id 
+                FROM room_players 
+                WHERE room_id = ? AND player_id IN ($placeholders) AND is_online = TRUE
+            ");
+            $params = array_merge([$roomId], $fromPlayersIds);
+            $stmt->execute($params);
+            $sourcePlayers = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        if (empty($sourcePlayers)) {
+            sendResponse(['success' => false, 'error' => 'No valid source players found'], 400);
+        }
+    } else {
+        sendResponse(['success' => false, 'error' => 'Invalid from players'], 400);
+    }
+
+    // Build WHERE clause for source players (who sent the updates) and current player as target
+    if (count($sourcePlayers) === 1) {
+        $whereClause = "WHERE from_player_id = ? AND target_player_id = ? AND room_id = ?";
+        $params = [$sourcePlayers[0], $player['id'], $roomId];
+    } else {
+        $placeholders = implode(',', array_fill(0, count($sourcePlayers), '?'));
+        $whereClause = "WHERE from_player_id IN ($placeholders) AND target_player_id = ? AND room_id = ?";
+        $params = array_merge($sourcePlayers, [$player['id'], $roomId]);
+    }
 
     if ($lastUpdateId) {
         $whereClause .= " AND update_id > ?";
@@ -1249,7 +1304,7 @@ try {
         completeAction($m[1]);
     } elseif ($method === 'POST' && preg_match('#/updates/?$#', $path)) {
         sendUpdates();
-    } elseif ($method === 'GET' && preg_match('#/updates/poll/?$#', $path)) {
+    } elseif ($method === 'POST' && preg_match('#/updates/poll/?$#', $path)) {
         pollUpdates();
     } elseif ($method === 'GET' && preg_match('#/current/?$#', $path)) {
         getCurrentGameRoomStatus();

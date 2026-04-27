@@ -461,9 +461,65 @@ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=API_T
 
 //Poll for Room Updates
 
-curl "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
+curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_players": "host",
+    "last_update": "LAST_UPDATE_ID"
+  }'
 
-curl "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN&last_update=LAST_UPDATE"
+curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_players": "all",
+    "last_update": "LAST_UPDATE_ID"
+  }'
+
+curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_players": "others",
+    "last_update": "LAST_UPDATE_ID"
+  }'
+
+curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_players": "specific",
+    "from_players_ids": [47, 48],
+    "last_update": "LAST_UPDATE_ID"
+  }'
+
+//Response:
+{
+  "success": true,
+  "updates": [
+    {
+      "update_id": "u1v2w3x4y5z6",
+      "from_player_id": 47,
+      "type": "play_animation",
+      "data": {
+        "animation": "victory",
+        "duration": 2.0
+      },
+      "created_at": "2026-03-13T10:30:15+00:00"
+    },
+    {
+      "update_id": "u2v3w4x5y6z7",
+      "from_player_id": 48,
+      "type": "spawn_effect",
+      "data": {
+        "effect": "explosion",
+        "position": {
+          "x": 10,
+          "y": 20
+        }
+      },
+      "created_at": "2026-03-13T10:30:20+00:00"
+    }
+  ],
+  "last_update": "u2v3w4x5y6z7"
+}
 
 //Matchmaking
 
