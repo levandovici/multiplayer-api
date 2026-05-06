@@ -683,3 +683,21 @@ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=API_TOKEN" 
     "sort_by": ["score", "level"],
     "limit": 10
   }'
+
+//Realtime
+
+//Generate Realtime Token
+
+curl -X POST "https://api.michitai.com/api/realtime.php/token?api_token=API_TOKEN&player_token=PLAYER_TOKEN" -H "Content-Type: application/json"
+
+//Response:
+{
+  "success": true,
+  "token": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+  "player_info": {
+    "player_id": 47,
+    "player_name": "TestPlayer",
+    "room_id": "dc3723848639139113ca240958ba0bf8",
+    "is_host": true
+  }
+}

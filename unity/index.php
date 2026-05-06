@@ -182,6 +182,7 @@ $site_twitter = "@michitai";
                             <a href="#room-management" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Management</a>
                             <a href="#room-actions" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Actions</a>
                             <a href="#room-updates" class="block text-white/70 hover:text-white py-1 text-sm transition">Room Updates</a>
+                            <a href="#realtime" class="block text-white/70 hover:text-white py-1 text-sm transition">Realtime</a>
                             <a href="#matchmaking" class="block text-white/70 hover:text-white py-1 text-sm transition">Matchmaking</a>
                             <a href="#leaderboard" class="block text-white/70 hover:text-white py-1 text-sm transition">Leaderboard</a>
                         </nav>
@@ -416,6 +417,62 @@ $site_twitter = "@michitai";
                                     <h3 class="text-white font-semibold mb-2">PollUpdatesAsync</h3>
                                     <pre class="bg-black/30 text-cyan-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PollUpdatesResponse&gt; PollUpdatesAsync(string playerToken, PollUpdates request, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Polls for updates from specific source players. Use PollUpdates request object to specify from_players, from_players_ids, and lastUpdate.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Realtime Section -->
+                    <div id="realtime" class="glass-effect rounded-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-6">
+                            <h2 class="text-2xl font-bold text-white">Realtime</h2>
+                            <p class="text-white/80">WebSocket connections for live multiplayer gameplay</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">Constructor</h3>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Realtime(string realtimeWebSocketUrl = "ws://realtime.michitai.com")</code></pre>
+                                    <p class="text-white/70 mt-2">Initializes realtime WebSocket client with optional custom server URL. Default: ws://realtime.michitai.com</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">GetTokenAsync (Static)</h3>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public static async Task&lt;TokenResponse&gt; GetTokenAsync(
+    Client client, 
+    string playerToken
+)</code></pre>
+                                    <p class="text-white/70 mt-2">Static method to generate realtime authentication token using API client.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">ConnectAsync</h3>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public async Task&lt;bool&gt; ConnectAsync(string realtimeToken)</code></pre>
+                                    <p class="text-white/70 mt-2">Connects to WebSocket server using realtime token. Returns true if successful, false if failed. Includes connection state protection.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">SendAsync</h3>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public async Task SendAsync&lt;T&gt;(
+    ERoomTargetPlayer target,
+    string command,
+    T data = null,
+    int[] targetIds = null
+)</code></pre>
+                                    <p class="text-white/70 mt-2">Sends a message to specific targets (Host, All, Others, or specific player IDs) with optional data. Uses JsonUtility for serialization.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">DisconnectAsync</h3>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public async Task DisconnectAsync()</code></pre>
+                                    <p class="text-white/70 mt-2">Disconnects from WebSocket server and cleans up resources. Automatically called in OnDestroy.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">Events</h3>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public event Action&lt;string, string, SenderInfo&gt; OnReceive;
+public event Action OnConnected;</code></pre>
+                                    <p class="text-white/70 mt-2">OnConnected: Fired when WebSocket connection is established. OnReceive: Fired when a message is received from server with command, data, and sender information.</p>
                                 </div>
                             </div>
                         </div>

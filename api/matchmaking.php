@@ -2,7 +2,7 @@
 // ====================== CORS & HEADERS ======================
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Content-Type: application/json');
 
 // Enable error reporting & logging
@@ -45,7 +45,6 @@ function sendResponse($data, $statusCode = 200) {
 }
 
 function getAuthContext() {
-    $headers = getallheaders();
     $apiToken = $_GET['api_token'];
 
     if (empty($apiToken)) {
@@ -62,7 +61,7 @@ function getAuthContext() {
     }
 
     $player = null;
-    $playerToken = $headers['X-Player-Token'] ?? $_GET['player_token'] ?? '';
+    $playerToken = $_GET['player_token'] ?? '';
 
     if ($playerToken !== '') {
         $stmt = $pdo->prepare("SELECT * FROM game_players WHERE private_key = ?");
@@ -206,6 +205,7 @@ function listMatchmaking() {
                 m.join_by_requests,
                 m.host_switch,
                 m.can_leave_room,
+                m.realtime_room,
                 m.rules,
                 m.created_at,
                 m.last_heartbeat,
@@ -221,6 +221,10 @@ function listMatchmaking() {
         ");
 
         $lobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($lobbies as &$lobby) {
+            $lobby['realtime_room'] = (bool)$lobby['realtime_room'];
+        }
         
         sendResponse(['success' => true, 'lobbies' => $lobbies]);
     } catch (Exception $e) {
@@ -258,6 +262,7 @@ function createMatchmaking() {
     $joinByRequests = (bool) ($data['join_by_requests'] ?? false);
     $hostSwitch = (bool) ($data['host_switch'] ?? false);
     $can_leave_room = (bool) ($data['can_leave_room'] ?? false);
+    $realtimeRoom = (bool) ($data['realtime_room'] ?? false);
 
     $matchmakingId = bin2hex(random_bytes(16));
 
@@ -307,10 +312,10 @@ function createMatchmaking() {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking 
-            (matchmaking_id, game_id, matchmaking_name, host_player_id, max_players, strict_full, join_by_requests, host_switch, can_leave_room, rules)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (matchmaking_id, game_id, matchmaking_name, host_player_id, max_players, strict_full, join_by_requests, host_switch, can_leave_room, realtime_room, rules)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $context['api']['id'], $matchmakingName, $player['id'], $maxPlayers, $strictFull, $joinByRequests, $hostSwitch, $can_leave_room, $rulesJson]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $matchmakingName, $player['id'], $maxPlayers, $strictFull, $joinByRequests, $hostSwitch, $can_leave_room, $realtimeRoom, $rulesJson]);
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
@@ -330,6 +335,7 @@ function createMatchmaking() {
             'join_by_requests' => $joinByRequests,
             'host_switch' => $hostSwitch,
             'can_leave_room' => $can_leave_room,
+            'realtime_room' => $realtimeRoom,
             'is_host' => true
         ]);
     } catch (Exception $e) {
@@ -749,6 +755,7 @@ function getCurrentMatchmakingStatus() {
                 m.join_by_requests,
                 m.host_switch,
                 m.can_leave_room,
+                m.realtime_room,
                 m.rules,
                 m.created_at,
                 m.last_heartbeat as lobby_heartbeat,
@@ -821,6 +828,7 @@ function getCurrentMatchmakingStatus() {
                 'join_by_requests' => (bool)$matchmaking['join_by_requests'],
                 'host_switch' => (bool)$matchmaking['host_switch'],
                 'can_leave_room' => (bool)$matchmaking['can_leave_room'],
+                'realtime_room' => (bool)$matchmaking['realtime_room'],
                 'rules' => $rules,
                 'joined_at' => isoUtc($matchmaking['joined_at']),
                 'is_online' => (bool)$matchmaking['is_online'],
@@ -994,9 +1002,9 @@ function startMatchmaking() {
         $roomName = $matchmaking['matchmaking_name'] ?? 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
 
         $pdo->prepare("
-            INSERT INTO game_rooms (room_id, game_id, room_name, max_players, host_switch, can_leave, matchmaking_id, rules)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ")->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmaking['host_switch'], $matchmaking['can_leave_room'], $matchmakingId, $matchmaking['rules']]);
+            INSERT INTO game_rooms (room_id, game_id, room_name, max_players, host_switch, can_leave, realtime, matchmaking_id, rules)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ")->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmaking['host_switch'], $matchmaking['can_leave_room'], $matchmaking['realtime_room'], $matchmakingId, $matchmaking['rules']]);
 
         $pdo->prepare("
             INSERT INTO room_players (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online, player_data)

@@ -184,6 +184,7 @@ $site_twitter = "@michitai";
                             <a href="#room-management" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Room Management</a>
                             <a href="#room-actions" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Room Actions</a>
                             <a href="#room-updates" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Room Updates</a>
+                            <a href="#realtime" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Realtime</a>
                             <a href="#matchmaking" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Matchmaking</a>
                             <a href="#leaderboard" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Leaderboard</a>
                         </nav>
@@ -463,6 +464,63 @@ $site_twitter = "@michitai";
     PollUpdates request,
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Polls for updates from specific source players with typed data support. Use PollUpdates request object to specify from_players, from_players_ids, and last_update.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Realtime -->
+                    <div id="realtime" class="glass-effect rounded-xl p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center mr-4">
+                                <i class="fas fa-bolt text-2xl text-white"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white">Realtime</h4>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">Constructor</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Realtime(string realtimeWebSocketUrl = "ws://realtime.michitai.com")</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Initializes the realtime WebSocket client with optional custom server URL.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">GetTokenAsync (Static)</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public static async Task&lt;TokenResponse&gt; GetTokenAsync(
+    Client client, 
+    string playerToken
+)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Static method to generate a realtime authentication token using the API client.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">ConnectAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public async Task&lt;bool&gt; ConnectAsync(string realtimeToken)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Connects to the WebSocket server using the realtime token. Returns true if successful, false if failed.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">SendAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public async Task SendAsync&lt;T&gt;(
+    ERoomTargetPlayer target,
+    string command,
+    T? data = null,
+    int[]? targetIds = null
+)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Sends a message to specific targets (host, all, others, or specific player IDs) with optional data.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">DisconnectAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public async Task DisconnectAsync()</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Disconnects from the WebSocket server and cleans up resources.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">Events</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public event Action&lt;string, object, SenderInfo&gt;? OnReceive;
+public event Action? OnConnected;</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">OnReceive: Fired when a message is received from the server. OnConnected: Fired when WebSocket connection is established.</p>
                             </div>
                         </div>
                     </div>

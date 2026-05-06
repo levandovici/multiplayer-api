@@ -2,7 +2,7 @@
 // ====================== CORS & HEADERS ======================
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Player-Token, X-Game-Player-Token');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Content-Type: application/json');
 
 // Enable error reporting & logging
@@ -41,7 +41,6 @@ function sendResponse($data, $statusCode = 200) {
 
 // ====================== HELPER FUNCTIONS ======================
 function getAuthContext() {
-    $headers = getallheaders();
     $apiToken = $_GET['api_token'];
 
     if (empty($apiToken)) {
@@ -58,7 +57,7 @@ function getAuthContext() {
     }
 
     $player = null;
-    $playerToken = $headers['X-Player-Token'] ?? $_GET['player_token'] ?? '';
+    $playerToken = $_GET['player_token'] ?? '';
 
     if ($playerToken !== '') {
         $stmt = $pdo->prepare("SELECT * FROM game_players WHERE private_key = ?");
@@ -181,6 +180,7 @@ function createRoom() {
     $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
     $maxPlayers = max(2, min(16, (int)($data['max_players'] ?? 6)));
     $hostSwitch = (bool) ($data['host_switch'] ?? false);
+    $realtime = (bool) ($data['realtime'] ?? false);
 
     if($isUnity)
     {
@@ -218,8 +218,8 @@ function createRoom() {
     try {
         $pdo->beginTransaction();
 
-        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, host_switch, can_leave, rules) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $hostSwitch, true, $rulesJson]);
+        $pdo->prepare("INSERT INTO game_rooms (room_id, game_id, room_name, password, max_players, host_switch, can_leave, realtime, rules) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+            ->execute([$roomId, $context['api']['id'], $roomName, $password, $maxPlayers, $hostSwitch, true, $realtime, $rulesJson]);
 
         addPlayerToRoom($roomId, $player['id'], $player['player_name'], $context['api']['id'], true, $playerDataJson);
 
@@ -232,6 +232,7 @@ function createRoom() {
             'success' => true,
             'room_id' => $roomId,
             'room_name' => $roomName,
+            'realtime' => $realtime,
             'is_host' => true
         ]);
     } catch (Exception $e) {
@@ -252,7 +253,7 @@ function listRooms() {
             SELECT r.room_id, r.room_name, r.max_players, 
                    COUNT(rp.player_id) as current_players,
                    r.password IS NOT NULL as has_password,
-                   r.host_switch, r.can_leave, r.rules
+                   r.host_switch, r.can_leave, r.realtime, r.rules
             FROM game_rooms r
             LEFT JOIN room_players rp ON r.room_id = rp.room_id
             WHERE r.is_active = TRUE
@@ -267,6 +268,7 @@ function listRooms() {
             $room['has_password'] = (bool)$room['has_password'];
             $room['host_switch'] = (bool)$room['host_switch'];
             $room['can_leave'] = (bool)$room['can_leave'];
+            $room['realtime'] = (bool)$room['realtime'];
 
             if($isUnity)
             {
@@ -449,6 +451,9 @@ function leaveRoom() {
         $pdo->prepare("DELETE FROM room_players WHERE player_id = ? AND room_id = ?")
             ->execute([$player['id'], $roomId]);
 
+        // Clean up realtime player for this individual player
+        cleanupRealtimePlayer($pdo, $player['id']);
+
         // If this room was created from matchmaking, also leave the matchmaking
         if ($matchmakingId) {
             $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ? AND player_id = ?")
@@ -474,6 +479,9 @@ function leaveRoom() {
                     $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
                 }
 
+                // Clean up realtime players for this room
+                cleanupRealtimePlayersForRoom($pdo, $roomId);
+                
                 $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
                 $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
@@ -571,6 +579,9 @@ function checkAndReassignHost($roomId) {
                 $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
             }
 
+            // Clean up realtime players for this room
+            cleanupRealtimePlayersForRoom($pdo, $roomId);
+            
             $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
             $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
             $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
@@ -1194,7 +1205,7 @@ function getCurrentGameRoomStatus() {
             rp.room_id, rp.player_id, rp.player_name, rp.is_host, rp.is_online, 
             rp.last_heartbeat, rp.joined_at,
             gr.room_name, gr.max_players, gr.password IS NOT NULL as has_password, 
-            gr.host_switch, gr.can_leave, gr.is_active, gr.rules, 
+            gr.host_switch, gr.can_leave, gr.realtime, gr.is_active, gr.rules, 
             gr.created_at as room_created_at,
             gr.updated_at, gr.last_activity as room_last_activity,
             COUNT(rp2.player_id) as current_players
@@ -1262,6 +1273,7 @@ function getCurrentGameRoomStatus() {
             'has_password'       => (bool)$room['has_password'],
             'host_switch'        => (bool)$room['host_switch'],
             'can_leave'          => (bool)$room['can_leave'],
+            'realtime'           => (bool)$room['realtime'],
             'is_active'          => (bool)$room['is_active'],
             'rules'              => $rules,
             'player_name'        => $room['player_name'],
@@ -1314,5 +1326,116 @@ try {
 } catch (Exception $e) {
     error_log("Critical error in game_room.php: " . $e->getMessage());
     sendResponse(['success' => false, 'error' => 'Internal server error'], 500);
+}
+
+/**
+ * Helper function to clean up realtime players for a specific room
+ */
+function cleanupRealtimePlayersForRoom($pdo, $roomId) {
+    // Get all realtime players in this room
+    $stmt = $pdo->prepare("
+        SELECT rp.connection_id, rp.token, gp.player_name
+        FROM realtime_players rp
+        JOIN game_players gp ON rp.game_player_id = gp.id
+        WHERE rp.game_room_id = :room_id AND rp.is_connected = TRUE
+    ");
+    $stmt->execute([':room_id' => $roomId]);
+    $connectedPlayers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Notify Node.js server to disconnect these players
+    if (!empty($connectedPlayers)) {
+        notifyRealtimeServerDisconnections($connectedPlayers, $roomId);
+    }
+    
+    // Remove realtime players for this room
+    $stmt = $pdo->prepare("
+        DELETE FROM realtime_players 
+        WHERE game_room_id = :room_id
+    ");
+    $stmt->execute([':room_id' => $roomId]);
+    
+    error_log("game_room.php: Removed " . count($connectedPlayers) . " realtime players from room $roomId");
+}
+
+/**
+ * Helper function to clean up a single realtime player
+ */
+function cleanupRealtimePlayer($pdo, $playerId) {
+    // Get realtime player info
+    $stmt = $pdo->prepare("
+        SELECT rp.connection_id, rp.token, gp.player_name
+        FROM realtime_players rp
+        JOIN game_players gp ON rp.game_player_id = gp.id
+        WHERE rp.game_player_id = :player_id AND rp.is_connected = TRUE
+    ");
+    $stmt->execute([':player_id' => $playerId]);
+    $player = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($player) {
+        // Notify Node.js server to disconnect this player
+        notifyRealtimeServerDisconnections([$player]);
+        
+        // Remove realtime player
+        $stmt = $pdo->prepare("
+            DELETE FROM realtime_players 
+            WHERE game_player_id = :player_id
+        ");
+        $stmt->execute([':player_id' => $playerId]);
+        
+        error_log("game_room.php: Removed realtime player {$player['player_name']} (ID: $playerId)");
+    }
+}
+
+/**
+ * Notify Node.js server about player disconnections using room-based disconnect
+ */
+function notifyRealtimeServerDisconnections($players, $roomId = null) {
+    $serverUrl = 'http://realtime.michitai.com/disconnect'; // Updated endpoint with port
+    
+    if ($roomId) {
+        // Use room-based disconnect for better efficiency
+        $url = $serverUrl . '?room_id=' . urlencode($roomId);
+        
+        $options = [
+            'http' => [
+                'header'  => "Content-Type: application/json\r\n",
+                'method'  => 'GET',
+                'timeout' => 5 // 5 second timeout
+            ]
+        ];
+        
+        $context = stream_context_create($options);
+        $result = @file_get_contents($url, false, $context);
+        
+        if ($result === false) {
+            error_log("game_room.php: Failed to notify realtime server about room disconnection for room $roomId");
+        } else {
+            $response = json_decode($result, true);
+            $disconnectedCount = $response['disconnected_count'] ?? 0;
+            error_log("game_room.php: Successfully notified realtime server about room disconnection for room $roomId - $disconnectedCount players disconnected");
+        }
+    } else {
+        // Fallback to individual player disconnections
+        foreach ($players as $player) {
+            $url = $serverUrl . '?player_token=' . urlencode($player['token']);
+            
+            $options = [
+                'http' => [
+                    'header'  => "Content-Type: application/json\r\n",
+                    'method'  => 'GET',
+                    'timeout' => 5 // 5 second timeout
+                ]
+            ];
+            
+            $context = stream_context_create($options);
+            $result = @file_get_contents($url, false, $context);
+            
+            if ($result === false) {
+                error_log("game_room.php: Failed to notify realtime server about disconnection for {$player['player_name']}");
+            } else {
+                error_log("game_room.php: Successfully notified realtime server about disconnection for {$player['player_name']}");
+            }
+        }
+    }
 }
 ?>

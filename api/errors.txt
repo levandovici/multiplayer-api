@@ -316,6 +316,20 @@
 {"message":"Invalid endpoint", "success": false}
 {"message":"Internal server error", "success": false}
 
+## realtime.php:
+
+### endpoint: token:
+{"message":"API token is required", "success": false}
+{"message":"Invalid API token", "success": false}
+{"message":"Invalid player token", "success": false}
+{"message":"Player token is required", "success": false}
+{"message":"Player is not in a realtime-enabled room", "success": false}
+{"message":"Failed to generate realtime token", "success": false}
+
+### endpoint: default:
+{"message":"Invalid endpoint", "success": false}
+{"message":"Internal server error", "success": false}
+
 ## time.php:
 
 ### endpoint: default:

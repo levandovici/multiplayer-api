@@ -2,9 +2,9 @@
   "metadata": {
     "title": "Lines of Code Over Time",
     "description": "Cumulative lines of code in the multiplayer-api project",
-    "generated": "2026-04-22 13:01:20",
-    "total_commits": 196,
-    "total_loc": 20409
+    "generated": "2026-05-08 20:25:56",
+    "total_commits": 201,
+    "total_loc": 25313
   },
   "data": [
     {
@@ -1374,10 +1374,45 @@
     },
     {
       "x": 1776845112000,
-      "y": 20409,
+      "y": 20535,
       "date": "2026-04-22 11:05:12 +0300",
       "message": "update - actions",
-      "hash": "6ab1944"
+      "hash": "7f3f5be"
+    },
+    {
+      "x": 1776871473000,
+      "y": 21440,
+      "date": "2026-04-22 18:24:33 +0300",
+      "message": "update .NET - code refactoring",
+      "hash": "b591c5c"
+    },
+    {
+      "x": 1776937017000,
+      "y": 22308,
+      "date": "2026-04-23 12:36:57 +0300",
+      "message": "update Unity - code refactoring",
+      "hash": "6bca186"
+    },
+    {
+      "x": 1777305341000,
+      "y": 22550,
+      "date": "2026-04-27 18:55:41 +0300",
+      "message": "update - send/poll updates",
+      "hash": "3825446"
+    },
+    {
+      "x": 1777980460000,
+      "y": 22759,
+      "date": "2026-05-05 14:27:40 +0300",
+      "message": "update cleanup",
+      "hash": "c582e3a"
+    },
+    {
+      "x": 1778071285000,
+      "y": 25313,
+      "date": "2026-05-06 15:41:25 +0300",
+      "message": "update realtime",
+      "hash": "08cfd0c"
     }
   ]
 }

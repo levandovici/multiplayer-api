@@ -301,6 +301,9 @@ try {
  * Helper function to remove a room and its associated matchmaking
  */
 function removeRoomAndMatchmaking($pdo, $roomId, $matchmakingId) {
+    // Clean up realtime players for this room
+    cleanupRealtimePlayersForRoom($pdo, $roomId);
+    
     // Remove room and all associated data
     $stmt = $pdo->prepare("
         DELETE gr, rp, aq, pu
@@ -322,6 +325,88 @@ function removeRoomAndMatchmaking($pdo, $roomId, $matchmakingId) {
             WHERE m.matchmaking_id = :matchmaking_id
         ");
         $stmt->execute([':matchmaking_id' => $matchmakingId]);
+    }
+}
+
+/**
+ * Helper function to clean up realtime players for a specific room
+ */
+function cleanupRealtimePlayersForRoom($pdo, $roomId) {
+    // Get all realtime players in this room
+    $stmt = $pdo->prepare("
+        SELECT rp.connection_id, rp.token, gp.player_name
+        FROM realtime_players rp
+        JOIN game_players gp ON rp.game_player_id = gp.id
+        WHERE rp.game_room_id = :room_id AND rp.is_connected = TRUE
+    ");
+    $stmt->execute([':room_id' => $roomId]);
+    $connectedPlayers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Notify Node.js server to disconnect these players
+    if (!empty($connectedPlayers)) {
+        notifyRealtimeServerDisconnections($connectedPlayers, $roomId);
+    }
+    
+    // Remove realtime players for this room
+    $stmt = $pdo->prepare("
+        DELETE FROM realtime_players 
+        WHERE game_room_id = :room_id
+    ");
+    $stmt->execute([':room_id' => $roomId]);
+    
+    error_log("cleanup.php: Removed " . count($connectedPlayers) . " realtime players from room $roomId");
+}
+
+/**
+ * Notify Node.js server about player disconnections using room-based disconnect
+ */
+function notifyRealtimeServerDisconnections($players, $roomId = null) {
+    $serverUrl = 'http://realtime.michitai.com/disconnect'; // Updated endpoint with port
+    
+    if ($roomId) {
+        // Use room-based disconnect for better efficiency
+        $url = $serverUrl . '?room_id=' . urlencode($roomId);
+        
+        $options = [
+            'http' => [
+                'header'  => "Content-Type: application/json\r\n",
+                'method'  => 'GET',
+                'timeout' => 5 // 5 second timeout
+            ]
+        ];
+        
+        $context = stream_context_create($options);
+        $result = @file_get_contents($url, false, $context);
+        
+        if ($result === false) {
+            error_log("cleanup.php: Failed to notify realtime server about room disconnection for room $roomId");
+        } else {
+            $response = json_decode($result, true);
+            $disconnectedCount = $response['disconnected_count'] ?? 0;
+            error_log("cleanup.php: Successfully notified realtime server about room disconnection for room $roomId - $disconnectedCount players disconnected");
+        }
+    } else {
+        // Fallback to individual player disconnections
+        foreach ($players as $player) {
+            $url = $serverUrl . '?player_token=' . urlencode($player['token']);
+            
+            $options = [
+                'http' => [
+                    'header'  => "Content-Type: application/json\r\n",
+                    'method'  => 'GET',
+                    'timeout' => 5 // 5 second timeout
+                ]
+            ];
+            
+            $context = stream_context_create($options);
+            $result = @file_get_contents($url, false, $context);
+            
+            if ($result === false) {
+                error_log("cleanup.php: Failed to notify realtime server about disconnection for {$player['player_name']}");
+            } else {
+                error_log("cleanup.php: Successfully notified realtime server about disconnection for {$player['player_name']}");
+            }
+        }
     }
 }
 

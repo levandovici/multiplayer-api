@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS game_rooms (
     max_players INT DEFAULT 6,
     host_switch BOOLEAN DEFAULT FALSE,
     can_leave BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Whether players can leave the game room',
+    realtime BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Whether this game room supports realtime connections',
     is_active BOOLEAN DEFAULT TRUE,
     matchmaking_id VARCHAR(36) NULL,
     rules JSON NULL COMMENT 'Host-defined game rules and settings',
@@ -147,6 +148,7 @@ CREATE TABLE IF NOT EXISTS matchmaking (
     join_by_requests BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Players can only join via host approval',
     host_switch BOOLEAN DEFAULT FALSE,
     can_leave_room BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Whether players can leave the game room',
+    realtime_room BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Whether game room supports realtime connections',
     rules JSON NULL COMMENT 'Host-defined criteria (rank, level, etc.)',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_heartbeat TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -202,6 +204,31 @@ CREATE TABLE IF NOT EXISTS matchmaking_requests (
     FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
     FOREIGN KEY (player_id) REFERENCES game_players(id) ON DELETE CASCADE,
     FOREIGN KEY (responded_by) REFERENCES game_players(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table for realtime players (TCP connection management)
+CREATE TABLE IF NOT EXISTS realtime_players (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    game_player_id INT NOT NULL,
+    game_id INT NOT NULL,
+    game_room_id VARCHAR(36) NULL,
+    token VARCHAR(64) UNIQUE NOT NULL,
+    connection_id VARCHAR(64) NULL,
+    is_connected BOOLEAN NOT NULL DEFAULT FALSE,
+    connected_at TIMESTAMP NULL,
+    last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    INDEX idx_game_player (game_player_id),
+    INDEX idx_game_id (game_id),
+    INDEX idx_room_id (game_room_id),
+    INDEX idx_token (token),
+    INDEX idx_connection (connection_id),
+    INDEX idx_connected (is_connected, last_activity),
+    
+    FOREIGN KEY (game_player_id) REFERENCES game_players(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_room_id) REFERENCES game_rooms(room_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Add indexes for better performance if they don't exist
