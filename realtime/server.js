@@ -264,39 +264,43 @@ class RealtimeServer {
                 throw new Error('Invalid target specified');
         }
 
-        // Format message based on client type
-        let messageData;
+        // Create base message data (using sender's format initially)
+        const senderInfo = {
+            is_host: await this.isPlayerHost(connection.playerId, connection.roomId),
+            game_player_id: connection.playerId,
+            player_name: connection.playerName
+        };
+
+        let baseMessageData;
         if (connection.clientType === 'json') {
-            // .NET format: data as object
-            messageData = {
+            // Sender is JSON client: use data as object
+            baseMessageData = {
                 type: 'receive',
                 command,
                 data: data || null,
-                sender: {
-                    is_host: await this.isPlayerHost(connection.playerId, connection.roomId),
-                    game_player_id: connection.playerId,
-                    player_name: connection.playerName
-                }
+                sender: senderInfo
             };
         } else if (connection.clientType === 'unity') {
-            // Unity format: data_json as string
-            messageData = {
+            // Sender is Unity client: use data_json as string
+            baseMessageData = {
                 type: 'receive',
                 command,
                 data_json: typeof data === 'string' ? data : (data ? JSON.stringify(data) : null),
-                sender: {
-                    is_host: await this.isPlayerHost(connection.playerId, connection.roomId),
-                    game_player_id: connection.playerId,
-                    player_name: connection.playerName
-                }
+                sender: senderInfo
             };
         } else {
             throw new Error(`Invalid client type: ${connection.clientType}. Supported types: 'json', 'unity'`);
         }
 
+        // Send to each target connection with appropriate conversion
         for (const targetConnectionId of targetConnections) {
             if (targetConnectionId !== connection.connectionId) {
-                this.sendToConnection(targetConnectionId, messageData);
+                const targetConnection = this.connections.get(targetConnectionId);
+                if (targetConnection) {
+                    // Convert message based on target connection's client type
+                    const convertedMessage = this.convertMessageForTarget(baseMessageData, targetConnection.clientType);
+                    this.sendToConnection(targetConnectionId, convertedMessage);
+                }
             }
         }
 
@@ -402,6 +406,26 @@ class RealtimeServer {
             }
         }
         return false;
+    }
+
+    convertMessageForTarget(messageData, targetClientType) {
+        // Convert message data based on target client type
+        if (targetClientType === 'json') {
+            // For JSON clients: ensure data is an object, not a string
+            return {
+                ...messageData,
+                data: messageData.data_json ? JSON.parse(messageData.data_json) : messageData.data,
+                data_json: undefined // Remove data_json property
+            };
+        } else if (targetClientType === 'unity') {
+            // For Unity clients: ensure data_json is a string
+            return {
+                ...messageData,
+                data_json: typeof messageData.data === 'string' ? messageData.data : (messageData.data ? JSON.stringify(messageData.data) : null),
+                data: undefined // Remove data property
+            };
+        }
+        return messageData;
     }
 
     sendToConnection(connectionId, message) {
