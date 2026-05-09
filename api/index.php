@@ -472,14 +472,9 @@ $site_twitter = "@michitai";
                     <h4 class="text-white/60 text-sm font-semibold mb-3">WebSocket</h4>
                     <div class="space-y-4">
                         <div class="grid grid-cols-12 items-center">
-                            <div class="col-span-2"><span class="inline-block bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded">WS</span></div>
-                            <div class="col-span-4 font-mono text-white/90">ws://realtime.michitai.com</div>
-                            <div class="col-span-6">Realtime WebSocket server (requires REALTIME TOKEN)</div>
-                        </div>
-                        <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded">WSS</span></div>
                             <div class="col-span-4 font-mono text-white/90">wss://realtime.michitai.com</div>
-                            <div class="col-span-6">Secure realtime WebSocket server (requires REALTIME TOKEN)</div>
+                            <div class="col-span-6">Realtime WebSocket server (requires REALTIME TOKEN)</div>
                         </div>
                     </div>
                 </div>

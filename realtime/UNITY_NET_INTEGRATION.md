@@ -33,7 +33,7 @@ namespace Michitai.Multiplayer.Rooms.Realtime
             playerInfo = tokenResponse.player_info;
             
             // Connect to WebSocket
-            websocket = new WebSocket($"ws://{tokenResponse.realtime_server.host}:{tokenResponse.realtime_server.port}?token={token}&client=unity");
+            websocket = new WebSocket($"wss://{tokenResponse.realtime_server.host}:{tokenResponse.realtime_server.port}?token={token}&client=unity");
             
             websocket.OnOpen += () => OnConnected?.Invoke();
             websocket.OnMessage += HandleMessage;
@@ -164,7 +164,7 @@ namespace Michitai.Multiplayer.Rooms.Realtime
             
             // Connect to WebSocket
             websocket = new ClientWebSocket();
-            var uri = new Uri($"ws://{tokenResponse.realtime_server.host}:{tokenResponse.realtime_server.port}?token={token}&client=dotnet");
+            var uri = new Uri($"wss://{tokenResponse.realtime_server.host}:{tokenResponse.realtime_server.port}?token={token}&client=dotnet");
             await websocket.ConnectAsync(uri, CancellationToken.None);
             
             // Start listening for messages

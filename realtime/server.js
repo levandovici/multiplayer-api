@@ -77,8 +77,8 @@ class RealtimeServer {
         
         httpServer.listen(port, () => {
             console.log(`Server listening on port ${port}`);
-            console.log(`WebSocket endpoint: ws://localhost:${port}`);
-            console.log(`HTTP disconnect endpoint: http://localhost:${port}/disconnect`);
+            console.log(`WebSocket endpoint: wss://realtime.michitai.com`);
+            console.log(`HTTPS disconnect endpoint: https://realtime.michitai.com/disconnect`);
         });
     }
 
@@ -87,7 +87,7 @@ class RealtimeServer {
     async handleConnection(ws, req) {
         console.log(`URL: ${req.url}`);
 
-        const url = new URL(req.url, 'http://localhost');
+        const url = new URL(req.url, 'https://realtime.michitai.com');
         const token = url.searchParams.get('token');
         const clientType = url.searchParams.get('client') || 'json';
         const connectionId = uuidv4();

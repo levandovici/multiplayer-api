@@ -432,8 +432,8 @@ $site_twitter = "@michitai";
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">Constructor</h3>
-                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Realtime(string realtimeWebSocketUrl = "ws://realtime.michitai.com")</code></pre>
-                                    <p class="text-white/70 mt-2">Initializes realtime WebSocket client with optional custom server URL. Default: ws://realtime.michitai.com</p>
+                                    <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Realtime(string realtimeWebSocketUrl = "wss://realtime.michitai.com")</code></pre>
+                                    <p class="text-white/70 mt-2">Initializes realtime WebSocket client with optional custom server URL. Default: wss://realtime.michitai.com</p>
                                 </div>
                                 
                                 <div>

@@ -361,7 +361,7 @@ function cleanupRealtimePlayersForRoom($pdo, $roomId) {
  * Notify Node.js server about player disconnections using room-based disconnect
  */
 function notifyRealtimeServerDisconnections($players, $roomId = null) {
-    $serverUrl = 'http://realtime.michitai.com/disconnect'; // Updated endpoint with port
+    $serverUrl = 'https://realtime.michitai.com/disconnect'; // Updated endpoint with port
     
     if ($roomId) {
         // Use room-based disconnect for better efficiency
