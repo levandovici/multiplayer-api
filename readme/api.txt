@@ -289,6 +289,16 @@ curl -X POST "https://api.michitai.com/api/game_room.php/heartbeat?api_token=API
 
 curl "https://api.michitai.com/api/game_room.php/current?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
 
+//Stop Game Room (Host Only)
+
+curl -X POST "https://api.michitai.com/api/game_room.php/stop?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "message": "Game room stopped successfully"
+}
+
 //Submit Action
 
 curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
@@ -606,6 +616,16 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/remove?api_token=API_
 //Start Game from Matchmaking
 
 curl -X POST "https://api.michitai.com/api/matchmaking.php/start?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
+
+//Stop Matchmaking Lobby (Host Only)
+
+curl -X POST "https://api.michitai.com/api/matchmaking.php/stop?api_token=API_TOKEN&player_token=PLAYER_TOKEN"
+
+//Response:
+{
+  "success": true,
+  "message": "Matchmaking lobby stopped successfully"
+}
 
 //Leaderboard
 

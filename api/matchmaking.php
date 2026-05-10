@@ -965,6 +965,43 @@ function respondToRequest() {
     }
 }
 
+function stopMatchmaking() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
+    if (!$currentMatchmaking) {
+        sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
+    }
+
+    if (!$currentMatchmaking['is_host']) {
+        sendResponse(['success' => false, 'error' => 'Only host can stop matchmaking lobby'], 403);
+    }
+
+    // Check if matchmaking has already been started
+    if ((bool)$currentMatchmaking['is_started']) {
+        sendResponse(['success' => false, 'error' => 'Cannot stop matchmaking lobby after it has been started'], 403);
+    }
+
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+
+    global $pdo;
+    $pdo->beginTransaction();
+    try {
+        // Delete all matchmaking-related data
+        $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+        $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+        $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+
+        $pdo->commit();
+        sendResponse(['success' => true, 'message' => 'Matchmaking lobby stopped successfully']);
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        error_log("Stop matchmaking failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to stop matchmaking lobby'], 500);
+    }
+}
+
 function startMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
@@ -1080,6 +1117,8 @@ try {
         removeMatchmaking();
     } elseif ($method === 'POST' && preg_match('#/start/?$#', $path)) {
         startMatchmaking();
+    } elseif ($method === 'POST' && preg_match('#/stop/?$#', $path)) {
+        stopMatchmaking();
     } else {
         sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }

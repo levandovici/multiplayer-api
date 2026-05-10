@@ -360,6 +360,11 @@ $site_twitter = "@michitai";
                                     <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;CurrentRoomResponse&gt; GetCurrentRoomAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Gets comprehensive room state including player lists and pending actions.</p>
                                 </div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">StopRoomAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;SuccessResponse&gt; StopRoomAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Stops current game room (Host Only). Completely removes room and all associated data.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -556,6 +561,11 @@ public event Action OnConnected;</code></pre>
                                     <h3 class="text-white font-semibold mb-2">StartGameFromMatchmakingAsync</h3>
                                     <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingStartResponse&gt; StartGameFromMatchmakingAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Starts a game from matchmaking lobby. Transfers all players to a new game room.</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">StopMatchmakingAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;SuccessResponse&gt; StopMatchmakingAsync(string playerToken, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Stops matchmaking lobby (Host Only). Cannot be called after game has started.</p>
                                 </div>
                             </div>
                         </div>

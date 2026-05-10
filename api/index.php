@@ -380,6 +380,11 @@ $site_twitter = "@michitai";
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/start</div>
                             <div class="col-span-6">Start game from matchmaking (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/stop</div>
+                            <div class="col-span-6">Stop matchmaking lobby (Host Only) (requires API TOKEN, PLAYER TOKEN)</div>
+                        </div>
                     </div>
                 </div>
                 
@@ -451,6 +456,11 @@ $site_twitter = "@michitai";
                             <div class="col-span-2"><span class="inline-block bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">GET</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/current</div>
                             <div class="col-span-6">Get current room status (requires API TOKEN, PLAYER TOKEN)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/api/game_room.php/stop</div>
+                            <div class="col-span-6">Stop game room (Host Only) (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                     </div>
                 </div>

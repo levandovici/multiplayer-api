@@ -396,6 +396,13 @@ $site_twitter = "@michitai";
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Gets comprehensive room state including player lists and pending actions with typed support.</p>
                             </div>
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-cyan-400 font-mono text-sm mb-2">StopRoomAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;SuccessResponse&gt; StopRoomAsync(
+    string playerToken,
+    CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Stops the current game room (Host Only). Completely removes the room and all associated data.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -637,6 +644,13 @@ public event Action? OnConnected;</code></pre>
     string gamePlayerToken,
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Starts a game from matchmaking lobby (host only).</p>
+                            </div>
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-orange-400 font-mono text-sm mb-2">StopMatchmakingAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;SuccessResponse&gt; StopMatchmakingAsync(
+    string gamePlayerToken,
+    CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Stops matchmaking lobby (Host Only). Cannot be called after game has started.</p>
                             </div>
                         </div>
                     </div>

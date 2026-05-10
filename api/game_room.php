@@ -1192,6 +1192,53 @@ function pollUpdates() {
     ]);
 }
 
+function stopGameRoom() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    $roomId = getPlayerRoom($player['id']);
+    if (!$roomId) {
+        sendResponse(['success' => false, 'error' => 'You are not in any game room'], 400);
+    }
+
+    // Check if player is the host
+    if (!isHost($player['id'])) {
+        sendResponse(['success' => false, 'error' => 'Only the host can stop the game room'], 403);
+    }
+
+    global $pdo;
+    $pdo->beginTransaction();
+    try {
+        // Get matchmaking_id if this room was created from matchmaking
+        $stmt = $pdo->prepare("SELECT matchmaking_id FROM game_rooms WHERE room_id = ?");
+        $stmt->execute([$roomId]);
+        $matchmakingId = $stmt->fetchColumn();
+
+        if ($matchmakingId) {
+            // Clean up matchmaking data
+            $pdo->prepare("DELETE FROM matchmaking_requests WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+            $pdo->prepare("DELETE FROM matchmaking WHERE matchmaking_id = ?")->execute([$matchmakingId]);
+        }
+
+        // Clean up realtime players for this room
+        cleanupRealtimePlayersForRoom($pdo, $roomId);
+        
+        // Delete all room-related data
+        $pdo->prepare("DELETE FROM action_queue WHERE room_id = ?")->execute([$roomId]);
+        $pdo->prepare("DELETE FROM player_updates WHERE room_id = ?")->execute([$roomId]);
+        $pdo->prepare("DELETE FROM room_players WHERE room_id = ?")->execute([$roomId]);
+        $pdo->prepare("DELETE FROM game_rooms WHERE room_id = ?")->execute([$roomId]);
+
+        $pdo->commit();
+        sendResponse(['success' => true, 'message' => 'Game room stopped successfully']);
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        error_log("Stop game room failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to stop game room'], 500);
+    }
+}
+
 function getCurrentGameRoomStatus() {
     global $isUnity;
 
@@ -1320,6 +1367,8 @@ try {
         pollUpdates();
     } elseif ($method === 'GET' && preg_match('#/current/?$#', $path)) {
         getCurrentGameRoomStatus();
+    } elseif ($method === 'POST' && preg_match('#/stop/?$#', $path)) {
+        stopGameRoom();
     } else {
         sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }
