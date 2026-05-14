@@ -252,6 +252,16 @@ $site_twitter = "@michitai";
                             <div class="col-span-4 font-mono text-white/90">/api/game_players.php/list</div>
                             <div class="col-span-6">List all players (requires API TOKEN, PRIVATE TOKEN)</div>
                         </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/api/game_players.php/ban</div>
+                            <div class="col-span-6">Ban player (requires API TOKEN, PRIVATE TOKEN)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/api/game_players.php/unban</div>
+                            <div class="col-span-6">Unban player (requires API TOKEN, PRIVATE TOKEN)</div>
+                        </div>
                     </div>
                 </div>
 

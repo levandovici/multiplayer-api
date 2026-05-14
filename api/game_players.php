@@ -159,6 +159,22 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid game player token'], 403);
             }
             
+            // Check if player is banned
+            $banCheck = checkPlayerBan($player['id'], $game['id']);
+            if ($banCheck['is_banned']) {
+                sendResponse([
+                    'success' => false,
+                    'error' => $banCheck['message'],
+                    'ban_info' => [
+                        'ban_id' => $banCheck['ban_id'],
+                        'ban_duration' => $banCheck['ban_duration'],
+                        'ban_reason' => $banCheck['ban_reason'],
+                        'banned_at' => $banCheck['banned_at'],
+                        'banned_until' => $banCheck['banned_until']
+                    ]
+                ], 403);
+            }
+            
             // Update last login
             $pdo->prepare("UPDATE game_players SET last_login = NOW() WHERE id = ?")
                 ->execute([$player['id']]);
@@ -223,6 +239,22 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid player token'], 403);
             }
             
+            // Check if player is banned
+            $banCheck = checkPlayerBan($player['id'], $game['id']);
+            if ($banCheck['is_banned']) {
+                sendResponse([
+                    'success' => false,
+                    'error' => $banCheck['message'],
+                    'ban_info' => [
+                        'ban_id' => $banCheck['ban_id'],
+                        'ban_duration' => $banCheck['ban_duration'],
+                        'ban_reason' => $banCheck['ban_reason'],
+                        'banned_at' => $banCheck['banned_at'],
+                        'banned_until' => $banCheck['banned_until']
+                    ]
+                ], 403);
+            }
+            
             if (updatePlayerHeartbeat($player['id'])) {
                 sendResponse([
                     'success' => true,
@@ -252,6 +284,22 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid player token'], 403);
             }
             
+            // Check if player is banned
+            $banCheck = checkPlayerBan($player['id'], $game['id']);
+            if ($banCheck['is_banned']) {
+                sendResponse([
+                    'success' => false,
+                    'error' => $banCheck['message'],
+                    'ban_info' => [
+                        'ban_id' => $banCheck['ban_id'],
+                        'ban_duration' => $banCheck['ban_duration'],
+                        'ban_reason' => $banCheck['ban_reason'],
+                        'banned_at' => $banCheck['banned_at'],
+                        'banned_until' => $banCheck['banned_until']
+                    ]
+                ], 403);
+            }
+            
             $pdo->prepare("UPDATE game_players SET last_logout = NOW(), is_online = FALSE WHERE id = ?")
                 ->execute([$player['id']]);
             
@@ -278,6 +326,22 @@ try {
             $player = validatePrivateKey($gamePlayerToken);
             if (!$player || $player['game_id'] != $game['id']) {
                 sendResponse(['success' => false, 'error' => 'Invalid player token'], 403);
+            }
+            
+            // Check if player is banned
+            $banCheck = checkPlayerBan($player['id'], $game['id']);
+            if ($banCheck['is_banned']) {
+                sendResponse([
+                    'success' => false,
+                    'error' => $banCheck['message'],
+                    'ban_info' => [
+                        'ban_id' => $banCheck['ban_id'],
+                        'ban_duration' => $banCheck['ban_duration'],
+                        'ban_reason' => $banCheck['ban_reason'],
+                        'banned_at' => $banCheck['banned_at'],
+                        'banned_until' => $banCheck['banned_until']
+                    ]
+                ], 403);
             }
             
             if (!isset($input['new_name']) || empty($input['new_name'])) {
@@ -337,6 +401,114 @@ try {
                 'success' => true,
                 'count'   => count($players),
                 'players' => $players
+            ]);
+            break;
+
+        // ====================== BAN ======================
+        case 'ban':
+            if ($method !== 'POST') {
+                sendResponse(['success' => false, 'error' => 'Method not allowed'], 405);
+            }
+            
+            if (empty($apiToken) || empty($apiPrivateToken)) {
+                sendResponse(['success' => false, 'error' => 'API token and private token are required'], 401);
+            }
+            
+            $game = validateApiKeys($apiToken, $apiPrivateToken);
+            if (!$game) {
+                sendResponse(['success' => false, 'error' => 'Invalid API credentials'], 401);
+            }
+            
+            if (!isset($input['player_id']) || empty($input['player_id'])) {
+                sendResponse(['success' => false, 'error' => 'player_id is required'], 400);
+            }
+            
+            if (!isset($input['ban_duration']) || empty($input['ban_duration'])) {
+                sendResponse(['success' => false, 'error' => 'ban_duration is required (hour, day, week, month, quarter, year, forever)'], 400);
+            }
+            
+            $validDurations = ['hour', 'day', 'week', 'month', 'quarter', 'year', 'forever'];
+            if (!in_array($input['ban_duration'], $validDurations)) {
+                sendResponse(['success' => false, 'error' => 'Invalid ban_duration. Must be one of: hour, day, week, month, quarter, year, forever'], 400);
+            }
+            
+            $banDuration = $input['ban_duration'];
+            $banReason = $input['ban_reason'] ?? null;
+            
+            // Get player to ban
+            $stmt = $pdo->prepare("SELECT id, game_id FROM game_players WHERE id = ? AND game_id = ?");
+            $stmt->execute([$input['player_id'], $game['id']]);
+            $playerToBan = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$playerToBan) {
+                sendResponse(['success' => false, 'error' => 'Player not found or does not belong to this game'], 404);
+            }
+            
+            // Calculate ban expiration
+            $bannedUntil = calculateBanExpiration($banDuration);
+            
+            // Deactivate any existing active bans for this player
+            $pdo->prepare("UPDATE player_bans SET is_active = FALSE WHERE player_id = ? AND game_id = ? AND is_active = TRUE")
+                ->execute([$playerToBan['id'], $game['id']]);
+            
+            // Insert new ban
+            $banId = bin2hex(random_bytes(16));
+            $stmt = $pdo->prepare("
+                INSERT INTO player_bans (ban_id, player_id, game_id, ban_duration, ban_reason, banned_at, banned_until, is_active)
+                VALUES (?, ?, ?, ?, ?, NOW(), ?, TRUE)
+            ");
+            $stmt->execute([$banId, $playerToBan['id'], $game['id'], $banDuration, $banReason, $bannedUntil]);
+            
+            sendResponse([
+                'success' => true,
+                'message' => 'Player banned successfully',
+                'ban_id' => $banId,
+                'player_id' => (int)$playerToBan['id'],
+                'ban_duration' => $banDuration,
+                'ban_reason' => $banReason,
+                'banned_until' => $bannedUntil ? isoUtc($bannedUntil) : null
+            ]);
+            break;
+
+        // ====================== UNBAN ======================
+        case 'unban':
+            if ($method !== 'POST') {
+                sendResponse(['success' => false, 'error' => 'Method not allowed'], 405);
+            }
+            
+            if (empty($apiToken) || empty($apiPrivateToken)) {
+                sendResponse(['success' => false, 'error' => 'API token and private token are required'], 401);
+            }
+            
+            $game = validateApiKeys($apiToken, $apiPrivateToken);
+            if (!$game) {
+                sendResponse(['success' => false, 'error' => 'Invalid API credentials'], 401);
+            }
+            
+            if (!isset($input['player_id']) || empty($input['player_id'])) {
+                sendResponse(['success' => false, 'error' => 'player_id is required'], 400);
+            }
+            
+            // Get player to unban
+            $stmt = $pdo->prepare("SELECT id, game_id FROM game_players WHERE id = ? AND game_id = ?");
+            $stmt->execute([$input['player_id'], $game['id']]);
+            $playerToUnban = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$playerToUnban) {
+                sendResponse(['success' => false, 'error' => 'Player not found or does not belong to this game'], 404);
+            }
+            
+            // Deactivate all active bans for this player
+            $stmt = $pdo->prepare("UPDATE player_bans SET is_active = FALSE WHERE player_id = ? AND game_id = ? AND is_active = TRUE");
+            $stmt->execute([$playerToUnban['id'], $game['id']]);
+            
+            $affectedRows = $stmt->rowCount();
+            
+            sendResponse([
+                'success' => true,
+                'message' => $affectedRows > 0 ? 'Player unbanned successfully' : 'No active bans found for this player',
+                'player_id' => (int)$playerToUnban['id'],
+                'bans_removed' => $affectedRows
             ]);
             break;
             

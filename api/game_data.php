@@ -125,6 +125,22 @@ try {
                     sendResponse(['success' => false, 'error' => 'Player does not belong to this game'], 403);
                 }
 
+                // Check if player is banned
+                $banCheck = checkPlayerBan($player['id'], $game['id']);
+                if ($banCheck['is_banned']) {
+                    sendResponse([
+                        'success' => false,
+                        'error' => $banCheck['message'],
+                        'ban_info' => [
+                            'ban_id' => $banCheck['ban_id'],
+                            'ban_duration' => $banCheck['ban_duration'],
+                            'ban_reason' => $banCheck['ban_reason'],
+                            'banned_at' => $banCheck['banned_at'],
+                            'banned_until' => $banCheck['banned_until']
+                        ]
+                    ], 403);
+                }
+
                 $playerData = json_decode($player['player_data'] ?? '{}', true) ?: new stdClass();
 
                 $response = [
@@ -190,6 +206,22 @@ try {
                 $player = validatePrivateKey($gamePlayerToken);
                 if (!$player || $player['game_id'] != $game['id']) {
                     sendResponse(['success' => false, 'error' => 'Invalid player or does not belong to game'], 403);
+                }
+
+                // Check if player is banned
+                $banCheck = checkPlayerBan($player['id'], $game['id']);
+                if ($banCheck['is_banned']) {
+                    sendResponse([
+                        'success' => false,
+                        'error' => $banCheck['message'],
+                        'ban_info' => [
+                            'ban_id' => $banCheck['ban_id'],
+                            'ban_duration' => $banCheck['ban_duration'],
+                            'ban_reason' => $banCheck['ban_reason'],
+                            'banned_at' => $banCheck['banned_at'],
+                            'banned_until' => $banCheck['banned_until']
+                        ]
+                    ], 403);
                 }
 
                 $playerData = json_decode($player['player_data'] ?? '{}', true);

@@ -122,6 +122,41 @@ curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=API_TO
   ]
 }
 
+//Ban Player
+
+curl -X POST "https://api.michitai.com/api/game_players.php/ban?api_token=API_TOKEN&private_token=PRIVATE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "player_id": 3,
+    "ban_duration": "day",
+    "ban_reason": "Violating terms of service"
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Player banned successfully",
+  "ban_id": "abc123def456",
+  "player_id": 3,
+  "ban_duration": "day",
+  "banned_until": "2026-03-14 09:46:37"
+}
+
+//Unban Player
+
+curl -X POST "https://api.michitai.com/api/game_players.php/unban?api_token=API_TOKEN&private_token=PRIVATE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "player_id": 3
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Player unbanned successfully",
+  "player_id": 3
+}
+
 //Get Game Data 
 
 curl -X GET "https://api.michitai.com/api/game_data.php/game/get?api_token=API_TOKEN"

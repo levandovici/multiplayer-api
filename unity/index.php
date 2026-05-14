@@ -249,6 +249,24 @@ $site_twitter = "@michitai";
                                     <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerRenameResponse&gt; RenamePlayerAsync(string playerToken, string newName, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Renames a player to a new name. Validates name length (2-50 characters) and requires player authentication.</p>
                                 </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">BanPlayerAsync</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerBanResponse&gt; BanPlayerAsync(int playerId, EBanTime banDuration, string banReason = null, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Bans a player from the game with specified duration (Hour, Day, Week, Month, Quarter, Year, Forever) and optional reason. Requires private API token.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">UnbanPlayerAsync</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;PlayerUnbanResponse&gt; UnbanPlayerAsync(int playerId, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Unbans a previously banned player. Requires private API token.</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">IsBanned</h3>
+                                    <pre class="bg-black/30 text-green-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public static bool IsBanned(ApiResponse response)</code></pre>
+                                    <p class="text-white/70 mt-2">Checks if an API response indicates the player is banned. Returns true if the error message contains "You are banned".</p>
+                                </div>
                             </div>
                         </div>
                     </div>

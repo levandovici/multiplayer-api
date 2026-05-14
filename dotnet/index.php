@@ -259,6 +259,24 @@ $site_twitter = "@michitai";
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;PlayerRenameResponse&gt; RenamePlayerAsync(string playerToken, string newName, CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Renames a player to a new name. Validates name length (2-50 characters) and requires player authentication.</p>
                             </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-blue-400 font-mono text-sm mb-2">BanPlayerAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;PlayerBanResponse&gt; BanPlayerAsync(int playerId, EBanTime banDuration, string? banReason = null, CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Bans a player from the game with specified duration (Hour, Day, Week, Month, Quarter, Year, Forever) and optional reason. Requires private API token.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-blue-400 font-mono text-sm mb-2">UnbanPlayerAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;PlayerUnbanResponse&gt; UnbanPlayerAsync(int playerId, CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Unbans a previously banned player. Requires private API token.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-blue-400 font-mono text-sm mb-2">IsBanned</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public static bool IsBanned(ApiResponse response)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Checks if an API response indicates the player is banned. Returns true if the error message contains "You are banned".</p>
+                            </div>
                         </div>
                     </div>
                     

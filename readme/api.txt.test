@@ -16,131 +16,137 @@
 6) $ curl -X GET "https://api.michitai.com/api/game_players.php/list?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&private_token=25f77965f41ef117e4f8e570685c51c4ebdc"
 {"success":true,"count":3,"players":[{"id":1,"player_name":"TestPlayer","is_online":true,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:37:47"},{"id":3,"player_name":"NewPlayerName","is_online":true,"last_login":"2026-03-13 09:40:35","last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:39:06"},{"id":2,"player_name":"TestPlayer","is_online":true,"last_login":null,"last_logout":null,"last_heartbeat":null,"created_at":"2026-03-13 09:38:01"}]}
 
-7) $ curl -X GET "https://api.michitai.com/api/game_data.php/game/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
+7) $ curl -X POST "https://api.michitai.com/api/game_players.php/ban?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&private_token=25f77965f41ef117e4f8e570685c51c4ebdc" -H "Content-Type: application/json" -d '{"player_id":3,"ban_duration":"day","ban_reason":"Violating terms of service"}'
+{"success":true,"message":"Player banned successfully","ban_id":"abc123def456","player_id":3,"ban_duration":"day","banned_until":"2026-03-14 09:46:37"}
+
+8) $ curl -X POST "https://api.michitai.com/api/game_players.php/unban?api_token=e2d9c3bf91da5cb931222b5fbf32acde91f1&private_token=25f77965f41ef117e4f8e570685c51c4ebdc" -H "Content-Type: application/json" -d '{"player_id":3}'
+{"success":true,"message":"Player unbanned successfully","player_id":3}
+
+9) $ curl -X GET "https://api.michitai.com/api/game_data.php/game/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c"
 {"success":true,"type":"game","game_id":4,"data":{"text":"hello world","game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}}
 
-8) $ curl -X PUT "https://api.michitai.com/api/game_data.php/game/update?api_token=175192bcedb99170c422abb74f7d4d9f4b81&private_token=325fc853eccf0236d9b4ac9cbba16fef5107" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
+10) $ curl -X PUT "https://api.michitai.com/api/game_data.php/game/update?api_token=175192bcedb99170c422abb74f7d4d9f4b81&private_token=325fc853eccf0236d9b4ac9cbba16fef5107" -H "Content-Type: application/json" -d '{"game_settings":{"difficulty":"hard","max_players":10},"last_updated":"2025-01-13T12:00:00Z"}'
 {"success":true,"message":"Game data updated successfully","updated_at":"2026-01-13 14:24:23"}
 
-8) $ curl -X GET "https://api.michitai.com/api/game_data.php/player/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c&player_token=46702c9b906e3361c26dbcd605ee9183"
+11) $ curl -X GET "https://api.michitai.com/api/game_data.php/player/get?api_token=dc8049bdeb600eb3d00945e530faebd2911c&player_token=46702c9b906e3361c26dbcd605ee9183"
 {"success":true,"type":"player","player_id":7,"player_name":"TestPlayer","data":{"level":1,"score":0,"inventory":["sword","shield"]}}
 
-9) $ curl -X PUT "https://api.michitai.com/api/game_data.php/player/update?api_token=dc8049bdeb600eb3d00945e530faebd2911c&player_token=46702c9b906e3361c26dbcd605ee9183" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
+12) $ curl -X PUT "https://api.michitai.com/api/game_data.php/player/update?api_token=dc8049bdeb600eb3d00945e530faebd2911c&player_token=46702c9b906e3361c26dbcd605ee9183" -H "Content-Type: application/json" -d '{"level":2,"score":100,"inventory":["sword","shield","potion"],"last_played":"2025-01-13T12:30:00Z"}'
 {"success":true,"message":"Player data updated successfully","updated_at":"2026-01-13 14:27:10"}
 
-10) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751"
+13) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751"
 {"success":true,"utc":"2026-03-13T14:01:49+00:00","timestamp":1773410509,"readable":"2026-03-13 14:01:49 UTC"}
 
-11) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751&utc=+1"
+14) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751&utc=+1"
 {"success":true,"utc":"2026-03-13T15:04:17+00:00","timestamp":1773414257,"readable":"2026-03-13 15:04:17 UTC","offset":{"offset_hours":1,"offset_string":"+1","original_utc":"2026-03-13T14:04:17+00:00","original_timestamp":1773410657}}
 
-12) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751&utc=-2"
+15) $ curl -X GET "https://api.michitai.com/api/time.php?api_token=4a90c6d4224e1df87e313bbf511394984751&utc=-2"
 {"success":true,"utc":"2026-03-13T12:05:13+00:00","timestamp":1773403513,"readable":"2026-03-13 12:05:13 UTC","offset":{"offset_hours":-2,"offset_string":"-2","original_utc":"2026-03-13T14:05:13+00:00","original_timestamp":1773410713}}
 
-13) $ curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4,"host_switch":false,"can_leave_room":true,"player_data":{"level":15,"class":"warrior","inventory":["sword","shield"]}}'
+16) $ curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4,"host_switch":false,"can_leave_room":true,"player_data":{"level":15,"class":"warrior","inventory":["sword","shield"]}}'
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","room_name":"My Game Room","is_host":true}
 
-14) $ curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=7e2bf5846eae184afd1f100ca9e901f34e59"
+17) $ curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=7e2bf5846eae184afd1f100ca9e901f34e59"
 {"success":true,"rooms":[{"room_id":"dc3723848639139113ca240958ba0bf8","room_name":"My Game Room","max_players":4,"current_players":1,"has_password":true,"host_switch":false}]}
 
-15) $ curl -X POST "https://api.michitai.com/api/game_room.php/dc3723848639139113ca240958ba0bf8/join?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"password":"secret123","player_data":{"level":12,"class":"mage","inventory":["staff","potion"]}}'
+18) $ curl -X POST "https://api.michitai.com/api/game_room.php/dc3723848639139113ca240958ba0bf8/join?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"password":"secret123","player_data":{"level":12,"class":"mage","inventory":["staff","potion"]}}'
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","message":"Successfully joined room"}
 
-16) $ curl -X GET "https://api.michitai.com/api/game_room.php/players?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+19) $ curl -X GET "https://api.michitai.com/api/game_room.php/players?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"players":[{"player_id":"48","player_name":"TestPlayer","is_host":true,"is_online":true,"is_local":true,"last_heartbeat":"2026-03-09 09:39:34","player_data":{"level":15,"class":"warrior","inventory":["sword","shield"]}},{"player_id":"49","player_name":"TestPlayer","is_host":false,"is_online":true,"is_local":false,"last_heartbeat":"2026-03-09 09:44:39","player_data":{"level":12,"class":"mage","inventory":["staff","potion"]}}],"last_updated":"2026-03-09T09:56:21+00:00"}
 
-17) $ curl -X POST "https://api.michitai.com/api/game_room.php/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+20) $ curl -X POST "https://api.michitai.com/api/game_room.php/leave?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"message":"Successfully left the room"}
 
-18) $ curl -X POST "https://api.michitai.com/api/game_room.php/heartbeat?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+21) $ curl -X POST "https://api.michitai.com/api/game_room.php/heartbeat?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"status":"ok"}
 
-19) $ curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"target_players":"host","action_type":"move","request_data":{"x":10,"y":20}}'
+22) $ curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"target_players":"host","action_type":"move","request_data":{"x":10,"y":20}}'
 {"success":true,"actions_sent":1,"action_ids":["1c2bbd859e36dc7d7e5e9b4f263c88ce"],"target_players_ids":[48]}
 
-20) $ curl "https://api.michitai.com/api/game_room.php/actions/poll?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+23) $ curl "https://api.michitai.com/api/game_room.php/actions/poll?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"actions":[{"action_id":"efc5ea74e3a37e41a4f57d948cfb2538","action_type":"move","response_data":{"success":true,"message":"Moved successfully"},"status":"completed","target_id":48,"is_host":true,"processed_at":"2026-03-13T10:15:30+00:00"}]}
 
-21) $ curl "https://api.michitai.com/api/game_room.php/actions/pending?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
+24) $ curl "https://api.michitai.com/api/game_room.php/actions/pending?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b"
 {"success":true,"actions":[{"action_id":"efc5ea74e3a37e41a4f57d948cfb2538","player_id":49,"target_id":48,"action_type":"move","request_data":{"x":10,"y":20},"created_at":"2026-03-09 10:10:10","player_name":"TestPlayer","is_host":false}]}
 
-22) $ curl -X POST "https://api.michitai.com/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
+25) $ curl -X POST "https://api.michitai.com/api/game_room.php/actions/1c2bbd859e36dc7d7e5e9b4f263c88ce/complete?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"status":"completed","response_data":{"success":true,"message":"Moved successfully"}}'
 {"success":true,"message":"Action completed"}
 
-23) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_players":"all","type":"play_animation","data":{"animation":"victory","duration":2.0}}'
+26) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_players":"all","type":"play_animation","data":{"animation":"victory","duration":2.0}}'
 {"success":true,"updates_sent":1,"update_ids":["ddb19c9d8722073762f5db33ff13712a"],"target_players_ids":[47]}
 
-24) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_players":"all","target_players_ids":[47],"type":"spawn_effect","data":{"effect":"explosion","position":{"x":10,"y":20}}}'
+27) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"target_players":"all","target_players_ids":[47],"type":"spawn_effect","data":{"effect":"explosion","position":{"x":10,"y":20}}}'
 {"success":true,"updates_sent":1,"update_ids":["377bfa1d4c56c3f72d9c87b0c081e6e8"],"target_players_ids":[47]}
 
-25) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"host","last_update":null}'
+28) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"host","last_update":null}'
 {"success":true,"updates":[{"update_id":"a28388775fcf9478c6926cbe44f9d3ed","from_player_id":"48","type":"play_animation","data":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:51:40"},{"update_id":"f26cbcdab3939b968f148edf68a9fe54","from_player_id":"48","type":"play_animation","data_json":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:53:58"},{"update_id":"374ad8d18f1a1fddf09a856d61787c5c","from_player_id":"48","type":"play_animation","data_json":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:54:16"}],"last_update":"374ad8d18f1a1fddf09a856d61787c5c"}
 
-26) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"host","last_update":"a28388775fcf9478c6926cbe44f9d3ed"}'
+29) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"host","last_update":"a28388775fcf9478c6926cbe44f9d3ed"}'
 {"success":true,"updates":[{"update_id":"f26cbcdab3939b968f148edf68a9fe54","from_player_id":"48","type":"play_animation","data":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:53:58"}],"last_update":"f26cbcdab3939b968f148edf68a9fe54"}
 
-28) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"all","last_update":null}'
+30) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"all","last_update":null}'
 {"success":true,"updates":[{"update_id":"a28388775fcf9478c6926cbe44f9d3ed","from_player_id":"48","type":"play_animation","data":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:51:40"},{"update_id":"f26cbcdab3939b968f148edf68a9fe54","from_player_id":"49","type":"spawn_effect","data":{"effect":"explosion","position":{"x":10,"y":20}},"created_at":"2026-03-09 10:53:58"}],"last_update":"f26cbcdab3939b968f148edf68a9fe54"}
 
-29) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"specific","from_players_ids":[48],"last_update":null}'
+31) $ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=175192bcedb99170c422abb74f7d4d9f4b81&player_token=5594ff7f9749361886b328053dcb558f0441" -H "Content-Type: application/json" -d '{"from_players":"specific","from_players_ids":[48],"last_update":null}'
 {"success":true,"updates":[{"update_id":"a28388775fcf9478c6926cbe44f9d3ed","from_player_id":"48","type":"play_animation","data":{"animation":"victory","duration":2},"created_at":"2026-03-09 10:51:40"}],"last_update":"a28388775fcf9478c6926cbe44f9d3ed"}
 
-30) $ curl "https://api.michitai.com/api/game_room.php/current?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
+32) $ curl "https://api.michitai.com/api/game_room.php/current?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
 {"success":true,"in_room":true,"room":{"room_id":"05f157893b1237f7699e548d045904ab","room_name":"Game from Matchmaking 636b3f","is_host":false,"is_online":true,"max_players":4,"current_players":2,"has_password":false,"host_switch":false,"is_active":true,"player_name":"TestPlayer","joined_at":"2026-03-06 17:50:35","last_heartbeat":"2026-03-06 18:02:35","room_created_at":"2026-03-06 17:50:35","room_last_activity":"2026-03-06 18:04:58"},"pending_actions":[],"pending_updates":[]}
 
-31) $ curl "https://api.michitai.com/api/matchmaking.php/list?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb"
+33) $ curl "https://api.michitai.com/api/matchmaking.php/list?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb"
 {"success":true,"lobbies":[{"matchmaking_id":"15b2b6e5f0ba44b5eef77705d120861f","matchmaking_name":"My Matchmaking","host_player_id":62,"max_players":4,"strict_full":true,"host_switch":false,"rules":{"min_level":10,"rank":"gold"},"created_at":"2026-03-10 15:16:58","last_heartbeat":"2026-03-10 15:16:58","current_players":1,"host_name":"TestPlayer"}]
 
-32) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"matchmaking_name":"My Matchmaking","max_players":4,"strict_full":true,"join_by_requests":true,"host_switch":false,"can_leave_room":true,"rules":{"min_level":10,"rank":"gold"},"player_data":{"level":20,"class":"paladin","inventory":["sword","shield","armor"]}}'
+34) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"matchmaking_name":"My Matchmaking","max_players":4,"strict_full":true,"join_by_requests":true,"host_switch":false,"can_leave_room":true,"rules":{"min_level":10,"rank":"gold"},"player_data":{"level":20,"class":"paladin","inventory":["sword","shield","armor"]}}'
 {"success":true,"matchmaking_id":"636b3ffc9b30dc9c918d8a49661df078","matchmaking_name":"My Matchmaking","max_players":4,"strict_full":true,"join_by_requests":true,"host_switch":false,"is_host":true}
 
-33) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=dc71b48b385eaea3388576ea14288319dc8e"
+35) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/request?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=dc71b48b385eaea3388576ea14288319dc8e"
 {"success":true,"request_id":"82334acd88f0af6a1f4747bbe755263a","message":"Join request sent to host"}
 
-34) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c" -H "Content-Type: application/json" -d '{"action":"approve"}'
+36) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c" -H "Content-Type: application/json" -d '{"action":"approve"}'
 {"success":true,"message":"Join request approved successfully","request_id":"f4d90025b5de54e6b1a83940cffb4490","action":"approve"}
 
-35) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c" -H "Content-Type: application/json" -d '{"action":"reject"}'
+37) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/response?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c" -H "Content-Type: application/json" -d '{"action":"reject"}'
 {"success":true,"message":"Join request rejected successfully","request_id":"f4d90025b5de54e6b1a83940cffb4490","action":"reject"}
 
-36) $ curl "https://api.michitai.com/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/status?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=dc71b48b385eaea3388576ea14288319dc8e"
+38) $ curl "https://api.michitai.com/api/matchmaking.php/f4d90025b5de54e6b1a83940cffb4490/status?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=dc71b48b385eaea3388576ea14288319dc8e"
 {"success":true,"request":{"request_id":"f4d90025b5de54e6b1a83940cffb4490","matchmaking_id":"15b2b6e5f0ba44b5eef77705d120861f","status":"approved","requested_at":"2026-03-10 16:10:23","responded_at":"2026-03-10 16:18:43","responded_by":62,"responder_name":"TestPlayer","join_by_requests":true}}
 
-37) $ curl "https://api.michitai.com/api/matchmaking.php/current?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
+39) $ curl "https://api.michitai.com/api/matchmaking.php/current?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
 {"success":true,"in_matchmaking":true,"matchmaking":{"matchmaking_id":"636b3ffc9b30dc9c918d8a49661df078","matchmaking_name":"My Matchmaking","is_host":true,"max_players":4,"current_players":1,"strict_full":true,"join_by_requests":false,"host_switch":false,"rules":{"min_level":10,"rank":"gold"},"joined_at":"2026-03-06 17:23:53","player_status":"active","last_heartbeat":"2026-03-06 17:23:53","lobby_heartbeat":"2026-03-06 17:24:37","is_started":false,"started_at":null},"pending_requests":[]}
 
-38) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/join?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=dc71b48b385eaea3388576ea14288319dc8e" -H "Content-Type: application/json" -d '{"player_data":{"level":18,"class":"ranger","inventory":["bow","arrows","dagger"]}}'
+40) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/15b2b6e5f0ba44b5eef77705d120861f/join?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=dc71b48b385eaea3388576ea14288319dc8e" -H "Content-Type: application/json" -d '{"player_data":{"level":18,"class":"ranger","inventory":["bow","arrows","dagger"]}}'
 {"success":true,"matchmaking_id":"15b2b6e5f0ba44b5eef77705d120861f","message":"Successfully joined matchmaking lobby"}
 
-39) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/leave?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
+41) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/leave?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
 {"success":true,"message":"Successfully left matchmaking lobby"}
 
-40) $ curl "https://api.michitai.com/api/matchmaking.php/players?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb"
+42) $ curl "https://api.michitai.com/api/matchmaking.php/players?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb"
 {"success":true,"players":[{"player_id":47,"joined_at":"2026-03-06 17:23:53","last_heartbeat":"2026-03-06 17:23:53","status":"active","player_name":"TestPlayer","seconds_since_heartbeat":726,"is_host":1,"is_local":true,"player_data":{"level":20,"class":"paladin","inventory":["sword","shield","armor"]}},{"player_id":46,"joined_at":"2026-03-06 17:35:01","last_heartbeat":"2026-03-06 17:35:01","status":"active","player_name":"TestPlayer","seconds_since_heartbeat":58,"is_host":0,"is_local":false,"player_data":{"level":18,"class":"ranger","inventory":["bow","arrows","dagger"]}}],"last_updated":"2026-03-06T17:35:59+00:00"}
 
-41) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/heartbeat?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb"
+43) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/heartbeat?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb"
 {"success":true,"status":"ok"}
 
-42) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/remove?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c"
+44) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/remove?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c"
 {"success":true,"message":"Matchmaking lobby removed successfully"}
 
-43) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/start?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c"
+45) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/start?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c"
 {"success":true,"room_id":"c899e32506d44823d486585b247eafe5","room_name":"Game from Matchmaking 15b2b6","players_transferred":2,"message":"Game started successfully"}
 
-44) $ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=4a90c6d4224e1df87e313bbf511394984751" -H "Content-Type: application/json" -d '{"sort_by":["level"],"limit":10}'
+46) $ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=4a90c6d4224e1df87e313bbf511394984751" -H "Content-Type: application/json" -d '{"sort_by":["level"],"limit":10}'
 {"success":true,"leaderboard":[{"rank":1,"player_id":33,"player_name":"GameHost","player_data":{"level":15,"rank":"platinum","role":"host","last_played":"2026-03-13T14:28:06.9900113Z","matchmaking_status":"ready"}},{"rank":2,"player_id":35,"player_name":"Player2","player_data":{"level":12,"rank":"gold","role":"player"}},{"rank":3,"player_id":34,"player_name":"Player1","player_data":{"level":8,"rank":"silver","role":"player"}},{"rank":4,"player_id":36,"player_name":"Player3","player_data":{"level":6,"rank":"bronze","role":"player"}}],"total":4,"sort_by":["level"],"limit":10}
 
-45) $ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=4a90c6d4224e1df87e313bbf511394984751" -H "Content-Type: application/json" -d '{"sort_by":["level","score"],"limit":10}'
+47) $ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=4a90c6d4224e1df87e313bbf511394984751" -H "Content-Type: application/json" -d '{"sort_by":["level","score"],"limit":10}'
 {"success":true,"leaderboard":[{"rank":1,"player_id":40,"player_name":"TestPlayer4","player_data":{"level":20,"score":1000,"inventory":[]}},{"rank":2,"player_id":37,"player_name":"TestPlayer1","player_data":{"level":15,"score":4500,"inventory":["sword"]}},{"rank":3,"player_id":38,"player_name":"TestPlayer2","player_data":{"level":15,"score":2000,"inventory":["sword","shield"]}},{"rank":4,"player_id":41,"player_name":"TestPlayer5","player_data":{"level":12,"inventory":["staff"]}},{"rank":5,"player_id":39,"player_name":"TestPlayer3","player_data":{"level":8,"score":3000,"inventory":["bow"]}}],"total":5,"sort_by":["level","score"],"limit":10}
 
-46) $ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=4a90c6d4224e1df87e313bbf511394984751" -H "Content-Type: application/json" -d '{"sort_by":["score","level"],"limit":10}'
+48) $ curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=4a90c6d4224e1df87e313bbf511394984751" -H "Content-Type: application/json" -d '{"sort_by":["score","level"],"limit":10}'
 {"success":true,"leaderboard":[{"rank":1,"player_id":37,"player_name":"TestPlayer1","player_data":{"level":15,"score":4500,"inventory":["sword"]}},{"rank":2,"player_id":39,"player_name":"TestPlayer3","player_data":{"level":8,"score":3000,"inventory":["bow"]}},{"rank":3,"player_id":38,"player_name":"TestPlayer2","player_data":{"level":15,"score":2000,"inventory":["sword","shield"]}},{"rank":4,"player_id":40,"player_name":"TestPlayer4","player_data":{"level":20,"score":1000,"inventory":[]}},{"rank":5,"player_id":41,"player_name":"TestPlayer5","player_data":{"level":12,"inventory":["staff"]}}],"total":5,"sort_by":["score","level"],"limit":10}
 
-47) $ curl -X POST "https://api.michitai.com/api/game_room.php/stop?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json"
+49) $ curl -X POST "https://api.michitai.com/api/game_room.php/stop?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json"
 {"success":true,"message":"Game room stopped successfully"}
 
-48) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/stop?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c" -H "Content-Type: application/json"
+50) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/stop?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb&player_token=b9643ce7a7e00999a313ec59a708835d3f7c" -H "Content-Type: application/json"
 {"success":true,"message":"Matchmaking lobby stopped successfully"}
 
-49) $ curl -X POST "https://api.michitai.com/api/realtime.php/token?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json"
+51) $ curl -X POST "https://api.michitai.com/api/realtime.php/token?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json"
 {"success":true,"token":"a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456","player_info":{"player_id":48,"player_name":"TestPlayer","room_id":"dc3723848639139113ca240958ba0bf8","is_host":true}}

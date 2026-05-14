@@ -231,6 +231,26 @@ CREATE TABLE IF NOT EXISTS realtime_players (
     FOREIGN KEY (game_room_id) REFERENCES game_rooms(room_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Player Bans Table
+CREATE TABLE IF NOT EXISTS player_bans (
+    ban_id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    player_id INT NOT NULL,
+    game_id INT NOT NULL,
+    ban_duration ENUM('hour', 'day', 'week', 'month', 'quarter', 'year', 'forever') NOT NULL,
+    ban_reason TEXT NULL,
+    banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    banned_until TIMESTAMP NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    INDEX idx_player_bans (player_id, is_active),
+    INDEX idx_game_bans (game_id, is_active),
+    INDEX idx_banned_until (banned_until, is_active),
+    
+    FOREIGN KEY (player_id) REFERENCES game_players(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES api_keys(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Add indexes for better performance if they don't exist
 ALTER TABLE game_rooms ADD INDEX IF NOT EXISTS idx_host_player (host_player_id);
 ALTER TABLE room_players ADD INDEX IF NOT EXISTS idx_player_active (player_id, last_heartbeat);

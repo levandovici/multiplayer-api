@@ -67,6 +67,23 @@ function requirePlayer($context) {
     if (!$context['player']) {
         sendResponse(['success' => false, 'error' => 'Player token is required'], 401);
     }
+    
+    // Check if player is banned
+    $banCheck = checkPlayerBan($context['player']['id'], $context['api']['id']);
+    if ($banCheck['is_banned']) {
+        sendResponse([
+            'success' => false,
+            'error' => $banCheck['message'],
+            'ban_info' => [
+                'ban_id' => $banCheck['ban_id'],
+                'ban_duration' => $banCheck['ban_duration'],
+                'ban_reason' => $banCheck['ban_reason'],
+                'banned_at' => $banCheck['banned_at'],
+                'banned_until' => $banCheck['banned_until']
+            ]
+        ], 403);
+    }
+    
     return $context['player'];
 }
 

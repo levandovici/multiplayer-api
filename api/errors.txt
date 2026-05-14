@@ -3,356 +3,400 @@
 ## game_data.php:
 
 ### endpoint: game/get:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
 
 ### endpoint: player/get:
-{"message":"API token is required", "success": false}
-{"message":"Game player token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid game player token", "success": false}
-{"message":"Player does not belong to this game", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Game player token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid game player token", "success": false}
+{"error":"Player does not belong to this game", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: game/update:
-{"message":"API token is required", "success": false}
-{"message":"API private token is required", "success": false}
-{"message":"Invalid API token or private token", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"API private token is required", "success": false}
+{"error":"Invalid API token or private token", "success": false}
 
 ### endpoint: player/update:
-{"message":"API token is required", "success": false}
-{"message":"Game player token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player or does not belong to game", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Game player token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player or does not belong to game", "success": false}
 
 ### endpoint: default:
-{"message":"Invalid endpoint", "success": false}
-{"message":"Method not allowed", "success": false}
-{"message":"Database error", "success": false}
-{"message":"An unexpected error occurred", "success": false}
+{"error":"Invalid endpoint", "success": false}
+{"error":"Method not allowed", "success": false}
+{"error":"Database error", "success": false}
+{"error":"An unexpected error occurred", "success": false}
 
 ## game_players.php:
 
 ### endpoint: register:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Player name is required", "success": false}
-{"message":"Failed to register player", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Player name is required", "success": false}
+{"error":"Failed to register player", "success": false}
 
 ### endpoint: login:
-{"message":"API token and game player token are required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid game player token", "success": false}
+{"error":"API token and game player token are required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid game player token", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: heartbeat:
-{"message":"API token and game player token are required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Failed to update heartbeat", "success": false}
+{"error":"API token and game player token are required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Failed to update heartbeat", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: logout:
-{"message":"API token and game player token are required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
+{"error":"API token and game player token are required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: rename:
-{"message":"API token and game player token are required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"New name is required", "success": false}
-{"message":"Player name must be between 2 and 50 characters", "success": false}
-{"message":"Failed to update player name", "success": false}
+{"error":"API token and game player token are required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"New name is required", "success": false}
+{"error":"Player name must be between 2 and 50 characters", "success": false}
+{"error":"Failed to update player name", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: list:
-{"message":"API token and private token are required", "success": false}
-{"message":"Invalid API credentials", "success": false}
+{"error":"API token and private token are required", "success": false}
+{"error":"Invalid API credentials", "success": false}
+
+### endpoint: ban:
+{"error":"API token and private token are required", "success": false}
+{"error":"Invalid API credentials", "success": false}
+{"error":"player_id is required", "success": false}
+{"error":"ban_duration is required (hour, day, week, month, quarter, year, forever)", "success": false}
+{"error":"Invalid ban_duration. Must be one of: hour, day, week, month, quarter, year, forever", "success": false}
+{"error":"Player not found or does not belong to this game", "success": false}
+
+### endpoint: unban:
+{"error":"API token and private token are required", "success": false}
+{"error":"Invalid API credentials", "success": false}
+{"error":"player_id is required", "success": false}
+{"error":"Player not found or does not belong to this game", "success": false}
 
 ### endpoint: default:
-{"message":"Method not allowed", "success": false}
-{"message":"Invalid endpoint", "success": false}
-{"message":"Internal server error", "success": false}
+{"error":"Method not allowed", "success": false}
+{"error":"Invalid endpoint", "success": false}
+{"error":"Internal server error", "success": false}
 
 ## game_room.php:
 
 ### endpoint: create:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are already in a game room. Leave current room first.", "success": false}
-{"message":"You cannot create a game room while in a matchmaking lobby.", "success": false}
-{"message":"Failed to create room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are already in a game room. Leave current room first.", "success": false}
+{"error":"You cannot create a game room while in a matchmaking lobby.", "success": false}
+{"error":"Failed to create room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: list:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Failed to list rooms", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Failed to list rooms", "success": false}
 
 ### endpoint: join:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are already in another room", "success": false}
-{"message":"Room not found", "success": false}
-{"message":"Room inactive", "success": false}
-{"message":"Room is full", "success": false}
-{"message":"Incorrect password", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are already in another room", "success": false}
+{"error":"Room not found", "success": false}
+{"error":"Room inactive", "success": false}
+{"error":"Room is full", "success": false}
+{"error":"Incorrect password", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: players:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: leave:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any room", "success": false}
-{"message":"You are not in this room", "success": false}
-{"message":"Room not found", "success": false}
-{"message":"Players are not allowed to leave this room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any room", "success": false}
+{"error":"You are not in this room", "success": false}
+{"error":"Room not found", "success": false}
+{"error":"Players are not allowed to leave this room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: heartbeat:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Player is not in any room", "success": false}
-{"message":"Failed to update heartbeat", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Player is not in any room", "success": false}
+{"error":"Failed to update heartbeat", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: actions:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Missing action_type", "success": false}
-{"message":"request_data_json must be a string", "success": false}
-{"message":"Player is not in any room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Missing action_type", "success": false}
+{"error":"request_data_json must be a string", "success": false}
+{"error":"Player is not in any room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: actions/poll:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Player is not in any room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Player is not in any room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: actions/pending:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: actions/complete:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Status is required", "success": false}
-{"message":"response_data_json must be a string", "success": false}
-{"message":"response_data is not valid JSON", "success": false}
-{"message":"Action not found or already processed", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Status is required", "success": false}
+{"error":"response_data_json must be a string", "success": false}
+{"error":"response_data is not valid JSON", "success": false}
+{"error":"Action not found or already processed", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: updates:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Player is not in any room", "success": false}
-{"message":"Missing required field: target_players", "success": false}
-{"message":"Missing required field: type", "success": false}
-{"message":"Missing required field: target_players_ids", "success": false}
-{"message":"Invalid target players ids", "success": false}
-{"message":"No valid target players found", "success": false}
-{"message":"Invalid target players", "success": false}
-{"message":"Failed to send updates", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Player is not in any room", "success": false}
+{"error":"Missing required field: target_players", "success": false}
+{"error":"Missing required field: type", "success": false}
+{"error":"Missing required field: target_players_ids", "success": false}
+{"error":"Invalid target players ids", "success": false}
+{"error":"No valid target players found", "success": false}
+{"error":"Invalid target players", "success": false}
+{"error":"Failed to send updates", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: updates/poll:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Player is not in any room", "success": false}
-{"message":"No valid source players found", "success": false}
-{"message":"Invalid from players", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Player is not in any room", "success": false}
+{"error":"No valid source players found", "success": false}
+{"error":"Invalid from players", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: current:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: stop:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any game room", "success": false}
-{"message":"Only host can stop game room", "success": false}
-{"message":"Failed to stop game room", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any game room", "success": false}
+{"error":"Only host can stop game room", "success": false}
+{"error":"Failed to stop game room", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: default:
-{"message":"Invalid endpoint", "success": false}
-{"message":"Internal server error", "success": false}
+{"error":"Invalid endpoint", "success": false}
+{"error":"Internal server error", "success": false}
 
 ## leaderboard.php:
 
 ### endpoint: default:
-{"message":"Method not allowed. Use POST.", "success": false}
-{"message":"api_token is required", "success": false}
-{"message":"Invalid or expired api_token", "success": false}
-{"message":"Invalid JSON body", "success": false}
-{"message":"sort_by must be a non-empty array of field names", "success": false}
-{"message":"limit must be between 1 and 1000", "success": false}
-{"message":"No valid sort fields provided after sanitization", "success": false}
-{"message":"Database error", "success": false}
-{"message":"Server error", "success": false}
+{"error":"Method not allowed. Use POST.", "success": false}
+{"error":"api_token is required", "success": false}
+{"error":"Invalid or expired api_token", "success": false}
+{"error":"Invalid JSON body", "success": false}
+{"error":"sort_by must be a non-empty array of field names", "success": false}
+{"error":"limit must be between 1 and 1000", "success": false}
+{"error":"No valid sort fields provided after sanitization", "success": false}
+{"error":"Database error", "success": false}
+{"error":"Server error", "success": false}
 
 ## matchmaking.php:
 
 ### endpoint: list:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: create:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are already in a matchmaking lobby", "success": false}
-{"message":"You cannot create matchmaking while in a game room. Leave room first.", "success": false}
-{"message":"Missing required field: max_players", "success": false}
-{"message":"Failed to create matchmaking lobby", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are already in a matchmaking lobby", "success": false}
+{"error":"You cannot create matchmaking while in a game room. Leave room first.", "success": false}
+{"error":"Missing required field: max_players", "success": false}
+{"error":"Failed to create matchmaking lobby", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: request:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Missing required parameter: matchmakingId", "success": false}
-{"message":"You are already in a matchmaking lobby", "success": false}
-{"message":"You already have a pending request to this matchmaking lobby", "success": false}
-{"message":"Matchmaking lobby not found or already started", "success": false}
-{"message":"Matchmaking lobby is full", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Missing required parameter: matchmakingId", "success": false}
+{"error":"You are already in a matchmaking lobby", "success": false}
+{"error":"You already have a pending request to this matchmaking lobby", "success": false}
+{"error":"Matchmaking lobby not found or already started", "success": false}
+{"error":"Matchmaking lobby is full", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: join:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Missing required parameter: matchmakingId", "success": false}
-{"message":"You are already in a matchmaking lobby", "success": false}
-{"message":"Matchmaking lobby not found or already started", "success": false}
-{"message":"This matchmaking lobby requires host approval. Use /request endpoint instead.", "success": false}
-{"message":"Matchmaking lobby is full", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Missing required parameter: matchmakingId", "success": false}
+{"error":"You are already in a matchmaking lobby", "success": false}
+{"error":"Matchmaking lobby not found or already started", "success": false}
+{"error":"This matchmaking lobby requires host approval. Use /request endpoint instead.", "success": false}
+{"error":"Matchmaking lobby is full", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: leave:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any matchmaking lobby", "success": false}
-{"message":"Players are not allowed to leave this matchmaking lobby", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any matchmaking lobby", "success": false}
+{"error":"Players are not allowed to leave this matchmaking lobby", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: players:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any matchmaking lobby", "success": false}
-{"message":"Failed to get players", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any matchmaking lobby", "success": false}
+{"error":"Failed to get players", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: heartbeat:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in any matchmaking lobby", "success": false}
-{"message":"Failed to update heartbeat", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in any matchmaking lobby", "success": false}
+{"error":"Failed to update heartbeat", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: remove:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in a matchmaking lobby", "success": false}
-{"message":"Only host can remove matchmaking lobby", "success": false}
-{"message":"Failed to remove matchmaking lobby", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in a matchmaking lobby", "success": false}
+{"error":"Only host can remove matchmaking lobby", "success": false}
+{"error":"Failed to remove matchmaking lobby", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: current:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Failed to get matchmaking status", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Failed to get matchmaking status", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: status:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Missing required parameter: requestId", "success": false}
-{"message":"Request not found or you are not the requester", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Missing required parameter: requestId", "success": false}
+{"error":"Request not found or you are not the requester", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: response:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Missing required fields: requestId and action", "success": false}
-{"message":"Action must be \"approve\" or \"reject\"", "success": false}
-{"message":"Request not found or already processed", "success": false}
-{"message":"Only the host can respond to join requests", "success": false}
-{"message":"Matchmaking lobby not found or already started", "success": false}
-{"message":"Matchmaking lobby is full", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Missing required fields: requestId and action", "success": false}
+{"error":"Action must be \"approve\" or \"reject\"", "success": false}
+{"error":"Request not found or already processed", "success": false}
+{"error":"Only the host can respond to join requests", "success": false}
+{"error":"Matchmaking lobby not found or already started", "success": false}
+{"error":"Matchmaking lobby is full", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: start:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in a matchmaking lobby", "success": false}
-{"message":"Only host can start matchmaking", "success": false}
-{"message":"Matchmaking lobby not found or already started", "success": false}
-{"message":"Lobby must be full to start (strict_full enabled)", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in a matchmaking lobby", "success": false}
+{"error":"Only host can start matchmaking", "success": false}
+{"error":"Matchmaking lobby not found or already started", "success": false}
+{"error":"Lobby must be full to start (strict_full enabled)", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: stop:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"You are not in a matchmaking lobby", "success": false}
-{"message":"Only host can stop matchmaking lobby", "success": false}
-{"message":"Cannot stop matchmaking lobby after it has been started", "success": false}
-{"message":"Failed to stop matchmaking lobby", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"You are not in a matchmaking lobby", "success": false}
+{"error":"Only host can stop matchmaking lobby", "success": false}
+{"error":"Cannot stop matchmaking lobby after it has been started", "success": false}
+{"error":"Failed to stop matchmaking lobby", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: default:
-{"message":"Invalid endpoint", "success": false}
-{"message":"Internal server error", "success": false}
+{"error":"Invalid endpoint", "success": false}
+{"error":"Internal server error", "success": false}
 
 ## realtime.php:
 
 ### endpoint: token:
-{"message":"API token is required", "success": false}
-{"message":"Invalid API token", "success": false}
-{"message":"Invalid player token", "success": false}
-{"message":"Player token is required", "success": false}
-{"message":"Player is not in a realtime-enabled room", "success": false}
-{"message":"Failed to generate realtime token", "success": false}
+{"error":"API token is required", "success": false}
+{"error":"Invalid API token", "success": false}
+{"error":"Invalid player token", "success": false}
+{"error":"Player token is required", "success": false}
+{"error":"Player is not in a realtime-enabled room", "success": false}
+{"error":"Failed to generate realtime token", "success": false}
+{"error":"You are banned", "success": false}
 
 ### endpoint: default:
-{"message":"Invalid endpoint", "success": false}
-{"message":"Internal server error", "success": false}
+{"error":"Invalid endpoint", "success": false}
+{"error":"Internal server error", "success": false}
 
 ## time.php:
 
 ### endpoint: default:
-{"message":"Method not allowed", "success": false}
-{"message":"API key is required", "success": false}
-{"message":"Invalid API key", "success": false}
-{"message":"Internal server error", "success": false}
+{"error":"Method not allowed", "success": false}
+{"error":"API key is required", "success": false}
+{"error":"Invalid API key", "success": false}
+{"error":"Internal server error", "success": false}
