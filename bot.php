@@ -83,18 +83,13 @@ function handleTelegramUpdate($update) {
     $logMessage = "[{$timestamp}] [DEBUG] {$messageType} {$messageId} from {$fromUser} in chat {$chatId} ({$chatType}, {$chatTitle}) at {$date}{$editInfo}: " . substr($text, 0, 100) . "..." . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     
-    // Check if this is a roadmap message
-    if (strpos($text, 'Upcoming updates:') !== false) {
-        $actionType = $isEdited ? 'UPDATED' : 'FOUND';
-        $logMessage = "[{$timestamp}] [SUCCESS] {$actionType} ROADMAP MESSAGE! Chat: {$chatId}, Type: {$chatType}, Title: {$chatTitle}, Message Type: {$messageType}" . PHP_EOL;
-        file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-        
-        // Update cache file
-        updateRoadmapCache($text, $chatId, $isEdited);
-    } else {
-        $logMessage = "[{$timestamp}] [DEBUG] Not a roadmap message (doesn't contain 'Upcoming updates:')" . PHP_EOL;
-        file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
-    }
+    // Process all messages as roadmap messages
+    $actionType = $isEdited ? 'UPDATED' : 'FOUND';
+    $logMessage = "[{$timestamp}] [SUCCESS] {$actionType} ROADMAP MESSAGE! Chat: {$chatId}, Type: {$chatType}, Title: {$chatTitle}, Message Type: {$messageType}" . PHP_EOL;
+    file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
+    
+    // Update cache file
+    updateRoadmapCache($text, $chatId, $isEdited);
 }
 
 function updateRoadmapCache($message, $chatId, $isEdited = false) {
