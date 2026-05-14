@@ -2,9 +2,9 @@
   "metadata": {
     "title": "Lines of Code Over Time",
     "description": "Cumulative lines of code in the multiplayer-api project",
-    "generated": "2026-05-10 16:03:25",
-    "total_commits": 204,
-    "total_loc": 25557
+    "generated": "2026-05-14 17:57:18",
+    "total_commits": 206,
+    "total_loc": 26952
   },
   "data": [
     {
@@ -1416,24 +1416,38 @@
     },
     {
       "x": 1778350523000,
-      "y": 25348,
+      "y": 25343,
       "date": "2026-05-09 21:15:23 +0300",
       "message": "update realtime security",
-      "hash": "a341432"
+      "hash": "9f66dcd"
     },
     {
       "x": 1778352153000,
-      "y": 25372,
+      "y": 25367,
       "date": "2026-05-09 21:42:33 +0300",
       "message": "update realtime - message conversion",
-      "hash": "7fea31b"
+      "hash": "ef2f28e"
     },
     {
       "x": 1778415963000,
-      "y": 25557,
+      "y": 25573,
       "date": "2026-05-10 15:26:03 +0300",
       "message": "update - added stop",
-      "hash": "8aa1684"
+      "hash": "c7e5533"
+    },
+    {
+      "x": 1778760512000,
+      "y": 26297,
+      "date": "2026-05-14 15:08:32 +0300",
+      "message": "update - players ban",
+      "hash": "dfc240d"
+    },
+    {
+      "x": 1778770407000,
+      "y": 26952,
+      "date": "2026-05-14 17:53:27 +0300",
+      "message": "update api - errors docs",
+      "hash": "74c530a"
     }
   ]
 }

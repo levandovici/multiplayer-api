@@ -1827,6 +1827,661 @@ $site_twitter = "@michitai";
         </div>
     </section>
 
+    <!-- API Error Responses -->
+    <section id="errors" class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-black text-white mb-6">API Error Responses</h3>
+                <p class="text-xl text-white/70 max-w-3xl mx-auto">Complete list of error responses for all API endpoints</p>
+            </div>
+            
+            <div class="glass-effect p-8 rounded-2xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center mr-4">
+                        <i class="fas fa-exclamation-triangle text-2xl text-white"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white">Error Responses <span class="font-light">– Complete Reference</span></h1>
+                </div>
+                <p class="text-white/80 mb-6">
+                    All API endpoints return consistent error responses in JSON format. Each error includes an error message and success status.
+                </p>
+
+                <div class="space-y-6">
+                    <!-- game_data.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-file-code mr-2 text-blue-400"></i>
+                            game_data.php
+                        </h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: game/get</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: player/get</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Game player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid game player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player does not belong to this game", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: game/update</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API private token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token or private token", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: player/update</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Game player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player or does not belong to game", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid endpoint", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Method not allowed", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Database error", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"An unexpected error occurred", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- game_players.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-users mr-2 text-purple-400"></i>
+                            game_players.php
+                        </h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: register</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player name is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to register player", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: login</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and game player token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid game player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: heartbeat</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and game player token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to update heartbeat", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: logout</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and game player token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: rename</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and game player token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"New name is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player name must be between 2 and 50 characters", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to update player name", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: list</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and private token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API credentials", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: ban</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and private token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API credentials", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"player_id is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"ban_duration is required (hour, day, week, month, quarter, year, forever)", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid ban_duration. Must be one of: hour, day, week, month, quarter, year, forever", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player not found or does not belong to this game", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: unban</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token and private token are required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API credentials", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"player_id is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player not found or does not belong to this game", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Method not allowed", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid endpoint", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Internal server error", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- game_room.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-door-open mr-2 text-green-400"></i>
+                            game_room.php
+                        </h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: create</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are already in a game room. Leave current room first.", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You cannot create a game room while in a matchmaking lobby.", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to create room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: list</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to list rooms", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: join</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are already in another room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Room not found", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Room inactive", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Room is full", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Incorrect password", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: players</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: leave</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in this room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Room not found", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Players are not allowed to leave this room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: heartbeat</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player is not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to update heartbeat", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: actions</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing action_type", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"request_data_json must be a string", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player is not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: actions/poll</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player is not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: actions/pending</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: actions/complete</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Status is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"response_data_json must be a string", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"response_data is not valid JSON", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Action not found or already processed", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: updates</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player is not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required field: target_players", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required field: type", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required field: target_players_ids", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid target players ids", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"No valid target players found", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid target players", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to send updates", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: updates/poll</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player is not in any room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"No valid source players found", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid from players", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: current</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: stop</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any game room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Only host can stop game room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to stop game room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid endpoint", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Internal server error", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- leaderboard.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-trophy mr-2 text-yellow-400"></i>
+                            leaderboard.php
+                        </h4>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Method not allowed. Use POST.", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"api_token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid or expired api_token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid JSON body", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"sort_by must be a non-empty array of field names", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"limit must be between 1 and 1000", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"No valid sort fields provided after sanitization", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Database error", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Server error", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- matchmaking.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-users-cog mr-2 text-cyan-400"></i>
+                            matchmaking.php
+                        </h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: list</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: create</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are already in a matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You cannot create matchmaking while in a game room. Leave room first.", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required field: max_players", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to create matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: request</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required parameter: matchmakingId", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are already in a matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You already have a pending request to this matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby not found or already started", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby is full", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: join</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required parameter: matchmakingId", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are already in a matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby not found or already started", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"This matchmaking lobby requires host approval. Use /request endpoint instead.", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby is full", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: leave</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Players are not allowed to leave this matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: players</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to get players", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: heartbeat</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in any matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to update heartbeat", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: remove</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in a matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Only host can remove matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to remove matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: current</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to get matchmaking status", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: status</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required parameter: requestId", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Request not found or you are not the requester", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: response</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Missing required fields: requestId and action", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Action must be \"approve\" or \"reject\"", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Request not found or already processed", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Only the host can respond to join requests", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby not found or already started", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby is full", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: start</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in a matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Only host can start matchmaking", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Matchmaking lobby not found or already started", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Lobby must be full to start (strict_full enabled)", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: stop</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are not in a matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Only host can stop matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Cannot stop matchmaking lobby after it has been started", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to stop matchmaking lobby", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid endpoint", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Internal server error", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- realtime.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-bolt mr-2 text-orange-400"></i>
+                            realtime.php
+                        </h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: token</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid player token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player token is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Player is not in a realtime-enabled room", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Failed to generate realtime token", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"You are banned", "success": false}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid endpoint", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Internal server error", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- time.php -->
+                    <div class="bg-black/50 p-6 rounded-lg">
+                        <h4 class="text-white font-semibold mb-4 flex items-center">
+                            <i class="fas fa-clock mr-2 text-indigo-400"></i>
+                            time.php
+                        </h4>
+                        
+                        <div>
+                            <h5 class="text-green-400 text-sm font-medium mb-2">endpoint: default</h5>
+                            <div class="space-y-2">
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Method not allowed", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"API key is required", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid API key", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Internal server error", "success": false}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="glass-effect border-t border-white/10 mt-16">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 text-center">
