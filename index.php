@@ -543,6 +543,13 @@ pre::-webkit-scrollbar-thumb:hover {
                     </a>
                 </div>
             </div>
+
+            <!-- Servers Button -->
+            <div class="text-center mt-8">
+                <a href="servers.php" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center">
+                    <i class="fas fa-server mr-3"></i>View Servers
+                </a>
+            </div>
         </div>
     </section>
 
