@@ -1019,6 +1019,72 @@ function stopMatchmaking() {
     }
 }
 
+function kickPlayer() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+    
+    if (!isset($data['player_id']) || empty($data['player_id'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: player_id'], 400);
+    }
+
+    $targetPlayerId = (int)$data['player_id'];
+
+    $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
+    if (!$currentMatchmaking) {
+        sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
+    }
+
+    if (!$currentMatchmaking['is_host']) {
+        sendResponse(['success' => false, 'error' => 'Only host can kick players'], 403);
+    }
+
+    if ((bool)$currentMatchmaking['is_started']) {
+        sendResponse(['success' => false, 'error' => 'Cannot kick players from matchmaking after it has been started'], 403);
+    }
+
+    if ($targetPlayerId === $player['id']) {
+        sendResponse(['success' => false, 'error' => 'You cannot kick yourself'], 400);
+    }
+
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+
+    global $pdo;
+    $pdo->beginTransaction();
+    try {
+        // Check if target player is in the same matchmaking
+        $stmt = $pdo->prepare("
+            SELECT mp.player_id
+            FROM matchmaking_players mp
+            WHERE mp.matchmaking_id = ? AND mp.player_id = ? AND mp.is_online = TRUE
+            LIMIT 1
+        ");
+        $stmt->execute([$matchmakingId, $targetPlayerId]);
+        $targetPlayer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$targetPlayer) {
+            sendResponse(['success' => false, 'error' => 'Player not found in this matchmaking lobby'], 404);
+        }
+
+        // Remove the player from matchmaking
+        $pdo->prepare("DELETE FROM matchmaking_players WHERE matchmaking_id = ? AND player_id = ?")
+             ->execute([$matchmakingId, $targetPlayerId]);
+
+        $pdo->commit();
+
+        sendResponse([
+            'success' => true,
+            'message' => 'Player kicked successfully',
+            'kicked_player_id' => $targetPlayerId
+        ]);
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        error_log("Kick player failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to kick player'], 500);
+    }
+}
+
 function startMatchmaking() {
     $context = getAuthContext();
     $player = requirePlayer($context);
@@ -1136,6 +1202,8 @@ try {
         startMatchmaking();
     } elseif ($method === 'POST' && preg_match('#/stop/?$#', $path)) {
         stopMatchmaking();
+    } elseif ($method === 'POST' && preg_match('#/kick/?$#', $path)) {
+        kickPlayer();
     } else {
         sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }

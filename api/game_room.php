@@ -1256,6 +1256,70 @@ function stopGameRoom() {
     }
 }
 
+function kickPlayer() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+    
+    if (!isset($data['player_id']) || empty($data['player_id'])) {
+        sendResponse(['success' => false, 'error' => 'Missing required field: player_id'], 400);
+    }
+
+    $targetPlayerId = (int)$data['player_id'];
+
+    $roomId = getPlayerRoom($player['id']);
+    if (!$roomId) {
+        sendResponse(['success' => false, 'error' => 'You are not in any game room'], 400);
+    }
+
+    // Check if player is the host
+    if (!isHost($player['id'])) {
+        sendResponse(['success' => false, 'error' => 'Only host can kick players'], 403);
+    }
+
+    if ($targetPlayerId === $player['id']) {
+        sendResponse(['success' => false, 'error' => 'You cannot kick yourself'], 400);
+    }
+
+    global $pdo;
+    $pdo->beginTransaction();
+    try {
+        // Check if target player is in the same room
+        $stmt = $pdo->prepare("
+            SELECT rp.player_id
+            FROM room_players rp
+            WHERE rp.room_id = ? AND rp.player_id = ? AND rp.is_online = TRUE
+            LIMIT 1
+        ");
+        $stmt->execute([$roomId, $targetPlayerId]);
+        $targetPlayer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$targetPlayer) {
+            sendResponse(['success' => false, 'error' => 'Player not found in this room'], 404);
+        }
+
+        // Remove the player from the room
+        $pdo->prepare("DELETE FROM room_players WHERE room_id = ? AND player_id = ?")
+             ->execute([$roomId, $targetPlayerId]);
+
+        // Clean up realtime player for the kicked player
+        cleanupRealtimePlayer($pdo, $targetPlayerId);
+
+        $pdo->commit();
+
+        sendResponse([
+            'success' => true,
+            'message' => 'Player kicked successfully',
+            'kicked_player_id' => $targetPlayerId
+        ]);
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        error_log("Kick player failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to kick player'], 500);
+    }
+}
+
 function getCurrentGameRoomStatus() {
     global $isUnity;
 
@@ -1386,6 +1450,8 @@ try {
         getCurrentGameRoomStatus();
     } elseif ($method === 'POST' && preg_match('#/stop/?$#', $path)) {
         stopGameRoom();
+    } elseif ($method === 'POST' && preg_match('#/kick/?$#', $path)) {
+        kickPlayer();
     } else {
         sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }

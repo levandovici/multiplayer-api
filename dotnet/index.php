@@ -421,6 +421,14 @@ $site_twitter = "@michitai";
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Stops the current game room (Host Only). Completely removes the room and all associated data.</p>
                             </div>
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-cyan-400 font-mono text-sm mb-2">KickPlayerAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;RoomKickResponse&gt; KickPlayerAsync(
+    string playerToken,
+    int playerId,
+    CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Kicks a player from the game room (Host Only). Cannot kick yourself.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -669,6 +677,14 @@ public event Action? OnConnected;</code></pre>
     string gamePlayerToken,
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Stops matchmaking lobby (Host Only). Cannot be called after game has started.</p>
+                            </div>
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-orange-400 font-mono text-sm mb-2">KickPlayerAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;MatchmakingKickResponse&gt; KickPlayerAsync(
+    string playerToken,
+    int playerId,
+    CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Kicks a player from matchmaking lobby (Host Only). Cannot kick yourself or after matchmaking has started.</p>
                             </div>
                         </div>
                     </div>

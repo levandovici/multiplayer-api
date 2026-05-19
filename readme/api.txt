@@ -334,6 +334,21 @@ curl -X POST "https://api.michitai.com/api/game_room.php/stop?api_token=API_TOKE
   "message": "Game room stopped successfully"
 }
 
+//Kick Player from Room (Host Only)
+
+curl -X POST "https://api.michitai.com/api/game_room.php/kick?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "player_id": 48
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Player kicked successfully",
+  "kicked_player_id": 48
+}
+
 //Submit Action
 
 curl -X POST "https://api.michitai.com/api/game_room.php/actions?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
@@ -660,6 +675,21 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/stop?api_token=API_TO
 {
   "success": true,
   "message": "Matchmaking lobby stopped successfully"
+}
+
+//Kick Player from Matchmaking Lobby (Host Only)
+
+curl -X POST "https://api.michitai.com/api/matchmaking.php/kick?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "player_id": 48
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Player kicked successfully",
+  "kicked_player_id": 48
 }
 
 //Leaderboard

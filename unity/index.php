@@ -383,6 +383,11 @@ $site_twitter = "@michitai";
                                     <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;SuccessResponse&gt; StopRoomAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Stops current game room (Host Only). Completely removes room and all associated data.</p>
                                 </div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">KickPlayerAsync</h3>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomKickResponse&gt; KickPlayerAsync(string playerToken, int playerId, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Kicks a player from the game room (Host Only). Cannot kick yourself.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -584,6 +589,11 @@ public event Action OnConnected;</code></pre>
                                     <h3 class="text-white font-semibold mb-2">StopMatchmakingAsync</h3>
                                     <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;SuccessResponse&gt; StopMatchmakingAsync(string playerToken, CancellationToken ct = default)</code></pre>
                                     <p class="text-white/70 mt-2">Stops matchmaking lobby (Host Only). Cannot be called after game has started.</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-2">KickPlayerAsync</h3>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingKickResponse&gt; KickPlayerAsync(string playerToken, int playerId, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Kicks a player from matchmaking lobby (Host Only). Cannot kick yourself or after matchmaking has started.</p>
                                 </div>
                             </div>
                         </div>
