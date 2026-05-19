@@ -291,6 +291,34 @@ curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=API_TO
   "is_host": true
 }
 
+//Update Room Password (Host Only)
+
+curl -X POST "https://api.michitai.com/api/game_room.php/password?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": "newpassword456"
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Password updated successfully"
+}
+
+//Remove Room Password (Host Only)
+
+curl -X POST "https://api.michitai.com/api/game_room.php/password?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": ""
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Password updated successfully"
+}
+
 //List All Available Rooms
 
 curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=API_TOKEN"
@@ -598,6 +626,7 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=API_
     "join_by_requests": true,
     "host_switch": false,
     "can_leave_room": true,
+    "password": "secret123",
     "rules": {
       "min_level": 10,
       "rank": "gold"
@@ -608,6 +637,43 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=API_
       "inventory": ["sword", "shield", "armor"]
     }
   }'
+
+//Response:
+{
+  "success": true,
+  "matchmaking_id": "abc123def456",
+  "matchmaking_name": "My Matchmaking",
+  "max_players": 4,
+  "is_host": true
+}
+
+//Update Matchmaking Password (Host Only)
+
+curl -X POST "https://api.michitai.com/api/matchmaking.php/password?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": "newpassword456"
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Password updated successfully"
+}
+
+//Remove Matchmaking Password (Host Only)
+
+curl -X POST "https://api.michitai.com/api/matchmaking.php/password?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": ""
+  }'
+
+//Response:
+{
+  "success": true,
+  "message": "Password updated successfully"
+}
 
 //Request to Join Matchmaking Lobby
 

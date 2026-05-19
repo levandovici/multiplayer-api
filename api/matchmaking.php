@@ -223,6 +223,7 @@ function listMatchmaking() {
                 m.host_switch,
                 m.can_leave_room,
                 m.realtime_room,
+                m.password IS NOT NULL as has_password,
                 m.rules,
                 m.created_at,
                 m.last_heartbeat,
@@ -241,6 +242,7 @@ function listMatchmaking() {
         
         foreach ($lobbies as &$lobby) {
             $lobby['realtime_room'] = (bool)$lobby['realtime_room'];
+            $lobby['has_password'] = (bool)$lobby['has_password'];
         }
         
         sendResponse(['success' => true, 'lobbies' => $lobbies]);
@@ -280,6 +282,7 @@ function createMatchmaking() {
     $hostSwitch = (bool) ($data['host_switch'] ?? false);
     $can_leave_room = (bool) ($data['can_leave_room'] ?? false);
     $realtimeRoom = (bool) ($data['realtime_room'] ?? false);
+    $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
 
     $matchmakingId = bin2hex(random_bytes(16));
 
@@ -329,10 +332,10 @@ function createMatchmaking() {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking 
-            (matchmaking_id, game_id, matchmaking_name, host_player_id, max_players, strict_full, join_by_requests, host_switch, can_leave_room, realtime_room, rules)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (matchmaking_id, game_id, matchmaking_name, host_player_id, max_players, strict_full, join_by_requests, host_switch, can_leave_room, realtime_room, password, rules)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$matchmakingId, $context['api']['id'], $matchmakingName, $player['id'], $maxPlayers, $strictFull, $joinByRequests, $hostSwitch, $can_leave_room, $realtimeRoom, $rulesJson]);
+        $stmt->execute([$matchmakingId, $context['api']['id'], $matchmakingName, $player['id'], $maxPlayers, $strictFull, $joinByRequests, $hostSwitch, $can_leave_room, $realtimeRoom, $password, $rulesJson]);
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
@@ -390,6 +393,7 @@ function requestJoin() {
         sendResponse(['success' => false, 'error' => 'You already have a pending request to this matchmaking lobby'], 400);
     }
 
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
     $rawInput = file_get_contents('php://input');
 
     $decoded = json_decode($rawInput, true);
@@ -414,6 +418,13 @@ function requestJoin() {
 
         if (!$matchmaking) throw new Exception('Matchmaking lobby not found or already started');
         if ($matchmaking['current_players'] >= $matchmaking['max_players']) throw new Exception('Matchmaking lobby is full');
+
+        // Validate password if set
+        if ($matchmaking['password'] !== null) {
+            if (!isset($data['password']) || !password_verify($data['password'], $matchmaking['password'])) {
+                throw new Exception('Incorrect password');
+            }
+        }
 
         $requestId = bin2hex(random_bytes(16));
         $stmt = $pdo->prepare("
@@ -479,6 +490,13 @@ function joinMatchmaking() {
         if (!$matchmaking) throw new Exception('Matchmaking lobby not found or already started');
         if ($matchmaking['join_by_requests']) throw new Exception('This matchmaking lobby requires host approval. Use /request endpoint instead.');
         if ($matchmaking['current_players'] >= $matchmaking['max_players']) throw new Exception('Matchmaking lobby is full');
+
+        // Validate password if set
+        if ($matchmaking['password'] !== null) {
+            if (!isset($data['password']) || !password_verify($data['password'], $matchmaking['password'])) {
+                throw new Exception('Incorrect password');
+            }
+        }
 
         $stmt = $pdo->prepare("
             INSERT INTO matchmaking_players 
@@ -773,6 +791,7 @@ function getCurrentMatchmakingStatus() {
                 m.host_switch,
                 m.can_leave_room,
                 m.realtime_room,
+                m.password IS NOT NULL as has_password,
                 m.rules,
                 m.created_at,
                 m.last_heartbeat as lobby_heartbeat,
@@ -846,6 +865,7 @@ function getCurrentMatchmakingStatus() {
                 'host_switch' => (bool)$matchmaking['host_switch'],
                 'can_leave_room' => (bool)$matchmaking['can_leave_room'],
                 'realtime_room' => (bool)$matchmaking['realtime_room'],
+                'has_password' => (bool)$matchmaking['has_password'],
                 'rules' => $rules,
                 'joined_at' => isoUtc($matchmaking['joined_at']),
                 'is_online' => (bool)$matchmaking['is_online'],
@@ -1122,9 +1142,9 @@ function startMatchmaking() {
         $roomName = $matchmaking['matchmaking_name'] ?? 'Game from Matchmaking ' . substr($matchmakingId, 0, 6);
 
         $pdo->prepare("
-            INSERT INTO game_rooms (room_id, game_id, room_name, max_players, host_switch, can_leave, realtime, matchmaking_id, rules)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ")->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmaking['host_switch'], $matchmaking['can_leave_room'], $matchmaking['realtime_room'], $matchmakingId, $matchmaking['rules']]);
+            INSERT INTO game_rooms (room_id, game_id, room_name, max_players, host_switch, can_leave, realtime, matchmaking_id, password, rules)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ")->execute([$roomId, $matchmaking['game_id'], $roomName, $matchmaking['max_players'], $matchmaking['host_switch'], $matchmaking['can_leave_room'], $matchmaking['realtime_room'], $matchmakingId, $matchmaking['password'], $matchmaking['rules']]);
 
         $pdo->prepare("
             INSERT INTO room_players (player_id, room_id, game_id, player_name, is_host, last_heartbeat, joined_at, is_online, player_data)
@@ -1162,6 +1182,43 @@ function startMatchmaking() {
         $pdo->rollBack();
         error_log("Start matchmaking failed: " . $e->getMessage());
         sendResponse(['success' => false, 'error' => $e->getMessage()], 400);
+    }
+}
+
+function updateMatchmakingPassword() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    $currentMatchmaking = getPlayerMatchmakingDetails($player['id']);
+    if (!$currentMatchmaking) {
+        sendResponse(['success' => false, 'error' => 'You are not in a matchmaking lobby'], 400);
+    }
+
+    if (!$currentMatchmaking['is_host']) {
+        sendResponse(['success' => false, 'error' => 'Only host can update matchmaking password'], 403);
+    }
+
+    if ($currentMatchmaking['is_started']) {
+        sendResponse(['success' => false, 'error' => 'Cannot change password after matchmaking has started'], 400);
+    }
+
+    $matchmakingId = $currentMatchmaking['matchmaking_id'];
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+
+    $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
+
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare("UPDATE matchmaking SET password = ? WHERE matchmaking_id = ?");
+        $stmt->execute([$password, $matchmakingId]);
+
+        sendResponse([
+            'success' => true,
+            'message' => 'Password updated successfully'
+        ]);
+    } catch (Exception $e) {
+        error_log("Update matchmaking password failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to update password'], 500);
     }
 }
 
@@ -1204,6 +1261,8 @@ try {
         stopMatchmaking();
     } elseif ($method === 'POST' && preg_match('#/kick/?$#', $path)) {
         kickPlayer();
+    } elseif ($method === 'POST' && preg_match('#/password/?$#', $path)) {
+        updateMatchmakingPassword();
     } else {
         sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }

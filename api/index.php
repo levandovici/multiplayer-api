@@ -338,7 +338,7 @@ $site_twitter = "@michitai";
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/create</div>
-                            <div class="col-span-6">Create matchmaking (requires API TOKEN, PRIVATE TOKEN)</div>
+                            <div class="col-span-6">Create matchmaking with optional password (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
@@ -399,6 +399,11 @@ $site_twitter = "@michitai";
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/kick</div>
                             <div class="col-span-6">Kick player from matchmaking lobby (Host Only) (requires API TOKEN, PLAYER TOKEN)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/api/matchmaking.php/password</div>
+                            <div class="col-span-6">Update matchmaking password (Host Only) (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                     </div>
                 </div>
@@ -481,6 +486,11 @@ $site_twitter = "@michitai";
                             <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
                             <div class="col-span-4 font-mono text-white/90">/api/game_room.php/kick</div>
                             <div class="col-span-6">Kick player from game room (Host Only) (requires API TOKEN, PLAYER TOKEN)</div>
+                        </div>
+                        <div class="grid grid-cols-12 items-center">
+                            <div class="col-span-2"><span class="inline-block bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">POST</span></div>
+                            <div class="col-span-4 font-mono text-white/90">/api/game_room.php/password</div>
+                            <div class="col-span-6">Update room password (Host Only) (requires API TOKEN, PLAYER TOKEN)</div>
                         </div>
                     </div>
                 </div>

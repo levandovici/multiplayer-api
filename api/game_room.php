@@ -520,6 +520,47 @@ function leaveRoom() {
     }
 }
 
+function updateRoomPassword() {
+    $context = getAuthContext();
+    $player = requirePlayer($context);
+
+    $roomId = getPlayerRoom($player['id']);
+    if (!$roomId) {
+        sendResponse(['success' => false, 'error' => 'You are not in any room'], 400);
+    }
+
+    // Check if player is host
+    $stmt = $pdo->prepare("SELECT is_host FROM room_players WHERE player_id = ? AND room_id = ?");
+    $stmt->execute([$player['id'], $roomId]);
+    $playerData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$playerData) {
+        sendResponse(['success' => false, 'error' => 'You are not in this room'], 400);
+    }
+
+    if (!(bool)$playerData['is_host']) {
+        sendResponse(['success' => false, 'error' => 'Only host can update room password'], 403);
+    }
+
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+
+    $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
+
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare("UPDATE game_rooms SET password = ? WHERE room_id = ?");
+        $stmt->execute([$password, $roomId]);
+
+        sendResponse([
+            'success' => true,
+            'message' => 'Password updated successfully'
+        ]);
+    } catch (Exception $e) {
+        error_log("Update room password failed: " . $e->getMessage());
+        sendResponse(['success' => false, 'error' => 'Failed to update password'], 500);
+    }
+}
+
 function checkAndReassignHost($roomId) {
     global $pdo;
 
@@ -1452,6 +1493,8 @@ try {
         stopGameRoom();
     } elseif ($method === 'POST' && preg_match('#/kick/?$#', $path)) {
         kickPlayer();
+    } elseif ($method === 'POST' && preg_match('#/password/?$#', $path)) {
+        updateRoomPassword();
     } else {
         sendResponse(['success' => false, 'error' => 'Invalid endpoint'], 404);
     }

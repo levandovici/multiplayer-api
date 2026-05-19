@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS matchmaking (
     host_switch BOOLEAN DEFAULT FALSE,
     can_leave_room BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Whether players can leave the game room',
     realtime_room BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Whether game room supports realtime connections',
+    password VARCHAR(255) NULL COMMENT 'Optional password for private matchmaking lobbies',
     rules JSON NULL COMMENT 'Host-defined criteria (rank, level, etc.)',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_heartbeat TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

@@ -429,6 +429,14 @@ $site_twitter = "@michitai";
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Kicks a player from the game room (Host Only). Cannot kick yourself.</p>
                             </div>
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-cyan-400 font-mono text-sm mb-2">UpdateRoomPasswordAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;SuccessResponse&gt; UpdateRoomPasswordAsync(
+    string playerToken,
+    string? password = null,
+    CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Updates the room password (Host Only). Use empty string to remove password.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -583,10 +591,11 @@ public event Action? OnConnected;</code></pre>
     bool joinByRequests = false,
     bool hostSwitch = false,
     bool canLeaveRoom = true,
+    string? password = null,
     T? rules = null,
     T? playerData = null,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with name, typed rules support, host switching, and player data.</p>
+                                <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with name, optional password, typed rules support, host switching, and player data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -685,6 +694,14 @@ public event Action? OnConnected;</code></pre>
     int playerId,
     CancellationToken ct = default)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Kicks a player from matchmaking lobby (Host Only). Cannot kick yourself or after matchmaking has started.</p>
+                            </div>
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-orange-400 font-mono text-sm mb-2">UpdateMatchmakingPasswordAsync</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;SuccessResponse&gt; UpdateMatchmakingPasswordAsync(
+    string playerToken,
+    string? password = null,
+    CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Updates the matchmaking password (Host Only). Cannot change password after matchmaking has started. Use empty string to remove password.</p>
                             </div>
                         </div>
                     </div>
