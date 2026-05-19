@@ -368,8 +368,8 @@ $site_twitter = "@michitai";
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">GetRoomsAsync</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Retrieves a list of all available game rooms with typed rules support.</p>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(string? search = null, int? limit = null, CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Retrieves a list of all available game rooms with typed rules support. Supports search and limit parameters.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -578,8 +578,8 @@ public event Action? OnConnected;</code></pre>
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-orange-400 font-mono text-sm mb-2">GetMatchmakingLobbiesAsync</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;MatchmakingListResponse&lt;T&gt;&gt; GetMatchmakingLobbiesAsync&lt;T&gt;(CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Lists all available matchmaking lobbies with typed rules support.</p>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;MatchmakingListResponse&lt;T&gt;&gt; GetMatchmakingLobbiesAsync&lt;T&gt;(string? search = null, int? limit = null, CancellationToken ct = default)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Lists all available matchmaking lobbies with typed rules support. Supports search and limit parameters.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">

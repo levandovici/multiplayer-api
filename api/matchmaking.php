@@ -210,9 +210,14 @@ function formatForUnity($data) {
 function listMatchmaking() {
     getAuthContext(); // just validate API key
 
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+
     global $pdo;
     try {
-        $stmt = $pdo->query("
+        $search = $data['search'] ?? '';
+        $limit = isset($data['limit']) ? max(1, min(50, (int)$data['limit'])) : null;
+
+        $sql = "
             SELECT 
                 m.matchmaking_id,
                 m.matchmaking_name,
@@ -233,10 +238,28 @@ function listMatchmaking() {
             LEFT JOIN matchmaking_players mp ON m.matchmaking_id = mp.matchmaking_id AND mp.is_online = TRUE
             LEFT JOIN game_players gp ON m.host_player_id = gp.id
             WHERE m.is_started = FALSE
+        ";
+
+        $params = [];
+
+        if (!empty($search)) {
+            $sql .= " AND m.matchmaking_name LIKE ?";
+            $params[] = "%$search%";
+        }
+
+        $sql .= "
             GROUP BY m.matchmaking_id
             HAVING current_players < m.max_players
             ORDER BY m.created_at ASC
-        ");
+        ";
+
+        if ($limit !== null) {
+            $sql .= " LIMIT ?";
+            $params[] = $limit;
+        }
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
 
         $lobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -1229,7 +1252,7 @@ try {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $method = $_SERVER['REQUEST_METHOD'];
 
-    if ($method === 'GET' && preg_match('#/list/?$#', $path)) {
+    if ($method === 'POST' && preg_match('#/list/?$#', $path)) {
         listMatchmaking();
     } elseif ($method === 'POST' && preg_match('#/create/?$#', $path)) {
         createMatchmaking();

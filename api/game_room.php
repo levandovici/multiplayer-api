@@ -264,9 +264,14 @@ function listRooms() {
 
     getAuthContext();
 
+    $data = json_decode(file_get_contents('php://input'), true) ?: [];
+
     global $pdo;
     try {
-        $stmt = $pdo->query("
+        $search = $data['search'] ?? '';
+        $limit = isset($data['limit']) ? max(1, min(50, (int)$data['limit'])) : null;
+
+        $sql = "
             SELECT r.room_id, r.room_name, r.max_players, 
                    COUNT(rp.player_id) as current_players,
                    r.password IS NOT NULL as has_password,
@@ -274,10 +279,28 @@ function listRooms() {
             FROM game_rooms r
             LEFT JOIN room_players rp ON r.room_id = rp.room_id
             WHERE r.is_active = TRUE
+        ";
+
+        $params = [];
+
+        if (!empty($search)) {
+            $sql .= " AND r.room_name LIKE ?";
+            $params[] = "%$search%";
+        }
+
+        $sql .= "
             GROUP BY r.room_id
             HAVING current_players < r.max_players
             ORDER BY current_players DESC, r.room_name ASC
-        ");
+        ";
+
+        if ($limit !== null) {
+            $sql .= " LIMIT ?";
+            $params[] = $limit;
+        }
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
 
         $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -1465,7 +1488,7 @@ try {
 
     if ($method === 'POST' && preg_match('#/create/?$#', $path)) {
         createRoom();
-    } elseif ($method === 'GET' && preg_match('#/list/?$#', $path)) {
+    } elseif ($method === 'POST' && preg_match('#/list/?$#', $path)) {
         listRooms();
     } elseif ($method === 'POST' && preg_match('#/([a-f0-9-]{32,36})/join/?$#', $path, $m)) {
         joinRoom($m[1]);

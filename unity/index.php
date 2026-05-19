@@ -345,8 +345,8 @@ $site_twitter = "@michitai";
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetRoomsAsync</h3>
-                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves all available game rooms with typed rules support. Useful for server browser.</p>
+                                    <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(string search = "", int limit = 20, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Retrieves all available game rooms with typed rules support. Useful for server browser. Supports search and limit parameters.</p>
                                 </div>
                                 
                                 <div>
@@ -521,8 +521,8 @@ public event Action OnConnected;</code></pre>
                             <div class="space-y-6">
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetMatchmakingLobbiesAsync</h3>
-                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingListResponse&gt; GetMatchmakingLobbiesAsync(CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality.</p>
+                                    <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingListResponse&gt; GetMatchmakingLobbiesAsync(string search = "", int limit = 20, CancellationToken ct = default)</code></pre>
+                                    <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality. Supports search and limit parameters.</p>
                                 </div>
                                 
                                 <div>

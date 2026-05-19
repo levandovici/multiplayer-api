@@ -102,9 +102,10 @@
 {"error":"Failed to create room", "success": false}
 {"error":"You are banned", "success": false}
 
-### endpoint: list:
+### endpoint: list (POST):
 {"error":"API token is required", "success": false}
 {"error":"Invalid API token", "success": false}
+{"error":"You are banned", "success": false}
 {"error":"Failed to list rooms", "success": false}
 
 ### endpoint: join:
@@ -222,7 +223,7 @@
 {"error":"Invalid player token", "success": false}
 {"error":"Player token is required", "success": false}
 {"error":"You are not in any game room", "success": false}
-{"error":"Only host can stop game room", "success": false}
+{"error":"Only the host can stop the game room", "success": false}
 {"error":"Failed to stop game room", "success": false}
 {"error":"You are banned", "success": false}
 
@@ -268,10 +269,11 @@
 
 ## matchmaking.php:
 
-### endpoint: list:
+### endpoint: list (POST):
 {"error":"API token is required", "success": false}
 {"error":"Invalid API token", "success": false}
 {"error":"You are banned", "success": false}
+{"error":"Failed to list matchmaking lobbies", "success": false}
 
 ### endpoint: create:
 {"error":"API token is required", "success": false}

@@ -2,9 +2,9 @@
   "metadata": {
     "title": "Lines of Code Over Time",
     "description": "Cumulative lines of code in the multiplayer-api project",
-    "generated": "2026-05-14 17:57:18",
-    "total_commits": 206,
-    "total_loc": 26952
+    "generated": "2026-05-19 21:48:57",
+    "total_commits": 213,
+    "total_loc": 28372
   },
   "data": [
     {
@@ -1444,10 +1444,59 @@
     },
     {
       "x": 1778770407000,
-      "y": 26952,
+      "y": 26966,
       "date": "2026-05-14 17:53:27 +0300",
       "message": "update api - errors docs",
-      "hash": "74c530a"
+      "hash": "c7549e9"
+    },
+    {
+      "x": 1778771621000,
+      "y": 26961,
+      "date": "2026-05-14 18:13:41 +0300",
+      "message": "fix",
+      "hash": "d0b2515"
+    },
+    {
+      "x": 1779034196000,
+      "y": 27251,
+      "date": "2026-05-17 19:09:56 +0300",
+      "message": "update index - servers",
+      "hash": "e50a4b3"
+    },
+    {
+      "x": 1779034835000,
+      "y": 27251,
+      "date": "2026-05-17 19:20:35 +0300",
+      "message": "update",
+      "hash": "4b8c1f8"
+    },
+    {
+      "x": 1779168918000,
+      "y": 27251,
+      "date": "2026-05-19 08:35:18 +0300",
+      "message": "update logo",
+      "hash": "3004672"
+    },
+    {
+      "x": 1779204642000,
+      "y": 27802,
+      "date": "2026-05-19 18:30:42 +0300",
+      "message": "update - kick players",
+      "hash": "0928337"
+    },
+    {
+      "x": 1779208193000,
+      "y": 28147,
+      "date": "2026-05-19 19:29:53 +0300",
+      "message": "update - passwords",
+      "hash": "b193856"
+    },
+    {
+      "x": 1779213474000,
+      "y": 28372,
+      "date": "2026-05-19 20:57:54 +0300",
+      "message": "update - search",
+      "hash": "76be068"
     }
   ]
 }

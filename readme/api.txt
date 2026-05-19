@@ -321,7 +321,30 @@ curl -X POST "https://api.michitai.com/api/game_room.php/password?api_token=API_
 
 //List All Available Rooms
 
-curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=API_TOKEN"
+curl -X POST "https://api.michitai.com/api/game_room.php/list?api_token=API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "",
+    "limit": 20
+  }'
+
+//Response:
+{
+  "success": true,
+  "rooms": [
+    {
+      "room_id": "dc3723848639139113ca240958ba0bf8",
+      "room_name": "My Game Room",
+      "max_players": 4,
+      "current_players": 2,
+      "has_password": true,
+      "host_switch": false,
+      "can_leave": true,
+      "realtime": false,
+      "rules": {}
+    }
+  ]
+}
 
 //Join a Room
 
@@ -613,7 +636,27 @@ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=
 
 //List All Matchmaking Lobbies
 
-curl "https://api.michitai.com/api/matchmaking.php/list?api_token=API_TOKEN"
+curl -X POST "https://api.michitai.com/api/matchmaking.php/list?api_token=API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "",
+    "limit": 20
+  }'
+
+//Response:
+{
+  "success": true,
+  "lobbies": [
+    {
+      "matchmaking_id": "abc123def456",
+      "matchmaking_name": "My Matchmaking",
+      "max_players": 4,
+      "current_players": 2,
+      "has_password": true,
+      "realtime_room": false
+    }
+  ]
+}
 
 //Create Matchmaking Lobby
 

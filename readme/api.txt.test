@@ -46,7 +46,7 @@
 16) $ curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"room_name":"My Game Room","password":"secret123","max_players":4,"host_switch":false,"can_leave_room":true,"player_data":{"level":15,"class":"warrior","inventory":["sword","shield"]}}'
 {"success":true,"room_id":"dc3723848639139113ca240958ba0bf8","room_name":"My Game Room","is_host":true}
 
-17) $ curl -X GET "https://api.michitai.com/api/game_room.php/list?api_token=7e2bf5846eae184afd1f100ca9e901f34e59"
+17) $ curl -X POST "https://api.michitai.com/api/game_room.php/list?api_token=7e2bf5846eae184afd1f100ca9e901f34e59" -H "Content-Type: application/json" -d '{"search":"","limit":20}'
 {"success":true,"rooms":[{"room_id":"dc3723848639139113ca240958ba0bf8","room_name":"My Game Room","max_players":4,"current_players":1,"has_password":true,"host_switch":false}]}
 
 18) $ curl -X POST "https://api.michitai.com/api/game_room.php/dc3723848639139113ca240958ba0bf8/join?api_token=7e2bf5846eae184afd1f100ca9e901f34e59&player_token=bed66b98ca159cc7df80d4a25f3914ce724b" -H "Content-Type: application/json" -d '{"password":"secret123","player_data":{"level":12,"class":"mage","inventory":["staff","potion"]}}'
@@ -94,7 +94,7 @@
 32) $ curl "https://api.michitai.com/api/game_room.php/current?api_token=111e15f332a500e6671b737b0d3412834785&player_token=12d1b70eb189b52aed11732313079158597a"
 {"success":true,"in_room":true,"room":{"room_id":"05f157893b1237f7699e548d045904ab","room_name":"Game from Matchmaking 636b3f","is_host":false,"is_online":true,"max_players":4,"current_players":2,"has_password":false,"host_switch":false,"is_active":true,"player_name":"TestPlayer","joined_at":"2026-03-06 17:50:35","last_heartbeat":"2026-03-06 18:02:35","room_created_at":"2026-03-06 17:50:35","room_last_activity":"2026-03-06 18:04:58"},"pending_actions":[],"pending_updates":[]}
 
-33) $ curl "https://api.michitai.com/api/matchmaking.php/list?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb"
+33) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/list?api_token=23f8b94f1064eacfa46d7188e7ddb5f6ceeb" -H "Content-Type: application/json" -d '{"search":"","limit":20}'
 {"success":true,"lobbies":[{"matchmaking_id":"15b2b6e5f0ba44b5eef77705d120861f","matchmaking_name":"My Matchmaking","host_player_id":62,"max_players":4,"strict_full":true,"host_switch":false,"rules":{"min_level":10,"rank":"gold"},"created_at":"2026-03-10 15:16:58","last_heartbeat":"2026-03-10 15:16:58","current_players":1,"host_name":"TestPlayer"}]
 
 34) $ curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=111e15f332a500e6671b737b0d3412834785&player_token=445bafa185803e678b06eae94682ba1bfccb" -H "Content-Type: application/json" -d '{"matchmaking_name":"My Matchmaking","max_players":4,"strict_full":true,"join_by_requests":true,"host_switch":false,"can_leave_room":true,"rules":{"min_level":10,"rank":"gold"},"player_data":{"level":20,"class":"paladin","inventory":["sword","shield","armor"]}}'
