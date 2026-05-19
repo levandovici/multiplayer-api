@@ -5,7 +5,7 @@ require_once 'php/config.php';
 // Set page-specific meta tag variables
 $title = "Pricing Plans – Multiplayer API";
 $description = "Flexible pricing plans for every game development need. From indie developers to enterprise studios.";
-$image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
+$image = "https://" . $_SERVER['HTTP_HOST'] . "/michitai.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?></title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="michitai.png">
     
     <?php require_once 'php/meta-tags.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -128,7 +128,7 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
-                    <img src="logo.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
+                    <img src="michitai.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
                     <div>
                         <h1 class="text-lg font-bold text-white">Multiplayer API</h1>
                         <p class="text-xs text-white/70">Core Cells</p>

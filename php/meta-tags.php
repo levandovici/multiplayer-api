@@ -17,7 +17,7 @@ function getCurrentUrl() {
 // Default values
 $defaultTitle = "Multiplayer API – Core Cells";
 $defaultDescription = "A powerful multiplayer API for game developers";
-$defaultImage = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
+$defaultImage = "https://" . $_SERVER['HTTP_HOST'] . "/michitai.png";
 $defaultUrl = getCurrentUrl();
 
 // Override with provided variables if they exist

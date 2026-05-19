@@ -107,7 +107,7 @@ function getTelegramRoadmap() {
 // Set page-specific meta tag variables
 $title = "Multiplayer API – Cross-platform";
 $description = "A powerful multiplayer API for game developers. Build multiplayer games with ease using our comprehensive SDK and API.";
-$image = "https://" . $_SERVER['HTTP_HOST'] . "/logo.png";
+$image = "https://" . $_SERVER['HTTP_HOST'] . "/michitai.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 // Platform-specific meta tags for better social sharing
@@ -122,7 +122,7 @@ $site_twitter = "@michitai";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?></title>
-    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="icon" type="image/png" href="/michitai.png">
     
     <?php require_once 'php/meta-tags.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -470,7 +470,7 @@ pre::-webkit-scrollbar-thumb:hover {
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
-                    <img src="/logo.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
+                    <img src="/michitai.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
                     <div>
                         <h1 class="text-lg font-bold text-white">Multiplayer API</h1>
                     </div>
