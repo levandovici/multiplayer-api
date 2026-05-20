@@ -307,7 +307,7 @@ namespace Michitai.Multiplayer.Errors
         InvalidPlayerToken,
         PlayerTokenIsRequired,
         YouAreNotInAnyGameRoom,
-        OnlyTheHostCanStopTheGameRoom,
+        OnlyHostCanStopTheGameRoom,
         FailedToStopGameRoom,
         YouAreBanned = ECommonError.YouAreBanned
     }

@@ -86,7 +86,7 @@ namespace Michitai.Multiplayer.Errors
             { "Missing required field: player_id", nameof(ERoomKickError.MissingRequiredFieldPlayerId) },
             { "Player not found in this room", nameof(ERoomKickError.PlayerNotFoundInThisRoom) },
             { "Failed to kick player", nameof(ERoomKickError.FailedToKickPlayer) },
-            { "Only host can stop game room", nameof(ERoomStopError.OnlyHostCanStopGameRoom) },
+            { "Only host can stop game room", nameof(ERoomStopError.OnlyHostCanStopTheGameRoom) },
             { "Failed to stop game room", nameof(ERoomStopError.FailedToStopGameRoom) },
             
             // Leaderboard errors
