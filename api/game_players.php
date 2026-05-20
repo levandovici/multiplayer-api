@@ -382,11 +382,11 @@ try {
                 sendResponse(['success' => false, 'error' => 'Invalid API credentials'], 401);
             }
             
-            $stmt = $pdo->prepare("SELECT id, player_name, is_online, last_login, last_logout, last_heartbeat, created_at 
+            $stmt = $pdo->prepare("SELECT id, player_name, is_online, last_login, last_logout, last_heartbeat, created_at
                                    FROM game_players WHERE game_id = ?");
             $stmt->execute([$game['id']]);
             $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             foreach ($players as &$player) {
                 $player['id']        = (int)$player['id'];
                 $player['is_online'] = (bool)$player['is_online'];
@@ -395,6 +395,39 @@ try {
                 $player['last_logout']    = isoUtc($player['last_logout']);
                 $player['last_heartbeat'] = isoUtc($player['last_heartbeat']);
                 $player['created_at']     = isoUtc($player['created_at']);
+
+                // Check if player is banned
+                $banStmt = $pdo->prepare("
+                    SELECT ban_id, ban_duration, ban_reason, banned_at, banned_until, is_active
+                    FROM player_bans
+                    WHERE player_id = ? AND game_id = ? AND is_active = TRUE
+                    ORDER BY banned_at DESC
+                    LIMIT 1
+                ");
+                $banStmt->execute([$player['id'], $game['id']]);
+                $ban = $banStmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($ban) {
+                    // Check if ban has expired
+                    $isExpired = $ban['banned_until'] && new DateTime($ban['banned_until']) < new DateTime();
+                    if ($isExpired) {
+                        // Deactivate expired ban
+                        $pdo->prepare("UPDATE player_bans SET is_active = FALSE WHERE ban_id = ?")
+                            ->execute([$ban['ban_id']]);
+                        $player['is_banned'] = false;
+                    } else {
+                        $player['is_banned'] = true;
+                        $player['ban_info'] = [
+                            'ban_id' => $ban['ban_id'],
+                            'ban_duration' => $ban['ban_duration'],
+                            'ban_reason' => $ban['ban_reason'],
+                            'banned_at' => isoUtc($ban['banned_at']),
+                            'banned_until' => $ban['banned_until'] ? isoUtc($ban['banned_until']) : null
+                        ];
+                    }
+                } else {
+                    $player['is_banned'] = false;
+                }
             }
 
             sendResponse([
