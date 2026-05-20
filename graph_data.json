@@ -2,9 +2,9 @@
   "metadata": {
     "title": "Lines of Code Over Time",
     "description": "Cumulative lines of code in the multiplayer-api project",
-    "generated": "2026-05-20 13:43:28",
-    "total_commits": 216,
-    "total_loc": 29151
+    "generated": "2026-05-20 14:49:00",
+    "total_commits": 217,
+    "total_loc": 33193
   },
   "data": [
     {
@@ -1514,10 +1514,17 @@
     },
     {
       "x": 1779272018000,
-      "y": 29151,
+      "y": 29172,
       "date": "2026-05-20 13:13:38 +0300",
       "message": "update SDK - bans",
-      "hash": "b6eabad"
+      "hash": "288caf9"
+    },
+    {
+      "x": 1779276418000,
+      "y": 33193,
+      "date": "2026-05-20 14:26:58 +0300",
+      "message": "update docs - summaries",
+      "hash": "b2b48eb"
     }
   ]
 }
