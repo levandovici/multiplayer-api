@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
-            header('Location: ../cabinet.html');
+            header('Location: ../cabinet.php');
             exit;
         } else {
             header('Location: ../login.html?error=Invalid email or password');

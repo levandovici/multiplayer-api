@@ -136,7 +136,7 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 </div>
                 <div class="flex items-center space-x-4">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="cabinet.html" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <a href="cabinet.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                             <i class="fas fa-user-circle mr-2"></i>Cabinet
                         </a>
                     <?php else: ?>

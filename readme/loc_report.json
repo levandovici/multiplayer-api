@@ -60,7 +60,7 @@
     "html_files": {
       "total_lines": 1367,
       "files": {
-        "cabinet.html": 582,
+        "cabinet.php": 582,
         "login.html": 152,
         "privacy.html": 209,
         "register.html": 176,
