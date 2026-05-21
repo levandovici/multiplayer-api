@@ -62,8 +62,8 @@
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <a href="index.html" class="text-white/70 hover:text-white transition-colors font-medium">Home</a>
-                    <a href="login.html" class="text-white/70 hover:text-white transition-colors font-medium">Sign In</a>
+                    <a href="index.php" class="text-white/70 hover:text-white transition-colors font-medium">Home</a>
+                    <a href="login.php" class="text-white/70 hover:text-white transition-colors font-medium">Sign In</a>
                 </div>
             </div>
         </div>
@@ -256,14 +256,14 @@
 
             <div class="mt-12 pt-8 border-t border-white/20">
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <a href="index.html" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold border-0">
+                    <a href="index.php" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold border-0">
                         <i class="fas fa-arrow-left mr-2"></i> Back to Home
                     </a>
                     <div class="text-sm text-white/60 text-center sm:text-right">
                         <p>© 2026 Nichita Levandovici. All rights reserved.</p>
                         <p class="mt-1">
-                            <a href="terms.html" class="text-blue-400 hover:text-blue-300">Terms of Service</a> • 
-                            <a href="privacy.html" class="text-blue-400 hover:text-blue-300">Privacy Policy</a>
+                            <a href="terms.php" class="text-blue-400 hover:text-blue-300">Terms of Service</a> • 
+                            <a href="privacy.php" class="text-blue-400 hover:text-blue-300">Privacy Policy</a>
                         </p>
                     </div>
                 </div>

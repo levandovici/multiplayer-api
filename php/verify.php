@@ -2,7 +2,7 @@
 require_once __DIR__ . '/config.php';
 
 if (!isset($_GET['token'])) {
-    header('Location: ../login.html?error=Invalid verification link');
+    header('Location: ../login.php?error=Invalid verification link');
     exit;
 }
 
@@ -14,7 +14,7 @@ try {
     $token_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$token_data) {
-        header('Location: ../login.html?error=Invalid or expired verification link');
+        header('Location: ../login.php?error=Invalid or expired verification link');
         exit;
     }
 
@@ -26,10 +26,10 @@ try {
     $stmt = $pdo->prepare("DELETE FROM verification_tokens WHERE token = :token");
     $stmt->execute(['token' => $token]);
 
-    header('Location: ../login.html?success=Email verified successfully. Please log in.');
+    header('Location: ../login.php?success=Email verified successfully. Please log in.');
     exit;
 } catch (PDOException $e) {
-    header('Location: ../login.html?error=Database error: ' . urlencode($e->getMessage()));
+    header('Location: ../login.php?error=Database error: ' . urlencode($e->getMessage()));
     exit;
 }
 ?>

@@ -76,7 +76,7 @@
                     <a href="index.php" class="text-white hover:text-gray-200 px-4 py-2 rounded-lg transition">
                         <i class="fas fa-home mr-2"></i>Home
                     </a>
-                    <a href="login.html" class="text-white hover:text-gray-200 px-4 py-2 rounded-lg transition">
+                    <a href="login.php" class="text-white hover:text-gray-200 px-4 py-2 rounded-lg transition">
                         <i class="fas fa-sign-in-alt mr-2"></i>Log In
                     </a>
                 </div>
@@ -138,7 +138,7 @@
                             <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 rounded bg-white/5" required>
                         </div>
                         <label for="terms" class="ml-3 block text-sm text-white/80">
-                            I agree to the <a href="terms.html" target="_blank" class="text-purple-300 hover:text-white font-medium">Terms of Service</a> and <a href="privacy.html" target="_blank" class="text-purple-300 hover:text-white font-medium">Privacy Policy</a>
+                            I agree to the <a href="terms.php" target="_blank" class="text-purple-300 hover:text-white font-medium">Terms of Service</a> and <a href="privacy.php" target="_blank" class="text-purple-300 hover:text-white font-medium">Privacy Policy</a>
                         </label>
                     </div>
                     
@@ -156,7 +156,7 @@
                     
                     <p class="mt-6 text-center text-sm text-white/60">
                         Already have an account? 
-                        <a href="login.html" class="text-purple-300 hover:text-white font-medium">
+                        <a href="login.php" class="text-purple-300 hover:text-white font-medium">
                             Sign in
                         </a>
                     </p>

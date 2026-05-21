@@ -346,7 +346,7 @@ $site_twitter = "@michitai";
                             <i class="fas fa-user-circle mr-2"></i>Cabinet
                         </a>
                     <?php else: ?>
-                        <a href="login.html" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <a href="login.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                             <i class="fas fa-sign-in-alt mr-2"></i>Sign In
                         </a>
                     <?php endif; ?>
@@ -487,7 +487,7 @@ $site_twitter = "@michitai";
                             <span class="price-tag">0</span>
                             <span class="period">/month</span>
                         </div>
-                        <a href="register.html" class="w-full py-3 rounded-lg font-semibold text-white block text-center bg-green-600 hover:bg-green-700 transition-colors">
+                        <a href="register.php" class="w-full py-3 rounded-lg font-semibold text-white block text-center bg-green-600 hover:bg-green-700 transition-colors">
                             Get Started Free
                         </a>
                     </div>
@@ -572,7 +572,7 @@ $site_twitter = "@michitai";
                             <span class="price-tag">9</span>
                             <span class="period">/month</span>
                         </div>
-                        <a href="register.html" class="btn-starter w-full py-3 rounded-lg font-semibold text-white block text-center hover:opacity-90 transition-opacity">
+                        <a href="register.php" class="btn-starter w-full py-3 rounded-lg font-semibold text-white block text-center hover:opacity-90 transition-opacity">
                             Get Started
                         </a>
                     </div>
@@ -663,7 +663,7 @@ $site_twitter = "@michitai";
                             <span class="price-tag">49</span>
                             <span class="period">/month</span>
                         </div>
-                        <a href="register.html" class="btn-pro w-full py-3 rounded-lg font-semibold text-white block text-center hover:opacity-90 transition-opacity">
+                        <a href="register.php" class="btn-pro w-full py-3 rounded-lg font-semibold text-white block text-center hover:opacity-90 transition-opacity">
                             Start Pro Trial
                         </a>
                     </div>
@@ -862,7 +862,7 @@ $site_twitter = "@michitai";
                 <h3 class="text-3xl font-bold mb-4">Ready to build amazing multiplayer games?</h3>
                 <p class="text-xl text-white/80 mb-8">Join thousands of developers using Multiplayer API</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="register.html" class="btn-primary px-8 py-4 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
+                    <a href="register.php" class="btn-primary px-8 py-4 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
                         Start Free Trial
                     </a>
                     <a href="index.php" class="btn-secondary px-8 py-4 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">

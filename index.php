@@ -481,7 +481,7 @@ pre::-webkit-scrollbar-thumb:hover {
                             <i class="fas fa-user-circle mr-2"></i>Cabinet
                         </a>
                     <?php else: ?>
-                        <a href="login.html" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <a href="login.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                             <i class="fas fa-sign-in-alt mr-2"></i>Sign In
                         </a>
                     <?php endif; ?>

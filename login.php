@@ -76,7 +76,7 @@
                     <a href="index.php" class="text-white hover:text-gray-200 px-4 py-2 rounded-lg transition">
                         <i class="fas fa-home mr-2"></i>Home
                     </a>
-                    <a href="register.html" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                    <a href="register.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                         <i class="fas fa-user-plus mr-2"></i>Register
                     </a>
                 </div>
@@ -143,7 +143,7 @@
                     
                     <p class="mt-6 text-center text-sm text-white/60">
                         Don't have an account? 
-                        <a href="register.html" class="text-purple-300 hover:text-white font-medium">
+                        <a href="register.php" class="text-purple-300 hover:text-white font-medium">
                             Sign up now
                         </a>
                     </p>

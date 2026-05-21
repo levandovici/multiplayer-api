@@ -630,7 +630,7 @@
             })
             .then(data => {
                 if (data.error) {
-                    window.location.href = 'login.html?error=' + encodeURIComponent(data.error);
+                    window.location.href = 'login.php?error=' + encodeURIComponent(data.error);
                     return;
                 }
                 document.getElementById('email').textContent = data.user.email;
@@ -723,7 +723,7 @@
             })
             .catch(error => {
                 console.error('Error loading user data:', error);
-                window.location.href = 'login.html?error=' + encodeURIComponent('Failed to load user data: ' + error.message);
+                window.location.href = 'login.php?error=' + encodeURIComponent('Failed to load user data: ' + error.message);
             });
         
 

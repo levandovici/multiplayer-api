@@ -7,11 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate inputs
     if (empty($email) || empty($password)) {
-        header('Location: ../register.html?error=All fields are required');
+        header('Location: ../register.php?error=All fields are required');
         exit;
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header('Location: ../register.html?error=Invalid email format');
+        header('Location: ../register.php?error=Invalid email format');
         exit;
     }
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
         $stmt->execute(['email' => $email]);
         if ($stmt->fetch()) {
-            header('Location: ../register.html?error=Email already exists');
+            header('Location: ../register.php?error=Email already exists');
             exit;
         }
 
@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = "Please verify your email by clicking this link: $verify_url";
         $headers = "From: " . $_ENV['EMAIL_FROM'] . "\r\n";
         if (!mail($email, $subject, $message, $headers)) {
-            header('Location: ../register.html?error=Failed to send verification email');
+            header('Location: ../register.php?error=Failed to send verification email');
             exit;
         }
 
-        header('Location: ../login.html?success=Registration successful. Please check your email to verify your account.');
+        header('Location: ../login.php?success=Registration successful. Please check your email to verify your account.');
         exit;
     } catch (PDOException $e) {
-        header('Location: ../register.html?error=Database error: ' . urlencode($e->getMessage()));
+        header('Location: ../register.php?error=Database error: ' . urlencode($e->getMessage()));
         exit;
     }
 }
