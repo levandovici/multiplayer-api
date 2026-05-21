@@ -901,7 +901,7 @@ $site_twitter = "@michitai";
 }</code></pre>
                     </div>
 
-                        <!-- 11. Get Leaderboard (by level and score) -->
+                        <!-- 11. Get Leaderboard (by level and score) (limit: 1-100) -->
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1110,7 +1110,7 @@ $site_twitter = "@michitai";
 }</code></pre>
                     </div>
 
-                    <!-- 16. List Matchmaking Lobbies -->
+                    <!-- 16. List Matchmaking Lobbies (limit: 1-50) -->
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1143,6 +1143,7 @@ $site_twitter = "@michitai";
     }
   ]
 }</code></pre>
+                        <div class="text-xs text-yellow-400 mt-2">Note: max_players in response can be between 2 and 16</div>
                     </div>
 
                     <!-- 17. Create Matchmaking Lobby -->
@@ -1444,7 +1445,7 @@ $site_twitter = "@michitai";
 }</code></pre>
                     </div>
 
-                    <!-- 30. List Rooms -->
+                    <!-- 30. List Rooms (limit: 1-50) -->
                     <div class="bg-black/50 p-4 rounded-lg">
                         <div class="flex items-center text-sm text-green-400 mb-2">
                             <span class="font-mono bg-green-900/50 px-2 py-1 rounded mr-2">POST</span>
@@ -1470,6 +1471,7 @@ $site_twitter = "@michitai";
     }
   ]
 }</code></pre>
+                        <div class="text-xs text-yellow-400 mt-2">Note: max_players in response can be between 2 and 16</div>
                     </div>
 
                     <!-- 31. Join Room -->
@@ -2256,7 +2258,7 @@ $site_twitter = "@michitai";
                                 <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid or expired api_token", "success": false}</code></pre>
                                 <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Invalid JSON body", "success": false}</code></pre>
                                 <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"sort_by must be a non-empty array of field names", "success": false}</code></pre>
-                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"limit must be between 1 and 1000", "success": false}</code></pre>
+                                <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"limit must be between 1 and 100", "success": false}</code></pre>
                                 <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"No valid sort fields provided after sanitization", "success": false}</code></pre>
                                 <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Database error", "success": false}</code></pre>
                                 <pre class="text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap"><code class="language-json">{"error":"Server error", "success": false}</code></pre>

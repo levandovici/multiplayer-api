@@ -68,10 +68,10 @@ try {
         sendResponse(['success' => false, 'error' => 'sort_by must be a non-empty array of field names'], 400);
     }
 
-    // Optional: limit (default 10, max 1000)
+    // Optional: limit (default 10, max 100)
     $limit = isset($input['limit']) ? (int)$input['limit'] : 10;
-    if ($limit < 1 || $limit > 1000) {
-        sendResponse(['success' => false, 'error' => 'limit must be between 1 and 1000'], 400);
+    if ($limit < 1 || $limit > 100) {
+        sendResponse(['success' => false, 'error' => 'limit must be between 1 and 100'], 400);
     }
 
     // Build ORDER BY clause safely

@@ -363,13 +363,13 @@ $site_twitter = "@michitai";
     T? rules = null,
     T? playerData = null,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Creates a new game room for multiplayer sessions with typed rules support, host switching, and player data.</p>
+                                <p class="text-gray-400 text-sm mt-2">Creates a new game room for multiplayer sessions with typed rules support, host switching, and player data. Max players: 2-16.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">GetRoomsAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(string? search = null, int? limit = null, CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Retrieves a list of all available game rooms with typed rules support. Supports search and limit parameters.</p>
+                                <p class="text-gray-400 text-sm mt-2">Retrieves a list of all available game rooms with typed rules support. Supports search and limit parameters (limit: 1-50).</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -579,7 +579,7 @@ public event Action? OnConnected;</code></pre>
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-orange-400 font-mono text-sm mb-2">GetMatchmakingLobbiesAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;MatchmakingListResponse&lt;T&gt;&gt; GetMatchmakingLobbiesAsync&lt;T&gt;(string? search = null, int? limit = null, CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Lists all available matchmaking lobbies with typed rules support. Supports search and limit parameters.</p>
+                                <p class="text-gray-400 text-sm mt-2">Lists all available matchmaking lobbies with typed rules support. Supports search and limit parameters (limit: 1-50).</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -595,7 +595,7 @@ public event Action? OnConnected;</code></pre>
     T? rules = null,
     T? playerData = null,
     CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with name, optional password, typed rules support, host switching, and player data.</p>
+                                <p class="text-gray-400 text-sm mt-2">Creates a new matchmaking lobby with name, optional password, typed rules support, host switching, and player data. Max players: 2-16.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -719,7 +719,7 @@ public event Action? OnConnected;</code></pre>
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-yellow-400 font-mono text-sm mb-2">GetLeaderboardAsync</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Task&lt;LeaderboardResponse&lt;T&gt;&gt; GetLeaderboardAsync&lt;T&gt;(string[] sortBy, int limit = 10, CancellationToken ct = default)</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Gets ranked leaderboard with configurable sorting, limit, and typed player data support.</p>
+                                <p class="text-gray-400 text-sm mt-2">Gets ranked leaderboard with configurable sorting, limit (1-100), and typed player data support.</p>
                                 <div class="mt-3 p-3 bg-yellow-900/20 rounded border border-yellow-700/50">
                                     <p class="text-yellow-200 text-xs font-medium mb-2">Example Usage:</p>
                                     <pre class="text-xs text-yellow-100 overflow-x-auto"><code class="language-csharp">// Sort by level, then score

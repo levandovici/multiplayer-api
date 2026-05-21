@@ -267,6 +267,7 @@ curl -X GET "https://api.michitai.com/api/time.php?api_token=API_TOKEN&utc=+1"
 curl -X GET "https://api.michitai.com/api/time.php?api_token=API_TOKEN&utc=-2"
 
 //Create a New Room
+// Note: max_players must be between 2 and 16
 
 curl -X POST "https://api.michitai.com/api/game_room.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
@@ -635,7 +636,6 @@ curl -X POST "https://api.michitai.com/api/game_room.php/updates/poll?api_token=
 //Matchmaking
 
 //List All Matchmaking Lobbies
-
 curl -X POST "https://api.michitai.com/api/matchmaking.php/list?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -659,6 +659,7 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/list?api_token=API_TO
 }
 
 //Create Matchmaking Lobby
+// Note: max_players must be between 2 and 16
 
 curl -X POST "https://api.michitai.com/api/matchmaking.php/create?api_token=API_TOKEN&player_token=PLAYER_TOKEN" \
   -H "Content-Type: application/json" \
@@ -804,6 +805,7 @@ curl -X POST "https://api.michitai.com/api/matchmaking.php/kick?api_token=API_TO
 //Leaderboard
 
 //Get Leaderboard
+// Note: limit must be between 1 and 100
 
 curl -X POST "https://api.michitai.com/api/leaderboard.php?api_token=API_TOKEN" \
   -H "Content-Type: application/json" \
@@ -894,4 +896,3 @@ curl -X POST "https://api.michitai.com/api/realtime.php/token?api_token=API_TOKE
     "room_id": "dc3723848639139113ca240958ba0bf8",
     "is_host": true
   }
-}

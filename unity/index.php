@@ -340,13 +340,13 @@ $site_twitter = "@michitai";
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateRoomAsync</h3>
                                     <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomCreateResponse&gt; CreateRoomAsync&lt;T&gt;(string playerToken, string roomName, int maxPlayers = 4, string password = null, bool hostSwitch = false, bool canLeaveRoom = true, T rules = null, T playerData = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Creates a new game room with optional password, host switching, player data and rules. The creating player becomes the host.</p>
+                                    <p class="text-white/70 mt-2">Creates a new game room with optional password, host switching, player data and rules. The creating player becomes the host. Max players: 2-16.</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetRoomsAsync</h3>
                                     <pre class="bg-black/30 text-orange-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;RoomListResponse&lt;T&gt;&gt; GetRoomsAsync&lt;T&gt;(string search = "", int limit = 20, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves all available game rooms with typed rules support. Useful for server browser. Supports search and limit parameters.</p>
+                                    <p class="text-white/70 mt-2">Retrieves all available game rooms with typed rules support. Useful for server browser. Supports search and limit parameters (limit: 1-50).</p>
                                 </div>
                                 
                                 <div>
@@ -522,13 +522,13 @@ public event Action OnConnected;</code></pre>
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetMatchmakingLobbiesAsync</h3>
                                     <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingListResponse&gt; GetMatchmakingLobbiesAsync(string search = "", int limit = 20, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality. Supports search and limit parameters.</p>
+                                    <p class="text-white/70 mt-2">Lists all available matchmaking lobbies. Useful for lobby browser functionality. Supports search and limit parameters (limit: 1-50).</p>
                                 </div>
                                 
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">CreateMatchmakingLobbyAsync</h3>
                                     <pre class="bg-black/30 text-pink-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;MatchmakingCreateResponse&gt; CreateMatchmakingLobbyAsync&lt;T&gt;(string playerToken, string matchmakingName, int maxPlayers = 4, bool strictFull = false, bool joinByRequests = false, bool hostSwitch = false, bool canLeaveRoom = true, string password = null, T rules = null, T playerData = null, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby with name, optional password, typed rules support, host switching, and player data. The creating player becomes the host.</p>
+                                    <p class="text-white/70 mt-2">Creates a new matchmaking lobby with name, optional password, typed rules support, host switching, and player data. The creating player becomes the host. Max players: 2-16.</p>
                                 </div>
                                 
                                 <div>
@@ -620,7 +620,7 @@ public event Action OnConnected;</code></pre>
                                 <div>
                                     <h3 class="text-white font-semibold mb-2">GetLeaderboardAsync</h3>
                                     <pre class="bg-black/30 text-yellow-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Task&lt;LeaderboardResponse&lt;T&gt;&gt; GetLeaderboardAsync&lt;T&gt;(string[] sortBy, int limit = 10, CancellationToken ct = default)</code></pre>
-                                    <p class="text-white/70 mt-2">Retrieves ranked players with configurable sorting criteria and typed player data support.</p>
+                                    <p class="text-white/70 mt-2">Retrieves ranked players with configurable sorting criteria, limit (1-100), and typed player data support.</p>
                                 </div>
                             </div>
                         </div>
