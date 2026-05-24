@@ -52,9 +52,7 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                        <img src="michitai.png" alt="Multiplayer API" class="w-6 h-6">
-                    </div>
+                    <img src="/michitai.png" alt="Multiplayer API Logo" class="w-10 h-10 rounded-xl object-contain">
                     <div>
                         <h1 class="text-lg font-bold text-white">Multiplayer API</h1>
                         <p class="text-xs text-white/70">Terms of Service</p>
