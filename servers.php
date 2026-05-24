@@ -105,6 +105,35 @@ $site_twitter = "@michitai";
             border-color: rgba(79, 172, 254, 0.3);
             transform: translateX(5px);
         }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        .status-planning {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(234, 179, 8, 0.1) 100%);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #eab308;
+        }
+
+        .server-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
     </style>
 </head>
 <body class="min-h-screen animated-bg">
@@ -165,34 +194,54 @@ $site_twitter = "@michitai";
                         Europe
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">fra.michitai.com</div>
-                                <div class="text-white/60 text-sm">Frankfurt, Germany</div>
+                        <a href="https://par.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">par.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Paris, France</div>
+                                </div>
+                                <span class="status-badge status-active">
+                                    <i class="fas fa-circle text-[8px] mr-2"></i>Active
+                                </span>
                             </div>
-                        </div>
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">vil.michitai.com</div>
-                                <div class="text-white/60 text-sm">Vilnius, Lithuania</div>
+                        </a>
+                        <a href="https://fra.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">fra.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Frankfurt, Germany</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">lon.michitai.com</div>
-                                <div class="text-white/60 text-sm">London, United Kingdom</div>
+                        </a>
+                        <a href="https://vil.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">vil.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Vilnius, Lithuania</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">par.michitai.com</div>
-                                <div class="text-white/60 text-sm">Paris, France</div>
+                        </a>
+                        <a href="https://lon.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">lon.michitai.com</div>
+                                    <div class="text-white/60 text-sm">London, United Kingdom</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
@@ -205,20 +254,30 @@ $site_twitter = "@michitai";
                         North America
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">bos.michitai.com</div>
-                                <div class="text-white/60 text-sm">Boston</div>
+                        <a href="https://bos.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">bos.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Boston</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">phx.michitai.com</div>
-                                <div class="text-white/60 text-sm">Phoenix</div>
+                        </a>
+                        <a href="https://phx.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">phx.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Phoenix</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
@@ -231,20 +290,30 @@ $site_twitter = "@michitai";
                         Asia
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">jkt.michitai.com</div>
-                                <div class="text-white/60 text-sm">Jakarta, Indonesia</div>
+                        <a href="https://jkt.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">jkt.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Jakarta, Indonesia</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">kul.michitai.com</div>
-                                <div class="text-white/60 text-sm">Kuala Lumpur, Malaysia</div>
+                        </a>
+                        <a href="https://kul.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">kul.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Kuala Lumpur, Malaysia</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
@@ -257,13 +326,18 @@ $site_twitter = "@michitai";
                         India
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="server-item flex items-center space-x-4 p-4 rounded-lg">
-                            <i class="fas fa-server text-cyan-400 text-xl"></i>
-                            <div>
-                                <div class="text-white font-semibold">bom.michitai.com</div>
-                                <div class="text-white/60 text-sm">Mumbai, India</div>
+                        <a href="https://bom.michitai.com" class="server-link">
+                            <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
+                                <i class="fas fa-server text-cyan-400 text-xl"></i>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold">bom.michitai.com</div>
+                                    <div class="text-white/60 text-sm">Mumbai, India</div>
+                                </div>
+                                <span class="status-badge status-planning">
+                                    <i class="fas fa-clock text-[8px] mr-2"></i>Standby
+                                </span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
