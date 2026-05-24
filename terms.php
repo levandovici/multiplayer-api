@@ -70,7 +70,7 @@
     <div class="max-w-4xl mx-auto px-6 lg:px-8 py-12">
         <div class="glass-effect rounded-2xl p-8 lg:p-12">
             <h1 class="text-4xl font-bold text-white mb-8">Terms of Service</h1>
-            <p class="text-white/70 mb-8">Last updated: September 11, 2025</p>
+            <p class="text-white/70 mb-8">Last updated: May 24, 2026</p>
 
             <div class="space-y-8 text-white/80">
                 <section>
@@ -116,28 +116,25 @@
                             <div class="bg-white/5 rounded-lg p-4">
                                 <h4 class="font-semibold text-white mb-2">Free Plan</h4>
                                 <ul class="text-sm space-y-1">
-                                    <li>• 250 MB storage</li>
+                                    <li>• 128 MB storage</li>
                                     <li>• 1 game</li>
                                     <li>• 100 concurrent players</li>
-                                    <li>• 1K API calls/day</li>
                                 </ul>
                             </div>
                             <div class="bg-white/5 rounded-lg p-4">
                                 <h4 class="font-semibold text-white mb-2">Standard - $25/month</h4>
                                 <ul class="text-sm space-y-1">
-                                    <li>• 1 GB storage</li>
+                                    <li>• 512 MB storage</li>
                                     <li>• 1 game</li>
                                     <li>• 1K concurrent players</li>
-                                    <li>• 10K API calls/day</li>
                                 </ul>
                             </div>
                             <div class="bg-white/5 rounded-lg p-4">
                                 <h4 class="font-semibold text-white mb-2">Pro - $300/month</h4>
                                 <ul class="text-sm space-y-1">
-                                    <li>• 2.5 GB storage</li>
+                                    <li>• 1 GB storage</li>
                                     <li>• 3 games</li>
                                     <li>• 2K concurrent players</li>
-                                    <li>• 1M API calls/day</li>
                                 </ul>
                             </div>
                         </div>
