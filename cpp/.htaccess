@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Do NOT redirect index.php, SDK.zip, Game.cpp
+RewriteCond %{REQUEST_URI} !^/cpp/index\.php$
+RewriteCond %{REQUEST_URI} !^/cpp/SDK\.zip$
+RewriteCond %{REQUEST_URI} !^/cpp/Game\.cpp$
+
+# Redirect everything else from /cpp to /api
+RewriteRule ^(.*)$ /api/$1 [R=301,L]
