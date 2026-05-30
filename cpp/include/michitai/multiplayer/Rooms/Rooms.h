@@ -84,7 +84,7 @@ struct RoomPlayer {
         player.isOnline = j.value("is_online", false);
         player.lastHeartbeat = j.value("last_heartbeat", "");
         
-        if (j.contains("player_data")) {
+        if (j.contains("player_data") && !j["player_data"].is_null()) {
             if constexpr (std::is_same_v<T, nlohmann::json>) {
                 player.playerData = j["player_data"];
             } else {
@@ -394,7 +394,8 @@ public:
             );
         } else {
             return client.post<RoomJoinResponse>(
-                client.url(endpoint, "&player_token=" + playerToken)
+                client.url(endpoint, "&player_token=" + playerToken),
+                nlohmann::json{}
             );
         }
     }
@@ -403,7 +404,8 @@ public:
     static RoomLeaveResponse leaveRoom(Client& client,
                                         const std::string& playerToken) {
         return client.post<RoomLeaveResponse>(
-            client.url(Endpoints::GameRoomLeave, "&player_token=" + playerToken)
+            client.url(Endpoints::GameRoomLeave, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -420,7 +422,8 @@ public:
     static HeartbeatResponse sendRoomHeartbeat(Client& client,
                                                const std::string& playerToken) {
         return client.post<HeartbeatResponse>(
-            client.url(Endpoints::GameRoomHeartbeat, "&player_token=" + playerToken)
+            client.url(Endpoints::GameRoomHeartbeat, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -437,7 +440,8 @@ public:
     static SuccessResponse stopRoom(Client& client,
                                     const std::string& playerToken) {
         return client.post<SuccessResponse>(
-            client.url(Endpoints::GameRoomStop, "&player_token=" + playerToken)
+            client.url(Endpoints::GameRoomStop, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     

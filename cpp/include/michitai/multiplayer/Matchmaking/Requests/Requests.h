@@ -205,7 +205,8 @@ public:
             );
         } else {
             return client.post<MatchmakingJoinRequestResponse>(
-                client.url(endpoint, "&player_token=" + playerToken)
+                client.url(endpoint, "&player_token=" + playerToken),
+                nlohmann::json{}
             );
         }
     }

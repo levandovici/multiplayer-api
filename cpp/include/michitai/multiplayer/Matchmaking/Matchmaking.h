@@ -96,7 +96,7 @@ struct MatchmakingPlayer {
         player.joinedAt = j.value("joined_at", "");
         player.lastHeartbeat = j.value("last_heartbeat", "");
         
-        if (j.contains("player_data")) {
+        if (j.contains("player_data") && !j["player_data"].is_null()) {
             if constexpr (std::is_same_v<T, nlohmann::json>) {
                 player.playerData = j["player_data"];
             } else {
@@ -426,7 +426,8 @@ public:
             );
         } else {
             return client.post<MatchmakingDirectJoinResponse>(
-                client.url(endpoint, "&player_token=" + playerToken)
+                client.url(endpoint, "&player_token=" + playerToken),
+                nlohmann::json{}
             );
         }
     }
@@ -436,7 +437,8 @@ public:
         Client& client,
         const std::string& playerToken) {
         return client.post<MatchmakingLeaveResponse>(
-            client.url(Endpoints::MatchmakingLeave, "&player_token=" + playerToken)
+            client.url(Endpoints::MatchmakingLeave, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -455,7 +457,8 @@ public:
         Client& client,
         const std::string& playerToken) {
         return client.post<MatchmakingHeartbeatResponse>(
-            client.url(Endpoints::MatchmakingHeartbeat, "&player_token=" + playerToken)
+            client.url(Endpoints::MatchmakingHeartbeat, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -464,7 +467,8 @@ public:
         Client& client,
         const std::string& playerToken) {
         return client.post<MatchmakingRemoveResponse>(
-            client.url(Endpoints::MatchmakingRemove, "&player_token=" + playerToken)
+            client.url(Endpoints::MatchmakingRemove, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -473,7 +477,8 @@ public:
         Client& client,
         const std::string& playerToken) {
         return client.post<MatchmakingStartResponse>(
-            client.url(Endpoints::MatchmakingStart, "&player_token=" + playerToken)
+            client.url(Endpoints::MatchmakingStart, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -482,7 +487,8 @@ public:
         Client& client,
         const std::string& playerToken) {
         return client.post<SuccessResponse>(
-            client.url(Endpoints::MatchmakingStop, "&player_token=" + playerToken)
+            client.url(Endpoints::MatchmakingStop, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     

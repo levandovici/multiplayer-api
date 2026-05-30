@@ -15,7 +15,6 @@
 #include "../include/michitai/multiplayer/Types.h"
 
 using namespace michitai::multiplayer;
-using namespace michitai::multiplayer::players;
 using namespace michitai::multiplayer::games;
 using namespace michitai::multiplayer::time;
 using namespace michitai::multiplayer::rooms;
@@ -118,7 +117,10 @@ namespace nlohmann {
 // ====================== GLOBAL STATE ======================
 
 static std::unique_ptr<Client> client;
-static std::map<std::string, PlayerInfo> players;
+static std::map<std::string, PlayerInfo> playerMap;
+
+// Forward declaration
+void runGameRoomFlow(const std::string& roomId, bool isFromMatchmaking);
 
 // ====================== SAFE EXECUTION ======================
 
@@ -177,31 +179,31 @@ void setupPlayers() {
     std::cout << "[SETUP] Registering players..." << std::endl;
     
     // Register host
-    auto h = Players::registerPlayer(*client, "GameHost", nlohmann::json{{"level", 15}, {"rank", "gold"}});
+    auto h = michitai::multiplayer::players::Players::registerPlayer(*client, "GameHost", std::optional<nlohmann::json>(nlohmann::json{{"level", 15}, {"rank", "gold"}}));
     std::cout << "[REGISTER] GameHost registered" << std::endl;
-    players["host"] = {h.playerId, h.privateKey, "GameHost"};
+    playerMap["host"] = PlayerInfo{h.playerId, h.privateKey, "GameHost"};
     
     // Register p1
-    auto p1 = Players::registerPlayer(*client, "PlayerOne", nlohmann::json{{"level", 12}, {"rank", "silver"}});
+    auto p1 = michitai::multiplayer::players::Players::registerPlayer(*client, "PlayerOne", std::optional<nlohmann::json>(nlohmann::json{{"level", 12}, {"rank", "silver"}}));
     std::cout << "[REGISTER] PlayerOne registered" << std::endl;
-    players["p1"] = {p1.playerId, p1.privateKey, "PlayerOne"};
+    playerMap["p1"] = PlayerInfo{p1.playerId, p1.privateKey, "PlayerOne"};
     
     // Register p2
-    auto p2 = Players::registerPlayer(*client, "PlayerTwo", nlohmann::json{{"level", 10}, {"rank", "bronze"}});
+    auto p2 = michitai::multiplayer::players::Players::registerPlayer(*client, "PlayerTwo", std::optional<nlohmann::json>(nlohmann::json{{"level", 10}, {"rank", "bronze"}}));
     std::cout << "[REGISTER] PlayerTwo registered" << std::endl;
-    players["p2"] = {p2.playerId, p2.privateKey, "PlayerTwo"};
+    playerMap["p2"] = PlayerInfo{p2.playerId, p2.privateKey, "PlayerTwo"};
     
     // Authenticate all players
-    for (auto& [key, p] : players) {
-        auto auth = Players::authenticatePlayer<PlayerData>(*client, p.token);
+    for (auto& [key, p] : playerMap) {
+        auto auth = michitai::multiplayer::players::Players::authenticatePlayer<PlayerData>(*client, p.token);
         if (auth.player.has_value()) {
             std::cout << "[AUTH] " << auth.player->playerName << " authenticated" << std::endl;
         }
     }
     
     // Send heartbeat for all players
-    for (auto& [key, p] : players) {
-        Players::sendPlayerHeartbeat(*client, p.token);
+    for (auto& [key, p] : playerMap) {
+        michitai::multiplayer::players::Players::sendPlayerHeartbeat(*client, p.token);
         std::cout << "[HEARTBEAT] Player heartbeat sent" << std::endl;
     }
     
@@ -216,14 +218,14 @@ void setupPlayers() {
     });
     
     // Get and update player data
-    for (auto& [key, p] : players) {
+    for (auto& [key, p] : playerMap) {
         safeExecute("GetPlayerData " + p.name, [&]() {
-            auto data = Players::getPlayerData<PlayerData>(*client, p.token);
+            auto data = michitai::multiplayer::players::Players::getPlayerData<PlayerData>(*client, p.token);
             std::cout << "[PLAYER DATA] Player data retrieved" << std::endl;
             
             PlayerData pd = data.playerData;
             pd.level++;
-            Players::updatePlayerData(*client, p.token, pd);
+            michitai::multiplayer::players::Players::updatePlayerData(*client, p.token, pd);
             std::cout << "[PLAYER DATA] Player data updated" << std::endl;
         });
     }
@@ -232,13 +234,13 @@ void setupPlayers() {
 void cleanupEverything() {
     std::cout << "\n[CLEANUP] Final cleanup..." << std::endl;
     
-    for (auto& [key, p] : players) {
+    for (auto& [key, p] : playerMap) {
         safeExecute("Logout " + p.name, [&]() {
-            Players::logoutPlayer(*client, p.token);
+            michitai::multiplayer::players::Players::logoutPlayer(*client, p.token);
         });
     }
     
-    players.clear();
+    playerMap.clear();
 }
 
 // ====================== DEMO 1: MATCHMAKING WITH JOIN REQUESTS ======================
@@ -252,54 +254,53 @@ void runDemoWithJoinByRequests() {
     PlayerData playerData{3, "Diamond"};
     
     auto createRes = Requests::createMatchmakingLobby<PlayerData, RulesData>(
-        *client, players["host"].token, "DEMO 1 Matchmaking", 4, false, false, false, false, false,
+        *client, playerMap["host"].token, "DEMO 1 Matchmaking", 4, false, false, false, false,
         std::nullopt, playerData, rules);
     std::string matchmakingId = createRes.matchmakingId;
     std::cout << "[MATCHMAKING] Lobby created (requests=true)" << std::endl;
     
     // Request to join
     auto req1 = Requests::requestToJoinMatchmaking<PlayerData>(
-        *client, players["p1"].token, matchmakingId, std::nullopt);
+        *client, playerMap["p1"].token, matchmakingId, std::nullopt);
     std::cout << "[REQUEST] Sent: " << req1.requestId << std::endl;
     
-    auto status1 = Requests::checkJoinRequestStatus(*client, players["p1"].token, req1.requestId);
+    auto status1 = Requests::checkJoinRequestStatus(*client, playerMap["p1"].token, req1.requestId);
     std::cout << "[REQUEST STATUS] " << status1.request.dump() << std::endl;
     
     auto approve1 = Requests::respondToJoinRequest(
-        *client, players["host"].token, req1.requestId, MatchmakingRequestAction::Approve);
+        *client, playerMap["host"].token, req1.requestId, michitai::multiplayer::matchmaking::requests::MatchmakingRequestAction::Approve);
     std::cout << "[APPROVE] " << approve1.message << std::endl;
     
     // Second player with data
     PlayerData p2Data;
     auto req2 = Requests::requestToJoinMatchmaking<PlayerData>(
-        *client, players["p2"].token, matchmakingId, p2Data);
+        *client, playerMap["p2"].token, matchmakingId, p2Data);
     std::cout << "[REQUEST] Sent: " << req2.requestId << std::endl;
     
-    auto status2 = Requests::checkJoinRequestStatus(*client, players["p2"].token, req2.requestId);
+    auto status2 = Requests::checkJoinRequestStatus(*client, playerMap["p2"].token, req2.requestId);
     std::cout << "[REQUEST STATUS] " << status2.request.dump() << std::endl;
     
     // Get current status
-    auto currentStatus = Matchmaking::getCurrentMatchmakingStatus<RulesData>(*client, players["host"].token);
+    auto currentStatus = Matchmaking::getCurrentMatchmakingStatus<RulesData>(*client, playerMap["host"].token);
     if (currentStatus.matchmaking.has_value()) {
         std::cout << "[MATCHMAKING STATUS] Players: " << currentStatus.matchmaking->currentPlayers << std::endl;
     }
     
     // Approve second player
     auto approve2 = Requests::respondToJoinRequest(
-        *client, players["host"].token, req2.requestId, MatchmakingRequestAction::Approve);
+        *client, playerMap["host"].token, req2.requestId, michitai::multiplayer::matchmaking::requests::MatchmakingRequestAction::Approve);
     std::cout << "[APPROVE] " << approve2.message << std::endl;
     
-    if (currentStatus.matchmaking.ha/_value()) {
-        s/ Get status again->
+    currentStatus = Matchmaking::getCurrentMatchmakingStatus<RulesData>(*client, playerMap["host"].token);
+    if (currentStatus.matchmaking.has_value()) {
+        std::cout << "[MATCHMAKING STATUS] Players: " << currentStatus.matchmaking->currentPlayers << std::endl;
     }
-    currentStatus = Matchmaking::getCurrentMatchmakingStatus<RulesData>(*client, players["host"].token);
-    std::cout << "[MATCHMAKING STATUS] Players: " << currentStatus.matchmaking.currentPlayers << std::endl;
     
-    auto playersList = Matchmaking::getMatchmakingPlayers<PlayerData>(*client, players["host"].token);
+    auto playersList = Matchmaking::getMatchmakingPlayers<PlayerData>(*client, playerMap["host"].token);
     std::cout << "[MATCHMAKING PLAYERS] " << playersList.players.size() << " players" << std::endl;
     
     // Start matchmaking and create room
-    auto start = Matchmaking::startGameFromMatchmaking(*client, players["host"].token);
+    auto start = Matchmaking::startGameFromMatchmaking(*client, playerMap["host"].token);
     std::string roomId = start.roomId;
     std::cout << "[START] Room created: " << roomId << std::endl;
     
@@ -318,31 +319,31 @@ void runDemoWithoutJoinByRequests() {
     PlayerData playerData{3, "Diamond"};
     
     auto createRes = Matchmaking::createMatchmakingLobby<PlayerData, RulesData>(
-        *client, players["host"].token, "DEMO 2 Matchmaking", 4, false, false, false, false, false,
+        *client, playerMap["host"].token, "DEMO 2 Matchmaking", 4, false, false, false, false, false,
         std::nullopt, playerData, rules);
     std::string matchmakingId = createRes.matchmakingId;
     std::cout << "[MATCHMAKING] Lobby created (requests=false)" << std::endl;
     
     // Join directly
-    for (auto& [key, p] : players) {
+    for (auto& [key, p] : playerMap) {
         if (key == "host") continue;
         
-        PlayerData pd;
+        std::optional<PlayerData> pd = PlayerData{};
         Matchmaking::joinMatchmakingDirectly(*client, p.token, matchmakingId, pd);
         std::cout << "[JOIN] Player joined directly" << std::endl;
-    if (currentStatus.matchmaking.ha}_value()) {
-        s->
     }
     
     // Get status
-    auto currentStatus = Matchmaking::getCurrentMatchmakingStatus<RulesData>(*client, players["host"].token);
-    std::cout << "[MATCHMAKING STATUS] Players: " << currentStatus.matchmaking.currentPlayers << std::endl;
+    auto currentStatus = Matchmaking::getCurrentMatchmakingStatus<RulesData>(*client, playerMap["host"].token);
+    if (currentStatus.matchmaking.has_value()) {
+        std::cout << "[MATCHMAKING STATUS] Players: " << currentStatus.matchmaking->currentPlayers << std::endl;
+    }
     
-    auto playersList = Matchmaking::getMatchmakingPlayers<PlayerData>(*client, players["host"].token);
+    auto playersList = Matchmaking::getMatchmakingPlayers<PlayerData>(*client, playerMap["host"].token);
     std::cout << "[MATCHMAKING PLAYERS] " << playersList.players.size() << " players" << std::endl;
     
     // Start matchmaking and create room
-    auto start = Matchmaking::startGameFromMatchmaking(*client, players["host"].token);
+    auto start = Matchmaking::startGameFromMatchmaking(*client, playerMap["host"].token);
     std::string roomId = start.roomId;
     std::cout << "[START] Room created: " << roomId << std::endl;
     
@@ -360,16 +361,16 @@ void runDemoDirectRoom() {
     PlayerData playerData{3, "Diamond"};
     
     auto create = Rooms::createRoom<PlayerData, RulesData>(
-        *client, players["host"].token, "Direct Battle Arena", 4, std::nullopt, false, false,
+        *client, playerMap["host"].token, "Direct Battle Arena", 4, std::nullopt, false, false,
         playerData, rules);
     std::string roomId = create.roomId;
     std::cout << "[ROOM] Room created: " << roomId << std::endl;
     
     // Join room
-    Rooms::joinRoom(*client, players["p1"].token, roomId);
+    Rooms::joinRoom(*client, playerMap["p1"].token, roomId);
     std::cout << "[ROOM] PlayerOne joined room" << std::endl;
     
-    Rooms::joinRoom(*client, players["p2"].token, roomId);
+    Rooms::joinRoom(*client, playerMap["p2"].token, roomId);
     std::cout << "[ROOM] PlayerTwo joined room" << std::endl;
     
     // Run game room flow
@@ -388,11 +389,11 @@ void runGameRoomFlow(const std::string& roomId, bool isFromMatchmaking) {
     });
     
     // Get current room
-    auto room = Rooms::getCurrentRoom<RulesData>(*client, players["host"].token);
+    auto room = Rooms::getCurrentRoom<RulesData>(*client, playerMap["host"].token);
     std::cout << "[ROOM] Current room: " << room.room.roomName << std::endl;
     
     // Submit actions
-    for (auto& [key, p] : players) {
+    for (auto& [key, p] : playerMap) {
         safeExecute("SubmitAction " + p.name, [&]() {
             ActionData ad{true};
             SubmitAction<ActionData> action{RoomTargetPlayers::Host, "player_ready", ad, {}};
@@ -402,7 +403,7 @@ void runGameRoomFlow(const std::string& roomId, bool isFromMatchmaking) {
     
     // Get pending actions
     safeExecute("GetPendingActions", [&]() {
-        auto pending = Actions::getPendingActions<ActionData>(*client, players["host"].token);
+        auto pending = Actions::getPendingActions<ActionData>(*client, playerMap["host"].token);
         std::cout << "[PENDING ACTIONS] " << pending.pendingActions.size() << " actions" << std::endl;
     });
     
@@ -410,11 +411,11 @@ void runGameRoomFlow(const std::string& roomId, bool isFromMatchmaking) {
     safeExecute("Send Room Update", [&]() {
         UpdateData ud{1, "Game Started!"};
         UpdatePlayers<UpdateData> update{RoomTargetPlayers::All, "game_start", ud, {}};
-        Updates::updatePlayers(*client, players["host"].token, update);
+        Updates::updatePlayers(*client, playerMap["host"].token, update);
     });
     
     // Poll updates
-    for (auto& [key, p] : players) {
+    for (auto& [key, p] : playerMap) {
         safeExecute("PollUpdates " + p.name, [&]() {
             PollUpdates poll{RoomTargetPlayers::Host, {}, std::nullopt};
             Updates::pollUpdates<UpdateData>(*client, p.token, poll);
@@ -423,12 +424,12 @@ void runGameRoomFlow(const std::string& roomId, bool isFromMatchmaking) {
     
     // Get room players
     safeExecute("GetRoomPlayers", [&]() {
-        auto roomPlayers = Rooms::getRoomPlayers<PlayerData>(*client, players["host"].token);
+        auto roomPlayers = Rooms::getRoomPlayers<PlayerData>(*client, playerMap["host"].token);
         std::cout << "[ROOM PLAYERS] " << roomPlayers.players.size() << " players" << std::endl;
     });
     
     // Send heartbeat
-    for (auto& [key, p] : players) {
+    for (auto& [key, p] : playerMap) {
         safeExecute("RoomHeartbeat " + p.name, [&]() {
             Rooms::sendRoomHeartbeat(*client, p.token);
         });
@@ -436,7 +437,7 @@ void runGameRoomFlow(const std::string& roomId, bool isFromMatchmaking) {
     
     // Stop room
     safeExecute("StopRoom", [&]() {
-        Rooms::stopRoom(*client, players["host"].token);
+        Rooms::stopRoom(*client, playerMap["host"].token);
     });
 }
 
@@ -468,5 +469,9 @@ int main() {
     }
     
     std::cout << "\n=== All Demos Finished - All Endpoints Covered ===" << std::endl;
+    
+    std::cout << "\nPress Enter to exit...";
+    std::cin.get();
+    
     return 0;
 }

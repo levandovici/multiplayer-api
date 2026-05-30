@@ -78,12 +78,23 @@ public:
     template<typename T>
     T get(const std::string& url) {
         cpr::Response response = cpr::Get(
-            url,
+            cpr::Url{url},
             cpr::Header{{"Content-Type", "application/json"}},
-            cpr::Timeout{30000}
+            cpr::Timeout{30000},
+            cpr::VerifySsl{false}
         );
         
+        logger_->log("API URL: " + url);
+        logger_->log("API Response Status: " + std::to_string(response.status_code));
         logger_->log("API Response: " + response.text);
+        
+        if (response.status_code == 0) {
+            logger_->error("HTTP Request Failed: " + response.error.message);
+            T result;
+            result.success = false;
+            result.error = "HTTP Request Failed: " + response.error.message;
+            return result;
+        }
         
         try {
             nlohmann::json jsonResponse = nlohmann::json::parse(response.text);
@@ -113,13 +124,24 @@ public:
     T post(const std::string& url, const nlohmann::json& body) {
         std::string bodyStr = body.dump();
         cpr::Response response = cpr::Post(
-            url,
+            cpr::Url{url},
             cpr::Header{{"Content-Type", "application/json"}},
             cpr::Body{bodyStr},
-            cpr::Timeout{30000}
+            cpr::Timeout{30000},
+            cpr::VerifySsl{false}
         );
         
+        logger_->log("API URL: " + url);
+        logger_->log("API Response Status: " + std::to_string(response.status_code));
         logger_->log("API Response: " + response.text);
+        
+        if (response.status_code == 0) {
+            logger_->error("HTTP Request Failed: " + response.error.message);
+            T result;
+            result.success = false;
+            result.error = "HTTP Request Failed: " + response.error.message;
+            return result;
+        }
         
         try {
             nlohmann::json jsonResponse = nlohmann::json::parse(response.text);
@@ -149,13 +171,24 @@ public:
     T put(const std::string& url, const nlohmann::json& body) {
         std::string bodyStr = body.dump();
         cpr::Response response = cpr::Put(
-            url,
+            cpr::Url{url},
             cpr::Header{{"Content-Type", "application/json"}},
             cpr::Body{bodyStr},
-            cpr::Timeout{30000}
+            cpr::Timeout{30000},
+            cpr::VerifySsl{false}
         );
         
+        logger_->log("API URL: " + url);
+        logger_->log("API Response Status: " + std::to_string(response.status_code));
         logger_->log("API Response: " + response.text);
+        
+        if (response.status_code == 0) {
+            logger_->error("HTTP Request Failed: " + response.error.message);
+            T result;
+            result.success = false;
+            result.error = "HTTP Request Failed: " + response.error.message;
+            return result;
+        }
         
         try {
             nlohmann::json jsonResponse = nlohmann::json::parse(response.text);
@@ -183,12 +216,23 @@ public:
     template<typename T>
     T del(const std::string& url) {
         cpr::Response response = cpr::Delete(
-            url,
+            cpr::Url{url},
             cpr::Header{{"Content-Type", "application/json"}},
-            cpr::Timeout{30000}
+            cpr::Timeout{30000},
+            cpr::VerifySsl{false}
         );
         
+        logger_->log("API URL: " + url);
+        logger_->log("API Response Status: " + std::to_string(response.status_code));
         logger_->log("API Response: " + response.text);
+        
+        if (response.status_code == 0) {
+            logger_->error("HTTP Request Failed: " + response.error.message);
+            T result;
+            result.success = false;
+            result.error = "HTTP Request Failed: " + response.error.message;
+            return result;
+        }
         
         try {
             nlohmann::json jsonResponse = nlohmann::json::parse(response.text);

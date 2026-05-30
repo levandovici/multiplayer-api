@@ -26,7 +26,7 @@ set(CPR_USE_SYSTEM_CURL OFF)
 FetchContent_MakeAvailable(cpr)
 
 # SDK library
-add_library(multiplayer_sdk
+add_library(multiplayer_sdk STATIC
   src/Client.cpp
 )
 
@@ -43,3 +43,12 @@ target_link_libraries(multiplayer_sdk
 
 # Set C++ standard
 target_compile_features(multiplayer_sdk PUBLIC cxx_std_17)
+
+# Example executable
+add_executable(game_example
+  examples/Game.cpp
+)
+
+target_link_libraries(game_example
+  PRIVATE multiplayer_sdk
+)

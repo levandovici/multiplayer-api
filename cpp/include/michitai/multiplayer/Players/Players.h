@@ -48,11 +48,24 @@ struct PlayerInfo {
         info.gameId = j.value("game_id", 0);
         info.playerData = j.value("player_data", nlohmann::json::object());
         info.isOnline = j.value("is_online", false);
-        info.lastLogin = j.value("last_login", "");
-        info.lastHeartbeat = j.value("last_heartbeat", "");
-        info.lastLogout = j.value("last_logout", "");
-        info.createdAt = j.value("created_at", "");
-        info.updatedAt = j.value("updated_at", "");
+        
+        // Handle null values for timestamp fields
+        if (j.contains("last_login") && !j["last_login"].is_null()) {
+            info.lastLogin = j["last_login"].get<std::string>();
+        }
+        if (j.contains("last_heartbeat") && !j["last_heartbeat"].is_null()) {
+            info.lastHeartbeat = j["last_heartbeat"].get<std::string>();
+        }
+        if (j.contains("last_logout") && !j["last_logout"].is_null()) {
+            info.lastLogout = j["last_logout"].get<std::string>();
+        }
+        if (j.contains("created_at") && !j["created_at"].is_null()) {
+            info.createdAt = j["created_at"].get<std::string>();
+        }
+        if (j.contains("updated_at") && !j["updated_at"].is_null()) {
+            info.updatedAt = j["updated_at"].get<std::string>();
+        }
+        
         return info;
     }
 };
@@ -188,7 +201,7 @@ struct PlayerRegisterRequest {
     
     nlohmann::json toJson() const {
         nlohmann::json j;
-        j["name"] = name;
+        j["player_name"] = name;
         if (playerData.has_value()) {
             if constexpr (std::is_same_v<T, nlohmann::json>) {
                 j["player_data"] = playerData.value();
@@ -272,7 +285,8 @@ public:
     static PlayerAuthResponse<T> authenticatePlayer(Client& client,
                                                       const std::string& playerToken) {
         return client.put<PlayerAuthResponse<T>>(
-            client.url(Endpoints::GamePlayersLogin, "&player_token=" + playerToken)
+            client.url(Endpoints::GamePlayersLogin, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -283,7 +297,8 @@ public:
     static PlayerHeartbeatResponse sendPlayerHeartbeat(Client& client,
                                                          const std::string& playerToken) {
         return client.post<PlayerHeartbeatResponse>(
-            client.url(Endpoints::GamePlayersHeartbeat, "&player_token=" + playerToken)
+            client.url(Endpoints::GamePlayersHeartbeat, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
@@ -294,7 +309,8 @@ public:
     static PlayerLogoutResponse logoutPlayer(Client& client,
                                                const std::string& playerToken) {
         return client.post<PlayerLogoutResponse>(
-            client.url(Endpoints::GamePlayersLogout, "&player_token=" + playerToken)
+            client.url(Endpoints::GamePlayersLogout, "&player_token=" + playerToken),
+            nlohmann::json{}
         );
     }
     
