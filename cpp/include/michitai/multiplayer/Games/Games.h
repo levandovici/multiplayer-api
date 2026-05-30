@@ -96,8 +96,7 @@ public:
     /// @param client The API client instance
     /// @return Response containing the list of all players with their basic information
     static PlayerListResponse getAllPlayers(Client& client) {
-        return client.send<PlayerListResponse>(
-            cpr::Method::GET,
+        return client.get<PlayerListResponse>(
             client.privateUrl(Endpoints::GamePlayersList)
         );
     }
@@ -107,8 +106,7 @@ public:
     /// @return Response containing the game data deserialized into the specified type
     template<typename T = nlohmann::json>
     static GameDataResponse<T> getGameData(Client& client) {
-        return client.send<GameDataResponse<T>>(
-            cpr::Method::GET,
+        return client.get<GameDataResponse<T>>(
             client.url(Endpoints::GameDataGameGet)
         );
     }
@@ -126,8 +124,7 @@ public:
         } else {
             jsonData = nlohmann::json(data);
         }
-        return client.send<SuccessResponse>(
-            cpr::Method::PUT,
+        return client.put<SuccessResponse>(
             client.privateUrl(Endpoints::GameDataGameUpdate),
             jsonData
         );

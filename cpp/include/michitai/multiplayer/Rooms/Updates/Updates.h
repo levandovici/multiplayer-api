@@ -170,8 +170,7 @@ public:
                                                const UpdatePlayers<T>& update) {
         UpdatePlayersRequest<T> request(update.targetPlayers, update.type, 
                                        update.data, update.targetPlayerIds);
-        return client.send<UpdatePlayersResponse>(
-            cpr::Method::POST,
+        return client.post<UpdatePlayersResponse>(
             client.url(Endpoints::GameRoomUpdates, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -183,8 +182,7 @@ public:
                                               const std::string& playerToken,
                                               const PollUpdates& poll) {
         PollUpdatesRequest request(poll.fromPlayers, poll.fromPlayerIds, poll.lastUpdate);
-        return client.send<PollUpdatesResponse<T>>(
-            cpr::Method::POST,
+        return client.post<PollUpdatesResponse<T>>(
             client.url(Endpoints::GameRoomUpdatesPoll, "&player_token=" + playerToken),
             request.toJson()
         );

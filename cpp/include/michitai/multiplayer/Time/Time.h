@@ -77,8 +77,7 @@ public:
     /// @param client The API client instance
     /// @return Response containing the server UTC time, timestamp, and readable format
     static ServerTimeResponse getServerTime(Client& client) {
-        return client.send<ServerTimeResponse>(
-            cpr::Method::GET,
+        return client.get<ServerTimeResponse>(
             client.url(Endpoints::Time)
         );
     }
@@ -89,8 +88,7 @@ public:
     /// @return Response containing the adjusted time with offset information
     static ServerTimeWithOffsetResponse getServerTimeWithOffset(Client& client, int utcOffset) {
         std::string offsetStr = (utcOffset >= 0) ? ("&utc=+" + std::to_string(utcOffset)) : ("&utc=" + std::to_string(utcOffset));
-        return client.send<ServerTimeWithOffsetResponse>(
-            cpr::Method::GET,
+        return client.get<ServerTimeWithOffsetResponse>(
             client.url(Endpoints::Time, offsetStr)
         );
     }

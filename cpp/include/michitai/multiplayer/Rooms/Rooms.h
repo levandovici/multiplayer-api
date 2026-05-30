@@ -354,8 +354,7 @@ public:
                                           const std::optional<TRules>& rules = std::nullopt) {
         RoomCreateRequest<TPlayerData, TRules> request(roomName, maxPlayers, password,
                                                        hostSwitch, realtime, playerData, rules);
-        return client.send<RoomCreateResponse>(
-            cpr::Method::POST,
+        return client.post<RoomCreateResponse>(
             client.url(Endpoints::GameRoomCreate, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -367,8 +366,7 @@ public:
                                          const std::optional<std::string>& search = std::nullopt,
                                          const std::optional<int>& limit = std::nullopt) {
         RoomListRequest request{search, limit};
-        return client.send<RoomListResponse<T>>(
-            cpr::Method::POST,
+        return client.post<RoomListResponse<T>>(
             client.url(Endpoints::GameRoomList),
             request.toJson()
         );
@@ -390,14 +388,12 @@ public:
         bool hasBody = password.has_value() || playerData.has_value();
         if (hasBody) {
             RoomJoinRequest<T> request(password, playerData);
-            return client.send<RoomJoinResponse>(
-                cpr::Method::POST,
+            return client.post<RoomJoinResponse>(
                 client.url(endpoint, "&player_token=" + playerToken),
                 request.toJson()
             );
         } else {
-            return client.send<RoomJoinResponse>(
-                cpr::Method::POST,
+            return client.post<RoomJoinResponse>(
                 client.url(endpoint, "&player_token=" + playerToken)
             );
         }
@@ -406,8 +402,7 @@ public:
     /// Leaves the current game room.
     static RoomLeaveResponse leaveRoom(Client& client,
                                         const std::string& playerToken) {
-        return client.send<RoomLeaveResponse>(
-            cpr::Method::POST,
+        return client.post<RoomLeaveResponse>(
             client.url(Endpoints::GameRoomLeave, "&player_token=" + playerToken)
         );
     }
@@ -416,8 +411,7 @@ public:
     template<typename T = nlohmann::json>
     static RoomPlayersResponse<T> getRoomPlayers(Client& client,
                                                   const std::string& playerToken) {
-        return client.send<RoomPlayersResponse<T>>(
-            cpr::Method::GET,
+        return client.get<RoomPlayersResponse<T>>(
             client.url(Endpoints::GameRoomPlayers, "&player_token=" + playerToken)
         );
     }
@@ -425,8 +419,7 @@ public:
     /// Sends a heartbeat to maintain the player's presence in the game room.
     static HeartbeatResponse sendRoomHeartbeat(Client& client,
                                                const std::string& playerToken) {
-        return client.send<HeartbeatResponse>(
-            cpr::Method::POST,
+        return client.post<HeartbeatResponse>(
             client.url(Endpoints::GameRoomHeartbeat, "&player_token=" + playerToken)
         );
     }
@@ -435,8 +428,7 @@ public:
     template<typename T = nlohmann::json>
     static CurrentRoomResponse<T> getCurrentRoom(Client& client,
                                                   const std::string& playerToken) {
-        return client.send<CurrentRoomResponse<T>>(
-            cpr::Method::GET,
+        return client.get<CurrentRoomResponse<T>>(
             client.url(Endpoints::GameRoomCurrent, "&player_token=" + playerToken)
         );
     }
@@ -444,8 +436,7 @@ public:
     /// Stops the current game room and removes all associated data (host only).
     static SuccessResponse stopRoom(Client& client,
                                     const std::string& playerToken) {
-        return client.send<SuccessResponse>(
-            cpr::Method::POST,
+        return client.post<SuccessResponse>(
             client.url(Endpoints::GameRoomStop, "&player_token=" + playerToken)
         );
     }
@@ -455,8 +446,7 @@ public:
                                        const std::string& playerToken,
                                        int playerId) {
         RoomKickRequest request(playerId);
-        return client.send<RoomKickResponse>(
-            cpr::Method::POST,
+        return client.post<RoomKickResponse>(
             client.url(Endpoints::GameRoomKick, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -467,8 +457,7 @@ public:
                                               const std::string& playerToken,
                                               const std::optional<std::string>& password = std::nullopt) {
         RoomPasswordUpdateRequest request(password);
-        return client.send<SuccessResponse>(
-            cpr::Method::POST,
+        return client.post<SuccessResponse>(
             client.url(Endpoints::GameRoomPassword, "&player_token=" + playerToken),
             request.toJson()
         );

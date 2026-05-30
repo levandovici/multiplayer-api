@@ -360,8 +360,7 @@ public:
         const std::optional<std::string>& search = std::nullopt,
         const std::optional<int>& limit = std::nullopt) {
         MatchmakingListRequest request{search, limit};
-        return client.send<MatchmakingListResponse<T>>(
-            cpr::Method::POST,
+        return client.post<MatchmakingListResponse<T>>(
             client.url(Endpoints::MatchmakingList),
             request.toJson()
         );
@@ -385,8 +384,7 @@ public:
         MatchmakingCreateRequest<TPlayerData, TRules> request(
             matchmakingName, maxPlayers, strictFull, joinByRequests,
             hostSwitch, canLeaveRoom, realtimeRoom, password, playerData, rules);
-        return client.send<MatchmakingCreateResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingCreateResponse>(
             client.url(Endpoints::MatchmakingCreate, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -397,8 +395,7 @@ public:
     static MatchmakingCurrentResponse<T> getCurrentMatchmakingStatus(
         Client& client,
         const std::string& playerToken) {
-        return client.send<MatchmakingCurrentResponse<T>>(
-            cpr::Method::GET,
+        return client.get<MatchmakingCurrentResponse<T>>(
             client.url(Endpoints::MatchmakingCurrent, "&player_token=" + playerToken)
         );
     }
@@ -423,14 +420,12 @@ public:
             } else {
                 jsonData = nlohmann::json(playerData.value());
             }
-            return client.send<MatchmakingDirectJoinResponse>(
-                cpr::Method::POST,
+            return client.post<MatchmakingDirectJoinResponse>(
                 client.url(endpoint, "&player_token=" + playerToken),
                 jsonData
             );
         } else {
-            return client.send<MatchmakingDirectJoinResponse>(
-                cpr::Method::POST,
+            return client.post<MatchmakingDirectJoinResponse>(
                 client.url(endpoint, "&player_token=" + playerToken)
             );
         }
@@ -440,8 +435,7 @@ public:
     static MatchmakingLeaveResponse leaveMatchmaking(
         Client& client,
         const std::string& playerToken) {
-        return client.send<MatchmakingLeaveResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingLeaveResponse>(
             client.url(Endpoints::MatchmakingLeave, "&player_token=" + playerToken)
         );
     }
@@ -451,8 +445,7 @@ public:
     static MatchmakingPlayersResponse<T> getMatchmakingPlayers(
         Client& client,
         const std::string& playerToken) {
-        return client.send<MatchmakingPlayersResponse<T>>(
-            cpr::Method::GET,
+        return client.get<MatchmakingPlayersResponse<T>>(
             client.url(Endpoints::MatchmakingPlayers, "&player_token=" + playerToken)
         );
     }
@@ -461,8 +454,7 @@ public:
     static MatchmakingHeartbeatResponse sendMatchmakingHeartbeat(
         Client& client,
         const std::string& playerToken) {
-        return client.send<MatchmakingHeartbeatResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingHeartbeatResponse>(
             client.url(Endpoints::MatchmakingHeartbeat, "&player_token=" + playerToken)
         );
     }
@@ -471,8 +463,7 @@ public:
     static MatchmakingRemoveResponse removeMatchmakingLobby(
         Client& client,
         const std::string& playerToken) {
-        return client.send<MatchmakingRemoveResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingRemoveResponse>(
             client.url(Endpoints::MatchmakingRemove, "&player_token=" + playerToken)
         );
     }
@@ -481,8 +472,7 @@ public:
     static MatchmakingStartResponse startGameFromMatchmaking(
         Client& client,
         const std::string& playerToken) {
-        return client.send<MatchmakingStartResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingStartResponse>(
             client.url(Endpoints::MatchmakingStart, "&player_token=" + playerToken)
         );
     }
@@ -491,8 +481,7 @@ public:
     static SuccessResponse stopMatchmaking(
         Client& client,
         const std::string& playerToken) {
-        return client.send<SuccessResponse>(
-            cpr::Method::POST,
+        return client.post<SuccessResponse>(
             client.url(Endpoints::MatchmakingStop, "&player_token=" + playerToken)
         );
     }
@@ -503,8 +492,7 @@ public:
         const std::string& playerToken,
         int playerId) {
         MatchmakingKickRequest request(playerId);
-        return client.send<MatchmakingKickResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingKickResponse>(
             client.url(Endpoints::MatchmakingKick, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -516,8 +504,7 @@ public:
         const std::string& playerToken,
         const std::optional<std::string>& password = std::nullopt) {
         MatchmakingPasswordUpdateRequest request(password);
-        return client.send<SuccessResponse>(
-            cpr::Method::POST,
+        return client.post<SuccessResponse>(
             client.url(Endpoints::MatchmakingPassword, "&player_token=" + playerToken),
             request.toJson()
         );

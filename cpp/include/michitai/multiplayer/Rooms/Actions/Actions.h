@@ -271,8 +271,7 @@ public:
                                             const SubmitAction<T>& action) {
         ActionSubmitRequest<T> request(action.targetPlayers, action.actionType, 
                                        action.data, action.targetPlayerIds);
-        return client.send<ActionSubmitResponse>(
-            cpr::Method::POST,
+        return client.post<ActionSubmitResponse>(
             client.url(Endpoints::GameRoomActions, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -282,8 +281,7 @@ public:
     template<typename T = nlohmann::json>
     static ActionPollResponse<T> pollActions(Client& client,
                                              const std::string& playerToken) {
-        return client.send<ActionPollResponse<T>>(
-            cpr::Method::GET,
+        return client.get<ActionPollResponse<T>>(
             client.url(Endpoints::GameRoomActionsPoll, "&player_token=" + playerToken)
         );
     }
@@ -292,8 +290,7 @@ public:
     template<typename T = nlohmann::json>
     static ActionPendingResponse<T> getPendingActions(Client& client,
                                                       const std::string& playerToken) {
-        return client.send<ActionPendingResponse<T>>(
-            cpr::Method::GET,
+        return client.get<ActionPendingResponse<T>>(
             client.url(Endpoints::GameRoomActionsPending, "&player_token=" + playerToken)
         );
     }
@@ -310,8 +307,7 @@ public:
         if (pos != std::string::npos) {
             endpoint.replace(pos, 3, std::to_string(actionId));
         }
-        return client.send<ActionCompleteResponse>(
-            cpr::Method::POST,
+        return client.post<ActionCompleteResponse>(
             client.url(endpoint, "&player_token=" + playerToken),
             request.toJson()
         );

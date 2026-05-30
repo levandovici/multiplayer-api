@@ -152,8 +152,7 @@ public:
     /// @param playerToken The player's private authentication token
     /// @return Response containing the realtime token
     static TokenResponse getToken(Client& client, const std::string& playerToken) {
-        return client.send<TokenResponse>(
-            cpr::Method::POST,
+        return client.post<TokenResponse>(
             client.url(Endpoints::RealtimeToken, "&player_token=" + playerToken)
         );
     }

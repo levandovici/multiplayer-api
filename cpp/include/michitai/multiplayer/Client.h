@@ -71,33 +71,122 @@ public:
     /// @return Complete URL with API token and private token
     std::string privateUrl(const std::string& endpoint, const std::string& extra = "") const;
     
-    /// Send an HTTP request to the API and deserialize the response
+    /// Send an HTTP GET request to the API and deserialize the response
     /// @tparam T The response type, must be constructible from JSON
-    /// @param method The HTTP method (GET, POST, PUT, DELETE)
     /// @param url The complete URL to send the request to
-    /// @param body Optional request body to serialize as JSON
     /// @return Deserialized API response of type T
     template<typename T>
-    T send(cpr::Method method, const std::string& url, const nlohmann::json& body = nullptr) {
-        cpr::Response response;
+    T get(const std::string& url) {
+        cpr::Response response = cpr::Get(
+            url,
+            cpr::Header{{"Content-Type", "application/json"}},
+            cpr::Timeout{30000}
+        );
         
-        if (body != nullptr) {
-            std::string bodyStr = body.dump();
-            response = cpr::cpr::Request(
-                method,
-                url,
-                cpr::Header{{"Content-Type", "application/json"}},
-                cpr::Body{bodyStr},
-                cpr::Timeout{30000} // 30 second timeout
-            );
-        } else {
-            response = cpr::cpr::Request(
-                method,
-                url,
-                cpr::Header{{"Content-Type", "application/json"}},
-                cpr::Timeout{30000}
-            );
+        logger_->log("API Response: " + response.text);
+        
+        try {
+            nlohmann::json jsonResponse = nlohmann::json::parse(response.text);
+            T result = T::fromJson(jsonResponse);
+            
+            if (!result.success) {
+                logger_->error("API Error: " + result.error);
+            }
+            
+            return result;
+        } catch (const nlohmann::json::exception& ex) {
+            logger_->warn("JSON Deserialization Error. Raw: " + response.text + ". Exception: " + ex.what());
+            
+            T result;
+            result.success = false;
+            result.error = "Failed to deserialize response";
+            return result;
         }
+    }
+
+    /// Send an HTTP POST request to the API and deserialize the response
+    /// @tparam T The response type, must be constructible from JSON
+    /// @param url The complete URL to send the request to
+    /// @param body Request body to serialize as JSON
+    /// @return Deserialized API response of type T
+    template<typename T>
+    T post(const std::string& url, const nlohmann::json& body) {
+        std::string bodyStr = body.dump();
+        cpr::Response response = cpr::Post(
+            url,
+            cpr::Header{{"Content-Type", "application/json"}},
+            cpr::Body{bodyStr},
+            cpr::Timeout{30000}
+        );
+        
+        logger_->log("API Response: " + response.text);
+        
+        try {
+            nlohmann::json jsonResponse = nlohmann::json::parse(response.text);
+            T result = T::fromJson(jsonResponse);
+            
+            if (!result.success) {
+                logger_->error("API Error: " + result.error);
+            }
+            
+            return result;
+        } catch (const nlohmann::json::exception& ex) {
+            logger_->warn("JSON Deserialization Error. Raw: " + response.text + ". Exception: " + ex.what());
+            
+            T result;
+            result.success = false;
+            result.error = "Failed to deserialize response";
+            return result;
+        }
+    }
+
+    /// Send an HTTP PUT request to the API and deserialize the response
+    /// @tparam T The response type, must be constructible from JSON
+    /// @param url The complete URL to send the request to
+    /// @param body Request body to serialize as JSON
+    /// @return Deserialized API response of type T
+    template<typename T>
+    T put(const std::string& url, const nlohmann::json& body) {
+        std::string bodyStr = body.dump();
+        cpr::Response response = cpr::Put(
+            url,
+            cpr::Header{{"Content-Type", "application/json"}},
+            cpr::Body{bodyStr},
+            cpr::Timeout{30000}
+        );
+        
+        logger_->log("API Response: " + response.text);
+        
+        try {
+            nlohmann::json jsonResponse = nlohmann::json::parse(response.text);
+            T result = T::fromJson(jsonResponse);
+            
+            if (!result.success) {
+                logger_->error("API Error: " + result.error);
+            }
+            
+            return result;
+        } catch (const nlohmann::json::exception& ex) {
+            logger_->warn("JSON Deserialization Error. Raw: " + response.text + ". Exception: " + ex.what());
+            
+            T result;
+            result.success = false;
+            result.error = "Failed to deserialize response";
+            return result;
+        }
+    }
+
+    /// Send an HTTP DELETE request to the API and deserialize the response
+    /// @tparam T The response type, must be constructible from JSON
+    /// @param url The complete URL to send the request to
+    /// @return Deserialized API response of type T
+    template<typename T>
+    T del(const std::string& url) {
+        cpr::Response response = cpr::Delete(
+            url,
+            cpr::Header{{"Content-Type", "application/json"}},
+            cpr::Timeout{30000}
+        );
         
         logger_->log("API Response: " + response.text);
         

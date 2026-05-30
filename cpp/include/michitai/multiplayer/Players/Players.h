@@ -258,8 +258,7 @@ public:
                                                    const std::string& name,
                                                    const std::optional<T>& playerData = std::nullopt) {
         PlayerRegisterRequest<T> request(name, playerData);
-        return client.send<PlayerRegisterResponse>(
-            cpr::Method::POST,
+        return client.post<PlayerRegisterResponse>(
             client.url(Endpoints::GamePlayersRegister),
             request.toJson()
         );
@@ -272,8 +271,7 @@ public:
     template<typename T = nlohmann::json>
     static PlayerAuthResponse<T> authenticatePlayer(Client& client,
                                                       const std::string& playerToken) {
-        return client.send<PlayerAuthResponse<T>>(
-            cpr::Method::PUT,
+        return client.put<PlayerAuthResponse<T>>(
             client.url(Endpoints::GamePlayersLogin, "&player_token=" + playerToken)
         );
     }
@@ -284,8 +282,7 @@ public:
     /// @return Response confirming the heartbeat was received
     static PlayerHeartbeatResponse sendPlayerHeartbeat(Client& client,
                                                          const std::string& playerToken) {
-        return client.send<PlayerHeartbeatResponse>(
-            cpr::Method::POST,
+        return client.post<PlayerHeartbeatResponse>(
             client.url(Endpoints::GamePlayersHeartbeat, "&player_token=" + playerToken)
         );
     }
@@ -296,8 +293,7 @@ public:
     /// @return Response confirming the logout
     static PlayerLogoutResponse logoutPlayer(Client& client,
                                                const std::string& playerToken) {
-        return client.send<PlayerLogoutResponse>(
-            cpr::Method::POST,
+        return client.post<PlayerLogoutResponse>(
             client.url(Endpoints::GamePlayersLogout, "&player_token=" + playerToken)
         );
     }
@@ -311,8 +307,7 @@ public:
                                               const std::string& playerToken,
                                               const std::string& newName) {
         PlayerRenameRequest request(newName);
-        return client.send<PlayerRenameResponse>(
-            cpr::Method::PUT,
+        return client.put<PlayerRenameResponse>(
             client.url(Endpoints::GamePlayersRename, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -329,8 +324,7 @@ public:
                                         BanTime banDuration,
                                         const std::optional<std::string>& banReason = std::nullopt) {
         PlayerBanRequest request(playerId, banDuration, banReason);
-        return client.send<PlayerBanResponse>(
-            cpr::Method::POST,
+        return client.post<PlayerBanResponse>(
             client.privateUrl(Endpoints::GamePlayersBan),
             request.toJson()
         );
@@ -343,8 +337,7 @@ public:
     static PlayerUnbanResponse unbanPlayer(Client& client,
                                             int playerId) {
         PlayerUnbanRequest request(playerId);
-        return client.send<PlayerUnbanResponse>(
-            cpr::Method::POST,
+        return client.post<PlayerUnbanResponse>(
             client.privateUrl(Endpoints::GamePlayersUnban),
             request.toJson()
         );
@@ -357,8 +350,7 @@ public:
     template<typename T = nlohmann::json>
     static PlayerDataResponse<T> getPlayerData(Client& client,
                                                 const std::string& playerToken) {
-        return client.send<PlayerDataResponse<T>>(
-            cpr::Method::GET,
+        return client.get<PlayerDataResponse<T>>(
             client.url(Endpoints::GameDataPlayerGet, "&player_token=" + playerToken)
         );
     }
@@ -378,8 +370,7 @@ public:
         } else {
             jsonData = nlohmann::json(data);
         }
-        return client.send<SuccessResponse>(
-            cpr::Method::PUT,
+        return client.put<SuccessResponse>(
             client.url(Endpoints::GameDataPlayerUpdate, "&player_token=" + playerToken),
             jsonData
         );

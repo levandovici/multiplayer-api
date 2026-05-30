@@ -111,8 +111,7 @@ public:
         const std::vector<std::string>& sortBy,
         int limit = 10) {
         LeaderboardRequest request(sortBy, limit);
-        return client.send<LeaderboardResponse<T>>(
-            cpr::Method::POST,
+        return client.post<LeaderboardResponse<T>>(
             client.url(Endpoints::Leaderboard),
             request.toJson()
         );

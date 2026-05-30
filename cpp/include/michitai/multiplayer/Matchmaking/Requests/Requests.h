@@ -173,8 +173,7 @@ public:
         MatchmakingCreateRequest<TPlayerData, TRules> request(matchmakingName, maxPlayers, strictFull, true,
                                                                hostSwitch, canLeaveRoom, realtimeRoom,
                                                                password, playerData, rules);
-        return client.send<MatchmakingCreateResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingCreateResponse>(
             client.url(Endpoints::MatchmakingCreate, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -200,14 +199,12 @@ public:
             } else {
                 jsonData = nlohmann::json(playerData.value());
             }
-            return client.send<MatchmakingJoinRequestResponse>(
-                cpr::Method::POST,
+            return client.post<MatchmakingJoinRequestResponse>(
                 client.url(endpoint, "&player_token=" + playerToken),
                 jsonData
             );
         } else {
-            return client.send<MatchmakingJoinRequestResponse>(
-                cpr::Method::POST,
+            return client.post<MatchmakingJoinRequestResponse>(
                 client.url(endpoint, "&player_token=" + playerToken)
             );
         }
@@ -225,8 +222,7 @@ public:
         if (pos != std::string::npos) {
             endpoint.replace(pos, 3, requestId);
         }
-        return client.send<MatchmakingPermissionResponse>(
-            cpr::Method::POST,
+        return client.post<MatchmakingPermissionResponse>(
             client.url(endpoint, "&player_token=" + playerToken),
             request.toJson()
         );
@@ -242,8 +238,7 @@ public:
         if (pos != std::string::npos) {
             endpoint.replace(pos, 3, requestId);
         }
-        return client.send<MatchmakingRequestStatusResponse>(
-            cpr::Method::GET,
+        return client.get<MatchmakingRequestStatusResponse>(
             client.url(endpoint, "&player_token=" + playerToken)
         );
     }
