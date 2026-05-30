@@ -175,7 +175,7 @@ $site_twitter = "@michitai";
                     <div class="glass-effect rounded-2xl p-6 sticky top-24">
                         <h4 class="text-white font-bold mb-4">Classes</h4>
                         <nav class="space-y-2">
-                            <a href="#multiplayersdk" class="block text-white/70 hover:text-white py-1 text-sm transition">MultiplayerSDK</a>
+                            <a href="#client" class="block text-white/70 hover:text-white py-1 text-sm transition">Client</a>
                             <a href="#player-management" class="block text-white/70 hover:text-white py-1 text-sm transition">Player Management</a>
                             <a href="#game-data" class="block text-white/70 hover:text-white py-1 text-sm transition">Game Data</a>
                             <a href="#time-management" class="block text-white/70 hover:text-white py-1 text-sm transition">Time Management</a>
@@ -192,15 +192,15 @@ $site_twitter = "@michitai";
                 <!-- Main Content -->
                 <div class="lg:col-span-3 space-y-8">
                     
-                    <!-- GameSDK Class -->
-                    <div id="multiplayersdk" class="glass-effect rounded-2xl overflow-hidden">
+                    <!-- Client Class -->
+                    <div id="client" class="glass-effect rounded-2xl overflow-hidden">
                         <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-6">
-                            <h2 class="text-2xl font-bold text-white">GameSDK</h2>
+                            <h2 class="text-2xl font-bold text-white">Client</h2>
                             <p class="text-white/80">Main SDK class for Unity multiplayer functionality</p>
                         </div>
                         <div class="p-6">
                             <h3 class="text-lg font-semibold text-white mb-3">Constructor</h3>
-                            <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public GameSDK(string apiToken, string apiPrivateToken, string baseUrl = "https://api.michitai.com/api", 
+                            <pre class="bg-black/30 text-purple-400 p-3 rounded text-sm overflow-x-auto whitespace-pre-wrap break-all"><code>public Client(string apiToken, string apiPrivateToken, string baseUrl = "https://api.michitai.com/api", 
                ILogger logger = null, HttpClient httpClient = null, bool useUnityFormat = true)</code></pre>
                             <p class="text-white/70 mt-2">Initializes the SDK with API tokens and optional Unity formatting.</p>
                         </div>

@@ -138,14 +138,14 @@ $site_twitter = "@michitai";
                             <i class="fas fa-download mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download .NET SDK</div>
-                                <div class="text-xs opacity-80">SDK.zip - 45KB</div>
+                                <div class="text-xs opacity-80">SDK.zip</div>
                             </div>
                         </button>
                         <button id="downloadDotnetExample" class="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
                             <i class="fas fa-code mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download Example</div>
-                                <div class="text-xs opacity-80">Game.cs - 20KB</div>
+                                <div class="text-xs opacity-80">Game.cs</div>
                             </div>
                         </button>
                         <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
@@ -177,7 +177,7 @@ $site_twitter = "@michitai";
                             API Reference
                         </h4>
                         <nav class="space-y-2">
-                            <a href="#gamesdk-class" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">GameSDK Class</a>
+                            <a href="#client-class" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Client Class</a>
                             <a href="#player-management" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Player Management</a>
                             <a href="#game-data" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Game Data</a>
                             <a href="#time-management" class="block text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition">Time Management</a>
@@ -193,18 +193,18 @@ $site_twitter = "@michitai";
                 
                 <!-- Main Content -->
                 <div class="col-span-12 lg:col-span-9 space-y-8">
-                    <!-- GameSDK Class -->
-                    <div id="gamesdk-class" class="glass-effect rounded-xl p-8">
+                    <!-- Client Class -->
+                    <div id="client-class" class="glass-effect rounded-xl p-8">
                         <div class="flex items-center mb-6">
                             <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center mr-4">
                                 <i class="fab fa-microsoft text-2xl text-white"></i>
                             </div>
-                            <h4 class="text-2xl font-bold text-white">GameSDK</h4>
+                            <h4 class="text-2xl font-bold text-white">Client</h4>
                         </div>
                         
                         <div class="bg-black/50 rounded-lg p-4 mb-6">
                             <h5 class="text-green-400 font-mono text-sm mb-2">Constructor</h5>
-                            <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public GameSDK(
+                            <pre class="text-sm text-white overflow-x-auto"><code class="language-csharp">public Client(
     string apiToken, 
     string apiPrivateToken, 
     string baseUrl = "https://api.michitai.com/api",

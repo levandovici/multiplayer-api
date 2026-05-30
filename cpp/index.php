@@ -138,14 +138,14 @@ $site_twitter = "@michitai";
                             <i class="fas fa-download mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download C++ SDK</div>
-                                <div class="text-xs opacity-80">SDK.zip - 50KB</div>
+                                <div class="text-xs opacity-80">SDK.zip</div>
                             </div>
                         </button>
                         <button id="downloadCppExample" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
                             <i class="fas fa-code mr-3"></i>
                             <div class="text-left">
                                 <div class="font-bold">Download Example</div>
-                                <div class="text-xs opacity-80">Game.cpp - 22KB</div>
+                                <div class="text-xs opacity-80">Game.cpp</div>
                             </div>
                         </button>
                         <a href="https://github.com/levandovici/multiplayer-sdk" target="_blank" class="flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
