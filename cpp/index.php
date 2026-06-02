@@ -601,6 +601,14 @@ static PollUpdatesResponse&lt;T&gt; pollUpdates(
                         
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">Constructor</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">Realtime(
+    const std::string& realtimeWebSocketUrl = "wss://realtime.michitai.com"
+)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Initializes the realtime WebSocket client with optional custom server URL.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-purple-400 font-mono text-sm mb-2">getToken (Static)</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">static TokenResponse getToken(
     Client& client,
@@ -616,7 +624,42 @@ static PollUpdatesResponse&lt;T&gt; pollUpdates(
     const std::string& token,
     const std::string& clientType = "json"
 )</code></pre>
-                                <p class="text-gray-400 text-sm mt-2">Constructs a WebSocket URL from server info and token. Full WebSocket implementation requires additional dependencies (e.g., websocketpp, uWebSockets).</p>
+                                <p class="text-gray-400 text-sm mt-2">Constructs a WebSocket URL from server info and token.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">connect</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">bool connect(const std::string& realtimeToken)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Connects to the WebSocket server using the realtime token. Returns true if successful, false if failed. Requires WebSocket library implementation (e.g., websocketpp, uWebSockets).</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">send</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">void send(
+    RoomTargetPlayer target,
+    const std::string& command,
+    const nlohmann::json& data = nlohmann::json::object(),
+    const std::vector&lt;int&gt;& targetIds = {}
+)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Sends a message to specific targets (host, all, others, or specific player IDs) with optional data. Requires WebSocket library implementation.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">disconnect</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">void disconnect()</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Disconnects from the WebSocket server and cleans up resources. Requires WebSocket library implementation.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">setReceiveCallback</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">void setReceiveCallback(ReceiveCallback callback)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Sets the callback function to be invoked when a message is received from the server.</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-purple-400 font-mono text-sm mb-2">setConnectedCallback</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-cpp">void setConnectedCallback(ConnectedCallback callback)</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Sets the callback function to be invoked when the WebSocket connection is established.</p>
                             </div>
                         </div>
                     </div>
