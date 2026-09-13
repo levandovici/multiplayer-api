@@ -544,6 +544,7 @@ function leaveRoom() {
 }
 
 function updateRoomPassword() {
+    global $pdo;
     $context = getAuthContext();
     $player = requirePlayer($context);
 
@@ -569,7 +570,6 @@ function updateRoomPassword() {
 
     $password = isset($data['password']) && !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
 
-    global $pdo;
     try {
         $stmt = $pdo->prepare("UPDATE game_rooms SET password = ? WHERE room_id = ?");
         $stmt->execute([$password, $roomId]);
