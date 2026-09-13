@@ -4,7 +4,7 @@ require_once 'php/config.php';
 
 // Set page-specific meta tag variables
 $title = "Multiplayer API – Cross-platform Game Backend";
-$description = "Open source (MIT-0) multiplayer backend for game developers: player accounts, game rooms, matchmaking, leaderboards and realtime updates. SDKs for Unity, Java, .NET and C++ plus a universal REST API.";
+$description = "Open source (MIT-0) multiplayer backend for game developers: player accounts, game rooms, matchmaking, leaderboards and realtime updates. SDKs for Unity, Java, .NET, Python and C++ plus a universal REST API.";
 $image = "https://" . $_SERVER['HTTP_HOST'] . "/michitai.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -26,7 +26,7 @@ $site_twitter = "@michitai";
     <link rel="author" href="/humans.txt">
     <meta name="theme-color" content="#667eea">
     <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="keywords" content="multiplayer API, game backend, game server, matchmaking, leaderboards, Unity SDK, Java SDK, .NET SDK, C++ SDK, REST API, open source">
+    <meta name="keywords" content="multiplayer API, game backend, game server, matchmaking, leaderboards, Unity SDK, Java SDK, .NET SDK, Python SDK, C++ SDK, REST API, open source">
     <meta name="author" content="Nichita Levandovici">
 
     <?php require_once 'php/meta-tags.php'; ?>
@@ -41,7 +41,7 @@ $site_twitter = "@michitai";
                 "name": "Multiplayer API",
                 "alternateName": "Michitai Multiplayer API",
                 "url": "https://api.michitai.com/",
-                "description": "Cross-platform multiplayer backend API for game developers with SDKs for Unity, Java, .NET and C++."
+                "description": "Cross-platform multiplayer backend API for game developers with SDKs for Unity, Java, .NET, Python and C++."
             },
             {
                 "@type": "SoftwareApplication",
@@ -49,7 +49,7 @@ $site_twitter = "@michitai";
                 "url": "https://api.michitai.com/",
                 "applicationCategory": "DeveloperApplication",
                 "operatingSystem": "Cross-platform",
-                "description": "Open source multiplayer game backend: player accounts, game rooms, matchmaking, leaderboards and realtime updates via REST API and SDKs for Unity, Java, .NET and C++.",
+                "description": "Open source multiplayer game backend: player accounts, game rooms, matchmaking, leaderboards and realtime updates via REST API and SDKs for Unity, Java, .NET, Python and C++.",
                 "license": "https://api.michitai.com/LICENSE",
                 "isAccessibleForFree": true,
                 "author": {
@@ -344,7 +344,7 @@ pre::-webkit-scrollbar-thumb:hover {
             <!-- Platform Selection -->
             <div class="mb-12">
                 <h3 class="text-2xl font-bold text-white mb-6 text-center">Cross-Platform</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
                     <!-- Unity Platform -->
                     <a href="unity/index.php" class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-300 group">
                         <div class="w-20 h-20 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform">
@@ -383,7 +383,20 @@ pre::-webkit-scrollbar-thumb:hover {
                             <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>C#</span>
                         </div>
                     </a>
-                    
+
+                    <!-- Python Platform -->
+                    <a href="python/index.php" class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-300 group">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-yellow-500 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform">
+                            <i class="fab fa-python text-3xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">Python</h4>
+                        <p class="text-white/80 text-center mb-4">Use REST API + JSON</p>
+                        <div class="flex items-center justify-center space-x-4">
+                            <span class="text-yellow-400 text-sm"><i class="fas fa-clock mr-1"></i>Coming Soon</span>
+                            <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>Python</span>
+                        </div>
+                    </a>
+
                     <!-- C++ Platform -->
                     <a href="cpp/index.php" class="glass-effect p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-300 group">
                         <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform">
@@ -432,7 +445,7 @@ pre::-webkit-scrollbar-thumb:hover {
                 <p class="text-white/70 text-lg max-w-3xl mx-auto">
                     A hosted multiplayer backend that handles the hard parts of online games —
                     players, rooms, matchmaking and leaderboards — so you can focus on gameplay.
-                    One REST API, four official SDKs, global server infrastructure.
+                    One REST API, five official SDKs, global server infrastructure.
                 </p>
             </div>
 
