@@ -61,6 +61,8 @@
                 
                 <div class="flex items-center space-x-3">
                     <a href="index.php" class="text-white/70 hover:text-white transition-colors font-medium">Home</a>
+                    <a href="about.php" class="text-white/70 hover:text-white transition-colors font-medium">About</a>
+                    <a href="faq.php" class="text-white/70 hover:text-white transition-colors font-medium">FAQ</a>
                     <a href="login.php" class="text-white/70 hover:text-white transition-colors font-medium">Sign In</a>
                 </div>
             </div>
@@ -70,7 +72,7 @@
     <div class="max-w-4xl mx-auto px-6 lg:px-8 py-12">
         <div class="glass-effect rounded-2xl p-8 lg:p-12">
             <h1 class="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
-            <p class="text-white/70 mb-8">Last updated: May 24, 2026</p>
+            <p class="text-white/70 mb-8">Last updated: September 13, 2026</p>
 
             <div class="space-y-8 text-white/80">
                 <section>
@@ -156,7 +158,7 @@
                     </ul>
                     
                     <div class="bg-white/5 rounded-lg p-4 mt-4">
-                        <p class="text-white/90">To exercise these rights, contact us at <a href="mailto:support@michitai.com" class="text-blue-400 hover:text-blue-300">support@michitai.com</a> or call <a href="tel:+37376962586" class="text-blue-400 hover:text-blue-300">+373 76 962 586</a>.</p>
+                        <p class="text-white/90">To exercise these rights, contact us at <a href="mailto:support@michitai.com" class="text-blue-400 hover:text-blue-300">support@michitai.com</a> or call <a href="tel:+37369186845" class="text-blue-400 hover:text-blue-300">+373 69 186 845</a>.</p>
                     </div>
                 </section>
 
@@ -188,12 +190,17 @@
                 </section>
 
                 <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">9. Changes to This Policy</h2>
+                    <h2 class="text-2xl font-semibold text-white mb-4">9. Open Source Software</h2>
+                    <p>The Multiplayer API source code and SDKs are released under the <a href="/LICENSE" class="text-blue-400 hover:text-blue-300">MIT No Attribution (MIT-0) license</a>. This Privacy Policy applies only to the hosted service operated at api.michitai.com. If you self-host the software, or use a third party's deployment, that operator is the data controller and their own privacy policy applies — we do not receive or process data from self-hosted instances.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">10. Changes to This Policy</h2>
                     <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date. Continued use of our service after changes constitutes acceptance of the new policy.</p>
                 </section>
 
                 <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">10. Contact Information</h2>
+                    <h2 class="text-2xl font-semibold text-white mb-4">11. Contact Information</h2>
                     <div class="bg-white/5 rounded-lg p-6">
                         <p class="text-white/90">If you have any questions about this Privacy Policy, please contact us:</p>
                         <ul class="mt-4 space-y-2">
@@ -203,7 +210,7 @@
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-phone text-blue-400 w-5 mr-3"></i>
-                                <a href="tel:+37376962586" class="text-blue-400 hover:text-blue-300">+373 76 962 586</a>
+                                <a href="tel:+37369186845" class="text-blue-400 hover:text-blue-300">+373 69 186 845</a>
                             </li>
                         </ul>
                     </div>
@@ -218,6 +225,8 @@
                     <div class="text-sm text-white/60 text-center sm:text-right">
                         <p>© 2026 Nichita Levandovici. All rights reserved.</p>
                         <p class="mt-1">
+                            <a href="about.php" class="text-blue-400 hover:text-blue-300">About</a> •
+                            <a href="faq.php" class="text-blue-400 hover:text-blue-300">FAQ</a> •
                             <a href="terms.php" class="text-blue-400 hover:text-blue-300">Terms of Service</a> • 
                             <a href="privacy.php" class="text-blue-400 hover:text-blue-300">Privacy Policy</a>
                         </p>

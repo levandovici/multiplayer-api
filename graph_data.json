@@ -2,9 +2,9 @@
   "metadata": {
     "title": "Lines of Code Over Time",
     "description": "Cumulative lines of code in the multiplayer-api project",
-    "generated": "2026-05-20 14:49:00",
-    "total_commits": 217,
-    "total_loc": 33193
+    "generated": "2026-09-13 11:56:15",
+    "total_commits": 234,
+    "total_loc": 48663
   },
   "data": [
     {
@@ -1521,10 +1521,129 @@
     },
     {
       "x": 1779276418000,
-      "y": 33193,
+      "y": 33200,
       "date": "2026-05-20 14:26:58 +0300",
       "message": "update docs - summaries",
-      "hash": "b2b48eb"
+      "hash": "d663d4a"
+    },
+    {
+      "x": 1779384749000,
+      "y": 33200,
+      "date": "2026-05-21 20:32:29 +0300",
+      "message": "refactor web",
+      "hash": "8ab72dd"
+    },
+    {
+      "x": 1779385587000,
+      "y": 33203,
+      "date": "2026-05-21 20:46:27 +0300",
+      "message": "update limits",
+      "hash": "ec1ac18"
+    },
+    {
+      "x": 1779385896000,
+      "y": 33400,
+      "date": "2026-05-21 20:51:36 +0300",
+      "message": "update roadmap",
+      "hash": "e5ef13c"
+    },
+    {
+      "x": 1779386774000,
+      "y": 33517,
+      "date": "2026-05-21 21:06:14 +0300",
+      "message": "add closed register",
+      "hash": "869b2cb"
+    },
+    {
+      "x": 1779615012000,
+      "y": 34806,
+      "date": "2026-05-24 12:30:12 +0300",
+      "message": "update servers",
+      "hash": "0cb32fa"
+    },
+    {
+      "x": 1779615761000,
+      "y": 34804,
+      "date": "2026-05-24 12:42:41 +0300",
+      "message": "fix logo",
+      "hash": "9da2e14"
+    },
+    {
+      "x": 1779615569000,
+      "y": 34801,
+      "date": "2026-05-24 12:39:29 +0300",
+      "message": "update terms & privacy",
+      "hash": "ded0809"
+    },
+    {
+      "x": 1780150287000,
+      "y": 39388,
+      "date": "2026-05-30 17:11:27 +0300",
+      "message": "release cpp",
+      "hash": "b77c262"
+    },
+    {
+      "x": 1780151552000,
+      "y": 39426,
+      "date": "2026-05-30 17:32:32 +0300",
+      "message": "fix cpp",
+      "hash": "e37b791"
+    },
+    {
+      "x": 1780153873000,
+      "y": 39511,
+      "date": "2026-05-30 18:11:13 +0300",
+      "message": "fix cpp",
+      "hash": "2fa21b8"
+    },
+    {
+      "x": 1780154719000,
+      "y": 39511,
+      "date": "2026-05-30 18:25:19 +0300",
+      "message": "update indexes",
+      "hash": "4270391"
+    },
+    {
+      "x": 1780422547000,
+      "y": 39660,
+      "date": "2026-06-02 20:49:07 +0300",
+      "message": "fix cpp",
+      "hash": "7c46bd6"
+    },
+    {
+      "x": 1781711287000,
+      "y": 39661,
+      "date": "2026-06-17 18:48:07 +0300",
+      "message": "fix Unity - ApiResponse",
+      "hash": "74ae81f"
+    },
+    {
+      "x": 1784710519000,
+      "y": 46069,
+      "date": "2026-07-22 11:55:19 +0300",
+      "message": "release java version",
+      "hash": "e7785b4"
+    },
+    {
+      "x": 1784711101000,
+      "y": 46717,
+      "date": "2026-07-22 12:05:01 +0300",
+      "message": "update java",
+      "hash": "9a351bd"
+    },
+    {
+      "x": 1786895628000,
+      "y": 46690,
+      "date": "2026-08-16 18:53:48 +0300",
+      "message": "MIT License",
+      "hash": "b7a5621"
+    },
+    {
+      "x": 1789287968000,
+      "y": 48663,
+      "date": "2026-09-13 11:26:08 +0300",
+      "message": "update SDK - java version",
+      "hash": "40ce8de"
     }
   ]
 }

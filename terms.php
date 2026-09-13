@@ -61,6 +61,8 @@
                 
                 <div class="flex items-center space-x-3">
                     <a href="index.php" class="text-white/70 hover:text-white transition-colors font-medium">Home</a>
+                    <a href="about.php" class="text-white/70 hover:text-white transition-colors font-medium">About</a>
+                    <a href="faq.php" class="text-white/70 hover:text-white transition-colors font-medium">FAQ</a>
                     <a href="login.php" class="text-white/70 hover:text-white transition-colors font-medium">Sign In</a>
                 </div>
             </div>
@@ -70,7 +72,7 @@
     <div class="max-w-4xl mx-auto px-6 lg:px-8 py-12">
         <div class="glass-effect rounded-2xl p-8 lg:p-12">
             <h1 class="text-4xl font-bold text-white mb-8">Terms of Service</h1>
-            <p class="text-white/70 mb-8">Last updated: May 24, 2026</p>
+            <p class="text-white/70 mb-8">Last updated: September 13, 2026</p>
 
             <div class="space-y-8 text-white/80">
                 <section>
@@ -85,9 +87,9 @@
                         <li>REST API endpoints for multiplayer game development</li>
                         <li>Visual logic constructor for game mechanics</li>
                         <li>Player data management and authentication</li>
-                        <li>Game room and community features</li>
+                        <li>Game rooms, matchmaking and leaderboard features</li>
                         <li>Payment processing and subscription management</li>
-                        <li>C# SDK and development tools</li>
+                        <li>Open source SDKs for Unity, Java, .NET and C++ (MIT-0)</li>
                     </ul>
                 </section>
 
@@ -169,7 +171,7 @@
                             <li>Attempting to exceed plan limits through technical means</li>
                             <li>Using the service for illegal or harmful activities</li>
                             <li>Sharing account credentials with unauthorized users</li>
-                            <li>Reverse engineering or attempting to access source code</li>
+                            <li>Attacking, probing or abusing the hosted service infrastructure</li>
                             <li>Interfering with the service or other users' access</li>
                             <li>Creating excessive load that impacts other users</li>
                         </ul>
@@ -193,10 +195,13 @@
                 </section>
 
                 <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">7. Intellectual Property</h2>
+                    <h2 class="text-2xl font-semibold text-white mb-4">7. Intellectual Property and Open Source License</h2>
                     <div class="space-y-4">
-                        <p>Our service and its original content, features, and functionality are and will remain the exclusive property of Multiplayer API and its licensors. The service is protected by copyright, trademark, and other laws of both the Republic of Moldova and foreign countries.</p>
-                        <p>You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the service without our express written permission.</p>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <p class="text-white/90"><strong>Open Source (MIT-0):</strong> The Multiplayer API source code and all official SDKs (Unity, Java, .NET, C++) are released under the <a href="/LICENSE" class="text-blue-400 hover:text-blue-300">MIT No Attribution license</a>. You may use, copy, modify, merge, publish, distribute, sublicense and/or sell copies of the software for any purpose, commercial or non-commercial, <strong>without attribution</strong>. The software is provided "AS IS", without warranty of any kind.</p>
+                        </div>
+                        <p>The hosted service operated at api.michitai.com — including the "Multiplayer API" and "Michitai" names, logos, and brand assets — remains the property of Nichita Levandovici. The open source license covers the software code only; it does not grant any rights to use our trademarks, branding, or to access the hosted service beyond these Terms.</p>
+                        <p>Games and content you build with the software are entirely yours. We claim no ownership over products created using the API or SDKs.</p>
                     </div>
                 </section>
 
@@ -242,7 +247,7 @@
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-phone text-blue-400 w-5 mr-3"></i>
-                                <a href="tel:+37376962586" class="text-blue-400 hover:text-blue-300">+373 76 962 586</a>
+                                <a href="tel:+37369186845" class="text-blue-400 hover:text-blue-300">+373 69 186 845</a>
                             </li>
                         </ul>
                     </div>
@@ -257,6 +262,8 @@
                     <div class="text-sm text-white/60 text-center sm:text-right">
                         <p>© 2026 Nichita Levandovici. All rights reserved.</p>
                         <p class="mt-1">
+                            <a href="about.php" class="text-blue-400 hover:text-blue-300">About</a> •
+                            <a href="faq.php" class="text-blue-400 hover:text-blue-300">FAQ</a> •
                             <a href="terms.php" class="text-blue-400 hover:text-blue-300">Terms of Service</a> • 
                             <a href="privacy.php" class="text-blue-400 hover:text-blue-300">Privacy Policy</a>
                         </p>

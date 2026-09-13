@@ -836,13 +836,7 @@ $site_twitter = "@michitai";
     </section>
 
     <!-- Footer -->
-    <footer class="glass-effect border-t border-white/10 mt-16">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 text-center">
-            <div class="text-white/60 text-sm">
-                &copy; 2026 Nichita Levandovici. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    <?php include_once __DIR__ . '/../php/footer.php'; ?>
 
     <script>
         // Smooth scrolling

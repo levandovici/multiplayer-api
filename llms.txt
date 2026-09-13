@@ -1,0 +1,62 @@
+# Multiplayer API (api.michitai.com)
+
+> Cross-platform multiplayer backend for game developers. Provides player accounts,
+> game rooms, matchmaking, leaderboards and realtime updates via a REST API and
+> official SDKs. Open source under the MIT No Attribution (MIT-0) license —
+> free to use, modify and redistribute, commercially or otherwise, with no
+> attribution required.
+
+Author: Nichita Levandovici (Michitai), Republic of Moldova
+Contact: support@michitai.com
+
+## Features
+
+- Player management: registration, authentication, sessions, heartbeats,
+  custom JSON player data, timed/permanent bans
+- Game rooms: create/join/leave, room state updates, realtime action broadcast
+- Matchmaking: lobbies, join requests, password-protected matches, direct join
+- Leaderboards: score submission and ranked queries per game
+- Game data storage: structured JSON persistence
+- Server time sync endpoint
+- Multi-region server network (Europe, North America, Asia, India)
+
+## SDKs / Documentation
+
+- [REST API docs](https://api.michitai.com/api/index.php): language-agnostic HTTP endpoints
+- [Unity SDK](https://api.michitai.com/unity/index.php): C# / JsonUtility
+- [Java SDK](https://api.michitai.com/java/index.php): Jackson-based client
+- [.NET SDK](https://api.michitai.com/dotnet/index.php): System.Text.Json client
+- [C++ SDK](https://api.michitai.com/cpp/index.php): nlohmann::json client
+
+## Main endpoints
+
+- `/api/game_players.php` — register, login, heartbeat, logout, rename, ban
+- `/api/game_room.php` — room lifecycle and player actions
+- `/api/matchmaking.php` — lobbies and join requests
+- `/api/leaderboard.php` — score submission and queries
+- `/api/game_data.php` — game data storage
+- `/api/realtime.php` — realtime room events
+- `/api/time.php` — server time (UTC)
+
+Authentication: `api_token` query parameter for developer calls,
+`player_token` for player-scoped calls.
+
+## Site pages
+
+- [Home](https://api.michitai.com/)
+- [About](https://api.michitai.com/about.php)
+- [FAQ](https://api.michitai.com/faq.php)
+- [Servers](https://api.michitai.com/servers/)
+- [Roadmap](https://api.michitai.com/roadmap.php)
+
+## Legal
+
+- [Terms of Service](https://api.michitai.com/terms.php)
+- [Privacy Policy](https://api.michitai.com/privacy.php)
+- [License: MIT No Attribution](https://api.michitai.com/LICENSE)
+
+## Pricing
+
+- Free: 128 MB storage, 1 game, 100 concurrent players
+- Standard ($25/mo): 512 MB, 1 game, 1K concurrent players
+- Pro ($300/mo): 1 GB, 3 games, 2K concurrent players

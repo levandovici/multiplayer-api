@@ -97,7 +97,7 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                     <a href="https://api.michitai.com" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                         <i class="fas fa-home mr-2"></i>Home
                     </a>
-                    <a href="https://api.michitai.com/servers.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                    <a href="https://api.michitai.com/servers/" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                         <i class="fas fa-server mr-2"></i>Servers
                     </a>
                 </div>
@@ -118,18 +118,12 @@ $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             <p class="text-xl text-white/60 mb-12 max-w-2xl mx-auto">
                 Mumbai, India - This server is on standby and can be quickly deployed when clients require it.
             </p>
-            <a href="https://api.michitai.com/servers.php" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-block">
+            <a href="https://api.michitai.com/servers/" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-block">
                 <i class="fas fa-arrow-left mr-2"></i>Back to Servers
             </a>
         </div>
     </section>
 
-    <footer class="glass-effect border-t border-white/10 mt-16">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 text-center">
-            <div class="text-white/60 text-sm">
-                &copy; 2026 Nichita Levandovici. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    <?php include_once __DIR__ . '/../../php/footer.php'; ?>
 </body>
 </html>

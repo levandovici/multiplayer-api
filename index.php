@@ -3,8 +3,8 @@ session_start();
 require_once 'php/config.php';
 
 // Set page-specific meta tag variables
-$title = "Multiplayer API – Cross-platform";
-$description = "A powerful multiplayer API for game developers. Build multiplayer games with ease using our comprehensive SDK and API.";
+$title = "Multiplayer API – Cross-platform Game Backend";
+$description = "Open source (MIT-0) multiplayer backend for game developers: player accounts, game rooms, matchmaking, leaderboards and realtime updates. SDKs for Unity, Java, .NET and C++ plus a universal REST API.";
 $image = "https://" . $_SERVER['HTTP_HOST'] . "/michitai.png";
 $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -21,8 +21,50 @@ $site_twitter = "@michitai";
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="icon" type="image/png" href="/michitai.png">
-    
+    <link rel="apple-touch-icon" href="/michitai.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="author" href="/humans.txt">
+    <meta name="theme-color" content="#667eea">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="keywords" content="multiplayer API, game backend, game server, matchmaking, leaderboards, Unity SDK, Java SDK, .NET SDK, C++ SDK, REST API, open source">
+    <meta name="author" content="Nichita Levandovici">
+
     <?php require_once 'php/meta-tags.php'; ?>
+
+    <!-- Structured data for search engines -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "name": "Multiplayer API",
+                "alternateName": "Michitai Multiplayer API",
+                "url": "https://api.michitai.com/",
+                "description": "Cross-platform multiplayer backend API for game developers with SDKs for Unity, Java, .NET and C++."
+            },
+            {
+                "@type": "SoftwareApplication",
+                "name": "Multiplayer API",
+                "url": "https://api.michitai.com/",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "Cross-platform",
+                "description": "Open source multiplayer game backend: player accounts, game rooms, matchmaking, leaderboards and realtime updates via REST API and SDKs for Unity, Java, .NET and C++.",
+                "license": "https://api.michitai.com/LICENSE",
+                "isAccessibleForFree": true,
+                "author": {
+                    "@type": "Person",
+                    "name": "Nichita Levandovici"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        ]
+    }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -372,7 +414,7 @@ pre::-webkit-scrollbar-thumb:hover {
 
             <!-- Servers Button -->
             <div class="text-center mt-8 flex flex-col md:flex-row justify-center items-center gap-4">
-                <a href="servers.php" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center w-full md:w-auto justify-center">
+                <a href="servers/" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center w-full md:w-auto justify-center">
                     <i class="fas fa-server mr-3"></i>View Servers
                 </a>
                 <a href="roadmap.php" class="btn-secondary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center w-full md:w-auto justify-center">
@@ -382,14 +424,116 @@ pre::-webkit-scrollbar-thumb:hover {
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="glass-effect border-t border-white/10 mt-16">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 text-center">
-            <div class="text-white/60 text-sm">
-                &copy; 2026 Nichita Levandovici. All rights reserved.
+    <!-- What is Multiplayer API -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-4xl font-bold text-white mb-4">What is Multiplayer API?</h2>
+                <p class="text-white/70 text-lg max-w-3xl mx-auto">
+                    A hosted multiplayer backend that handles the hard parts of online games —
+                    players, rooms, matchmaking and leaderboards — so you can focus on gameplay.
+                    One REST API, four official SDKs, global server infrastructure.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-effect floating-card rounded-2xl p-8">
+                    <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-users text-2xl text-purple-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Player Management</h3>
+                    <p class="text-white/70">Registration, authentication, sessions, heartbeats, custom player data and moderation tools including timed and permanent bans.</p>
+                </div>
+                <div class="glass-effect floating-card rounded-2xl p-8">
+                    <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-door-open text-2xl text-pink-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Game Rooms</h3>
+                    <p class="text-white/70">Create and manage rooms, join and leave flows, per-room state updates and realtime action broadcasting between players.</p>
+                </div>
+                <div class="glass-effect floating-card rounded-2xl p-8">
+                    <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-handshake text-2xl text-blue-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Matchmaking</h3>
+                    <p class="text-white/70">Lobbies, join requests, password-protected matches, direct joins and lobby management built into the API.</p>
+                </div>
+                <div class="glass-effect floating-card rounded-2xl p-8">
+                    <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-trophy text-2xl text-yellow-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Leaderboards</h3>
+                    <p class="text-white/70">Submit scores and query ranked leaderboards per game — no extra infrastructure required.</p>
+                </div>
+                <div class="glass-effect floating-card rounded-2xl p-8">
+                    <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-database text-2xl text-green-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Game Data Storage</h3>
+                    <p class="text-white/70">Persist structured game data and player state on the server with simple JSON-based endpoints.</p>
+                </div>
+                <div class="glass-effect floating-card rounded-2xl p-8">
+                    <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-bolt text-2xl text-orange-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Realtime Updates</h3>
+                    <p class="text-white/70">Low-latency room events and a Node.js realtime relay, served from a multi-region server network.</p>
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- Open Source / License -->
+    <section class="py-16">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
+            <div class="glass-effect rounded-2xl p-10 lg:p-14 text-center">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-scale-balanced text-3xl text-white"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-4">Open Source — MIT No Attribution</h2>
+                <p class="text-white/70 text-lg max-w-2xl mx-auto mb-6">
+                    All SDKs and the server source code are released under the
+                    <a href="/LICENSE" class="text-blue-400 hover:text-blue-300 font-medium">MIT-0 license</a>.
+                    Use, copy, modify and distribute them in any project — commercial or not —
+                    with <strong class="text-white">no attribution required</strong>.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="/about.php" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center">
+                        <i class="fas fa-circle-info mr-2"></i>About the Project
+                    </a>
+                    <a href="/faq.php" class="btn-secondary text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center">
+                        <i class="fas fa-circle-question mr-2"></i>FAQ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="py-16">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-white mb-4">Get Started in Minutes</h2>
+                <p class="text-white/70 text-lg">Create a free developer account, generate an API token and make your first call.</p>
+            </div>
+            <div class="glass-effect rounded-2xl p-8">
+                <pre><code class="language-bash"># Register a player in your game
+curl -X POST "https://api.michitai.com/api/game_players.php/register?api_token=YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"player_name": "PlayerOne", "player_data": {"level": 1}}'</code></pre>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+                    <a href="register.php" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>Create Free Account
+                    </a>
+                    <a href="api/index.php" class="text-white/80 hover:text-white font-medium inline-flex items-center">
+                        <i class="fas fa-book mr-2"></i>Read the API Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php include_once __DIR__ . '/php/footer.php'; ?>
     
     <script>
         // Smooth scrolling for anchor links

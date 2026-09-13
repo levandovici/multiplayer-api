@@ -1,0 +1,13 @@
+/* TEAM */
+Author & Maintainer: Nichita Levandovici
+Site: https://api.michitai.com
+Contact: support@michitai.com
+Location: Republic of Moldova
+
+/* SITE */
+Project: Multiplayer API — cross-platform multiplayer backend for games
+License: MIT No Attribution (MIT-0)
+Last update: 2026-09-13
+Stack: PHP, MySQL, Node.js (realtime), Tailwind CSS
+SDKs: Unity (C#/JsonUtility), Java (Jackson), .NET (System.Text.Json), C++ (nlohmann::json)
+Hosting: Hostinger (France) + multi-region server network

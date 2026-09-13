@@ -1,0 +1,17 @@
+{
+    "name": "Multiplayer API",
+    "short_name": "Multiplayer API",
+    "description": "Cross-platform multiplayer backend for game developers. Open source under MIT-0.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1e1e2d",
+    "theme_color": "#667eea",
+    "icons": [
+        {
+            "src": "/michitai.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

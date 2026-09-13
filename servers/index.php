@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'php/config.php';
+require_once '../php/config.php';
 
 // Set page-specific meta tag variables
 $title = "Multiplayer API – Servers";
@@ -22,7 +22,7 @@ $site_twitter = "@michitai";
     <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="icon" type="image/png" href="/michitai.png">
     
-    <?php require_once 'php/meta-tags.php'; ?>
+    <?php require_once '../php/meta-tags.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -148,15 +148,15 @@ $site_twitter = "@michitai";
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="index.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                    <a href="../index.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                         <i class="fas fa-home mr-2"></i>Home
                     </a>
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="cabinet.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <a href="../cabinet.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                             <i class="fas fa-user-circle mr-2"></i>Cabinet
                         </a>
                     <?php else: ?>
-                        <a href="login.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        <a href="../login.php" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
                             <i class="fas fa-sign-in-alt mr-2"></i>Sign In
                         </a>
                     <?php endif; ?>
@@ -194,11 +194,11 @@ $site_twitter = "@michitai";
                         Europe
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <a href="https://par.michitai.com" class="server-link">
+                        <a href="par/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">par.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/par</div>
                                     <div class="text-white/60 text-sm">Paris, France</div>
                                 </div>
                                 <span class="status-badge status-active">
@@ -206,11 +206,11 @@ $site_twitter = "@michitai";
                                 </span>
                             </div>
                         </a>
-                        <a href="https://fra.michitai.com" class="server-link">
+                        <a href="fra/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">fra.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/fra</div>
                                     <div class="text-white/60 text-sm">Frankfurt, Germany</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -218,11 +218,11 @@ $site_twitter = "@michitai";
                                 </span>
                             </div>
                         </a>
-                        <a href="https://vil.michitai.com" class="server-link">
+                        <a href="vil/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">vil.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/vil</div>
                                     <div class="text-white/60 text-sm">Vilnius, Lithuania</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -230,11 +230,11 @@ $site_twitter = "@michitai";
                                 </span>
                             </div>
                         </a>
-                        <a href="https://lon.michitai.com" class="server-link">
+                        <a href="lon/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">lon.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/lon</div>
                                     <div class="text-white/60 text-sm">London, United Kingdom</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -254,11 +254,11 @@ $site_twitter = "@michitai";
                         North America
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <a href="https://bos.michitai.com" class="server-link">
+                        <a href="bos/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">bos.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/bos</div>
                                     <div class="text-white/60 text-sm">Boston</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -266,11 +266,11 @@ $site_twitter = "@michitai";
                                 </span>
                             </div>
                         </a>
-                        <a href="https://phx.michitai.com" class="server-link">
+                        <a href="phx/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">phx.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/phx</div>
                                     <div class="text-white/60 text-sm">Phoenix</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -290,11 +290,11 @@ $site_twitter = "@michitai";
                         Asia
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <a href="https://jkt.michitai.com" class="server-link">
+                        <a href="jkt/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">jkt.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/jkt</div>
                                     <div class="text-white/60 text-sm">Jakarta, Indonesia</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -302,11 +302,11 @@ $site_twitter = "@michitai";
                                 </span>
                             </div>
                         </a>
-                        <a href="https://kul.michitai.com" class="server-link">
+                        <a href="kul/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">kul.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/kul</div>
                                     <div class="text-white/60 text-sm">Kuala Lumpur, Malaysia</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -326,11 +326,11 @@ $site_twitter = "@michitai";
                         India
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <a href="https://bom.michitai.com" class="server-link">
+                        <a href="bom/" class="server-link">
                             <div class="server-item flex items-center space-x-4 p-4 rounded-lg cursor-pointer">
                                 <i class="fas fa-server text-cyan-400 text-xl"></i>
                                 <div class="flex-1">
-                                    <div class="text-white font-semibold">bom.michitai.com</div>
+                                    <div class="text-white font-semibold">api.michitai.com/servers/bom</div>
                                     <div class="text-white/60 text-sm">Mumbai, India</div>
                                 </div>
                                 <span class="status-badge status-planning">
@@ -345,13 +345,6 @@ $site_twitter = "@michitai";
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="glass-effect border-t border-white/10 mt-16">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 text-center">
-            <div class="text-white/60 text-sm">
-                &copy; 2026 Nichita Levandovici. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    <?php include_once __DIR__ . '/../php/footer.php'; ?>
 </body>
 </html>

@@ -1,0 +1,5 @@
+Contact: mailto:support@michitai.com
+Expires: 2027-09-13T00:00:00.000Z
+Preferred-Languages: en, ro, ru
+Canonical: https://api.michitai.com/.well-known/security.txt
+Policy: https://api.michitai.com/terms.php
