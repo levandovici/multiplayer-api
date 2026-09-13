@@ -243,7 +243,48 @@ $site_twitter = "@michitai";
         .task-item:hover::after {
             transform: scaleY(1);
         }
-        
+
+        /* Horizontal roadmap marquee: one row per section, auto-scrolls left */
+        .roadmap-marquee {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+            mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+        }
+
+        .roadmap-track {
+            display: flex;
+            position: relative;
+            width: max-content;
+            will-change: transform;
+        }
+
+        .roadmap-track > .task-item {
+            flex: 0 0 280px;
+            margin-right: 1rem;
+        }
+
+        /* Cards start hidden (only once JS arms the track) and slide in from the right */
+        .roadmap-track.armed > .task-item {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .roadmap-track.armed > .task-item.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .roadmap-track.armed > .task-item.revealed:hover {
+            transform: translateX(5px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .roadmap-marquee {
+                overflow-x: auto;
+            }
+        }
+
         .section-icon {
             display: inline-flex;
             align-items: center;
@@ -411,13 +452,15 @@ $site_twitter = "@michitai";
                             </h3>
                             
                             <?php if (!empty($section['items'])): ?>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <?php foreach ($section['items'] as $item): ?>
-                                        <div class="task-item flex items-start space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                                            <i class="fas fa-chevron-right text-cyan-400 mt-1 text-sm"></i>
-                                            <span class="text-white/90 text-sm"><?php echo htmlspecialchars($item); ?></span>
-                                        </div>
-                                    <?php endforeach; ?>
+                                <div class="roadmap-marquee">
+                                    <div class="roadmap-track">
+                                        <?php foreach ($section['items'] as $item): ?>
+                                            <div class="task-item flex items-start space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                                                <i class="fas fa-chevron-right text-cyan-400 mt-1 text-sm"></i>
+                                                <span class="text-white/90 text-sm"><?php echo htmlspecialchars($item); ?></span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             <?php else: ?>
                                 <p class="text-white/50 italic">No tasks found in this section.</p>
@@ -508,22 +551,30 @@ $site_twitter = "@michitai";
                     }
                 ?>;
                 
-                // Update statistics
-                document.getElementById('totalCommits').textContent = data.metadata.total_commits.toLocaleString();
-                document.getElementById('totalLOC').textContent = data.metadata.total_loc.toLocaleString();
-                
+                // Update statistics with a count-up animation
+                animateCounter(document.getElementById('totalCommits'), data.metadata.total_commits);
+                animateCounter(document.getElementById('totalLOC'), data.metadata.total_loc);
+
                 // Calculate project age (days from first commit to now)
                 const firstCommit = new Date(data.data[0].date);
                 const now = new Date();
                 const daysActive = Math.floor((now - firstCommit) / (1000 * 60 * 60 * 24));
-                document.getElementById('projectAge').textContent = daysActive.toLocaleString();
+                animateCounter(document.getElementById('projectAge'), daysActive);
                 
                 // Prepare chart data
                 const chartData = data.data.map(point => ({
                     x: point.x, // Use the timestamp directly
                     y: point.y
                 }));
-                
+
+                // Progressive line drawing: reveal each point left-to-right
+                const totalPoints = chartData.length;
+                const animationDuration = 2500;
+                const delayBetweenPoints = animationDuration / totalPoints;
+                const previousY = (animCtx) => animCtx.index === 0
+                    ? animCtx.chart.scales.y.getPixelForValue(0)
+                    : animCtx.chart.getDatasetMeta(animCtx.datasetIndex).data[animCtx.index - 1].getProps(['y'], true).y;
+
                 const ctx = document.getElementById('locChart').getContext('2d');
                 
                 new Chart(ctx, {
@@ -541,6 +592,34 @@ $site_twitter = "@michitai";
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: {
+                            x: {
+                                type: 'number',
+                                easing: 'linear',
+                                duration: delayBetweenPoints,
+                                from: NaN, // the point is initially skipped
+                                delay(animCtx) {
+                                    if (animCtx.type !== 'data' || animCtx.xStarted) {
+                                        return 0;
+                                    }
+                                    animCtx.xStarted = true;
+                                    return animCtx.index * delayBetweenPoints;
+                                }
+                            },
+                            y: {
+                                type: 'number',
+                                easing: 'linear',
+                                duration: delayBetweenPoints,
+                                from: previousY,
+                                delay(animCtx) {
+                                    if (animCtx.type !== 'data' || animCtx.yStarted) {
+                                        return 0;
+                                    }
+                                    animCtx.yStarted = true;
+                                    return animCtx.index * delayBetweenPoints;
+                                }
+                            }
+                        },
                         plugins: {
                             legend: {
                                 display: false
@@ -597,8 +676,114 @@ $site_twitter = "@michitai";
             }
         }
         
-        // Load the graph when the page loads
-        loadLOCGraph();
+        // Count-up animation for the stat numbers
+        function animateCounter(el, target, duration = 2000) {
+            const start = performance.now();
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(target * eased).toLocaleString();
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        // Load the graph when the analytics section scrolls into view
+        const chartObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    chartObserver.disconnect();
+                    // Let the card fade-in finish before the line starts drawing
+                    setTimeout(loadLOCGraph, 300);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        chartObserver.observe(document.getElementById('locChart'));
+
+        // Roadmap rows: reveal cards one-by-one keeping the newest card in view,
+        // then keep auto-scrolling left in a seamless loop
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const REVEAL_STAGGER = 90;
+        const SCROLL_SPEED = 45; // px per second
+        const EDGE_PAD = 16;   // px gap between newest card and the row's right edge
+
+        function initRoadmapTrack(track) {
+            track.classList.add('armed');
+            const marquee = track.parentElement;
+            const items = Array.from(track.children);
+            if (reduceMotion) {
+                items.forEach(item => item.classList.add('revealed'));
+                return;
+            }
+
+            let offset = 0, targetOffset = 0, halfWidth = 0, lastTime = null;
+            let phase = 'reveal', paused = false;
+
+            // Reveal cards one by one; after each spawn, slide the row left so
+            // the just-spawned card sits at the visible right edge
+            items.forEach((item, i) => {
+                setTimeout(() => {
+                    item.classList.add('revealed');
+                    const cardRight = item.offsetLeft + item.offsetWidth;
+                    targetOffset = Math.max(0, cardRight - marquee.clientWidth + EDGE_PAD);
+                }, i * REVEAL_STAGGER);
+            });
+
+            // After all cards spawned: duplicate the set, then scroll continuously
+            setTimeout(() => {
+                const originals = Array.from(track.children);
+                let guard = 0;
+                while (track.scrollWidth < marquee.clientWidth && guard++ < 10) {
+                    originals.forEach(n => {
+                        const clone = n.cloneNode(true);
+                        clone.setAttribute('aria-hidden', 'true');
+                        track.appendChild(clone);
+                    });
+                }
+                // Second identical half so wrapping by halfWidth is seamless
+                Array.from(track.children).forEach(n => {
+                    const clone = n.cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    track.appendChild(clone);
+                });
+                halfWidth = track.scrollWidth / 2;
+                phase = 'scroll';
+            }, items.length * REVEAL_STAGGER + 600);
+
+            marquee.addEventListener('mouseenter', () => paused = true);
+            marquee.addEventListener('mouseleave', () => paused = false);
+
+            function frame(t) {
+                if (lastTime === null) lastTime = t;
+                const dt = Math.min((t - lastTime) / 1000, 0.1);
+                lastTime = t;
+                if (phase === 'reveal') {
+                    // Ease the row toward the newest card
+                    offset += (targetOffset - offset) * Math.min(1, dt * 8);
+                } else if (!paused) {
+                    offset += SCROLL_SPEED * dt;
+                    if (offset >= halfWidth) offset -= halfWidth;
+                }
+                track.style.transform = 'translateX(' + (-offset) + 'px)';
+                requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+        }
+
+        // Observe the viewport-width wrapper: the track itself is wider than
+        // the viewport when clipped, so its visible ratio may never hit threshold
+        const marqueeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    marqueeObserver.unobserve(entry.target);
+                    const track = entry.target.querySelector('.roadmap-track');
+                    if (track) initRoadmapTrack(track);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.roadmap-marquee').forEach(marquee => marqueeObserver.observe(marquee));
     </script>
 </body>
 </html>
