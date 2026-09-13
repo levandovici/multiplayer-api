@@ -390,9 +390,9 @@ pre::-webkit-scrollbar-thumb:hover {
                             <i class="fab fa-python text-3xl text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-white mb-3 text-center">Python</h4>
-                        <p class="text-white/80 text-center mb-4">Use REST API + JSON</p>
+                        <p class="text-white/80 text-center mb-4">SDK for dataclasses + asyncio</p>
                         <div class="flex items-center justify-center space-x-4">
-                            <span class="text-yellow-400 text-sm"><i class="fas fa-clock mr-1"></i>Coming Soon</span>
+                            <span class="text-green-400 text-sm"><i class="fas fa-check-circle mr-1"></i>Modern</span>
                             <span class="text-blue-400 text-sm"><i class="fas fa-code mr-1"></i>Python</span>
                         </div>
                     </a>

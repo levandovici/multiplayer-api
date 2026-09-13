@@ -27,6 +27,7 @@ Contact: support@michitai.com
 - [Java SDK](https://api.michitai.com/java/index.php): Jackson-based client
 - [.NET SDK](https://api.michitai.com/dotnet/index.php): System.Text.Json client
 - [C++ SDK](https://api.michitai.com/cpp/index.php): nlohmann::json client
+- [Python SDK](https://api.michitai.com/python/index.php): dataclass + asyncio/websockets client
 
 ## Main endpoints
 
