@@ -41,12 +41,28 @@ public class Updates {
      * @return Response containing the received updates.
      * @throws IOException if the request fails.
      */
-    public static PollUpdatesResponse pollUpdates(Client client, String playerToken, PollUpdates request) throws IOException {
+    public static PollUpdatesResponse<?> pollUpdates(Client client, String playerToken, PollUpdates request) throws IOException {
+        return pollUpdates(client, playerToken, request, Object.class);
+    }
+
+    /**
+     * Polls for updates that were sent to the current player.
+     *
+     * @param <T> The type to deserialize update data into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param request The poll request containing filters.
+     * @param dataType The class to deserialize update data into.
+     * @return Response containing the received updates with typed data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> PollUpdatesResponse<T> pollUpdates(Client client, String playerToken, PollUpdates request, Class<T> dataType) throws IOException {
         PollUpdatesRequest pollRequest = new PollUpdatesRequest(
             request.getFromPlayers(), 
             request.getFromPlayersIds(), 
             request.getLastUpdate()
         );
-        return client.post(client.url(Endpoints.GAME_ROOM_UPDATES_POLL, "&player_token=" + playerToken), pollRequest, PollUpdatesResponse.class);
+        return client.post(client.url(Endpoints.GAME_ROOM_UPDATES_POLL, "&player_token=" + playerToken), pollRequest,
+            client.parametricType(PollUpdatesResponse.class, dataType));
     }
 }

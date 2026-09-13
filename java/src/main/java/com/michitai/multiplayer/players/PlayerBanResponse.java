@@ -10,6 +10,9 @@ public class PlayerBanResponse extends ApiResponse {
     @JsonProperty("message")
     private String message;
 
+    @JsonProperty("ban_id")
+    private String banId;
+
     @JsonProperty("player_id")
     private int playerId;
 
@@ -19,12 +22,23 @@ public class PlayerBanResponse extends ApiResponse {
     @JsonProperty("ban_reason")
     private String banReason;
 
+    @JsonProperty("banned_until")
+    private String bannedUntil;
+
     public String getMessage() {
         return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getBanId() {
+        return banId;
+    }
+
+    public void setBanId(String banId) {
+        this.banId = banId;
     }
 
     public int getPlayerId() {
@@ -49,5 +63,13 @@ public class PlayerBanResponse extends ApiResponse {
 
     public void setBanReason(String banReason) {
         this.banReason = banReason;
+    }
+
+    public String getBannedUntil() {
+        return bannedUntil;
+    }
+
+    public void setBannedUntil(String bannedUntil) {
+        this.bannedUntil = bannedUntil;
     }
 }

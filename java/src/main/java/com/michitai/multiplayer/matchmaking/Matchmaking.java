@@ -24,8 +24,24 @@ public class Matchmaking {
      * @throws IOException if the request fails.
      */
     public static MatchmakingListResponse<?> getMatchmakingLobbies(Client client, String search, Integer limit) throws IOException {
+        return getMatchmakingLobbies(client, search, limit, Object.class);
+    }
+
+    /**
+     * Retrieves a list of available matchmaking lobbies.
+     *
+     * @param <T> The type to deserialize lobby rules into.
+     * @param client The API client instance.
+     * @param search Optional search term to filter lobbies.
+     * @param limit Optional limit on the number of results.
+     * @param rulesType The class to deserialize lobby rules into.
+     * @return Response containing the list of matchmaking lobbies with typed rules.
+     * @throws IOException if the request fails.
+     */
+    public static <T> MatchmakingListResponse<T> getMatchmakingLobbies(Client client, String search, Integer limit, Class<T> rulesType) throws IOException {
         MatchmakingListRequest request = new MatchmakingListRequest(search, limit);
-        return client.post(client.url(Endpoints.MATCHMAKING_LIST), request, MatchmakingListResponse.class);
+        return client.post(client.url(Endpoints.MATCHMAKING_LIST), request,
+            client.parametricType(MatchmakingListResponse.class, rulesType));
     }
 
     /**
@@ -68,7 +84,22 @@ public class Matchmaking {
      * @throws IOException if the request fails.
      */
     public static MatchmakingCurrentResponse<?> getCurrentMatchmakingStatus(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.MATCHMAKING_CURRENT, "&player_token=" + playerToken), MatchmakingCurrentResponse.class);
+        return getCurrentMatchmakingStatus(client, playerToken, Object.class);
+    }
+
+    /**
+     * Gets the current status of the player's matchmaking lobby.
+     *
+     * @param <T> The type to deserialize lobby rules into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param rulesType The class to deserialize lobby rules into.
+     * @return Response containing the current lobby status and information with typed rules.
+     * @throws IOException if the request fails.
+     */
+    public static <T> MatchmakingCurrentResponse<T> getCurrentMatchmakingStatus(Client client, String playerToken, Class<T> rulesType) throws IOException {
+        return client.get(client.url(Endpoints.MATCHMAKING_CURRENT, "&player_token=" + playerToken),
+            client.parametricType(MatchmakingCurrentResponse.class, rulesType));
     }
 
     /**
@@ -108,7 +139,22 @@ public class Matchmaking {
      * @throws IOException if the request fails.
      */
     public static MatchmakingPlayersResponse<?> getMatchmakingPlayers(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.MATCHMAKING_PLAYERS, "&player_token=" + playerToken), MatchmakingPlayersResponse.class);
+        return getMatchmakingPlayers(client, playerToken, Object.class);
+    }
+
+    /**
+     * Gets the list of players in the current matchmaking lobby.
+     *
+     * @param <T> The type to deserialize player data into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param dataType The class to deserialize player data into.
+     * @return Response containing the list of players in the lobby with typed player data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> MatchmakingPlayersResponse<T> getMatchmakingPlayers(Client client, String playerToken, Class<T> dataType) throws IOException {
+        return client.get(client.url(Endpoints.MATCHMAKING_PLAYERS, "&player_token=" + playerToken),
+            client.parametricType(MatchmakingPlayersResponse.class, dataType));
     }
 
     /**

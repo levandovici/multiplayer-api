@@ -1,7 +1,6 @@
 package com.michitai.multiplayer.matchmaking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Base information for a matchmaking join request.
@@ -10,23 +9,17 @@ public class MatchmakingRequestBase {
     @JsonProperty("request_id")
     private String requestId;
 
-    @JsonProperty("player_id")
-    private int playerId;
-
-    @JsonProperty("player_name")
-    private String playerName;
+    @JsonProperty("matchmaking_id")
+    private String matchmakingId;
 
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("data_json")
-    private String dataJson;
+    @JsonProperty("requested_at")
+    private String requestedAt;
 
-    @JsonProperty("data")
-    private JsonNode data;
-
-    @JsonProperty("created_at")
-    private String createdAt;
+    @JsonProperty("responded_at")
+    private String respondedAt;
 
     public String getRequestId() {
         return requestId;
@@ -36,20 +29,12 @@ public class MatchmakingRequestBase {
         this.requestId = requestId;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public String getMatchmakingId() {
+        return matchmakingId;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setMatchmakingId(String matchmakingId) {
+        this.matchmakingId = matchmakingId;
     }
 
     public String getStatus() {
@@ -60,27 +45,19 @@ public class MatchmakingRequestBase {
         this.status = status;
     }
 
-    public String getDataJson() {
-        return dataJson;
+    public String getRequestedAt() {
+        return requestedAt;
     }
 
-    public void setDataJson(String dataJson) {
-        this.dataJson = dataJson;
+    public void setRequestedAt(String requestedAt) {
+        this.requestedAt = requestedAt;
     }
 
-    public JsonNode getData() {
-        return data;
+    public String getRespondedAt() {
+        return respondedAt;
     }
 
-    public void setData(JsonNode data) {
-        this.data = data;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setRespondedAt(String respondedAt) {
+        this.respondedAt = respondedAt;
     }
 }

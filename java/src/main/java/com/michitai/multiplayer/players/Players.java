@@ -38,7 +38,22 @@ public class Players {
      * @throws IOException if the request fails.
      */
     public static PlayerAuthResponse<?> authenticatePlayer(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.GAME_PLAYERS_LOGIN, "&player_token=" + playerToken), PlayerAuthResponse.class);
+        return authenticatePlayer(client, playerToken, Object.class);
+    }
+
+    /**
+     * Authenticates a player using their private token and retrieves their data.
+     *
+     * @param <T> The type to deserialize player data into.
+     * @param client The API client instance.
+     * @param playerToken The player's private authentication token.
+     * @param dataType The class to deserialize player data into.
+     * @return Response containing the authenticated player information with typed player data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> PlayerAuthResponse<T> authenticatePlayer(Client client, String playerToken, Class<T> dataType) throws IOException {
+        return client.put(client.url(Endpoints.GAME_PLAYERS_LOGIN, "&player_token=" + playerToken), null,
+            client.parametricType(PlayerAuthResponse.class, dataType));
     }
 
     /**
@@ -96,6 +111,21 @@ public class Players {
     }
 
     /**
+     * Bans a player from the game with a specified duration.
+     * Requires the private API token for authentication.
+     *
+     * @param client The API client instance.
+     * @param playerId The ID of the player to ban.
+     * @param banDuration The duration of the ban.
+     * @param banReason Optional reason for the ban.
+     * @return Response containing the ban details.
+     * @throws IOException if the request fails.
+     */
+    public static PlayerBanResponse banPlayer(Client client, int playerId, EBanTime banDuration, String banReason) throws IOException {
+        return banPlayer(client, playerId, banDuration.name().toLowerCase(), banReason);
+    }
+
+    /**
      * Unbans a previously banned player.
      * Requires the private API token for authentication.
      *
@@ -118,7 +148,22 @@ public class Players {
      * @throws IOException if the request fails.
      */
     public static PlayerDataResponse<?> getPlayerData(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.GAME_DATA_PLAYER_GET, "&player_token=" + playerToken), PlayerDataResponse.class);
+        return getPlayerData(client, playerToken, Object.class);
+    }
+
+    /**
+     * Retrieves a player's data with typed deserialization support.
+     *
+     * @param <T> The type to deserialize player data into.
+     * @param client The API client instance.
+     * @param playerToken The player's private authentication token.
+     * @param dataType The class to deserialize player data into.
+     * @return Response containing the player's data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> PlayerDataResponse<T> getPlayerData(Client client, String playerToken, Class<T> dataType) throws IOException {
+        return client.get(client.url(Endpoints.GAME_DATA_PLAYER_GET, "&player_token=" + playerToken),
+            client.parametricType(PlayerDataResponse.class, dataType));
     }
 
     /**

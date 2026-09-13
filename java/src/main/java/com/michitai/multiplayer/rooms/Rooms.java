@@ -49,8 +49,24 @@ public class Rooms {
      * @throws IOException if the request fails.
      */
     public static RoomListResponse<?> getRooms(Client client, String search, Integer limit) throws IOException {
+        return getRooms(client, search, limit, Object.class);
+    }
+
+    /**
+     * Retrieves a list of available game rooms.
+     *
+     * @param <T> The type to deserialize room rules into.
+     * @param client The API client instance.
+     * @param search Optional search term to filter rooms.
+     * @param limit Optional limit on the number of results.
+     * @param rulesType The class to deserialize room rules into.
+     * @return Response containing the list of game rooms with typed rules.
+     * @throws IOException if the request fails.
+     */
+    public static <T> RoomListResponse<T> getRooms(Client client, String search, Integer limit, Class<T> rulesType) throws IOException {
         RoomListRequest request = new RoomListRequest(search, limit);
-        return client.post(client.url(Endpoints.GAME_ROOM_LIST), request, RoomListResponse.class);
+        return client.post(client.url(Endpoints.GAME_ROOM_LIST), request,
+            client.parametricType(RoomListResponse.class, rulesType));
     }
 
     /**
@@ -95,7 +111,22 @@ public class Rooms {
      * @throws IOException if the request fails.
      */
     public static RoomPlayersResponse<?> getRoomPlayers(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.GAME_ROOM_PLAYERS, "&player_token=" + playerToken), RoomPlayersResponse.class);
+        return getRoomPlayers(client, playerToken, Object.class);
+    }
+
+    /**
+     * Gets the list of players in the current game room.
+     *
+     * @param <T> The type to deserialize player data into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param dataType The class to deserialize player data into.
+     * @return Response containing the list of players in the room with typed player data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> RoomPlayersResponse<T> getRoomPlayers(Client client, String playerToken, Class<T> dataType) throws IOException {
+        return client.get(client.url(Endpoints.GAME_ROOM_PLAYERS, "&player_token=" + playerToken),
+            client.parametricType(RoomPlayersResponse.class, dataType));
     }
 
     /**
@@ -119,7 +150,22 @@ public class Rooms {
      * @throws IOException if the request fails.
      */
     public static CurrentRoomResponse<?> getCurrentRoom(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.GAME_ROOM_CURRENT, "&player_token=" + playerToken), CurrentRoomResponse.class);
+        return getCurrentRoom(client, playerToken, Object.class);
+    }
+
+    /**
+     * Gets comprehensive information about the current game room including players and pending actions.
+     *
+     * @param <T> The type to deserialize room rules into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param rulesType The class to deserialize room rules into.
+     * @return Response containing detailed room information with typed rules.
+     * @throws IOException if the request fails.
+     */
+    public static <T> CurrentRoomResponse<T> getCurrentRoom(Client client, String playerToken, Class<T> rulesType) throws IOException {
+        return client.get(client.url(Endpoints.GAME_ROOM_CURRENT, "&player_token=" + playerToken),
+            client.parametricType(CurrentRoomResponse.class, rulesType));
     }
 
     /**

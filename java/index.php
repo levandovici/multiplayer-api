@@ -226,10 +226,10 @@ $site_twitter = "@michitai";
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-red-400 font-mono text-sm mb-2">Players.registerPlayer</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; PlayerRegisterResponse registerPlayer(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static PlayerRegisterResponse registerPlayer(
     Client client,
     String name, 
-    T playerData
+    Object playerData
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Registers a new player with optional custom data. Uses generic type for player data with Jackson serialization.</p>
                             </div>
@@ -238,13 +238,14 @@ $site_twitter = "@michitai";
                                 <h5 class="text-red-400 font-mono text-sm mb-2">Players.authenticatePlayer</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; PlayerAuthResponse&lt;T&gt; authenticatePlayer(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Authenticates a player using their private token. Returns player information with typed data support.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-red-400 font-mono text-sm mb-2">Players.getAllPlayers</h5>
+                                <h5 class="text-red-400 font-mono text-sm mb-2">Games.getAllPlayers</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static PlayerListResponse getAllPlayers(
     Client client
 ) throws IOException</code></pre>
@@ -284,7 +285,7 @@ $site_twitter = "@michitai";
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static PlayerBanResponse banPlayer(
     Client client,
     int playerId,
-    BanTime banDuration,
+    EBanTime banDuration,
     String banReason
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Bans a player from the game with specified duration (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR, FOREVER) and optional reason. Requires private API token.</p>
@@ -300,7 +301,7 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-red-400 font-mono text-sm mb-2">Players.isBanned</h5>
+                                <h5 class="text-red-400 font-mono text-sm mb-2">Ban.isBanned</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static boolean isBanned(ApiResponse response)</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Checks if an API response indicates the player is banned. Returns true if the error message contains "You are banned".</p>
                             </div>
@@ -320,35 +321,37 @@ $site_twitter = "@michitai";
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-yellow-400 font-mono text-sm mb-2">Games.getGameData</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; GameDataResponse&lt;T&gt; getGameData(
-    Client client
+    Client client,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves global game data with Jackson compatible nested objects.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-yellow-400 font-mono text-sm mb-2">Games.updateGameData</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; SuccessResponse updateGameData(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static SuccessResponse updateGameData(
     Client client,
-    T data
+    Object data
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Updates global game data (requires private API token). Uses generic type for type safety.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-yellow-400 font-mono text-sm mb-2">Games.getPlayerData</h5>
+                                <h5 class="text-yellow-400 font-mono text-sm mb-2">Players.getPlayerData</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; PlayerDataResponse&lt;T&gt; getPlayerData(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves a specific player's data using their authentication token with typed support.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-yellow-400 font-mono text-sm mb-2">Games.updatePlayerData</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; SuccessResponse updatePlayerData(
+                                <h5 class="text-yellow-400 font-mono text-sm mb-2">Players.updatePlayerData</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static SuccessResponse updatePlayerData(
     Client client,
     String playerToken,
-    T data
+    Object data
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Updates a specific player's data like level, score, and inventory with generic type support.</p>
                             </div>
@@ -396,7 +399,7 @@ $site_twitter = "@michitai";
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">Rooms.createRoom</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; RoomCreateResponse createRoom(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static RoomCreateResponse createRoom(
     Client client,
     String playerToken,
     String roomName,
@@ -404,30 +407,32 @@ $site_twitter = "@michitai";
     String password,
     boolean hostSwitch,
     boolean canLeaveRoom,
-    T rules,
-    T playerData
+    boolean realtime,
+    Object playerData,
+    Object rules
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Creates a new game room for multiplayer sessions with typed rules support, host switching, and player data. Max players: 2-16.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">Rooms.getRooms</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static RoomListResponse getRooms(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; RoomListResponse&lt;T&gt; getRooms(
     Client client,
     String search,
-    Integer limit
+    Integer limit,
+    Class&lt;T&gt; rulesType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves a list of all available game rooms with typed rules support. Supports search and limit parameters (limit: 1-50).</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">Rooms.joinRoom</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; RoomJoinResponse joinRoom(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static RoomJoinResponse joinRoom(
     Client client,
     String playerToken,
     String roomId,
     String password,
-    T playerData
+    Object playerData
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Joins an existing game room with optional password and player data.</p>
                             </div>
@@ -443,9 +448,10 @@ $site_twitter = "@michitai";
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">Rooms.getRoomPlayers</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static RoomPlayersResponse getRoomPlayers(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; RoomPlayersResponse&lt;T&gt; getRoomPlayers(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves a list of all players in the current room.</p>
                             </div>
@@ -463,7 +469,8 @@ $site_twitter = "@michitai";
                                 <h5 class="text-cyan-400 font-mono text-sm mb-2">Rooms.getCurrentRoom</h5>
                                 <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; CurrentRoomResponse&lt;T&gt; getCurrentRoom(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; rulesType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Gets comprehensive room state including player lists and pending actions with typed support.</p>
                             </div>
@@ -521,18 +528,20 @@ $site_twitter = "@michitai";
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-green-400 font-mono text-sm mb-2">Actions.pollActions</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static ActionPollResponse pollActions(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; ActionPollResponse&lt;T&gt; pollActions(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Polls for completed actions from other players with typed response data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-green-400 font-mono text-sm mb-2">Actions.getPendingActions</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static ActionPendingResponse&lt;?&gt; getPendingActions(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; ActionPendingResponse&lt;T&gt; getPendingActions(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves a list of pending actions that need to be processed with typed request data.</p>
                             </div>
@@ -572,10 +581,11 @@ $site_twitter = "@michitai";
                             
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-indigo-400 font-mono text-sm mb-2">Updates.pollUpdates</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static PollUpdatesResponse pollUpdates(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; PollUpdatesResponse&lt;T&gt; pollUpdates(
     Client client,
     String playerToken,
-    PollUpdates request
+    PollUpdates request,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Polls for updates from other players. Returns list of update messages with typed data.</p>
                             </div>
@@ -639,11 +649,12 @@ $site_twitter = "@michitai";
                         
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.getLobbies</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingListResponse getLobbies(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.getMatchmakingLobbies</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; MatchmakingListResponse&lt;T&gt; getMatchmakingLobbies(
     Client client,
     String search,
-    Integer limit
+    Integer limit,
+    Class&lt;T&gt; rulesType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves a list of all available matchmaking lobbies with typed rules support.</p>
                             </div>
@@ -668,11 +679,12 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.joinDirectly</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingDirectJoinResponse joinDirectly(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.joinMatchmakingDirectly</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingDirectJoinResponse joinMatchmakingDirectly(
     Client client,
     String playerToken,
-    String matchmakingId
+    String matchmakingId,
+    Object playerData
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Joins a matchmaking lobby directly (requires lobby to be in direct join mode).</p>
                             </div>
@@ -700,26 +712,28 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.getCurrent</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingCurrentResponse getCurrent(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.getCurrentMatchmakingStatus</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; MatchmakingCurrentResponse&lt;T&gt; getCurrentMatchmakingStatus(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; rulesType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Gets current matchmaking lobby status with typed rules support.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.getPlayers</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingPlayersResponse getPlayers(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.getMatchmakingPlayers</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; MatchmakingPlayersResponse&lt;T&gt; getMatchmakingPlayers(
     Client client,
-    String playerToken
+    String playerToken,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Gets list of players in the matchmaking lobby with typed player data.</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.startGame</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingStartResponse startGame(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.startGameFromMatchmaking</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingStartResponse startGameFromMatchmaking(
     Client client,
     String playerToken
 ) throws IOException</code></pre>
@@ -727,8 +741,8 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.leave</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingLeaveResponse leave(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.leaveMatchmaking</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingLeaveResponse leaveMatchmaking(
     Client client,
     String playerToken
 ) throws IOException</code></pre>
@@ -736,8 +750,8 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.sendHeartbeat</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingHeartbeatResponse sendHeartbeat(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.sendMatchmakingHeartbeat</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingHeartbeatResponse sendMatchmakingHeartbeat(
     Client client,
     String playerToken
 ) throws IOException</code></pre>
@@ -745,12 +759,21 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.removeLobby</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingRemoveResponse removeLobby(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.removeMatchmakingLobby</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static MatchmakingRemoveResponse removeMatchmakingLobby(
     Client client,
     String playerToken
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Removes the matchmaking lobby (Host Only).</p>
+                            </div>
+                            
+                            <div class="bg-black/50 rounded-lg p-4">
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.stopMatchmaking</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static SuccessResponse stopMatchmaking(
+    Client client,
+    String playerToken
+) throws IOException</code></pre>
+                                <p class="text-gray-400 text-sm mt-2">Stops the matchmaking lobby before it has been started (Host Only).</p>
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
@@ -764,8 +787,8 @@ $site_twitter = "@michitai";
                             </div>
                             
                             <div class="bg-black/50 rounded-lg p-4">
-                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.updatePassword</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static SuccessResponse updatePassword(
+                                <h5 class="text-amber-400 font-mono text-sm mb-2">Matchmaking.updateMatchmakingPassword</h5>
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static SuccessResponse updateMatchmakingPassword(
     Client client,
     String playerToken,
     String password
@@ -797,10 +820,11 @@ $site_twitter = "@michitai";
                         <div class="space-y-6">
                             <div class="bg-black/50 rounded-lg p-4">
                                 <h5 class="text-lime-400 font-mono text-sm mb-2">Leaderboard.getLeaderboard</h5>
-                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static LeaderboardResponse&lt;?&gt; getLeaderboard(
+                                <pre class="text-sm text-white overflow-x-auto"><code class="language-java">public static &lt;T&gt; LeaderboardResponse&lt;T&gt; getLeaderboard(
     Client client,
     String[] sortBy,
-    int limit
+    int limit,
+    Class&lt;T&gt; dataType
 ) throws IOException</code></pre>
                                 <p class="text-gray-400 text-sm mt-2">Retrieves leaderboard sorted by specified fields with typed player data support.</p>
                             </div>
@@ -830,13 +854,47 @@ $site_twitter = "@michitai";
             });
         });
         
-        // Download handlers
-        document.getElementById('downloadJavaSdk').addEventListener('click', function() {
-            window.location.href = '/java/SDK.zip';
+        // Download functionality for Java SDK files
+        function triggerDownload(url, filename) {
+            const originalText = event.target.innerHTML;
+            event.target.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Preparing...';
+            event.target.disabled = true;
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            
+            document.body.appendChild(link);
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: false
+            });
+            link.dispatchEvent(clickEvent);
+            
+            setTimeout(() => {
+                document.body.removeChild(link);
+                event.target.innerHTML = originalText;
+                event.target.disabled = false;
+                
+                const successMsg = document.createElement('div');
+                successMsg.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center z-50';
+                successMsg.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Downloaded ${filename} successfully!`;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    successMsg.style.opacity = '0';
+                    setTimeout(() => successMsg.remove(), 300);
+                }, 3000);
+            }, 100);
+        }
+        
+        document.getElementById('downloadJavaSdk').addEventListener('click', (event) => {
+            triggerDownload('SDK.zip', 'Java-SDK.zip');
         });
         
-        document.getElementById('downloadJavaExample').addEventListener('click', function() {
-            window.location.href = '/java/Game.java';
+        document.getElementById('downloadJavaExample').addEventListener('click', (event) => {
+            triggerDownload('Game.java', 'Game.java');
         });
     </script>
 </body>

@@ -1,12 +1,13 @@
 package com.michitai.multiplayer.rooms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Short room information for room listings.
+ *
+ * @param <T> The type to deserialize room rules into.
  */
-public class RoomShort {
+public class RoomShort<T> {
     @JsonProperty("room_id")
     private String roomId;
 
@@ -22,6 +23,12 @@ public class RoomShort {
     @JsonProperty("has_password")
     private boolean hasPassword;
 
+    @JsonProperty("host_switch")
+    private boolean hostSwitch;
+
+    @JsonProperty("can_leave")
+    private boolean canLeave;
+
     @JsonProperty("realtime")
     private boolean realtime;
 
@@ -29,7 +36,7 @@ public class RoomShort {
     private String rulesJson;
 
     @JsonProperty("rules")
-    private JsonNode rules;
+    private T rules;
 
     public String getRoomId() {
         return roomId;
@@ -71,6 +78,22 @@ public class RoomShort {
         this.hasPassword = hasPassword;
     }
 
+    public boolean isHostSwitch() {
+        return hostSwitch;
+    }
+
+    public void setHostSwitch(boolean hostSwitch) {
+        this.hostSwitch = hostSwitch;
+    }
+
+    public boolean isCanLeave() {
+        return canLeave;
+    }
+
+    public void setCanLeave(boolean canLeave) {
+        this.canLeave = canLeave;
+    }
+
     public boolean isRealtime() {
         return realtime;
     }
@@ -87,11 +110,11 @@ public class RoomShort {
         this.rulesJson = rulesJson;
     }
 
-    public JsonNode getRules() {
+    public T getRules() {
         return rules;
     }
 
-    public void setRules(JsonNode rules) {
+    public void setRules(T rules) {
         this.rules = rules;
     }
 }

@@ -40,8 +40,23 @@ public class Actions {
      * @return Response containing the completed actions.
      * @throws IOException if the request fails.
      */
-    public static ActionPollResponse pollActions(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.GAME_ROOM_ACTIONS_POLL, "&player_token=" + playerToken), ActionPollResponse.class);
+    public static ActionPollResponse<?> pollActions(Client client, String playerToken) throws IOException {
+        return pollActions(client, playerToken, Object.class);
+    }
+
+    /**
+     * Polls for completed actions that were targeted to the current player.
+     *
+     * @param <T> The type to deserialize action response data into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param dataType The class to deserialize action response data into.
+     * @return Response containing the completed actions with typed response data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> ActionPollResponse<T> pollActions(Client client, String playerToken, Class<T> dataType) throws IOException {
+        return client.get(client.url(Endpoints.GAME_ROOM_ACTIONS_POLL, "&player_token=" + playerToken),
+            client.parametricType(ActionPollResponse.class, dataType));
     }
 
     /**
@@ -54,7 +69,23 @@ public class Actions {
      * @throws IOException if the request fails.
      */
     public static ActionPendingResponse<?> getPendingActions(Client client, String playerToken) throws IOException {
-        return client.get(client.url(Endpoints.GAME_ROOM_ACTIONS_PENDING, "&player_token=" + playerToken), ActionPendingResponse.class);
+        return getPendingActions(client, playerToken, Object.class);
+    }
+
+    /**
+     * Retrieves pending actions that need to be completed by the host.
+     * Only the host can retrieve pending actions.
+     *
+     * @param <T> The type to deserialize action request data into.
+     * @param client The API client instance.
+     * @param playerToken The player's authentication token.
+     * @param dataType The class to deserialize action request data into.
+     * @return Response containing the pending actions with typed request data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> ActionPendingResponse<T> getPendingActions(Client client, String playerToken, Class<T> dataType) throws IOException {
+        return client.get(client.url(Endpoints.GAME_ROOM_ACTIONS_PENDING, "&player_token=" + playerToken),
+            client.parametricType(ActionPendingResponse.class, dataType));
     }
 
     /**

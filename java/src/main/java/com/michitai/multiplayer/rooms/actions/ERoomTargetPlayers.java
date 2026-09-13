@@ -6,6 +6,6 @@ package com.michitai.multiplayer.rooms.actions;
 public enum ERoomTargetPlayers {
     HOST,
     ALL,
-    ALL_EXCEPT_HOST,
+    OTHERS,
     SPECIFIC
 }

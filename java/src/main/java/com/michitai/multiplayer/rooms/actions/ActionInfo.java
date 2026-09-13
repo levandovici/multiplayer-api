@@ -1,44 +1,38 @@
 package com.michitai.multiplayer.rooms.actions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Information about a completed action.
+ * Information about a completed action in the room.
+ * Contains action details, status, and response data.
+ *
+ * @param <T> The type to deserialize response data into.
  */
-public class ActionInfo {
+public class ActionInfo<T> {
     @JsonProperty("action_id")
     private String actionId;
-
-    @JsonProperty("sender_id")
-    private int senderId;
-
-    @JsonProperty("sender_name")
-    private String senderName;
 
     @JsonProperty("action_type")
     private String actionType;
 
-    @JsonProperty("request_data_json")
-    private String requestDataJson;
+    @JsonProperty("is_host")
+    private boolean isHost;
 
-    @JsonProperty("request_data")
-    private JsonNode requestData;
+    @JsonProperty("target_id")
+    private int targetId;
+
+    @JsonProperty("status")
+    private String status;
 
     @JsonProperty("response_data_json")
     private String responseDataJson;
 
     @JsonProperty("response_data")
-    private JsonNode responseData;
+    private T responseData;
 
-    @JsonProperty("status")
-    private String status;
-
-    @JsonProperty("created_at")
-    private String createdAt;
-
-    @JsonProperty("completed_at")
-    private String completedAt;
+    @JsonProperty("processed_at")
+    private String processedAt;
 
     public String getActionId() {
         return actionId;
@@ -46,22 +40,6 @@ public class ActionInfo {
 
     public void setActionId(String actionId) {
         this.actionId = actionId;
-    }
-
-    public int getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
     }
 
     public String getActionType() {
@@ -72,36 +50,20 @@ public class ActionInfo {
         this.actionType = actionType;
     }
 
-    public String getRequestDataJson() {
-        return requestDataJson;
+    public boolean isHost() {
+        return isHost;
     }
 
-    public void setRequestDataJson(String requestDataJson) {
-        this.requestDataJson = requestDataJson;
+    public void setHost(boolean host) {
+        isHost = host;
     }
 
-    public JsonNode getRequestData() {
-        return requestData;
+    public int getTargetId() {
+        return targetId;
     }
 
-    public void setRequestData(JsonNode requestData) {
-        this.requestData = requestData;
-    }
-
-    public String getResponseDataJson() {
-        return responseDataJson;
-    }
-
-    public void setResponseDataJson(String responseDataJson) {
-        this.responseDataJson = responseDataJson;
-    }
-
-    public JsonNode getResponseData() {
-        return responseData;
-    }
-
-    public void setResponseData(JsonNode responseData) {
-        this.responseData = responseData;
+    public void setTargetId(int targetId) {
+        this.targetId = targetId;
     }
 
     public String getStatus() {
@@ -112,19 +74,51 @@ public class ActionInfo {
         this.status = status;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getResponseDataJson() {
+        return responseDataJson;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setResponseDataJson(String responseDataJson) {
+        this.responseDataJson = responseDataJson;
     }
 
-    public String getCompletedAt() {
-        return completedAt;
+    public T getResponseData() {
+        return responseData;
     }
 
-    public void setCompletedAt(String completedAt) {
-        this.completedAt = completedAt;
+    public void setResponseData(T responseData) {
+        this.responseData = responseData;
+    }
+
+    public String getProcessedAt() {
+        return processedAt;
+    }
+
+    public void setProcessedAt(String processedAt) {
+        this.processedAt = processedAt;
+    }
+
+    /**
+     * The parsed status of the action.
+     *
+     * @return The action status enum value.
+     * @throws IllegalArgumentException if the status is unknown.
+     */
+    @JsonIgnore
+    public ERoomActionStatus getActionStatus() {
+        switch (status == null ? "" : status) {
+            case "pending":
+                return ERoomActionStatus.PENDING;
+            case "processing":
+                return ERoomActionStatus.PROCESSING;
+            case "completed":
+                return ERoomActionStatus.COMPLETED;
+            case "failed":
+                return ERoomActionStatus.FAILED;
+            case "read":
+                return ERoomActionStatus.READ;
+            default:
+                throw new IllegalArgumentException("Unknown action status: " + status);
+        }
     }
 }

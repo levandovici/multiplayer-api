@@ -12,16 +12,16 @@ import java.util.List;
  */
 public class MatchmakingListResponse<T> extends ApiResponse {
     @JsonProperty("lobbies")
-    private List<MatchmakingLobby> lobbies;
+    private List<MatchmakingLobby<T>> lobbies;
 
     @JsonProperty("count")
     private int count;
 
-    public List<MatchmakingLobby> getLobbies() {
+    public List<MatchmakingLobby<T>> getLobbies() {
         return lobbies;
     }
 
-    public void setLobbies(List<MatchmakingLobby> lobbies) {
+    public void setLobbies(List<MatchmakingLobby<T>> lobbies) {
         this.lobbies = lobbies;
     }
 

@@ -1,86 +1,42 @@
 package com.michitai.multiplayer.matchmaking.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.michitai.multiplayer.matchmaking.MatchmakingRequestBase;
 
 /**
- * Information about a matchmaking join request.
+ * Information about a matchmaking join request, including responder details.
  */
-public class MatchmakingRequestInfo {
-    @JsonProperty("request_id")
-    private String requestId;
+public class MatchmakingRequestInfo extends MatchmakingRequestBase {
+    @JsonProperty("responded_by")
+    private Integer respondedBy;
 
-    @JsonProperty("player_id")
-    private int playerId;
+    @JsonProperty("responder_name")
+    private String responderName;
 
-    @JsonProperty("player_name")
-    private String playerName;
+    @JsonProperty("join_by_requests")
+    private boolean joinByRequests;
 
-    @JsonProperty("status")
-    private String status;
-
-    @JsonProperty("data_json")
-    private String dataJson;
-
-    @JsonProperty("data")
-    private JsonNode data;
-
-    @JsonProperty("created_at")
-    private String createdAt;
-
-    public String getRequestId() {
-        return requestId;
+    public Integer getRespondedBy() {
+        return respondedBy;
     }
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
+    public void setRespondedBy(Integer respondedBy) {
+        this.respondedBy = respondedBy;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public String getResponderName() {
+        return responderName;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
+    public void setResponderName(String responderName) {
+        this.responderName = responderName;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public boolean isJoinByRequests() {
+        return joinByRequests;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDataJson() {
-        return dataJson;
-    }
-
-    public void setDataJson(String dataJson) {
-        this.dataJson = dataJson;
-    }
-
-    public JsonNode getData() {
-        return data;
-    }
-
-    public void setData(JsonNode data) {
-        this.data = data;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setJoinByRequests(boolean joinByRequests) {
+        this.joinByRequests = joinByRequests;
     }
 }

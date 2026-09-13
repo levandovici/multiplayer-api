@@ -6,30 +6,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Request for registering a new player.
  */
 public class PlayerRegisterRequest {
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("player_name")
+    private String playerName;
 
-    @JsonProperty("data")
-    private String data;
+    @JsonProperty("player_data")
+    private String playerData;
 
-    public PlayerRegisterRequest(String name, String data) {
-        this.name = name;
-        this.data = data;
+    public PlayerRegisterRequest(String playerName, String playerData) {
+        this.playerName = playerName;
+        this.playerData = playerData;
     }
 
-    public String getName() {
-        return name;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
-    public String getData() {
-        return data;
+    public String getPlayerData() {
+        return playerData;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setPlayerData(String playerData) {
+        this.playerData = playerData;
     }
 }

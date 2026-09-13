@@ -17,6 +17,14 @@ public class PollUpdates {
         this.lastUpdate = lastUpdate;
     }
 
+    public PollUpdates(ERoomTargetPlayers fromPlayers) {
+        this(fromPlayers, null, null);
+    }
+
+    public PollUpdates() {
+        this(ERoomTargetPlayers.HOST, null, null);
+    }
+
     public ERoomTargetPlayers getFromPlayers() {
         return fromPlayers;
     }

@@ -1,7 +1,6 @@
 package com.michitai.multiplayer.rooms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Comprehensive information about a game room.
@@ -15,6 +14,12 @@ public class CurrentRoomInfo<T> {
     @JsonProperty("room_name")
     private String roomName;
 
+    @JsonProperty("is_host")
+    private boolean isHost;
+
+    @JsonProperty("is_online")
+    private boolean isOnline;
+
     @JsonProperty("max_players")
     private int maxPlayers;
 
@@ -24,23 +29,35 @@ public class CurrentRoomInfo<T> {
     @JsonProperty("has_password")
     private boolean hasPassword;
 
-    @JsonProperty("realtime")
-    private boolean realtime;
-
     @JsonProperty("host_switch")
     private boolean hostSwitch;
 
-    @JsonProperty("can_leave_room")
-    private boolean canLeaveRoom;
+    @JsonProperty("can_leave")
+    private boolean canLeave;
 
-    @JsonProperty("rules_json")
-    private String rulesJson;
+    @JsonProperty("realtime")
+    private boolean realtime;
+
+    @JsonProperty("is_active")
+    private boolean isActive;
 
     @JsonProperty("rules")
-    private JsonNode rules;
+    private T rules;
 
-    @JsonProperty("created_at")
-    private String createdAt;
+    @JsonProperty("player_name")
+    private String playerName;
+
+    @JsonProperty("joined_at")
+    private String joinedAt;
+
+    @JsonProperty("last_heartbeat")
+    private String lastHeartbeat;
+
+    @JsonProperty("room_created_at")
+    private String roomCreatedAt;
+
+    @JsonProperty("room_last_activity")
+    private String roomLastActivity;
 
     public String getRoomId() {
         return roomId;
@@ -56,6 +73,22 @@ public class CurrentRoomInfo<T> {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 
     public int getMaxPlayers() {
@@ -82,14 +115,6 @@ public class CurrentRoomInfo<T> {
         this.hasPassword = hasPassword;
     }
 
-    public boolean isRealtime() {
-        return realtime;
-    }
-
-    public void setRealtime(boolean realtime) {
-        this.realtime = realtime;
-    }
-
     public boolean isHostSwitch() {
         return hostSwitch;
     }
@@ -98,35 +123,75 @@ public class CurrentRoomInfo<T> {
         this.hostSwitch = hostSwitch;
     }
 
-    public boolean isCanLeaveRoom() {
-        return canLeaveRoom;
+    public boolean isCanLeave() {
+        return canLeave;
     }
 
-    public void setCanLeaveRoom(boolean canLeaveRoom) {
-        this.canLeaveRoom = canLeaveRoom;
+    public void setCanLeave(boolean canLeave) {
+        this.canLeave = canLeave;
     }
 
-    public String getRulesJson() {
-        return rulesJson;
+    public boolean isRealtime() {
+        return realtime;
     }
 
-    public void setRulesJson(String rulesJson) {
-        this.rulesJson = rulesJson;
+    public void setRealtime(boolean realtime) {
+        this.realtime = realtime;
     }
 
-    public JsonNode getRules() {
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public T getRules() {
         return rules;
     }
 
-    public void setRules(JsonNode rules) {
+    public void setRules(T rules) {
         this.rules = rules;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public String getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(String joinedAt) {
+        this.joinedAt = joinedAt;
+    }
+
+    public String getLastHeartbeat() {
+        return lastHeartbeat;
+    }
+
+    public void setLastHeartbeat(String lastHeartbeat) {
+        this.lastHeartbeat = lastHeartbeat;
+    }
+
+    public String getRoomCreatedAt() {
+        return roomCreatedAt;
+    }
+
+    public void setRoomCreatedAt(String roomCreatedAt) {
+        this.roomCreatedAt = roomCreatedAt;
+    }
+
+    public String getRoomLastActivity() {
+        return roomLastActivity;
+    }
+
+    public void setRoomLastActivity(String roomLastActivity) {
+        this.roomLastActivity = roomLastActivity;
     }
 }

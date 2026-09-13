@@ -100,7 +100,7 @@ public class Game {
             );
             System.out.println("[LEADERBOARD] Top " + lb.getLeaderboard().size() + " players");
             if (!lb.getLeaderboard().isEmpty()) {
-                LeaderboardEntry<PlayerData> top = lb.getLeaderboard().get(0);
+                LeaderboardPlayer<PlayerData> top = lb.getLeaderboard().get(0);
                 System.out.println("[LEADERBOARD] #1: " + top.getPlayerName() + ", Level: " + top.getPlayerData().getLevel() + " (Rank " + top.getRank() + ")");
             }
         }, "GetLeaderboard");
@@ -169,8 +169,9 @@ public class Game {
             null,
             false,
             true,
-            new RulesData(),
-            new PlayerData()
+            false,
+            new PlayerData(),
+            new RulesData()
         );
         String roomId = create.getRoomId();
 
@@ -295,7 +296,7 @@ public class Game {
     }
 
     private static String requestToJoinMatchmaking(String token, String matchmakingId, PlayerData playerData) throws IOException {
-        MatchmakingRequestResponse req = Requests.requestToJoinMatchmaking(client, token, matchmakingId, playerData);
+        MatchmakingJoinRequestResponse req = Requests.requestToJoinMatchmaking(client, token, matchmakingId, playerData);
         System.out.println("[REQUEST] Sent: " + req.getRequestId());
         return req.getRequestId();
     }
@@ -306,11 +307,11 @@ public class Game {
     }
 
     private static void approveJoinRequest(String hostToken, String requestId) throws IOException {
-        MatchmakingRequestResponse resp = Requests.respondToJoinRequest(
+        MatchmakingPermissionResponse resp = Requests.respondToJoinRequest(
             client, 
             hostToken, 
             requestId, 
-            MatchmakingRequestAction.APPROVE
+            EMatchmakingRequestAction.APPROVE
         );
         System.out.println("[APPROVE] " + resp.getMessage());
     }
@@ -321,7 +322,7 @@ public class Game {
     }
 
     private static void getCurrentMatchmakingStatus() throws IOException {
-        MatchmakingStatusResponse<RulesData> s = Matchmaking.getCurrentMatchmakingStatus(
+        MatchmakingCurrentResponse<RulesData> s = Matchmaking.getCurrentMatchmakingStatus(
             client, 
             players.get("host").getToken(), 
             RulesData.class
@@ -369,7 +370,7 @@ public class Game {
                 actionData.setReady(true);
                 
                 SubmitAction<ActionData> actionReq = new SubmitAction<>(
-                    RoomTargetPlayers.HOST, 
+                    ERoomTargetPlayers.HOST, 
                     "player_ready", 
                     actionData
                 );
@@ -394,7 +395,7 @@ public class Game {
             updateData.setMessage("Game Started!");
             
             UpdatePlayers<UpdateData> updateReq = new UpdatePlayers<>(
-                RoomTargetPlayers.ALL, 
+                ERoomTargetPlayers.ALL, 
                 "game_start", 
                 updateData
             );
@@ -405,7 +406,7 @@ public class Game {
         // Players poll updates
         for (PlayerInfo p : players.values()) {
             safeExecute(() -> {
-                PollUpdates pollReq = new PollUpdates(RoomTargetPlayers.HOST);
+                PollUpdates pollReq = new PollUpdates(ERoomTargetPlayers.HOST);
                 Updates.pollUpdates(client, p.getToken(), pollReq);
             }, "PollUpdates " + p.getName());
         }
@@ -421,7 +422,7 @@ public class Game {
         safeExecute(() -> Rooms.stopRoom(client, players.get("host").getToken()), "StopRoom " + room.getRoom().getRoomName());
     }
 
-    private static void safeExecute(Runnable action, String operation) {
+    private static void safeExecute(ThrowingRunnable action, String operation) {
         try {
             System.out.println("[LOG] " + operation);
             action.run();
@@ -429,6 +430,11 @@ public class Game {
             System.err.println("[CRASH] " + operation + ": " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @FunctionalInterface
+    private interface ThrowingRunnable {
+        void run() throws Exception;
     }
 
     // ====================== PLAYER INFO ======================

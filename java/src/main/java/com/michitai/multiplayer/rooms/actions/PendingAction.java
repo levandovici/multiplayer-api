@@ -1,22 +1,27 @@
 package com.michitai.multiplayer.rooms.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Information about a pending action awaiting completion.
  *
- * @param <T> The type to deserialize action data into.
+ * @param <T> The type to deserialize action request data into.
  */
 public class PendingAction<T> {
     @JsonProperty("action_id")
     private String actionId;
 
-    @JsonProperty("sender_id")
-    private int senderId;
+    @JsonProperty("player_id")
+    private int playerId;
 
-    @JsonProperty("sender_name")
-    private String senderName;
+    @JsonProperty("target_id")
+    private int targetId;
+
+    @JsonProperty("player_name")
+    private String playerName;
+
+    @JsonProperty("is_host")
+    private boolean isHost;
 
     @JsonProperty("action_type")
     private String actionType;
@@ -25,7 +30,7 @@ public class PendingAction<T> {
     private String requestDataJson;
 
     @JsonProperty("request_data")
-    private JsonNode requestData;
+    private T requestData;
 
     @JsonProperty("created_at")
     private String createdAt;
@@ -38,20 +43,36 @@ public class PendingAction<T> {
         this.actionId = actionId;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public int getPlayerId() {
+        return playerId;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
-    public String getSenderName() {
-        return senderName;
+    public int getTargetId() {
+        return targetId;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setTargetId(int targetId) {
+        this.targetId = targetId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
     }
 
     public String getActionType() {
@@ -70,11 +91,11 @@ public class PendingAction<T> {
         this.requestDataJson = requestDataJson;
     }
 
-    public JsonNode getRequestData() {
+    public T getRequestData() {
         return requestData;
     }
 
-    public void setRequestData(JsonNode requestData) {
+    public void setRequestData(T requestData) {
         this.requestData = requestData;
     }
 

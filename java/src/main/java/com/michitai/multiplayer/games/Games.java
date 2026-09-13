@@ -30,7 +30,21 @@ public class Games {
      * @throws IOException if the request fails.
      */
     public static GameDataResponse<?> getGameData(Client client) throws IOException {
-        return client.get(client.url(Endpoints.GAME_DATA_GAME_GET), GameDataResponse.class);
+        return getGameData(client, Object.class);
+    }
+
+    /**
+     * Retrieves global game data with typed deserialization support.
+     *
+     * @param <T> The type to deserialize game data into.
+     * @param client The API client instance.
+     * @param dataType The class to deserialize game data into.
+     * @return Response containing the game data.
+     * @throws IOException if the request fails.
+     */
+    public static <T> GameDataResponse<T> getGameData(Client client, Class<T> dataType) throws IOException {
+        return client.get(client.url(Endpoints.GAME_DATA_GAME_GET),
+            client.parametricType(GameDataResponse.class, dataType));
     }
 
     /**

@@ -18,11 +18,11 @@ public class CurrentRoomResponse<T> extends ApiResponse {
     @JsonProperty("room")
     private CurrentRoomInfo<T> room;
 
-    @JsonProperty("pending_actions_json")
-    private List<String> pendingActionsJson;
+    @JsonProperty("pending_actions")
+    private List<Object> pendingActions;
 
-    @JsonProperty("pending_updates_json")
-    private List<String> pendingUpdatesJson;
+    @JsonProperty("pending_updates")
+    private List<Object> pendingUpdates;
 
     public boolean isInRoom() {
         return inRoom;
@@ -40,19 +40,19 @@ public class CurrentRoomResponse<T> extends ApiResponse {
         this.room = room;
     }
 
-    public List<String> getPendingActionsJson() {
-        return pendingActionsJson;
+    public List<Object> getPendingActions() {
+        return pendingActions;
     }
 
-    public void setPendingActionsJson(List<String> pendingActionsJson) {
-        this.pendingActionsJson = pendingActionsJson;
+    public void setPendingActions(List<Object> pendingActions) {
+        this.pendingActions = pendingActions;
     }
 
-    public List<String> getPendingUpdatesJson() {
-        return pendingUpdatesJson;
+    public List<Object> getPendingUpdates() {
+        return pendingUpdates;
     }
 
-    public void setPendingUpdatesJson(List<String> pendingUpdatesJson) {
-        this.pendingUpdatesJson = pendingUpdatesJson;
+    public void setPendingUpdates(List<Object> pendingUpdates) {
+        this.pendingUpdates = pendingUpdates;
     }
 }

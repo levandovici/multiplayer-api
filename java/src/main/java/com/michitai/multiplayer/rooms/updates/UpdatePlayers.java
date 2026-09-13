@@ -21,6 +21,10 @@ public class UpdatePlayers<T> {
         this.data = data;
     }
 
+    public UpdatePlayers(ERoomTargetPlayers targetPlayers, String type, T data) {
+        this(targetPlayers, type, data, null);
+    }
+
     public ERoomTargetPlayers getTargetPlayers() {
         return targetPlayers;
     }

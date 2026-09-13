@@ -1,7 +1,6 @@
 package com.michitai.multiplayer.games;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.michitai.multiplayer.ApiResponse;
 
 /**
@@ -21,7 +20,7 @@ public class GameDataResponse<T> extends ApiResponse {
     private String dataJson;
 
     @JsonProperty("data")
-    private JsonNode data;
+    private T data;
 
     public String getType() {
         return type;
@@ -47,11 +46,11 @@ public class GameDataResponse<T> extends ApiResponse {
         this.dataJson = dataJson;
     }
 
-    public JsonNode getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(JsonNode data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

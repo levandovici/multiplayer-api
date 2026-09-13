@@ -1,7 +1,6 @@
 package com.michitai.multiplayer.matchmaking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Comprehensive information about a matchmaking lobby.
@@ -14,6 +13,9 @@ public class MatchmakingInfo<T> {
 
     @JsonProperty("matchmaking_name")
     private String matchmakingName;
+
+    @JsonProperty("is_host")
+    private boolean isHost;
 
     @JsonProperty("max_players")
     private int maxPlayers;
@@ -43,13 +45,25 @@ public class MatchmakingInfo<T> {
     private String rulesJson;
 
     @JsonProperty("rules")
-    private JsonNode rules;
+    private T rules;
 
-    @JsonProperty("created_at")
-    private String createdAt;
+    @JsonProperty("joined_at")
+    private String joinedAt;
 
-    @JsonProperty("is_host")
-    private boolean isHost;
+    @JsonProperty("is_online")
+    private boolean isOnline;
+
+    @JsonProperty("last_heartbeat")
+    private String lastHeartbeat;
+
+    @JsonProperty("lobby_heartbeat")
+    private String lobbyHeartbeat;
+
+    @JsonProperty("is_started")
+    private boolean isStarted;
+
+    @JsonProperty("started_at")
+    private String startedAt;
 
     public String getMatchmakingId() {
         return matchmakingId;
@@ -65,6 +79,14 @@ public class MatchmakingInfo<T> {
 
     public void setMatchmakingName(String matchmakingName) {
         this.matchmakingName = matchmakingName;
+    }
+
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
     }
 
     public int getMaxPlayers() {
@@ -139,27 +161,59 @@ public class MatchmakingInfo<T> {
         this.rulesJson = rulesJson;
     }
 
-    public JsonNode getRules() {
+    public T getRules() {
         return rules;
     }
 
-    public void setRules(JsonNode rules) {
+    public void setRules(T rules) {
         this.rules = rules;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getJoinedAt() {
+        return joinedAt;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setJoinedAt(String joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
-    public boolean isHost() {
-        return isHost;
+    public boolean isOnline() {
+        return isOnline;
     }
 
-    public void setHost(boolean host) {
-        isHost = host;
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
+
+    public String getLastHeartbeat() {
+        return lastHeartbeat;
+    }
+
+    public void setLastHeartbeat(String lastHeartbeat) {
+        this.lastHeartbeat = lastHeartbeat;
+    }
+
+    public String getLobbyHeartbeat() {
+        return lobbyHeartbeat;
+    }
+
+    public void setLobbyHeartbeat(String lobbyHeartbeat) {
+        this.lobbyHeartbeat = lobbyHeartbeat;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
+    }
+
+    public String getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(String startedAt) {
+        this.startedAt = startedAt;
     }
 }

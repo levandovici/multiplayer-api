@@ -1,20 +1,19 @@
 package com.michitai.multiplayer.rooms.updates;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Information about a player update.
+ * Information about a player update received in a room.
+ * Contains update details, sender information, and data.
+ *
+ * @param <T> The type to deserialize update data into.
  */
-public class PlayerUpdate {
+public class PlayerUpdate<T> {
     @JsonProperty("update_id")
     private String updateId;
 
-    @JsonProperty("sender_id")
-    private int senderId;
-
-    @JsonProperty("sender_name")
-    private String senderName;
+    @JsonProperty("from_player_id")
+    private int fromPlayerId;
 
     @JsonProperty("type")
     private String type;
@@ -23,7 +22,7 @@ public class PlayerUpdate {
     private String dataJson;
 
     @JsonProperty("data")
-    private JsonNode data;
+    private T data;
 
     @JsonProperty("created_at")
     private String createdAt;
@@ -36,20 +35,12 @@ public class PlayerUpdate {
         this.updateId = updateId;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public int getFromPlayerId() {
+        return fromPlayerId;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setFromPlayerId(int fromPlayerId) {
+        this.fromPlayerId = fromPlayerId;
     }
 
     public String getType() {
@@ -68,11 +59,11 @@ public class PlayerUpdate {
         this.dataJson = dataJson;
     }
 
-    public JsonNode getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(JsonNode data) {
+    public void setData(T data) {
         this.data = data;
     }
 

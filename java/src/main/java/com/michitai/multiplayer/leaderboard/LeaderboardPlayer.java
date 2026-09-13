@@ -1,7 +1,6 @@
 package com.michitai.multiplayer.leaderboard;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Information about a player on the leaderboard.
@@ -23,7 +22,7 @@ public class LeaderboardPlayer<T> {
     private String playerDataJson;
 
     @JsonProperty("player_data")
-    private JsonNode playerData;
+    private T playerData;
 
     public int getRank() {
         return rank;
@@ -57,11 +56,11 @@ public class LeaderboardPlayer<T> {
         this.playerDataJson = playerDataJson;
     }
 
-    public JsonNode getPlayerData() {
+    public T getPlayerData() {
         return playerData;
     }
 
-    public void setPlayerData(JsonNode playerData) {
+    public void setPlayerData(T playerData) {
         this.playerData = playerData;
     }
 }

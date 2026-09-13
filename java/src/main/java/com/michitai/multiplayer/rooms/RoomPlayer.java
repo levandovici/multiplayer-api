@@ -1,7 +1,6 @@
 package com.michitai.multiplayer.rooms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Player information within a game room.
@@ -9,8 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @param <T> The type to deserialize player data into.
  */
 public class RoomPlayer<T> {
-    @JsonProperty("id")
-    private int id;
+    @JsonProperty("player_id")
+    private int playerId;
 
     @JsonProperty("player_name")
     private String playerName;
@@ -18,21 +17,27 @@ public class RoomPlayer<T> {
     @JsonProperty("is_host")
     private boolean isHost;
 
-    @JsonProperty("data_json")
-    private String dataJson;
+    @JsonProperty("is_online")
+    private boolean isOnline;
 
-    @JsonProperty("data")
-    private JsonNode data;
+    @JsonProperty("is_local")
+    private boolean isLocal;
+
+    @JsonProperty("player_data_json")
+    private String playerDataJson;
+
+    @JsonProperty("player_data")
+    private T playerData;
 
     @JsonProperty("last_heartbeat")
     private String lastHeartbeat;
 
-    public int getId() {
-        return id;
+    public int getPlayerId() {
+        return playerId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     public String getPlayerName() {
@@ -51,20 +56,36 @@ public class RoomPlayer<T> {
         isHost = host;
     }
 
-    public String getDataJson() {
-        return dataJson;
+    public boolean isOnline() {
+        return isOnline;
     }
 
-    public void setDataJson(String dataJson) {
-        this.dataJson = dataJson;
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 
-    public JsonNode getData() {
-        return data;
+    public boolean isLocal() {
+        return isLocal;
     }
 
-    public void setData(JsonNode data) {
-        this.data = data;
+    public void setLocal(boolean local) {
+        isLocal = local;
+    }
+
+    public String getPlayerDataJson() {
+        return playerDataJson;
+    }
+
+    public void setPlayerDataJson(String playerDataJson) {
+        this.playerDataJson = playerDataJson;
+    }
+
+    public T getPlayerData() {
+        return playerData;
+    }
+
+    public void setPlayerData(T playerData) {
+        this.playerData = playerData;
     }
 
     public String getLastHeartbeat() {

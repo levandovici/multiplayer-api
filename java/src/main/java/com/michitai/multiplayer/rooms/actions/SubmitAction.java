@@ -19,6 +19,10 @@ public class SubmitAction<T> {
         this.requestData = requestData;
     }
 
+    public SubmitAction(ERoomTargetPlayers targetPlayers, String actionType, T requestData) {
+        this(targetPlayers, actionType, requestData, null);
+    }
+
     public ERoomTargetPlayers getTargetPlayers() {
         return targetPlayers;
     }

@@ -12,16 +12,16 @@ import java.util.List;
  */
 public class RoomListResponse<T> extends ApiResponse {
     @JsonProperty("rooms")
-    private List<RoomShort> rooms;
+    private List<RoomShort<T>> rooms;
 
     @JsonProperty("count")
     private int count;
 
-    public List<RoomShort> getRooms() {
+    public List<RoomShort<T>> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<RoomShort> rooms) {
+    public void setRooms(List<RoomShort<T>> rooms) {
         this.rooms = rooms;
     }
 

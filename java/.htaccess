@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Do NOT redirect index.php, SDK.zip, Game.java
+RewriteCond %{REQUEST_URI} !^/java/index\.php$
+RewriteCond %{REQUEST_URI} !^/java/SDK\.zip$
+RewriteCond %{REQUEST_URI} !^/java/Game\.java$
+
+# Redirect everything else from /java to /api
+RewriteRule ^(.*)$ /api/$1 [R=301,L]
